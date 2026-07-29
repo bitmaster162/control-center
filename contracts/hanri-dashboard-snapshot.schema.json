@@ -1,0 +1,892 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-canter.local/contracts/hanri-dashboard-snapshot.schema.json",
+  "title": "HANRI Control Center Dashboard Snapshot",
+  "description": "Deterministic read-only projection contract. The schema is not an authority source.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "meta",
+    "render_policy",
+    "sources",
+    "kpis",
+    "current_actions",
+    "blockers",
+    "events",
+    "systems",
+    "agents",
+    "decisions",
+    "memory_layers",
+    "memory_contract",
+    "communication_flow",
+    "messages",
+    "security",
+    "audit",
+    "arbiter_content"
+  ],
+  "$defs": {
+    "evidenceState": {
+      "type": "string",
+      "enum": [
+        "RECEIPTED",
+        "HASH_VERIFIED",
+        "SOURCE_BACKED",
+        "CLAIMED",
+        "INFERRED",
+        "UNKNOWN",
+        "CONFLICTED",
+        "REJECTED"
+      ]
+    },
+    "freshnessState": {
+      "type": "string",
+      "enum": [
+        "CURRENT",
+        "STALE",
+        "UNKNOWN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "warn",
+        "danger",
+        "info",
+        "neutral"
+      ]
+    },
+    "refList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "kind",
+        "locator",
+        "evidence_state",
+        "freshness",
+        "as_of"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]+$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "CONTROL_ROOT",
+            "RUNTIME_STATE",
+            "RETURN_REGISTRY",
+            "RECEIPT",
+            "PROOF_LEDGER",
+            "DEPLOYMENT",
+            "ARCHIVE",
+            "HUMAN_DECISION",
+            "OTHER"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-fA-F0-9]{64}$"
+        },
+        "drive_file_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_state": {
+          "$ref": "#/$defs/evidenceState"
+        },
+        "freshness": {
+          "$ref": "#/$defs/freshnessState"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "evidenceBound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_state",
+        "evidence_refs"
+      ],
+      "properties": {
+        "evidence_state": {
+          "$ref": "#/$defs/evidenceState"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/refList"
+        },
+        "freshness": {
+          "$ref": "#/$defs/freshnessState"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "properties": {
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "schema_uri",
+        "compatible_ui",
+        "breaking_change_policy"
+      ],
+      "properties": {
+        "name": {
+          "const": "hanri.control_center.snapshot"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+        },
+        "schema_uri": {
+          "const": "contracts/hanri-dashboard-snapshot.schema.json"
+        },
+        "compatible_ui": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "breaking_change_policy": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_id",
+        "authority_generation",
+        "authority_status",
+        "implementation_layer",
+        "control_generation_created",
+        "generated_at",
+        "generated_by",
+        "freshness",
+        "global_mode",
+        "can_trade",
+        "capital_permission",
+        "deploy_permission",
+        "self_application"
+      ],
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority_generation": {
+          "const": "R63"
+        },
+        "authority_status": {
+          "enum": [
+            "ACCEPTED",
+            "PENDING",
+            "REJECTED"
+          ]
+        },
+        "implementation_layer": {
+          "type": "string",
+          "pattern": "^R64(?:[.-][A-Za-z0-9]+)*$"
+        },
+        "control_generation_created": {
+          "const": false
+        },
+        "generated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "generated_by": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "actor_id",
+            "role"
+          ],
+          "properties": {
+            "actor_id": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "state",
+            "as_of"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "SNAPSHOT",
+                "LIVE",
+                "FALLBACK"
+              ]
+            },
+            "state": {
+              "$ref": "#/$defs/freshnessState"
+            },
+            "as_of": {
+              "$ref": "#/$defs/timestamp"
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        },
+        "global_mode": {
+          "enum": [
+            "READ_ONLY",
+            "PROPOSAL_FIRST",
+            "APPROVAL_REQUIRED"
+          ]
+        },
+        "can_trade": {
+          "const": false
+        },
+        "capital_permission": {
+          "const": "DENY"
+        },
+        "deploy_permission": {
+          "const": "DENY"
+        },
+        "self_application": {
+          "const": false
+        }
+      }
+    },
+    "render_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "green_requires",
+        "claimed_tone",
+        "unknown_tone",
+        "conflict_tone",
+        "stale_override"
+      ],
+      "properties": {
+        "green_requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2
+        },
+        "claimed_tone": {
+          "const": "warn"
+        },
+        "unknown_tone": {
+          "const": "neutral"
+        },
+        "conflict_tone": {
+          "const": "danger"
+        },
+        "stale_override": {
+          "const": "warn"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRef"
+      },
+      "minItems": 1
+    },
+    "kpis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "value",
+          "tone",
+          "evidence_state",
+          "evidence_refs",
+          "freshness"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "integer"
+            ]
+          },
+          "tone": {
+            "$ref": "#/$defs/tone"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          },
+          "freshness": {
+            "$ref": "#/$defs/freshnessState"
+          },
+          "as_of": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/timestamp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "current_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "text",
+          "status",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "text",
+          "severity",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "time",
+          "title",
+          "text",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "time": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "systems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "operational",
+          "truth",
+          "execution",
+          "owner",
+          "next",
+          "evidence_state",
+          "evidence_refs",
+          "freshness"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "operational": {
+            "type": "string",
+            "enum": [
+              "OPERATIONAL",
+              "DEGRADED",
+              "HALTED",
+              "MAINTENANCE",
+              "PLANNED",
+              "UNKNOWN"
+            ]
+          },
+          "truth": {
+            "type": "string",
+            "enum": [
+              "VERIFIED",
+              "EVIDENCED",
+              "CLAIMED",
+              "CONTRADICTED",
+              "UNKNOWN"
+            ]
+          },
+          "execution": {
+            "type": "string",
+            "enum": [
+              "LIVE",
+              "READ_ONLY",
+              "PROPOSAL_ONLY",
+              "APPROVAL_REQUIRED",
+              "ISOLATED_ONLY",
+              "HALTED",
+              "UNKNOWN"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "next": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          },
+          "freshness": {
+            "$ref": "#/$defs/freshnessState"
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slot",
+          "role",
+          "status",
+          "channel",
+          "memory",
+          "evidence_state",
+          "evidence_refs",
+          "freshness"
+        ],
+        "properties": {
+          "slot": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "memory": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          },
+          "freshness": {
+            "$ref": "#/$defs/freshnessState"
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "verdict",
+          "action",
+          "implementation_status",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "ACCEPT",
+              "REJECT",
+              "REVISE",
+              "HOLD"
+            ]
+          },
+          "action": {
+            "type": "string"
+          },
+          "implementation_status": {
+            "type": "string",
+            "enum": [
+              "DONE",
+              "CLOSED",
+              "ACTIVE",
+              "CLAIMED_NOT_RECEIPTED",
+              "STAGED",
+              "PENDING_CHANNEL",
+              "PENDING",
+              "REJECTED"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "memory_layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "status",
+          "description",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "COMPLETE",
+              "PARTIAL",
+              "DEGRADED",
+              "UNKNOWN"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "memory_contract": {
+      "type": "object"
+    },
+    "communication_flow": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "message_id",
+          "from",
+          "to",
+          "type",
+          "status",
+          "ref",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "message_id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "security": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "status",
+          "action",
+          "evidence_state",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "OPEN_REVERIFY",
+              "CLAIMED_NOT_RECEIPTED",
+              "RECEIPTED_CLOSED",
+              "DEGRADED",
+              "UNKNOWN"
+            ]
+          },
+          "action": {
+            "type": "string"
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          }
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority",
+        "hanri_decision_loop",
+        "p0_receipts",
+        "defects",
+        "acceptance",
+        "invariants"
+      ],
+      "properties": {
+        "authority": {
+          "type": "object"
+        },
+        "hanri_decision_loop": {
+          "type": "object"
+        },
+        "p0_receipts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "defects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "acceptance": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "invariants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "arbiter_content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "flow",
+        "evidence_status",
+        "sources"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "flow": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_status": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

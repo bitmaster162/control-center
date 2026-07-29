@@ -4,3 +4,10 @@ __pycache__/
 .DS_Store
 node_modules/
 data/snapshot.generated.json
+data/snapshot.json
+data/snapshot.js
+data/snapshot.sha256
+HANRI_R64_DASHBOARD_STANDALONE_CONTRACT_V1.html
+test-artifacts/
+release/
+data/source_capture.generated.json

@@ -1,0 +1,26 @@
+{
+  "schema": "control_canter.runtime_handoff_acceptance.v1",
+  "receipt_id": "R64-FABLE-RUNTIME-HANDOFF-ACCEPTANCE-20260730",
+  "source": "HANDOFF_TO_GPT_R64_RUNTIME_REPORT_20260730.md",
+  "status": "ACCEPTED_WITH_CONDITIONS",
+  "accepted": [
+    "R64 package verification PASS",
+    "R63 controller acceptance evidence sufficient",
+    "D1 DONE",
+    "D2 CLOSED",
+    "D3 ACTIVE",
+    "R64 UI canonical frame",
+    "FABLE runtime role and source separation",
+    "HANRI role canon"
+  ],
+  "conditions": [
+    "D4 remains P0_CLAIMED_NOT_RECEIPTED until three closure receipts pass",
+    "D5 remains SEND_APPROVED_PENDING_CHANNEL until explicit SEND ROMAN and authenticated channel",
+    "HANRI R64 governor is shadow/install-gated and cannot replace live R28 automatically",
+    "No new authority generation during active freeze"
+  ],
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "deploy_permission": "DENY",
+  "self_application": false
+}

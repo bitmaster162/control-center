@@ -1,3 +1,9 @@
+# SUPERSEDED
+
+Use `CODEX01_R64_P1_CONTRACT_BOUND_LIVE_DASHBOARD.md`. This file is retained for lineage only.
+
+---
+
 # CODEX01-R64 — HANRI / Universe live dashboard integration
 
 ## Goal

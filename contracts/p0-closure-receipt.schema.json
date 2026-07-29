@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-canter.local/contracts/p0-closure-receipt.schema.json",
+  "title": "P0 Security Closure Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "p0_id",
+    "status",
+    "action_class",
+    "started_at",
+    "completed_at",
+    "scope",
+    "negative_tests",
+    "continuity_test",
+    "rotation",
+    "evidence",
+    "secrets_exposed",
+    "operator_presence_required"
+  ],
+  "properties": {
+    "schema": {
+      "const": "control_canter.p0_closure_receipt.v1"
+    },
+    "p0_id": {
+      "enum": [
+        "P0-1",
+        "P0-2",
+        "P0-3"
+      ]
+    },
+    "status": {
+      "enum": [
+        "RECEIPTED_CLOSED",
+        "PARTIAL",
+        "FAILED",
+        "OPERATOR_PRESENCE_REQUIRED"
+      ]
+    },
+    "action_class": {
+      "const": "COMPENSATABLE"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "negative_tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "test_id",
+          "expected",
+          "observed",
+          "status",
+          "timestamp",
+          "command_redacted"
+        ],
+        "properties": {
+          "test_id": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "string"
+          },
+          "observed": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "NOT_RUN"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "command_redacted": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "continuity_test": {
+      "type": "object",
+      "required": [
+        "expected",
+        "observed",
+        "status",
+        "timestamp"
+      ],
+      "properties": {
+        "expected": {
+          "type": "string"
+        },
+        "observed": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_RUN"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rotation": {
+      "type": "object",
+      "required": [
+        "new_access_activated_at",
+        "old_access_revoked_at",
+        "break_glass_status"
+      ],
+      "properties": {
+        "new_access_activated_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "old_access_revoked_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "break_glass_status": {
+          "enum": [
+            "VERIFIED",
+            "NOT_APPLICABLE",
+            "MISSING",
+            "FAILED"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "locator",
+          "sha256"
+        ],
+        "properties": {
+          "locator": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "secrets_exposed": {
+      "const": false
+    },
+    "operator_presence_required": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

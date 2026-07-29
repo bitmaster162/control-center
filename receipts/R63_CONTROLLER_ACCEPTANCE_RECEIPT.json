@@ -1,0 +1,32 @@
+{
+  "schema": "control_canter.controller_acceptance_receipt.v1",
+  "receipt_id": "R63-CONTROLLER-ACCEPTANCE-20260730",
+  "authority_generation": "R63",
+  "status_before": "PROVIDER_READBACK_CLAIM_CONTROLLER_REPLAY_PENDING",
+  "status_after": "ACCEPTED",
+  "decision_class": "CONTROLLER_ACCEPTANCE",
+  "evidence": [
+    {
+      "ref": "R63_DRIVE_READBACK_RECEIPT.json",
+      "claim": "device 21/21 plus provider readback; pointer bytes matched",
+      "sha256": "READ_FROM_SOURCE_RECEIPT"
+    },
+    {
+      "ref": "R63_INDEPENDENT_ACCEPTANCE.json",
+      "claim": "Antigravity 21/21 readback, pointer-written-last, R56 VOID",
+      "sha256": "READ_FROM_SOURCE_RECEIPT"
+    },
+    {
+      "ref": "HANDOFF_TO_GPT_R64_RUNTIME_REPORT_20260730.md",
+      "claim": "FABLE runtime handoff binding both checks",
+      "sha256": "READ_FROM_ATTACHED_SOURCE"
+    }
+  ],
+  "scope": "Authority state only. R64 remains an implementation/dashboard layer and does not create a control generation.",
+  "control_generation_created": false,
+  "freeze_respected": true,
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "deploy_permission": "DENY",
+  "self_application": false
+}

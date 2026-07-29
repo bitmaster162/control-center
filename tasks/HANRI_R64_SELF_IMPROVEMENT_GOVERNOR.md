@@ -1,3 +1,9 @@
+# SUPERSEDED
+
+Use `HANRI_R64_P1_SELF_IMPROVEMENT_GOVERNOR.md`. This file is retained for lineage only.
+
+---
+
 # HANRI-R64 — bounded self-improvement governor
 
 Implement proposal/test/learning functions above Control Center and ContinuityOS.

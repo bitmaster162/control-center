@@ -1,0 +1,49 @@
+{
+  "schema": "control_canter.p0_closure_receipt.v1",
+  "p0_id": "P0-2",
+  "status": "PARTIAL",
+  "action_class": "COMPENSATABLE",
+  "started_at": "REPLACE_RFC3339",
+  "completed_at": "REPLACE_RFC3339",
+  "scope": "Bearer token artifact closure",
+  "negative_tests": [
+    {
+      "test_id": "old_token_request",
+      "expected": "DENIED",
+      "observed": "NOT_RUN",
+      "status": "NOT_RUN",
+      "timestamp": "REPLACE_RFC3339",
+      "command_redacted": "REPLACE",
+      "exit_code": null
+    },
+    {
+      "test_id": "zero_literal_grep",
+      "expected": "ZERO_MATCHES_IN_DECLARED_SCOPE",
+      "observed": "NOT_RUN",
+      "status": "NOT_RUN",
+      "timestamp": "REPLACE_RFC3339",
+      "command_redacted": "REPLACE",
+      "exit_code": null
+    }
+  ],
+  "continuity_test": {
+    "expected": "AUTHORIZED_CONSUMER_PASSES_WITH_NEW_TOKEN",
+    "observed": "NOT_RUN",
+    "status": "NOT_RUN",
+    "timestamp": "REPLACE_RFC3339"
+  },
+  "rotation": {
+    "new_access_activated_at": null,
+    "old_access_revoked_at": null,
+    "break_glass_status": "NOT_APPLICABLE"
+  },
+  "evidence": [
+    {
+      "locator": "REPLACE",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "secrets_exposed": false,
+  "operator_presence_required": false,
+  "notes": "Never include secret values or unredacted scan output."
+}

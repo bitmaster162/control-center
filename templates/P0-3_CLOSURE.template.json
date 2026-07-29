@@ -1,0 +1,49 @@
+{
+  "schema": "control_canter.p0_closure_receipt.v1",
+  "p0_id": "P0-3",
+  "status": "PARTIAL",
+  "action_class": "COMPENSATABLE",
+  "started_at": "REPLACE_RFC3339",
+  "completed_at": "REPLACE_RFC3339",
+  "scope": "Remote Administrator credential closure",
+  "negative_tests": [
+    {
+      "test_id": "old_credential_login",
+      "expected": "DENIED",
+      "observed": "NOT_RUN",
+      "status": "NOT_RUN",
+      "timestamp": "REPLACE_RFC3339",
+      "command_redacted": "REPLACE",
+      "exit_code": null
+    },
+    {
+      "test_id": "new_access_login",
+      "expected": "PASS",
+      "observed": "NOT_RUN",
+      "status": "NOT_RUN",
+      "timestamp": "REPLACE_RFC3339",
+      "command_redacted": "REPLACE",
+      "exit_code": null
+    }
+  ],
+  "continuity_test": {
+    "expected": "LEGITIMATE_REMOTE_ADMIN_PATH_REMAINS_AVAILABLE",
+    "observed": "NOT_RUN",
+    "status": "NOT_RUN",
+    "timestamp": "REPLACE_RFC3339"
+  },
+  "rotation": {
+    "new_access_activated_at": null,
+    "old_access_revoked_at": null,
+    "break_glass_status": "MISSING"
+  },
+  "evidence": [
+    {
+      "locator": "REPLACE",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "secrets_exposed": false,
+  "operator_presence_required": true,
+  "notes": "Stop before revocation if lockout risk cannot be compensated."
+}
