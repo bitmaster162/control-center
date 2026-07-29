@@ -1,5 +1,7 @@
 # HANRI Control Center R64
 
+> **Classification:** implementation/dashboard package only. It is **not** a new Control Center authority generation and does not supersede R63.
+
 A runnable local **snapshot dashboard** plus integration contracts for the HANRI / Control Center / ContinuityOS stack.
 
 ## What this package is

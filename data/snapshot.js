@@ -1,6 +1,8 @@
 window.HANRI_SNAPSHOT = {
   meta: {
-    snapshot_id: "R64-SNAPSHOT-20260730",
+    snapshot_id: "R64-IMPLEMENTATION-SNAPSHOT-20260730",
+    authority_generation: "R63",
+    control_generation_created: false,
     generated_at: "2026-07-30T00:00:00+07:00",
     freshness: "SNAPSHOT / NOT LIVE",
     current_generation_claim: "R63",
