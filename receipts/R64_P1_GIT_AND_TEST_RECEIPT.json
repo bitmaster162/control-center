@@ -1,0 +1,40 @@
+{
+  "schema": "core.git_test_receipt.v1",
+  "repository": "HANRI_CONTROL_CENTER_R64",
+  "patch": "R64-P1",
+  "classification": "IMPLEMENTATION_DASHBOARD_PATCH",
+  "authority_generation": "R63",
+  "authority_status": "ACCEPTED",
+  "control_generation_created": false,
+  "branch": "r64-runtime-contract-p1",
+  "baseline_head": "fdb96ea9474ef56416c0154cd44b114b74871d11",
+  "baseline_tree": "acb6a4e63ae11f96d238585462eb74d3c4eba6d9",
+  "implementation_head": "5964f4698074fcb77d6ec5c59130225aea95ca55",
+  "implementation_tree": "06e029a53e0011467f6b145fdc534fe82e256e47",
+  "baseline_porcelain": "",
+  "implementation_porcelain": "",
+  "tests": {
+    "snapshot_schema": "PASS contract 1.0.0, 6 source refs",
+    "validator": "PASS 11 checks",
+    "pytest": "13/13 PASS",
+    "javascript_syntax": "PASS node --check",
+    "browser_desktop": "PASS, 9 tabs, Audit present, 0 console errors",
+    "browser_mobile": "PASS, 9 tabs, Audit present, 0 console errors"
+  },
+  "generated_release_artifacts": {
+    "snapshot_canonical_sha256": "00807114b3a8375f53e1e8a61d909a764dad05734821c0551c3877917119fb06",
+    "snapshot_js_sha256": "2226113104b4e65d1b3a02009193abd4655d2dac4a75b8f8e4cd8e66e476e0c2",
+    "standalone_html_sha256": "c83d5e59692a2c74fd56aa5125aceb8a33e09d1c87b6aa2a9d21de0a412d470f",
+    "desktop_screenshot_sha256": "e409ad1ebfc1f56ac1cc5f38e692e58b40c1539b408f965fd6a79c29f2ca138a",
+    "mobile_screenshot_sha256": "eb815634e27406f89e67c4d40cc4b8f526a6c7294213e41f7c11de7a181a51e5"
+  },
+  "effect_ceiling": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false,
+    "drive_mutations": 0,
+    "external_messages": 0
+  },
+  "final_receipt_commit_resolution": "Resolve the evidence commit from git rev-parse HEAD; the external release receipt binds the final HEAD/tree and immutable archive hash."
+}
