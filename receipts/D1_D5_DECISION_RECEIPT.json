@@ -1,0 +1,19 @@
+{
+  "schema": "control_canter.human_decision_receipt.v1",
+  "generation": "R64",
+  "decider": "Robert",
+  "authorization_utterance": "D1,D2,D3,D4,D5 го",
+  "decisions": [
+    {"id":"D1","verdict":"ACCEPT","scope":"register permanent CLAUDE-BITUNIX slot"},
+    {"id":"D2","verdict":"ACCEPT","scope":"install/test HANRI decision-intake repair"},
+    {"id":"D3","verdict":"ACCEPT","scope":"CONTROL_FREEZE policy"},
+    {"id":"D4","verdict":"ACCEPT","scope":"P0 security closure window"},
+    {"id":"D5","verdict":"ACCEPT","scope":"Roman outreach; send approved, external channel pending"}
+  ],
+  "boundaries": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "production_promotion": false,
+    "secret_values_in_receipts": false
+  }
+}

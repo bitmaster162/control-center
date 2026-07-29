@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>HANRI Control Center R64</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">HANRI · CONTROL CENTER · CONTINUITYOS</p>
+      <h1>Операторский центр</h1>
+      <p id="snapshot-subtitle" class="subtitle">Загрузка снимка…</p>
+    </div>
+    <div class="top-actions">
+      <span id="global-mode" class="badge badge-neutral">UNKNOWN</span>
+      <button id="refresh-btn" class="btn">Перечитать снимок</button>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Основные разделы">
+    <button class="tab active" data-view="overview">Обзор</button>
+    <button class="tab" data-view="systems">Системы</button>
+    <button class="tab" data-view="agents">Агенты</button>
+    <button class="tab" data-view="decisions">Решения</button>
+    <button class="tab" data-view="memory">Общая память</button>
+    <button class="tab" data-view="communications">Связь агентов</button>
+    <button class="tab" data-view="security">P0 безопасность</button>
+    <button class="tab" data-view="arbiter">Arbiter Content</button>
+  </nav>
+
+  <main>
+    <section id="view-overview" class="view active">
+      <div id="kpis" class="kpi-grid"></div>
+      <div class="two-col">
+        <article class="panel">
+          <div class="panel-head"><h2>Что происходит сейчас</h2><span class="muted">current snapshot</span></div>
+          <div id="current-actions"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><h2>Открытые блокеры</h2><span class="muted">material only</span></div>
+          <div id="blockers"></div>
+        </article>
+      </div>
+      <article class="panel">
+        <div class="panel-head"><h2>Последние события</h2><span class="muted">append-only</span></div>
+        <div id="events" class="timeline"></div>
+      </article>
+    </section>
+
+    <section id="view-systems" class="view">
+      <div class="panel filter-row">
+        <input id="system-search" type="search" placeholder="Фильтр систем…" />
+        <select id="system-status-filter">
+          <option value="all">Все статусы</option>
+          <option value="operational">operational</option>
+          <option value="degraded">degraded</option>
+          <option value="halted">halted</option>
+          <option value="planned">planned</option>
+          <option value="unknown">unknown</option>
+        </select>
+      </div>
+      <div id="systems-grid" class="card-grid"></div>
+    </section>
+
+    <section id="view-agents" class="view">
+      <article class="panel">
+        <div class="panel-head"><h2>Executor Network</h2><span class="muted">не чат, а доказательный транспорт</span></div>
+        <div id="agents-table" class="table-wrap"></div>
+      </article>
+    </section>
+
+    <section id="view-decisions" class="view">
+      <article class="panel">
+        <div class="panel-head"><h2>Решения Роберта</h2><span class="muted">D1–D5</span></div>
+        <div id="decisions-list"></div>
+      </article>
+    </section>
+
+    <section id="view-memory" class="view">
+      <div id="memory-layers" class="card-grid"></div>
+      <article class="panel">
+        <div class="panel-head"><h2>Единый контракт памяти</h2><span class="muted">что обязаны читать все агенты</span></div>
+        <pre id="memory-contract" class="code-block"></pre>
+      </article>
+    </section>
+
+    <section id="view-communications" class="view">
+      <article class="panel">
+        <div class="panel-head"><h2>Как агенты «переписываются»</h2><span class="muted">artifact bus</span></div>
+        <div id="communications-flow" class="flow"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Последние сообщения/возвраты</h2><span class="muted">structured envelopes</span></div>
+        <div id="messages-table" class="table-wrap"></div>
+      </article>
+    </section>
+
+    <section id="view-security" class="view">
+      <div id="security-grid" class="card-grid"></div>
+    </section>
+
+    <section id="view-arbiter" class="view">
+      <article class="panel hero-panel">
+        <p class="eyebrow">RECOVERED PRODUCT CONCEPT</p>
+        <h2>Arbiter Content Engine</h2>
+        <p id="arbiter-summary" class="lead"></p>
+      </article>
+      <div id="arbiter-flow" class="flow"></div>
+      <article class="panel">
+        <div class="panel-head"><h2>Статус находки</h2><span class="muted">exact phrase vs recovered concept</span></div>
+        <div id="arbiter-evidence"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <span>R64 snapshot dashboard · read-only · proposal-first</span>
+    <span>can_trade=false · capital_permission=DENY</span>
+  </footer>
+
+  <script src="data/snapshot.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
