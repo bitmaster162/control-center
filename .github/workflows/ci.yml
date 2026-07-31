@@ -7,23 +7,84 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: control-center-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v7
         with:
-          python-version: '3.13'
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
         with:
-          node-version: '22'
-      - run: python -m pip install --disable-pip-version-check pytest
-      - run: python scripts/validate.py
-      - run: python scripts/validate_repository_inventory.py
-      - run: python -m pytest -q
-      - run: node --check assets/app.js
-      - name: Verify deterministic generated assets
+          python-version: "3.13"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Show toolchain
         run: |
-          python scripts/generate_snapshot_assets.py
-          git diff --exit-code -- data/snapshot.js data/snapshot.sha256 HANRI_R64_DASHBOARD_STANDALONE_CONTRACT_V1.html
+          set -euxo pipefail
+          python --version
+          node --version
+          git --version
+          git status --short --branch
+
+      - name: Install locked validation dependencies
+        run: |
+          set -euxo pipefail
+          python -m pip install --disable-pip-version-check -r requirements-dev.txt
+          python -c "import jsonschema, pytest"
+
+      - name: Compile Python sources
+        run: python -m compileall -q scripts tests
+
+      - name: Validate contracts and snapshot
+        run: python scripts/validate.py
+
+      - name: Validate repository inventory
+        run: python scripts/validate_repository_inventory.py
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Check JavaScript syntax
+        run: node --check assets/app.js
+
+      - name: Verify deterministic generated assets
+        shell: bash
+        run: |
+          set -euxo pipefail
+          first="$(mktemp -d)"
+          second="$(mktemp -d)"
+          python scripts/generate_snapshot_assets.py \
+            --out-js "$first/snapshot.js" \
+            --out-hash "$first/snapshot.sha256" \
+            --standalone "$first/standalone.html"
+          python scripts/generate_snapshot_assets.py \
+            --out-js "$second/snapshot.js" \
+            --out-hash "$second/snapshot.sha256" \
+            --standalone "$second/standalone.html"
+          cmp "$first/snapshot.js" "$second/snapshot.js"
+          cmp "$first/snapshot.sha256" "$second/snapshot.sha256"
+          cmp "$first/standalone.html" "$second/standalone.html"
+          sha256sum "$first/snapshot.js" "$first/snapshot.sha256" "$first/standalone.html"
+
+      - name: Verify clean tracked worktree
+        run: |
+          set -euxo pipefail
+          test -z "$(git status --porcelain --untracked-files=no)"

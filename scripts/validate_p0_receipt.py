@@ -14,7 +14,11 @@ def main() -> int:
     parser.add_argument("--schema", type=Path, default=ROOT / "contracts/p0-closure-receipt.schema.json")
     args = parser.parse_args()
 
-    import jsonschema
+    try:
+        import jsonschema
+    except ModuleNotFoundError:
+        print(json.dumps({"status": "BLOCKED", "errors": ["missing_dependency:jsonschema"]}, indent=2))
+        return 2
     payload = json.loads(args.receipt.read_text(encoding="utf-8"))
     schema = json.loads(args.schema.read_text(encoding="utf-8"))
     errors = sorted(e.message for e in jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).iter_errors(payload))

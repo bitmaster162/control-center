@@ -120,8 +120,10 @@ Identical JSON input produces byte-identical generated assets.
 ## Validation
 
 ```bash
+python -m pip install -r requirements-dev.txt
 python scripts/validate_snapshot.py
 python scripts/validate.py
+python scripts/validate_repository_inventory.py
 python -m pytest -q
 node --check assets/app.js
 ```
