@@ -66,7 +66,18 @@
     $('audit-p0').innerHTML = table(['P0','Статус','Required evidence'], a.p0_receipts.map(p => [p.id,p.status,(p.required || []).join(', ')]));
     $('audit-defects').innerHTML = table(['Defect','Статус','Summary'], a.defects.map(d => [d.id,d.status,d.summary]));
     $('audit-acceptance').innerHTML = `<div class="list">${a.acceptance.map(x => `<div class="list-item"><div class="card-top"><strong>${esc(x.artifact)}</strong><span class="badge ${toneClass(x.status==='PASS'||x.status==='ACCEPTED'?'ok':'warn')}">${esc(x.status)}</span></div><div class="muted">${esc((x.checks || []).join(' · '))}</div>${x.sha256 ? `<div class="micro mono">${esc(x.sha256)}</div>` : ''}</div>`).join('')}</div>`;
+    const repos = snapshot.repositories || [];
+    $('audit-repositories').innerHTML = table(['Repository','Status','Visibility','Branch','Local HEAD','Remote HEAD','Δ','Next','Evidence'], repos.map(r => [r.name,r.status,r.visibility,r.branch || '—',shortSha(r.local_head || r.local_head_prefix),shortSha(r.remote_head || r.remote_head_prefix),deltaLabel(r),r.next,`${r.evidence_state}/${r.freshness}`]));
     $('audit-invariants').innerHTML = a.invariants.map(v => `<span class="badge badge-neutral">${esc(v)}</span>`).join('');
+  }
+
+  function shortSha(value) {
+    return value ? value.slice(0, 8) : '—';
+  }
+
+  function deltaLabel(repo) {
+    if (repo.ahead == null || repo.behind == null) return '—';
+    return `${repo.ahead}/${repo.behind}`;
   }
 
   function objectCard(obj) {

@@ -1,19 +1,20 @@
 {
   "contract": {
     "name": "hanri.control_center.snapshot",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "schema_uri": "contracts/hanri-dashboard-snapshot.schema.json",
     "compatible_ui": [
       "R64",
-      "R64-P1"
+      "R64-P1",
+      "R64-P2"
     ],
     "breaking_change_policy": "Major version changes require a new UI compatibility declaration; minor additions must remain backward-compatible."
   },
   "meta": {
-    "snapshot_id": "R64-P1-RUNTIME-CONTRACT-SNAPSHOT-20260730",
+    "snapshot_id": "R64-P2-REPOSITORY-CONTROL-SNAPSHOT-20260731",
     "authority_generation": "R63",
     "authority_status": "ACCEPTED",
-    "implementation_layer": "R64-P1",
+    "implementation_layer": "R64-P2",
     "control_generation_created": false,
     "generated_at": "2026-07-30T05:20:00+07:00",
     "generated_by": {
@@ -115,6 +116,30 @@
       "as_of": "2026-07-29T22:05:00Z",
       "required": true,
       "notes": "Closure templates exist, but required negative-test receipts are not complete."
+    },
+    {
+      "source_id": "repo-census-r2",
+      "kind": "RECEIPT",
+      "locator": "PROJECT_REPO_CENSUS.json + PROJECT_REPO_CENSUS_ACCEPTANCE_AND_GITHUB_TRANSPORT_R2_20260731.md",
+      "sha256": null,
+      "drive_file_id": null,
+      "evidence_state": "SOURCE_BACKED",
+      "freshness": "CURRENT",
+      "as_of": "2026-07-31T13:38:16Z",
+      "required": true,
+      "notes": "Antigravity read-only census: 21 paths, 9 Git roots and 7 bounded non-Git snapshots; no repositories initialized or modified."
+    },
+    {
+      "source_id": "github-transport-wave1-r2",
+      "kind": "RECEIPT",
+      "locator": "github.com/bitmaster162/{control-center,control-return-broker}:gpt/github-ready-r1",
+      "sha256": null,
+      "drive_file_id": null,
+      "evidence_state": "SOURCE_BACKED",
+      "freshness": "CURRENT",
+      "as_of": "2026-07-31T13:38:16Z",
+      "required": true,
+      "notes": "Antigravity provider readback reports private branches with exact local/remote HEAD equality and no deployment or main-branch change."
     }
   ],
   "kpis": [
@@ -219,6 +244,17 @@
       "evidence_refs": [
         "fable-handoff-r64"
       ]
+    },
+    {
+      "id": "A6",
+      "title": "Repository control",
+      "text": "Two private review branches are published; reconcile exported Git roots and create GitHub-ready Wave 2 without initializing runtime/data roots.",
+      "status": "ACTIVE",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2",
+        "github-transport-wave1-r2"
+      ]
     }
   ],
   "blockers": [
@@ -262,6 +298,16 @@
       "evidence_state": "SOURCE_BACKED",
       "evidence_refs": [
         "fable-handoff-r64"
+      ]
+    },
+    {
+      "id": "B-REPO-HASH",
+      "title": "Some census commits are prefix-only in the controller report",
+      "text": "Do not treat padded illustrative commit values as exact identities; bind full 40-character commits from exported bundle metadata before merge or push.",
+      "severity": "P1",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
       ]
     }
   ],
@@ -859,5 +905,404 @@
       "MASTER_KNOWLEDGE_MAP.md",
       "UNIVERSE_HUB_MASTER_ARCHITECTURE_V1.md"
     ]
-  }
+  },
+  "repositories": [
+    {
+      "id": "control-center",
+      "name": "Control Center",
+      "category": "PRIVATE_GIT",
+      "status": "PUBLISHED_VERIFIED",
+      "code_root": null,
+      "remote_url": "https://github.com/bitmaster162/control-center.git",
+      "visibility": "PRIVATE",
+      "branch": "gpt/github-ready-r1",
+      "local_head": "2d1bddf5506f758f9cd8d89be1c21187f3c10256",
+      "remote_head": "2d1bddf5506f758f9cd8d89be1c21187f3c10256",
+      "ahead": 0,
+      "behind": 0,
+      "next": "GPT direct development on review branches; no direct main push.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "github-transport-wave1-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "control-return-broker",
+      "name": "Control Return Broker",
+      "category": "PRIVATE_GIT",
+      "status": "PUBLISHED_VERIFIED",
+      "code_root": null,
+      "remote_url": "https://github.com/bitmaster162/control-return-broker.git",
+      "visibility": "PRIVATE",
+      "branch": "gpt/github-ready-r1",
+      "local_head": "ce4818b3012b6cf58bf1b7edf7d29ac5b75afdca",
+      "remote_head": "ce4818b3012b6cf58bf1b7edf7d29ac5b75afdca",
+      "ahead": 0,
+      "behind": 0,
+      "next": "Reconcile host main with published review branch; preserve transport/content boundary.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2",
+        "github-transport-wave1-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "continuityos",
+      "name": "ContinuityOS package",
+      "category": "CANONICAL_GIT",
+      "status": "RECONCILE_REQUIRED",
+      "code_root": "C:\\PROJECTS\\continuityos",
+      "remote_url": "https://github.com/bitmaster162/continuityos.git",
+      "visibility": "PUBLIC",
+      "branch": "hardening/governance-repair-20260712",
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Fetch remote master and reconcile with CODEX-01 Anti-Amnesia Gate return before any merge.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": "17d43c64",
+      "remote_head_prefix": null
+    },
+    {
+      "id": "continuityos-live",
+      "name": "ContinuityOS live mixed root",
+      "category": "RUNTIME_DATA",
+      "status": "RUNTIME_ONLY",
+      "code_root": "C:\\PROJECTS\\continuity_os",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Never initialize Git for the mixed runtime/data root; extract code-only boundaries.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "agent-return-broker",
+      "name": "Agent Return Broker predecessor",
+      "category": "FORK_CANDIDATE",
+      "status": "RECONCILE_REQUIRED",
+      "code_root": "C:\\PROJECTS\\agent_return_broker",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": "main",
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Diff full history against control-return-broker; KEEP/MERGE/ARCHIVE decision only after evidence.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": "0068fbfe",
+      "remote_head_prefix": null
+    },
+    {
+      "id": "archiveos-api",
+      "name": "ArchiveOS API",
+      "category": "PRIVATE_GIT",
+      "status": "EXPORT_READY",
+      "code_root": "C:\\PROJECTS\\archiveos_api",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": "master",
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Secret/data audit, tests and private remote candidate.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": "bc55a74b",
+      "remote_head_prefix": null
+    },
+    {
+      "id": "archiveos-data",
+      "name": "ArchiveOS data",
+      "category": "RUNTIME_DATA",
+      "status": "RUNTIME_ONLY",
+      "code_root": "C:\\PROJECTS\\archiveos_data",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Keep outside Git; expose immutable evidence refs only.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "visionassist",
+      "name": "VisionAssist shell",
+      "category": "PRIVATE_GIT",
+      "status": "EXPORT_READY",
+      "code_root": "C:\\Users\\coins\\My Drive\\04_PRODUCT_SHELLS\\VisionAssist",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": "codex/r50-visionassist-operator-demo",
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Move active clone off DriveFS and reconcile SensorBridge staging.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": "e74101f3",
+      "remote_head_prefix": null
+    },
+    {
+      "id": "maworld",
+      "name": "MAWorld",
+      "category": "PRIVATE_GIT",
+      "status": "EXPORT_READY",
+      "code_root": "C:\\PROJECTS\\MAWorld",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": "main",
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Verify tests and portable PostgreSQL/RLS boundary before private remote.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": "f82b9ccf",
+      "remote_head_prefix": null
+    },
+    {
+      "id": "sovereign-arena-site",
+      "name": "Sovereign Arena Site",
+      "category": "PUBLIC_GIT",
+      "status": "RECONCILE_REQUIRED",
+      "code_root": "C:\\PROJECTS\\sovereign-arena-site",
+      "remote_url": "https://github.com/bitmaster162/sovereign-arena-site.git",
+      "visibility": "PUBLIC",
+      "branch": "main",
+      "local_head": "d0d637fc1f9220c7e9f1d8f099c1b861cefed1bc",
+      "remote_head": "f070fe0587a4222b993b7e8fc9b8f2726ca414d9",
+      "ahead": 0,
+      "behind": 1,
+      "next": "Reconcile ancestry with verified repair candidate; production alias remains unchanged.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "bitevo-agent-site",
+      "name": "BitEvo AI Portal",
+      "category": "PUBLIC_GIT",
+      "status": "REMOTE_SYNCED",
+      "code_root": "C:\\PROJECTS\\continuity_os\\04_PRODUCT_SHELLS\\bitevo_agent_site",
+      "remote_url": "https://github.com/bitmaster162/bitevo-agent-site.git",
+      "visibility": "PUBLIC",
+      "branch": "main",
+      "local_head": "febbe4fcf8cda1f49341c1315912cbaf74f8dab2",
+      "remote_head": "febbe4fcf8cda1f49341c1315912cbaf74f8dab2",
+      "ahead": 0,
+      "behind": 0,
+      "next": "Keep separate public surface; source-bind telemetry or render STATIC_DEMO.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "crypto-guides-site",
+      "name": "Crypto Guides",
+      "category": "PUBLIC_GIT",
+      "status": "REMOTE_SYNCED",
+      "code_root": "C:\\PROJECTS\\continuity_os\\04_PRODUCT_SHELLS\\crypto_guides_site",
+      "remote_url": "https://github.com/bitmaster162/crypto-guides-site.git",
+      "visibility": "PUBLIC",
+      "branch": "main",
+      "local_head": "2b19db447318a3ddf0c856889d91d0e566deafa7",
+      "remote_head": "2b19db447318a3ddf0c856889d91d0e566deafa7",
+      "ahead": 0,
+      "behind": 0,
+      "next": "Keep separate public content repo; freshness and CTA audit.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "tradingos-live",
+      "name": "TradingOS LIVE_TRADING",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": "C:\\PROJECTS\\LIVE_TRADING",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Build one sanitized private monorepo only after data/secret/generated boundary audit.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "trading-edge",
+      "name": "Trading Edge Lab",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": "C:\\PROJECTS\\trading-edge",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Merge source modules into TradingOS only after accepted-edge and provenance review.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "parasite-killer",
+      "name": "Parasite-Killer",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": null,
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Identify exact code source from R62 result and product shell; exclude game, data, wallets and returns.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "bitevo-runtime",
+      "name": "BitEvo Runtime",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": "C:\\Users\\coins\\TradingOS\\Active\\bitevo",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Compare active root with Drive mirror and create code-only private baseline.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "visionassist-staging",
+      "name": "VisionAssist SensorBridge staging",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": "C:\\Users\\coins\\Downloads\\VisionAssist_Staging\\VisionAssist-SensorBridge-MVP",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Diff against VisionAssist Git history; do not initialize blindly.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    },
+    {
+      "id": "parasite-hunter-game",
+      "name": "Parasite Hunter game",
+      "category": "NON_GIT_SOURCE",
+      "status": "BOUNDARY_AUDIT_REQUIRED",
+      "code_root": "C:\\Users\\coins\\Downloads\\parasite_hunter_meshy_ready_bundle",
+      "remote_url": null,
+      "visibility": "LOCAL_ONLY",
+      "branch": null,
+      "local_head": null,
+      "remote_head": null,
+      "ahead": null,
+      "behind": null,
+      "next": "Separate private game repo; perform asset/LFS audit.",
+      "evidence_state": "SOURCE_BACKED",
+      "evidence_refs": [
+        "repo-census-r2"
+      ],
+      "freshness": "CURRENT",
+      "local_head_prefix": null,
+      "remote_head_prefix": null
+    }
+  ]
 }

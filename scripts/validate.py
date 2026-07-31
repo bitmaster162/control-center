@@ -18,7 +18,10 @@ required = [
     "contracts/hanri-dashboard-snapshot.schema.json",
     "contracts/SNAPSHOT_DATA_CONTRACT.md",
     "contracts/p0-closure-receipt.schema.json",
-        "README.md",
+    "contracts/REPOSITORY_INVENTORY_CONTRACT.md",
+    "contracts/repository-inventory.schema.json",
+    "data/repositories.v1.example.json",
+    "README.md",
 ]
 for item in required:
     if not (ROOT / item).exists():
@@ -45,8 +48,8 @@ if snapshot_path.exists():
     for key, value in expected.items():
         if meta.get(key) != value:
             errors.append(f"meta:{key}:expected:{value!r}:got:{meta.get(key)!r}")
-    if payload.get("contract", {}).get("version") != "1.0.0":
-        errors.append("snapshot_contract_version_not_1.0.0")
+    if payload.get("contract", {}).get("version") != "1.1.0":
+        errors.append("snapshot_contract_version_not_1.1.0")
     security = {x.get("id"): x for x in payload.get("security", [])}
     for p0 in ["P0-1", "P0-2", "P0-3"]:
         if security.get(p0, {}).get("status") != "CLAIMED_NOT_RECEIPTED":
@@ -55,6 +58,9 @@ if snapshot_path.exists():
 result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_snapshot.py")], cwd=ROOT, capture_output=True, text=True)
 if result.returncode:
     errors.append(f"snapshot_validation_failed:{result.stdout.strip()}:{result.stderr.strip()}")
+repo_result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_repository_inventory.py")], cwd=ROOT, capture_output=True, text=True)
+if repo_result.returncode:
+    errors.append(f"repository_inventory_validation_failed:{repo_result.stdout.strip()}:{repo_result.stderr.strip()}")
 
 snapshot_text = snapshot_path.read_text(encoding="utf-8") if snapshot_path.exists() else ""
 if re.search(r"(?:api[_-]?key|private[_-]?key|password|token)\s*[:=]\s*['\"][^'\"]+", snapshot_text, re.I):
@@ -74,4 +80,4 @@ if standalone.exists():
 if errors:
     print(json.dumps({"status": "FAIL", "errors": errors}, ensure_ascii=False, indent=2))
     sys.exit(1)
-print(json.dumps({"status": "PASS", "checks": 11, "errors": []}, ensure_ascii=False, indent=2))
+print(json.dumps({"status": "PASS", "checks": 13, "errors": []}, ensure_ascii=False, indent=2))

@@ -887,6 +887,146 @@
           }
         }
       }
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "status",
+          "code_root",
+          "remote_url",
+          "visibility",
+          "branch",
+          "local_head",
+          "remote_head",
+          "ahead",
+          "behind",
+          "next",
+          "evidence_state",
+          "evidence_refs",
+          "freshness"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "CANONICAL_GIT",
+              "PUBLIC_GIT",
+              "PRIVATE_GIT",
+              "NON_GIT_SOURCE",
+              "RUNTIME_DATA",
+              "FORK_CANDIDATE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PUBLISHED_VERIFIED",
+              "REMOTE_SYNCED",
+              "EXPORT_READY",
+              "RECONCILE_REQUIRED",
+              "BOUNDARY_AUDIT_REQUIRED",
+              "RUNTIME_ONLY",
+              "HOLD"
+            ]
+          },
+          "code_root": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "remote_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "PRIVATE",
+              "PUBLIC",
+              "LOCAL_ONLY",
+              "UNKNOWN"
+            ]
+          },
+          "branch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "local_head": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{40}$"
+          },
+          "remote_head": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{40}$"
+          },
+          "ahead": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "behind": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "next": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          },
+          "freshness": {
+            "$ref": "#/$defs/freshnessState"
+          },
+          "local_head_prefix": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{7,39}$"
+          },
+          "remote_head_prefix": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{7,39}$"
+          }
+        }
+      }
     }
   }
 }

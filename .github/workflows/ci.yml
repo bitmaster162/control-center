@@ -20,6 +20,7 @@ jobs:
           node-version: '22'
       - run: python -m pip install --disable-pip-version-check pytest
       - run: python scripts/validate.py
+      - run: python scripts/validate_repository_inventory.py
       - run: python -m pytest -q
       - run: node --check assets/app.js
       - name: Verify deterministic generated assets

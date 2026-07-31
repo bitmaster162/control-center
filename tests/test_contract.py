@@ -41,7 +41,7 @@ def test_authority_and_effect_ceiling():
 def test_every_material_projection_has_valid_evidence_refs():
     snapshot = load_snapshot()
     source_ids = {s["source_id"] for s in snapshot["sources"]}
-    for key in ["kpis", "current_actions", "blockers", "events", "systems", "agents", "decisions", "memory_layers", "messages", "security"]:
+    for key in ["kpis", "current_actions", "blockers", "events", "systems", "agents", "decisions", "memory_layers", "messages", "security", "repositories"]:
         for item in snapshot[key]:
             assert item["evidence_refs"]
             assert set(item["evidence_refs"]) <= source_ids
@@ -143,4 +143,68 @@ def test_p0_closed_without_negative_test_pass_fails(tmp_path):
     path = tmp_path / "p0-bad.json"
     path.write_text(json.dumps(payload), encoding="utf-8")
     result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_p0_receipt.py"), str(path)], cwd=ROOT)
+    assert result.returncode != 0
+
+
+def test_repository_projection_is_evidence_bound_and_safe():
+    snapshot = load_snapshot()
+    repos = snapshot["repositories"]
+    assert len(repos) >= 10
+    for repo in repos:
+        assert repo["evidence_refs"]
+        assert repo["evidence_state"] != "HASH_VERIFIED"
+        if repo["status"] == "PUBLISHED_VERIFIED":
+            assert repo["local_head"] == repo["remote_head"]
+        if repo["status"] == "RUNTIME_ONLY":
+            assert repo["remote_url"] is None
+
+
+def test_dashboard_renders_repository_control_section():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    js = (ROOT / "assets/app.js").read_text(encoding="utf-8")
+    assert 'id="audit-repositories"' in html
+    assert "snapshot.repositories || []" in js
+
+
+def test_repository_normalizer_rejects_prefix_as_exact_sha(tmp_path):
+    payload = {
+        "git_repositories": {
+            "sample": {
+                "project_name": "Sample",
+                "path": "C:/sample",
+                "branch": "main",
+                "local_head": "abcdef12",
+                "remote_head": "abcdef12",
+                "ahead": 0,
+                "behind": 0,
+                "upstream": "origin/main"
+            }
+        },
+        "non_git_sources": {}
+    }
+    source = tmp_path / "input.json"
+    output = tmp_path / "output.json"
+    source.write_text(json.dumps(payload), encoding="utf-8")
+    result = subprocess.run([sys.executable, str(ROOT / "scripts/normalize_repository_inventory.py"), str(source), str(output)], cwd=ROOT)
+    assert result.returncode == 0
+    row = json.loads(output.read_text(encoding="utf-8"))["repositories"][0]
+    assert row["local_head"] is None
+    assert row["remote_head"] is None
+    assert row["local_head_prefix"] == "abcdef12"
+    assert row["remote_head_prefix"] == "abcdef12"
+    assert row["status"] == "RECONCILE_REQUIRED"
+
+
+def test_repository_inventory_validator_passes():
+    result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_repository_inventory.py")], cwd=ROOT)
+    assert result.returncode == 0
+
+
+def test_repository_inventory_rejects_runtime_remote(tmp_path):
+    payload = json.loads((ROOT / "data/repositories.v1.example.json").read_text(encoding="utf-8"))
+    row = next(r for r in payload["repositories"] if r["status"] == "RUNTIME_ONLY")
+    row["remote_url"] = "https://example.invalid/runtime.git"
+    bad = tmp_path / "bad-repositories.json"
+    bad.write_text(json.dumps(payload), encoding="utf-8")
+    result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_repository_inventory.py"), "--inventory", str(bad)], cwd=ROOT)
     assert result.returncode != 0

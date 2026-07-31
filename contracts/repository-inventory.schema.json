@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control.local/contracts/repository-inventory.schema.json",
+  "title": "HANRI Repository Inventory v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "generated_at",
+    "source_refs",
+    "repositories",
+    "effects"
+  ],
+  "$defs": {
+    "evidenceState": {
+      "type": "string",
+      "enum": [
+        "RECEIPTED",
+        "HASH_VERIFIED",
+        "SOURCE_BACKED",
+        "CLAIMED",
+        "INFERRED",
+        "UNKNOWN",
+        "CONFLICTED",
+        "REJECTED"
+      ]
+    },
+    "freshnessState": {
+      "type": "string",
+      "enum": [
+        "CURRENT",
+        "STALE",
+        "UNKNOWN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "refList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "properties": {
+    "schema": {
+      "const": "hanri.repository_inventory.v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "status",
+          "code_root",
+          "remote_url",
+          "visibility",
+          "branch",
+          "local_head",
+          "remote_head",
+          "ahead",
+          "behind",
+          "next",
+          "evidence_state",
+          "evidence_refs",
+          "freshness"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "CANONICAL_GIT",
+              "PUBLIC_GIT",
+              "PRIVATE_GIT",
+              "NON_GIT_SOURCE",
+              "RUNTIME_DATA",
+              "FORK_CANDIDATE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PUBLISHED_VERIFIED",
+              "REMOTE_SYNCED",
+              "EXPORT_READY",
+              "RECONCILE_REQUIRED",
+              "BOUNDARY_AUDIT_REQUIRED",
+              "RUNTIME_ONLY",
+              "HOLD"
+            ]
+          },
+          "code_root": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "remote_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "PRIVATE",
+              "PUBLIC",
+              "LOCAL_ONLY",
+              "UNKNOWN"
+            ]
+          },
+          "branch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "local_head": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{40}$"
+          },
+          "remote_head": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{40}$"
+          },
+          "ahead": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "behind": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "next": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_state": {
+            "$ref": "#/$defs/evidenceState"
+          },
+          "evidence_refs": {
+            "$ref": "#/$defs/refList"
+          },
+          "freshness": {
+            "$ref": "#/$defs/freshnessState"
+          },
+          "local_head_prefix": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{7,39}$"
+          },
+          "remote_head_prefix": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-fA-F0-9]{7,39}$"
+          }
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "git_writes",
+        "remote_writes",
+        "deployments",
+        "can_trade",
+        "capital_permission"
+      ],
+      "properties": {
+        "git_writes": {
+          "const": 0
+        },
+        "remote_writes": {
+          "const": 0
+        },
+        "deployments": {
+          "const": 0
+        },
+        "can_trade": {
+          "const": false
+        },
+        "capital_permission": {
+          "const": "DENY"
+        }
+      }
+    }
+  }
+}

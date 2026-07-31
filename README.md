@@ -1,8 +1,8 @@
-# HANRI Control Center R64-P1
+# HANRI Control Center R64-P2
 
 > **Classification:** implementation/dashboard patch only. Authority remains **R63 ACCEPTED**. This repository does not create or supersede a Control Center authority generation.
 
-A contract-bound, read-only operator dashboard for the HANRI / Control Center / ContinuityOS stack.
+A contract-bound, read-only operator dashboard with repository-control projection for the HANRI / Control Center / ContinuityOS stack.
 
 ## Controller decisions applied
 
@@ -54,6 +54,20 @@ STALE                                              → yellow override
 ```
 
 No HTTP status, file existence or agent statement alone may render a system healthy.
+
+## Repository control
+
+Snapshot contract `1.1.0` adds an optional, evidence-bound `repositories` projection.
+It distinguishes published Git branches, synced remotes, exported candidates,
+non-Git source roots and runtime/data roots that must never be initialized blindly.
+
+```bash
+python scripts/normalize_repository_inventory.py EXPORT_SUMMARY.json data/repositories.generated.json
+python scripts/validate_repository_inventory.py --inventory data/repositories.generated.json
+```
+
+Transport/readback does not equal content acceptance. Prefix-only commit IDs remain
+`SOURCE_BACKED` and cannot authorize merge or push.
 
 ## Dashboard
 

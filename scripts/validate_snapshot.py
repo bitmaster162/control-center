@@ -41,7 +41,7 @@ def main() -> int:
         errors.append("authority_binding_invalid")
 
     source_ids = {s.get("source_id") for s in payload.get("sources", [])}
-    for collection in ["kpis", "current_actions", "blockers", "events", "systems", "agents", "decisions", "memory_layers", "messages", "security"]:
+    for collection in ["kpis", "current_actions", "blockers", "events", "systems", "agents", "decisions", "memory_layers", "messages", "security", "repositories"]:
         for index, item in enumerate(payload.get(collection, [])):
             refs = item.get("evidence_refs", [])
             if not refs:

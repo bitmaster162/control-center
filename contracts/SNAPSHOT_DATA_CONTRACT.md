@@ -112,3 +112,17 @@ The R63 operator dashboard is merged here; it is not maintained as an independen
 - `FALLBACK`: live adapters failed and the last accepted snapshot is displayed with a visible degradation label.
 
 The standalone HTML and server-hosted UI must render the same snapshot ID and payload hash.
+
+## Version 1.1.0 — repository control projection
+
+Version 1.1.0 adds the optional `repositories` collection. It is backward-compatible
+for R64-P1 readers: the UI treats a missing collection as empty.
+
+Repository transport evidence must not be promoted beyond its receipt class:
+
+- exact full commit + provider readback may support `PUBLISHED_VERIFIED`;
+- prefix-only commit reports remain `SOURCE_BACKED`;
+- non-Git and mixed runtime/data roots remain `BOUNDARY_AUDIT_REQUIRED` or
+  `RUNTIME_ONLY`;
+- repository projection never authorizes initialization, merge, push, deployment or
+  live-root mutation.
