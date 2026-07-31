@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install --disable-pip-version-check pytest
+      - run: python scripts/validate.py
+      - run: python -m pytest -q
+      - run: node --check assets/app.js
+      - name: Verify deterministic generated assets
+        run: |
+          python scripts/generate_snapshot_assets.py
+          git diff --exit-code -- data/snapshot.js data/snapshot.sha256 HANRI_R64_DASHBOARD_STANDALONE_CONTRACT_V1.html

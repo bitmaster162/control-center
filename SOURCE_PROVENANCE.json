@@ -1,0 +1,11 @@
+{
+  "schema": "repository.source_provenance.v1",
+  "repository": "control-center",
+  "source_branch": "r64-runtime-contract-p1",
+  "source_head": "6f2745a7ae027648776ee69b516578282cb740c5",
+  "source_tree": "8f552ced0843f2fa843afd8b0351a00d65f94c8f",
+  "source_git_bundle_sha256": "79a265d0692018049f7dc5a4668769f4bc2312779f05b2afba319014634cc0a4",
+  "source_zip_sha256": "2f910ff85355f68067c7881d7c629a89f3fd5396fad5f2a331bcf5eb1f0c7325",
+  "authority_generation": "R63",
+  "control_generation_created": false
+}
