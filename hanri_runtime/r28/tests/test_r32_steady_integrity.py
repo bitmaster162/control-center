@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -65,6 +64,32 @@ class R32SteadyIntegrityTests(unittest.TestCase):
             self.assertEqual(reason, "BASE_OK")
             self.assertEqual(result["heavy_snapshot_raw_sha256"], expected)
             self.assertEqual(result["heavy_snapshot_bytes_hashed"], sum(path.stat().st_size for path in paths))
+            self.assertIn("heavy_snapshot_integrity_elapsed_ms", result)
+
+    def test_process_hashes_heavy_state_once_under_lock(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            state = root / "state"
+            state.mkdir()
+            paths = self._heavy(state)
+            expected = {path.name: "x" * 64 for path in paths}
+            context = self._base_context(root, paths, expected)
+            config = {
+                "state_root": str(state),
+                "lock_file": str(state / "hanri.lock"),
+                "lock_stale_seconds": 1800,
+            }
+            with (
+                mock.patch.object(integrity.base, "r32_load_config", return_value=config),
+                mock.patch.object(integrity, "_BASE_FAST_CONTEXT", return_value=(True, "BASE_OK", context)) as preflight,
+                mock.patch.object(integrity, "_heavy_snapshot_raw_sha256", return_value=expected) as heavy_sha,
+                mock.patch.object(integrity, "run_fast_path_integrity", return_value={"heartbeat_fast_path": True}) as run_fast,
+            ):
+                result = integrity.r32_process_once_integrity(root / "config.json")
+            self.assertTrue(result["heartbeat_fast_path"])
+            self.assertEqual(preflight.call_count, 2)
+            self.assertEqual(heavy_sha.call_count, 1)
+            run_fast.assert_called_once()
 
     def test_raw_sha_is_streaming_byte_integrity_not_json_semantics(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -94,6 +119,7 @@ class R32SteadyIntegrityTests(unittest.TestCase):
             self.assertEqual(receipt["heavy_snapshot_bytes_hashed"], sum(path.stat().st_size for path in paths))
             self.assertEqual(set(receipt["heavy_snapshot_raw_sha256"]), {path.name for path in paths})
             self.assertTrue(receipt["material_policy"]["fast_path_streaming_sha256_integrity"])
+            self.assertEqual(receipt["material_policy"]["fast_path_heavy_sha_passes"], 1)
             self.assertFalse(receipt["material_policy"]["heavy_json_parse_required_on_fast_path"])
             self.assertFalse(receipt["can_trade"])
 
@@ -101,6 +127,7 @@ class R32SteadyIntegrityTests(unittest.TestCase):
         text = Path(integrity.__file__).read_text(encoding="utf-8")
         self.assertIn('INTEGRITY_MODE = "STREAMING_SHA256_NO_JSON_PARSE"', text)
         self.assertIn("base.install_r32_guard()", text)
+        self.assertIn("core.process_once = r32_process_once_integrity", text)
         self.assertNotIn("requests.", text)
         self.assertNotIn("subprocess", text)
         self.assertNotIn("can_trade = True", text)
