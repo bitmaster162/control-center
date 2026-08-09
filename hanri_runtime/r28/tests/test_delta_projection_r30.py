@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from hanri import archive as archive_mod
 from hanri.delta_cli import (
     ACTOR,
     HUMAN_LABEL,
@@ -16,6 +17,7 @@ from hanri.delta_cli import (
     r30_render_human_digest,
     r30_snapshot_event,
 )
+from hanri.guarded_cli import guarded_scan_causal_spine
 
 
 class R30DeltaProjectionTests(unittest.TestCase):
@@ -39,6 +41,33 @@ class R30DeltaProjectionTests(unittest.TestCase):
 
             self.assertIn("authority.json", names)
             self.assertNotIn("latest_ai_state.json", names)
+
+    def test_guarded_causal_spine_uses_projection_exclusion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            origin = root / "origin"
+            pivot = root / "00_CONTROL"
+            current = root / "current"
+            self_output = pivot / "HANRI_R30"
+            sibling = pivot / "OTHER"
+            for folder in (origin, current, self_output, sibling):
+                folder.mkdir(parents=True)
+            (origin / "origin.json").write_text("{}", encoding="utf-8")
+            (current / "current.json").write_text("{}", encoding="utf-8")
+            (self_output / "latest_ai_state.json").write_text("{}", encoding="utf-8")
+            (sibling / "authority.json").write_text("{}", encoding="utf-8")
+
+            configure_excluded_roots([self_output])
+            original_iter = archive_mod.iter_files
+            archive_mod.iter_files = iter_files_excluding_projection
+            try:
+                spine, cache = guarded_scan_causal_spine([origin], [pivot], [current])
+            finally:
+                archive_mod.iter_files = original_iter
+
+            persisted = json.dumps({"spine": spine, "cache": cache}, ensure_ascii=False)
+            self.assertIn("authority.json", persisted)
+            self.assertNotIn("latest_ai_state.json", persisted)
 
     def test_material_digest_ignores_only_generated_at_and_run_id(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
