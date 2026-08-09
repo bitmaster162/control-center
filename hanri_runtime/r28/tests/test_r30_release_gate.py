@@ -33,7 +33,7 @@ class R30ReleaseGateTests(unittest.TestCase):
 
     def test_installer_is_side_by_side_and_preserves_accepted_r29(self) -> None:
         text = (APP_ROOT / "scripts" / "Install-R30ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
-        self.assertIn('ExpectedBranch = "hanri/r30-release-candidate"', text)
+        self.assertIn('ExpectedBranch = "hanri/r30-release-candidate-1.1"', text)
         self.assertIn("ControlCenterHANRIR30", text)
         self.assertIn("ControlCenter-HANRI-R30", text)
         self.assertIn("ControlCenter-HANRI-R29-RC2", text)
@@ -43,17 +43,41 @@ class R30ReleaseGateTests(unittest.TestCase):
         self.assertIn('r29_files_modified = $false', text)
         self.assertIn('r29_state_modified_by_installer = $false', text)
 
-    def test_accepted_r29_is_disabled_only_after_r30_readback(self) -> None:
+    def test_previous_failed_r30_instance_is_stopped_before_app_replacement(self) -> None:
+        text = (APP_ROOT / "scripts" / "Install-R30ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
+        disable_old = text.find("Disable-ScheduledTask -TaskName $R30TaskName")
+        stop_old = text.find("Stop-ScheduledTask -TaskName $R30TaskName")
+        move_app = text.find("Move-Item -Force $InstallRoot")
+        self.assertGreaterEqual(disable_old, 0)
+        self.assertGreater(stop_old, disable_old)
+        self.assertGreater(move_app, stop_old)
+        self.assertIn("Wait-TaskStopped $R30TaskName 60", text)
+
+    def test_scheduler_running_result_is_transitional_not_immediate_failure(self) -> None:
+        text = (APP_ROOT / "scripts" / "Install-R30ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
+        self.assertIn("SchedulerRunningResult = 267009", text)
+        self.assertIn("SchedulerGateTimeoutMinutes = 21", text)
+        self.assertIn("ExecutionTimeLimit (New-TimeSpan -Minutes $SchedulerExecutionLimitMinutes)", text)
+        self.assertIn("SchedulerExecutionLimitMinutes = 20", text)
+        self.assertIn("fresh run receipt", text)
+        self.assertIn("fresh projection receipt", text)
+        self.assertIn('TaskState -ne "Running"', text)
+        self.assertIn("SCHED_S_TASK_RUNNING", text)
+
+    def test_accepted_r29_is_disabled_only_after_completed_r30_readback(self) -> None:
         text = (APP_ROOT / "scripts" / "Install-R30ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
         last_readback = text.rfind("Assert-R30RuntimeReadback")
+        task_result_check = text.rfind("LastTaskResult -ne 0")
         disable_r29 = text.find("Disable-ScheduledTask -TaskName $R29TaskName")
         self.assertGreater(last_readback, 0)
-        self.assertGreater(disable_r29, last_readback)
+        self.assertGreater(task_result_check, last_readback)
+        self.assertGreater(disable_r29, task_result_check)
 
-    def test_failure_path_restores_accepted_r29_scheduler(self) -> None:
+    def test_failure_path_stops_r30_and_restores_accepted_r29_scheduler(self) -> None:
         text = (APP_ROOT / "scripts" / "Install-R30ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
         catch = text[text.rfind("catch {"):]
         self.assertIn("Disable-ScheduledTask -TaskName $R30TaskName", catch)
+        self.assertIn("Stop-ScheduledTask -TaskName $R30TaskName", catch)
         self.assertIn("Enable-ScheduledTask -TaskName $R29TaskName", catch)
 
     def test_runtime_verifier_requires_projection_and_safety_invariants(self) -> None:
