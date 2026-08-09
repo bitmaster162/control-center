@@ -72,19 +72,21 @@ class SecretBoundaryR29Tests(unittest.TestCase):
     def test_frontier_state_and_inventory_cache_are_sanitized_before_persistence(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            origin = root / "origin"
+            path_secret = "path-secret-456"
+            origin = root / f"password={path_secret}"
             current = root / "current"
             origin.mkdir()
             current.mkdir()
-            secret = "frontier-pass-123"
-            (origin / "origin.md").write_text(f'password="{secret}"\norigin', encoding="utf-8")
+            content_secret = "frontier-pass-123"
+            (origin / "origin.md").write_text(f'password="{content_secret}"\norigin', encoding="utf-8")
             (current / "current.md").write_text("current", encoding="utf-8")
 
             pair, cache = guarded_scan_frontier_pair([origin], [current])
             persisted = json.dumps({"pair": pair, "cache": cache}, ensure_ascii=False)
 
-            self.assertNotIn(secret, persisted)
-            self.assertGreaterEqual(pair["secret_boundary"]["finding_count"], 1)
+            self.assertNotIn(content_secret, persisted)
+            self.assertNotIn(path_secret, persisted)
+            self.assertGreaterEqual(pair["secret_boundary"]["finding_count"], 2)
             self.assertFalse(pair["secret_boundary"]["raw_values_persisted"])
 
     def test_causal_spine_state_and_inventory_cache_are_sanitized_before_persistence(self) -> None:
