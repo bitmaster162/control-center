@@ -20,9 +20,12 @@ class R30ReleaseGateTests(unittest.TestCase):
 
     def test_successor_entrypoint_preserves_r30_guard_inheritance(self) -> None:
         entrypoint = (APP_ROOT / "src" / "hanri" / "__main__.py").read_text(encoding="utf-8")
+        integrity = (APP_ROOT / "src" / "hanri" / "steady_integrity_cli.py").read_text(encoding="utf-8")
         steady = (APP_ROOT / "src" / "hanri" / "steady_cli.py").read_text(encoding="utf-8")
         stability = (APP_ROOT / "src" / "hanri" / "stability_cli.py").read_text(encoding="utf-8")
-        self.assertIn("from .steady_cli import main", entrypoint)
+        self.assertIn("from .steady_integrity_cli import main", entrypoint)
+        self.assertIn("from . import steady_cli as base", integrity)
+        self.assertIn("base.install_r32_guard()", integrity)
         self.assertIn("from . import stability_cli as r31", steady)
         self.assertIn("r31.install_r31_guard()", steady)
         self.assertIn("from . import delta_cli as r30", stability)
