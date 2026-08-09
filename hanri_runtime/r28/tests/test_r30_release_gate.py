@@ -18,10 +18,13 @@ class R30ReleaseGateTests(unittest.TestCase):
         self.assertIn("HANRI_R30", config["human_output_root"])
         self.assertEqual(config["max_recursion_depth"], 2)
 
-    def test_r31_entrypoint_preserves_r30_guard_inheritance(self) -> None:
+    def test_successor_entrypoint_preserves_r30_guard_inheritance(self) -> None:
         entrypoint = (APP_ROOT / "src" / "hanri" / "__main__.py").read_text(encoding="utf-8")
+        steady = (APP_ROOT / "src" / "hanri" / "steady_cli.py").read_text(encoding="utf-8")
         stability = (APP_ROOT / "src" / "hanri" / "stability_cli.py").read_text(encoding="utf-8")
-        self.assertIn("from .stability_cli import main", entrypoint)
+        self.assertIn("from .steady_cli import main", entrypoint)
+        self.assertIn("from . import stability_cli as r31", steady)
+        self.assertIn("r31.install_r31_guard()", steady)
         self.assertIn("from . import delta_cli as r30", stability)
         self.assertIn("r30.install_r30_guard()", stability)
 
