@@ -38,6 +38,9 @@ _CONTEXT_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ),
 )
 
+_BASE_SCAN_FRONTIER_PAIR = core.scan_frontier_pair
+_BASE_SCAN_CAUSAL_SPINE = core.scan_causal_spine
+
 
 def _explicitly_redacted(value: str) -> bool:
     normalized = value.strip().strip("\"'").lower()
@@ -75,14 +78,7 @@ def _redact_contextual_string(value: str, findings: list[dict[str, str]]) -> str
 
 
 def enhanced_sanitize(value: Any, findings: list[dict[str, str]] | None = None) -> Any:
-    """Fail-safe R29 sanitization without changing R28 core persistence semantics.
-
-    Raw secret values are never copied into findings: only SHA-256 fingerprints and
-    classification metadata are retained. Dict keys that explicitly name credential
-    fields are treated as secrets even when the value does not match a vendor-specific
-    token format. Free-text strings additionally cover named assignments, Bearer auth,
-    and DSN user:password forms.
-    """
+    """Sanitize persistence-bound values and retain fingerprints only."""
     findings = findings if findings is not None else []
 
     if isinstance(value, str):
@@ -113,11 +109,52 @@ def enhanced_sanitize(value: Any, findings: list[dict[str, str]] | None = None) 
     return value
 
 
+def _dedupe_findings(findings: list[dict[str, str]]) -> list[dict[str, str]]:
+    unique: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for row in findings:
+        key = (str(row.get("kind", "UNKNOWN")), str(row.get("value_sha256", "")))
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(dict(row))
+    return unique
+
+
+def _sanitize_archive_scan(result: Any, cache: Any) -> tuple[Any, Any]:
+    """Sanitize archive scan output before R28 writes frontier/spine state or cache."""
+    findings: list[dict[str, str]] = []
+    clean_result = enhanced_sanitize(result, findings)
+    clean_cache = enhanced_sanitize(cache, findings)
+    unique = _dedupe_findings(findings)
+    if isinstance(clean_result, dict):
+        clean_result["secret_boundary"] = {
+            "guard_version": GUARD_VERSION,
+            "finding_count": len(unique),
+            "raw_values_persisted": False,
+        }
+        if unique:
+            clean_result["secret_findings"] = unique
+    return clean_result, clean_cache
+
+
+def guarded_scan_frontier_pair(*args: Any, **kwargs: Any) -> tuple[Any, Any]:
+    result, cache = _BASE_SCAN_FRONTIER_PAIR(*args, **kwargs)
+    return _sanitize_archive_scan(result, cache)
+
+
+def guarded_scan_causal_spine(*args: Any, **kwargs: Any) -> tuple[Any, Any]:
+    result, cache = _BASE_SCAN_CAUSAL_SPINE(*args, **kwargs)
+    return _sanitize_archive_scan(result, cache)
+
+
 def install_guard() -> None:
-    # R28 calls its module-global `sanitize` at every event/decision persistence path.
-    # Rebinding only that function keeps the verified R28 core intact and makes rollback
-    # a one-line entrypoint change.
+    # R28 writes event/decision payloads through `sanitize`, but archive frontier/spine
+    # objects and their inventory cache are persisted before event sanitization. Guard
+    # both surfaces so no raw contextual credential reaches state or Drive projection.
     core.sanitize = enhanced_sanitize
+    core.scan_frontier_pair = guarded_scan_frontier_pair
+    core.scan_causal_spine = guarded_scan_causal_spine
 
 
 def main(argv: Sequence[str] | None = None) -> int:
