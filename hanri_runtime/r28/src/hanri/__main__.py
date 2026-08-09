@@ -1,3 +1,3 @@
-from .cli import main
+from .guarded_cli import main
 
 raise SystemExit(main())
