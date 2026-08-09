@@ -14,9 +14,12 @@ $StateRoot = Join-Path $InstallBase "state"
 $LogRoot = Join-Path $InstallBase "logs"
 $ReceiptRoot = Join-Path $InstallBase "receipts"
 $ConfigSource = Join-Path $SourceRoot "config\r30.windows.json"
-$ExpectedBranch = "hanri/r30-release-candidate"
+$ExpectedBranch = "hanri/r30-release-candidate-1.1"
 $ExpectedDigestIdentity = "HANRI R30"
 $ForbiddenDigestIdentity = "HANRI R29"
+$SchedulerRunningResult = 267009
+$SchedulerExecutionLimitMinutes = 20
+$SchedulerGateTimeoutMinutes = 21
 
 function GitValue([string[]]$Arguments) {
     $value = & git -C $SourceRoot @Arguments 2>$null
@@ -64,6 +67,16 @@ function Assert-R30RuntimeReadback(
     if ([int]$Projection.external_model_api_calls -ne 0) { throw "R30 projection external API invariant failed" }
 }
 
+function Wait-TaskStopped([string]$TaskName, [int]$TimeoutSeconds) {
+    $Deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+    while ([DateTime]::UtcNow -lt $Deadline) {
+        $Task = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
+        if (-not $Task -or $Task.State -ne "Running") { return $true }
+        Start-Sleep -Seconds 2
+    }
+    return $false
+}
+
 $Head = GitValue @("rev-parse", "HEAD")
 $Branch = GitValue @("branch", "--show-current")
 $Dirty = GitValue @("status", "--porcelain")
@@ -86,15 +99,26 @@ if (-not $R29Task) { throw "Promotion gate: accepted R29 task not found: $R29Tas
 $R29WasEnabled = [bool]($R29Task.State -ne "Disabled")
 if (-not $R29WasEnabled) { throw "Promotion gate: accepted R29 task is not enabled" }
 
-Write-Host "HANRI R30 side-by-side install gate (PS5.1 safe)"
+Write-Host "HANRI R30 RC1.1 side-by-side install gate (PS5.1 safe)"
 Write-Host "Source:  $SourceRoot"
 Write-Host "HEAD:    $Head"
 Write-Host "Install: $InstallRoot"
-Write-Host "Accepted R29 remains enabled until R30 scheduled readback passes."
+Write-Host "Accepted R29 remains enabled until R30 scheduled readback and task completion pass."
 
 if (-not $Apply) {
     Write-Host "DRY RUN ONLY. Re-run with -Apply -ExpectedCommit $Head"
     exit 0
+}
+
+$ExistingR30Task = Get-ScheduledTask -TaskName $R30TaskName -ErrorAction SilentlyContinue
+if ($ExistingR30Task) {
+    Disable-ScheduledTask -TaskName $R30TaskName -ErrorAction SilentlyContinue | Out-Null
+    if ($ExistingR30Task.State -eq "Running") {
+        Stop-ScheduledTask -TaskName $R30TaskName -ErrorAction SilentlyContinue
+    }
+    if (-not (Wait-TaskStopped $R30TaskName 60)) {
+        throw "Recovery gate: previous R30 task instance did not stop within 60 seconds"
+    }
 }
 
 New-Item -ItemType Directory -Force -Path $InstallBase, $StateRoot, $LogRoot, $ReceiptRoot | Out-Null
@@ -130,33 +154,53 @@ try {
     $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $Argument
     $TriggerLogon = New-ScheduledTaskTrigger -AtLogOn
     $TriggerRepeat = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 5) -RepetitionDuration (New-TimeSpan -Days 3650)
-    $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 5)
+    $Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes $SchedulerExecutionLimitMinutes)
     Register-ScheduledTask -TaskName $R30TaskName -Action $Action -Trigger @($TriggerLogon, $TriggerRepeat) -Settings $Settings -Description "HANRI R30 bounded shadow supervisor; self-observation containment and delta projection" -Force | Out-Null
     Enable-ScheduledTask -TaskName $R30TaskName | Out-Null
 
-    $BeforeWrite = (Get-Item $RunReceiptPath).LastWriteTimeUtc
+    $BeforeRunWrite = (Get-Item $RunReceiptPath).LastWriteTimeUtc
+    $BeforeProjectionWrite = (Get-Item $ProjectionReceiptPath).LastWriteTimeUtc
+    $SchedulerGateStarted = [DateTime]::UtcNow
+    $SchedulerDeadline = $SchedulerGateStarted.AddMinutes($SchedulerGateTimeoutMinutes)
+    $RunUpdated = $false
+    $ProjectionUpdated = $false
+    $TaskCompleted = $false
+
     Start-ScheduledTask -TaskName $R30TaskName
-    $SchedulerObserved = $false
-    for ($i = 0; $i -lt 30; $i++) {
-        Start-Sleep -Seconds 1
-        if ((Test-Path $RunReceiptPath) -and ((Get-Item $RunReceiptPath).LastWriteTimeUtc -gt $BeforeWrite)) {
-            $SchedulerObserved = $true
+    while ([DateTime]::UtcNow -lt $SchedulerDeadline) {
+        Start-Sleep -Seconds 2
+        if ((Test-Path $RunReceiptPath) -and ((Get-Item $RunReceiptPath).LastWriteTimeUtc -gt $BeforeRunWrite)) {
+            $RunUpdated = $true
+        }
+        if ((Test-Path $ProjectionReceiptPath) -and ((Get-Item $ProjectionReceiptPath).LastWriteTimeUtc -gt $BeforeProjectionWrite)) {
+            $ProjectionUpdated = $true
+        }
+        $TaskState = (Get-ScheduledTask -TaskName $R30TaskName -ErrorAction Stop).State
+        if ($RunUpdated -and $ProjectionUpdated -and $TaskState -ne "Running") {
+            $TaskCompleted = $true
             break
         }
     }
-    if (-not $SchedulerObserved) { throw "R30 scheduled-task readback did not update receipt within gate window" }
+
+    if (-not $RunUpdated) { throw "R30 scheduled task did not produce a fresh run receipt within gate window" }
+    if (-not $ProjectionUpdated) { throw "R30 scheduled task did not produce a fresh projection receipt within gate window" }
+    if (-not $TaskCompleted) { throw "R30 scheduled task did not complete within gate window" }
 
     Assert-R30RuntimeReadback $RunReceiptPath $AiStatePath $DigestPath $ProjectionReceiptPath
     $TaskInfo = Get-ScheduledTaskInfo -TaskName $R30TaskName
+    if ($TaskInfo.LastTaskResult -eq $SchedulerRunningResult) {
+        throw "R30 scheduler completion race: LastTaskResult still reports SCHED_S_TASK_RUNNING"
+    }
     if ($TaskInfo.LastTaskResult -ne 0) { throw "R30 scheduled task LastTaskResult=$($TaskInfo.LastTaskResult)" }
 
     Disable-ScheduledTask -TaskName $R29TaskName | Out-Null
 
     $Projection = Get-Content $ProjectionReceiptPath -Raw | ConvertFrom-Json
+    $SchedulerWaitSeconds = [int]([DateTime]::UtcNow - $SchedulerGateStarted).TotalSeconds
     $Receipt = [ordered]@{
         schema_version = 1
         status = "PASS"
-        release = "HANRI_R30_RC1"
+        release = "HANRI_R30_RC1_1"
         installed_at_utc = [DateTime]::UtcNow.ToString("o")
         source_commit = $Head
         source_branch = $Branch
@@ -164,6 +208,11 @@ try {
         state_root = $StateRoot
         r30_task = $R30TaskName
         r30_last_task_result = $TaskInfo.LastTaskResult
+        scheduler_wait_seconds = $SchedulerWaitSeconds
+        scheduler_execution_limit_minutes = $SchedulerExecutionLimitMinutes
+        fresh_run_receipt_observed = $RunUpdated
+        fresh_projection_receipt_observed = $ProjectionUpdated
+        task_completion_observed = $TaskCompleted
         r29_task = $R29TaskName
         r29_was_enabled = $R29WasEnabled
         r29_disabled_only_after_r30_readback = $true
@@ -180,14 +229,15 @@ try {
         can_trade = $false
         rollback = "scripts/Restore-R29RC2FromR30.ps1"
     }
-    $ReceiptPath = Join-Path $ReceiptRoot "INSTALL_R30_RC1_RECEIPT.json"
+    $ReceiptPath = Join-Path $ReceiptRoot "INSTALL_R30_RC1_1_RECEIPT.json"
     $Receipt | ConvertTo-Json -Depth 10 | Set-Content -Encoding UTF8 $ReceiptPath
-    Write-Host "PASS: HANRI R30 RC1 installed side-by-side and scheduled readback verified."
+    Write-Host "PASS: HANRI R30 RC1.1 installed side-by-side and scheduled completion/readback verified."
     Write-Host "Receipt: $ReceiptPath"
     Write-Host "Accepted R29 files/state were not modified; R29 task was disabled only after R30 PASS."
 }
 catch {
     Disable-ScheduledTask -TaskName $R30TaskName -ErrorAction SilentlyContinue | Out-Null
+    Stop-ScheduledTask -TaskName $R30TaskName -ErrorAction SilentlyContinue
     if ($R29WasEnabled) { Enable-ScheduledTask -TaskName $R29TaskName -ErrorAction SilentlyContinue | Out-Null }
     throw
 }
