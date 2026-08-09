@@ -5,14 +5,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from hanri import archive as archive_mod
-from hanri import cli as core
 from hanri.stability_cli import (
     ACTOR,
     HUMAN_LABEL,
     MATERIAL_POLICY_VERSION,
+    PROGRAM_VERSION,
     copy_latest_outputs_stable,
-    install_r31_guard,
     material_digest_r31,
     r31_archive_frontier_event,
     r31_render_human_digest,
@@ -134,12 +132,8 @@ class R31AiStateStabilityTests(unittest.TestCase):
             self.assertIn("latest_ai_state.json", receipt["copied"])
             self.assertEqual(json.loads((target / "latest_ai_state.json").read_text(encoding="utf-8"))["new_findings"], 1)
 
-    def test_identity_and_direct_archive_bindings_are_r31(self) -> None:
-        install_r31_guard()
-        self.assertEqual(core.VERSION, "31.0.0")
-        self.assertIs(core.archive_frontier_event, r31_archive_frontier_event)
-        self.assertIs(archive_mod.archive_frontier_event, r31_archive_frontier_event)
-
+    def test_identity_wrappers_are_r31_without_mutating_global_test_state(self) -> None:
+        self.assertEqual(PROGRAM_VERSION, "31.0.0")
         digest = r31_render_human_digest("run", [], [], {}, {}, [])
         self.assertIn(HUMAN_LABEL, digest.splitlines()[0])
         self.assertNotIn("HANRI R30", digest.splitlines()[0])
@@ -148,6 +142,21 @@ class R31AiStateStabilityTests(unittest.TestCase):
             path = Path(tmp) / "state.json"
             path.write_text("{}", encoding="utf-8")
             self.assertEqual(r31_snapshot_event(path, "state")["actor"], ACTOR)
+
+        item = {
+            "name": "x.md",
+            "path": "/tmp/x.md",
+            "sha256": "a" * 64,
+            "content_class": "GENERIC_TEXT",
+            "content_signature_verified": True,
+        }
+        pair = {
+            "generated_at": "2026-08-09T00:00:00Z",
+            "origin": dict(item),
+            "current": dict(item),
+            "same_name_collisions": [],
+        }
+        self.assertEqual(r31_archive_frontier_event(pair)["actor"], ACTOR)
 
 
 if __name__ == "__main__":
