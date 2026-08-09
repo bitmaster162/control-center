@@ -89,7 +89,7 @@ class R31AiStateStabilityTests(unittest.TestCase):
             self._write(second, {"new_events": 2, "stop_reasons": ["HOLD"]})
             self.assertNotEqual(material_digest_r31(first), material_digest_r31(second))
 
-    def test_projection_skips_ai_state_when_only_run_counter_changes(self) -> None:
+    def test_projection_skips_ai_state_when_only_run_counter_changes_but_envelope_is_fresh(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / "state"
@@ -99,14 +99,35 @@ class R31AiStateStabilityTests(unittest.TestCase):
             ai = source / "latest_ai_state.json"
             heartbeat = source / "latest_run_receipt.json"
 
-            self._write(ai, {"generated_at": "t1", "run_id": "r1", "new_events": 3, "total_findings": 0})
-            self._write(heartbeat, {"run_id": "r1"})
+            first_state = {
+                "generated_at": "t1",
+                "run_id": "r1",
+                "new_events": 3,
+                "new_findings": 0,
+                "new_candidates": 0,
+                "new_decisions": 0,
+                "total_findings": 0,
+                "total_candidates": 0,
+                "pending_human_decisions": 0,
+                "stop_reasons": [],
+                "shadow_only": True,
+                "invariants": {
+                    "self_application": False,
+                    "external_model_api_calls": 0,
+                    "source_repository_writes": False,
+                    "can_trade": False,
+                },
+            }
+            self._write(ai, first_state)
+            self._write(heartbeat, {"run_id": "r1", "events_processed": 3})
             first = copy_latest_outputs_stable(source, target)
             self.assertIn("latest_ai_state.json", first["copied"])
             first_ai = (target / "latest_ai_state.json").read_text(encoding="utf-8")
 
-            self._write(ai, {"generated_at": "t2", "run_id": "r2", "new_events": 1, "total_findings": 0})
-            self._write(heartbeat, {"run_id": "r2"})
+            second_state = dict(first_state)
+            second_state.update({"generated_at": "t2", "run_id": "r2", "new_events": 1})
+            self._write(ai, second_state)
+            self._write(heartbeat, {"run_id": "r2", "events_processed": 1})
             second = copy_latest_outputs_stable(source, target)
 
             self.assertIn("latest_ai_state.json", second["skipped_no_material_delta"])
@@ -116,6 +137,13 @@ class R31AiStateStabilityTests(unittest.TestCase):
             self.assertEqual(second["material_policy"]["version"], MATERIAL_POLICY_VERSION)
             self.assertEqual(second["material_policy"]["latest_ai_state_ignored_top_level_keys"], ["new_events"])
             self.assertTrue(second["material_policy"]["nested_new_events_remains_material"])
+            self.assertTrue(second["material_policy"]["current_run_envelope_always_projected"])
+            envelope = second["ai_state_run_envelope"]
+            self.assertEqual(envelope["run_id"], "r2")
+            self.assertEqual(envelope["new_events"], 1)
+            self.assertEqual(envelope["source_sha256"], __import__("hashlib").sha256(ai.read_bytes()).hexdigest())
+            self.assertEqual(envelope["material_digest"], second["material_digests"]["latest_ai_state.json"])
+            self.assertFalse(envelope["can_trade"])
 
     def test_real_ai_state_change_is_projected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
