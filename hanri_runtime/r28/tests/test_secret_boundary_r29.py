@@ -2,9 +2,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
-from hanri.guarded_cli import enhanced_sanitize
+from hanri.guarded_cli import (
+    enhanced_sanitize,
+    guarded_scan_causal_spine,
+    guarded_scan_frontier_pair,
+)
 
 
 class SecretBoundaryR29Tests(unittest.TestCase):
@@ -62,6 +68,47 @@ class SecretBoundaryR29Tests(unittest.TestCase):
         text = "operator approved bounded shadow-only analysis"
         self.assertEqual(enhanced_sanitize(text, findings), text)
         self.assertEqual(findings, [])
+
+    def test_frontier_state_and_inventory_cache_are_sanitized_before_persistence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            origin = root / "origin"
+            current = root / "current"
+            origin.mkdir()
+            current.mkdir()
+            secret = "frontier-pass-123"
+            (origin / "origin.md").write_text(f'password="{secret}"\norigin', encoding="utf-8")
+            (current / "current.md").write_text("current", encoding="utf-8")
+
+            pair, cache = guarded_scan_frontier_pair([origin], [current])
+            persisted = json.dumps({"pair": pair, "cache": cache}, ensure_ascii=False)
+
+            self.assertNotIn(secret, persisted)
+            self.assertGreaterEqual(pair["secret_boundary"]["finding_count"], 1)
+            self.assertFalse(pair["secret_boundary"]["raw_values_persisted"])
+
+    def test_causal_spine_state_and_inventory_cache_are_sanitized_before_persistence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            origin = root / "origin"
+            pivot = root / "pivot"
+            current = root / "current"
+            for folder in (origin, pivot, current):
+                folder.mkdir()
+            secret = "pivot-dsn-pass"
+            (origin / "origin.md").write_text("origin", encoding="utf-8")
+            (pivot / "pivot.md").write_text(
+                f"postgresql://alice:{secret}@db.internal/app",
+                encoding="utf-8",
+            )
+            (current / "current.md").write_text("current", encoding="utf-8")
+
+            spine, cache = guarded_scan_causal_spine([origin], [pivot], [current])
+            persisted = json.dumps({"spine": spine, "cache": cache}, ensure_ascii=False)
+
+            self.assertNotIn(secret, persisted)
+            self.assertGreaterEqual(spine["secret_boundary"]["finding_count"], 1)
+            self.assertFalse(spine["secret_boundary"]["raw_values_persisted"])
 
 
 if __name__ == "__main__":
