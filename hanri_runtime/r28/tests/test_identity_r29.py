@@ -13,6 +13,7 @@ from hanri.identity_cli import (
     r29_render_human_digest,
     r29_snapshot_event,
 )
+from hanri import archive as archive_core
 from hanri import cli as core
 
 
@@ -71,13 +72,15 @@ class R29IdentityTests(unittest.TestCase):
         event = r29_causal_spine_event(spine)
         self.assertEqual(event["actor"], ACTOR)
 
-    def test_install_guard_rebinds_core_identity_and_version(self) -> None:
+    def test_install_guard_rebinds_all_identity_surfaces_and_version(self) -> None:
         install_identity_guard()
         self.assertEqual(core.VERSION, "29.0.0")
         self.assertIs(core.render_human_digest, r29_render_human_digest)
         self.assertIs(core.snapshot_event, r29_snapshot_event)
         self.assertIs(core.archive_frontier_event, r29_archive_frontier_event)
         self.assertIs(core.causal_spine_event, r29_causal_spine_event)
+        self.assertIs(archive_core.archive_frontier_event, r29_archive_frontier_event)
+        self.assertIs(archive_core.causal_spine_event, r29_causal_spine_event)
 
 
 if __name__ == "__main__":
