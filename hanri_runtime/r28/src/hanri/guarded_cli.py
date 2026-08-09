@@ -90,20 +90,21 @@ def enhanced_sanitize(value: Any, findings: list[dict[str, str]] | None = None) 
     if isinstance(value, dict):
         result: dict[str, Any] = {}
         for key, item in value.items():
-            string_key = str(key)
-            normalized_key = string_key.strip().replace("-", "_")
+            raw_key = str(key)
+            safe_key = _redact_contextual_string(raw_key, findings)
+            normalized_key = raw_key.strip().replace("-", "_")
             if SENSITIVE_KEY.fullmatch(normalized_key) and item not in (None, ""):
                 if isinstance(item, str):
                     raw = item
                 else:
                     raw = json.dumps(item, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-                result[string_key] = _fingerprint_and_redact(
+                result[safe_key] = _fingerprint_and_redact(
                     raw,
                     f"SENSITIVE_FIELD:{normalized_key.lower()}",
                     findings,
                 )
             else:
-                result[string_key] = enhanced_sanitize(item, findings)
+                result[safe_key] = enhanced_sanitize(item, findings)
         return result
 
     return value
