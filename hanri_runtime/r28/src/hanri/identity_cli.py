@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from . import archive as archive_core
 from . import cli as core
 from . import guarded_cli as r29
 
@@ -62,6 +63,9 @@ def install_identity_guard() -> None:
     core.snapshot_event = r29_snapshot_event
     core.archive_frontier_event = r29_archive_frontier_event
     core.causal_spine_event = r29_causal_spine_event
+    # Close direct-import identity bypasses as well as the cli module aliases.
+    archive_core.archive_frontier_event = r29_archive_frontier_event
+    archive_core.causal_spine_event = r29_causal_spine_event
 
 
 def main(argv: Sequence[str] | None = None) -> int:
