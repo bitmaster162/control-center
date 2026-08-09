@@ -21,15 +21,23 @@ jobs:
       - run: python -m pip install --disable-pip-version-check pytest jsonschema
       - run: python scripts/validate.py
       - run: python -m pytest -q
-      - name: Parse R29 PS5.1 release entrypoints
+      - name: Parse PS5.1 release entrypoints
         shell: pwsh
         run: |
           $files = @(
             'hanri_runtime/r28/scripts/Install-R29RC2SideBySide-PS51.ps1',
             'hanri_runtime/r28/scripts/Verify-R29RC2Runtime-PS51.ps1',
-            'hanri_runtime/r28/scripts/Restore-R29RC1FromRC2.ps1'
+            'hanri_runtime/r28/scripts/Restore-R29RC1FromRC2.ps1',
+            'hanri_runtime/r28/scripts/Install-R30ReleaseCandidate-PS51.ps1',
+            'hanri_runtime/r28/scripts/Verify-R30Runtime-PS51.ps1',
+            'hanri_runtime/r28/scripts/Restore-R29RC2FromR30.ps1'
           )
           foreach ($file in $files) {
+            $bytes = [System.IO.File]::ReadAllBytes((Resolve-Path $file))
+            if ($bytes | Where-Object { $_ -gt 127 }) {
+              Write-Error "Non-ASCII byte found in release entrypoint: $file"
+              exit 1
+            }
             $tokens = $null
             $errors = $null
             [System.Management.Automation.Language.Parser]::ParseFile(
