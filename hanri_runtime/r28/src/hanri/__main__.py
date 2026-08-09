@@ -1,3 +1,3 @@
-from .steady_cli import main
+from .steady_integrity_cli import main
 
 raise SystemExit(main())
