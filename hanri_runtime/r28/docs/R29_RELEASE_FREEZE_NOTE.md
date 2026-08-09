@@ -1,0 +1,1 @@
+HANRI R29 RC1 install bytes are frozen at commit `4180413cc9d9541615b4f9dbabb8e642c480ac44` on branch `hanri/r29-release-candidate`. Later documentation commits on the feature branch are not part of RC1 install bytes.
