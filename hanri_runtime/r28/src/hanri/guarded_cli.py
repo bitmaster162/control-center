@@ -3,11 +3,13 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from pathlib import Path
 from typing import Any, Sequence
 
 from . import cli as core
 
-GUARD_VERSION = "29.0.0-candidate"
+GUARD_VERSION = "29.0.0-rc1"
+PROGRAM_VERSION = "29.0.0"
 
 SENSITIVE_KEY = re.compile(
     r"(?i)^(?:password|passwd|pwd|secret|client[_-]?secret|api[_-]?key|apikey|"
@@ -40,6 +42,7 @@ _CONTEXT_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 _BASE_SCAN_FRONTIER_PAIR = core.scan_frontier_pair
 _BASE_SCAN_CAUSAL_SPINE = core.scan_causal_spine
+_BASE_LOAD_CONFIG = core.load_config
 
 
 def _explicitly_redacted(value: str) -> bool:
@@ -123,7 +126,7 @@ def _dedupe_findings(findings: list[dict[str, str]]) -> list[dict[str, str]]:
 
 
 def _sanitize_archive_scan(result: Any, cache: Any) -> tuple[Any, Any]:
-    """Sanitize archive scan output before R28 writes frontier/spine state or cache."""
+    """Sanitize archive scan output before core writes frontier/spine state or cache."""
     findings: list[dict[str, str]] = []
     clean_result = enhanced_sanitize(result, findings)
     clean_cache = enhanced_sanitize(cache, findings)
@@ -149,8 +152,20 @@ def guarded_scan_causal_spine(*args: Any, **kwargs: Any) -> tuple[Any, Any]:
     return _sanitize_archive_scan(result, cache)
 
 
+def guarded_load_config(path: Path) -> dict[str, Any]:
+    config = _BASE_LOAD_CONFIG(path)
+    if str(config.get("program_version", "")) != PROGRAM_VERSION:
+        raise core.HanriError(
+            f"R29 guard requires program_version={PROGRAM_VERSION}; got {config.get('program_version')!r}"
+        )
+    return config
+
+
 def install_guard() -> None:
-    # R28 writes event/decision payloads through `sanitize`, but archive frontier/spine
+    # Bind release identity before FileLock/receipts are created.
+    core.VERSION = PROGRAM_VERSION
+    core.load_config = guarded_load_config
+    # Core writes event/decision payloads through `sanitize`, but archive frontier/spine
     # objects and their inventory cache are persisted before event sanitization. Guard
     # both surfaces so no raw contextual credential reaches state or Drive projection.
     core.sanitize = enhanced_sanitize
