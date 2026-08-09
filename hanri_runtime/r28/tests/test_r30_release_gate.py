@@ -18,9 +18,12 @@ class R30ReleaseGateTests(unittest.TestCase):
         self.assertIn("HANRI_R30", config["human_output_root"])
         self.assertEqual(config["max_recursion_depth"], 2)
 
-    def test_module_entrypoint_routes_through_r30_guard(self) -> None:
-        text = (APP_ROOT / "src" / "hanri" / "__main__.py").read_text(encoding="utf-8")
-        self.assertIn("from .delta_cli import main", text)
+    def test_r31_entrypoint_preserves_r30_guard_inheritance(self) -> None:
+        entrypoint = (APP_ROOT / "src" / "hanri" / "__main__.py").read_text(encoding="utf-8")
+        stability = (APP_ROOT / "src" / "hanri" / "stability_cli.py").read_text(encoding="utf-8")
+        self.assertIn("from .stability_cli import main", entrypoint)
+        self.assertIn("from . import delta_cli as r30", stability)
+        self.assertIn("r30.install_r30_guard()", stability)
 
     def test_r30_delta_guard_does_not_enable_effect_authority(self) -> None:
         text = (APP_ROOT / "src" / "hanri" / "delta_cli.py").read_text(encoding="utf-8")
