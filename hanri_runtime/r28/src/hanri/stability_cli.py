@@ -12,7 +12,7 @@ from . import delta_cli as r30
 PROGRAM_VERSION = "31.0.0"
 ACTOR = "HANRI_R31"
 HUMAN_LABEL = "HANRI R31"
-MATERIAL_POLICY_VERSION = "31.0.0-ai-state-stability-v1"
+MATERIAL_POLICY_VERSION = "31.0.0-ai-state-stability-v2"
 
 _RAW_LOAD_CONFIG = core.load_config
 _AI_STATE_EPHEMERAL_TOP_LEVEL = frozenset({"new_events"})
@@ -93,6 +93,33 @@ def material_digest_r31(path: Path) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def _ai_state_run_envelope(source_root: Path) -> dict[str, Any] | None:
+    path = source_root / "latest_ai_state.json"
+    if not path.exists():
+        return None
+    value = json.loads(path.read_text(encoding="utf-8-sig"))
+    invariants = value.get("invariants", {}) if isinstance(value, dict) else {}
+    return {
+        "source_sha256": core.sha256_file(path),
+        "material_digest": material_digest_r31(path),
+        "run_id": value.get("run_id"),
+        "generated_at": value.get("generated_at"),
+        "new_events": value.get("new_events"),
+        "new_findings": value.get("new_findings"),
+        "new_candidates": value.get("new_candidates"),
+        "new_decisions": value.get("new_decisions"),
+        "total_findings": value.get("total_findings"),
+        "total_candidates": value.get("total_candidates"),
+        "pending_human_decisions": value.get("pending_human_decisions"),
+        "stop_reasons": value.get("stop_reasons", []),
+        "shadow_only": value.get("shadow_only"),
+        "self_application": invariants.get("self_application"),
+        "external_model_api_calls": invariants.get("external_model_api_calls"),
+        "source_repository_writes": invariants.get("source_repository_writes"),
+        "can_trade": invariants.get("can_trade"),
+    }
+
+
 def copy_latest_outputs_stable(source_root: Path, target_root: Path) -> dict[str, Any]:
     target_root.mkdir(parents=True, exist_ok=True)
     copied: list[str] = []
@@ -130,6 +157,7 @@ def copy_latest_outputs_stable(source_root: Path, target_root: Path) -> dict[str
         "skipped_no_material_delta": sorted(skipped),
         "bytes_avoided": bytes_avoided,
         "material_digests": material_digests,
+        "ai_state_run_envelope": _ai_state_run_envelope(source_root),
         "material_policy": {
             "version": MATERIAL_POLICY_VERSION,
             "inherited_recursive_volatile_keys": sorted(r30._VOLATILE_MATERIAL_KEYS),
@@ -139,6 +167,7 @@ def copy_latest_outputs_stable(source_root: Path, target_root: Path) -> dict[str
             "new_candidates_remains_material": True,
             "new_decisions_remains_material": True,
             "stop_reasons_remains_material": True,
+            "current_run_envelope_always_projected": True,
         },
         "self_projection_excluded_from_archive": True,
         "external_model_api_calls": 0,
