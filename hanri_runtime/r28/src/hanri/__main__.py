@@ -1,3 +1,3 @@
-from .delta_cli import main
+from .stability_cli import main
 
 raise SystemExit(main())
