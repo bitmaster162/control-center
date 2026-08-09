@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "program_version": "31.0.0",
+  "shadow_only": true,
+  "external_model_api": "DENY",
+  "can_trade": false,
+  "max_recursion_depth": 2,
+  "lock_stale_seconds": 1800,
+  "state_root": "%LOCALAPPDATA%\\ControlCenterHANRIR31\\state",
+  "lock_file": "%LOCALAPPDATA%\\ControlCenterHANRIR31\\state\\hanri.lock",
+  "event_inbox": "%LOCALAPPDATA%\\ControlCenterHANRIR31\\event_inbox",
+  "decision_inbox": "%LOCALAPPDATA%\\ControlCenterHANRIR31\\decision_inbox",
+  "human_output_root": "%USERPROFILE%\\My Drive\\Control canter\\00_CONTROL\\HANRI_R31",
+  "r23_state_path": "%LOCALAPPDATA%\\ControlCenterReturnSyncR23\\state\\latest_state.json",
+  "current_state_paths": [
+    "%USERPROFILE%\\My Drive\\Control canter\\CONTROL_CENTER_CURRENT_STATE.json"
+  ],
+  "archive_frontier": {
+    "enabled": true,
+    "scope_id": "CONTROL_CENTER_REGISTERED_CAUSAL_FRONTIERS_R31",
+    "max_read_bytes": 16777216,
+    "origin_paths": [
+      "%USERPROFILE%\\My Drive\\Control canter\\00_INBOX_RAW\\handoff_recovery"
+    ],
+    "pivot_paths": [
+      "%USERPROFILE%\\My Drive\\Control canter\\00_CONTROL"
+    ],
+    "current_paths": [
+      "%USERPROFILE%\\My Drive\\Control canter\\00_INBOX_RAW\\agent_returns\\_R23_INTAKE"
+    ],
+    "scan_interval_seconds": 900
+  }
+}
