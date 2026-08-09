@@ -1,3 +1,3 @@
-from .stability_cli import main
+from .steady_cli import main
 
 raise SystemExit(main())
