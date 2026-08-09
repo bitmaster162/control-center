@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "version": "R26",
+  "unit_tests": "22/22 PASS",
+  "compileall": "PASS",
+  "demo_events": 2,
+  "demo_findings": 5,
+  "demo_candidates": 5,
+  "causal_spine": "SPINE_READY",
+  "scope_coverage": "3/3",
+  "external_model_api_calls": 0,
+  "self_application": false,
+  "can_trade": false,
+  "unit_test_log_sha256": "e4d55b62d935dcb1f5f0c184a9e4211694862c9bf0e5ba288febd09f61cfad4a",
+  "demo_ai_state_sha256": "34dfc296d19f797749ccb6552cffea27556493c5ed3d60b4527dae11c152f1ab",
+  "clean_clone": "PASS",
+  "clean_clone_tests": "22/22 PASS",
+  "git_lineage_verification": "FINAL COMMIT/TREE RECORDED IN EXTERNAL R26 PACKAGE RECEIPT"
+}

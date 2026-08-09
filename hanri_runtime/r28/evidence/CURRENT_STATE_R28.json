@@ -1,0 +1,37 @@
+{
+  "version": "CURRENT_STATE_R28",
+  "generated_at": "2026-07-23T13:50:25.092042+00:00",
+  "past": {
+    "handoff_recovery_99_scope": "PHYSICALLY_REAUDITED",
+    "physical_copied_files": 99,
+    "artifact_role_counts": {
+      "AGENT_RETURN": 24,
+      "CONTROL_METADATA": 10,
+      "DERIVATIVE_REPORT": 55,
+      "PRIMARY_SOURCE": 4,
+      "RECOVERY_SELF_DERIVATIVE": 2,
+      "RESTRICTED_SECRET_BEARING": 2,
+      "UNKNOWN": 2
+    },
+    "recovery_self_derivative_copied": 2,
+    "secret_bearing_artifacts": 2,
+    "global_archive_complete": false,
+    "source001_wave013": "COMPLETED_USER_CONFIRMED / PHYSICAL_INGESTION_PENDING / RERUN_DENIED"
+  },
+  "present": {
+    "raw_handoff_recovery_package": "RESTRICTED / NOT_SAFE_FOR_GENERAL_DISTRIBUTION",
+    "no_source_effect_proof": "VALID_WITHIN_SOURCE_MUTATION_SCOPE",
+    "no_secret_content_proof": "FAIL",
+    "collector_contract": "REVISE",
+    "hanri_r28": "IMPLEMENTED_AND_TESTED / NOT_INSTALLED_ON_WINDOWS"
+  },
+  "future": {
+    "collector_v2": "CANDIDATE / EXCLUDE_OWN_OUTPUTS / SECOND_PASS_SECRET_SCAN / ROLE_AND_DERIVATION_LEDGER",
+    "source001_next_cursor": "DO_NOT_ADVANCE_BEYOND_260_UNTIL_WAVE013_BYTES_ACCEPTED"
+  },
+  "global": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "external_model_api": "DENY"
+  }
+}

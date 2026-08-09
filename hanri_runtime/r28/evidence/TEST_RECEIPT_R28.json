@@ -1,0 +1,10 @@
+{
+  "version": "TEST_RECEIPT_R28",
+  "generated_at": "2026-07-23T13:52:13.116126+00:00",
+  "compileall": "PASS",
+  "unit_tests": "30/30 PASS",
+  "test_log": "evidence/UNIT_TESTS_R28.txt",
+  "external_model_api_calls": 0,
+  "self_application": false,
+  "can_trade": false
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "program_version": "24.0.0",
+  "compileall": "PASS",
+  "unit_tests": {
+    "status": "PASS",
+    "count": 13,
+    "failures": 0,
+    "errors": 0
+  },
+  "demo": {
+    "events_processed": 4,
+    "findings_generated": 9,
+    "candidate_deltas_generated": 8,
+    "stop_reason_observed": "STOP_NO_MATERIAL_DELTA",
+    "external_model_api_calls": 0,
+    "self_application": false
+  },
+  "can_trade": false
+}

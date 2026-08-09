@@ -1,0 +1,318 @@
+{
+  "archive_causal_spine": null,
+  "archive_frontier": null,
+  "archive_scope_certificate": null,
+  "generated_at": "2026-07-23T12:05:16.350133Z",
+  "invariants": {
+    "can_trade": false,
+    "external_model_api_calls": 0,
+    "human_approval_required": true,
+    "network_calls": 0,
+    "self_application": false,
+    "source_repository_writes": false
+  },
+  "latest_candidates": [
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-6351bf774ca0a0683b4d",
+      "created_at": "2026-07-23T12:05:16.349417Z",
+      "evidence_refs": [
+        {
+          "event_id": "TK-2d1664a94622547cbcf2",
+          "sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "failure_class": "AUTHORITY_SURFACE_MULTIPLICITY",
+      "finding_id": "F-69040d47d8ef45eeb36d",
+      "minimum_change": "Map and reduce mutation paths; designate one current authority and route all other writers through a deterministic broker or read-only projection.",
+      "proposal": "More than one mutable current authority surface exists without one verified effect broker",
+      "rationale": "The archive repeatedly shows canonical runtime, sibling package repository, direct CLI paths, swarm_sync, bridges and nested repositories competing for authority.",
+      "recursion_depth": 1,
+      "regression_case": "Multiple current mutable writers without one verified broker must block Unified Canonical State and implementation promotion.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "CRITICAL",
+      "task_id": "R27-DEMO"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-00ba2978d73700ecb9a7",
+      "created_at": "2026-07-23T12:05:16.349462Z",
+      "evidence_refs": [
+        {
+          "event_id": "TK-2d1664a94622547cbcf2",
+          "sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "failure_class": "ARITHMETIC_PARTITION_INCONSISTENCY",
+      "finding_id": "F-a38ef56714ee301cb042",
+      "minimum_change": "Bind every count to one universe and publish a disjoint/overlap matrix before using the figures in a verdict.",
+      "proposal": "Declared numerical partition does not reconcile to its total",
+      "rationale": "Archive reports can be broadly correct while mixing copied representatives, duplicate occurrences and excluded candidates into one invalid sum.",
+      "recursion_depth": 1,
+      "regression_case": "A disjoint partition whose component sum differs from its declared total must fail the report admission gate.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R27-DEMO"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-61f534415e0b941f52f2",
+      "created_at": "2026-07-23T12:05:16.349496Z",
+      "evidence_refs": [
+        {
+          "event_id": "TK-2d1664a94622547cbcf2",
+          "sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "failure_class": "COUNT_UNIVERSE_CONFLATION",
+      "finding_id": "F-b1de97266a7a7bfdd9f9",
+      "minimum_change": "Attach universe_id, denominator, subset relation and overlap semantics to every quantitative claim.",
+      "proposal": "Counts from different universes or subsets were compared as one partition",
+      "rationale": "The checkpoint audit reports 327 evidenced across 970 records and 551 claimed inside a 787-record strong-progress subset; these are not one direct partition.",
+      "recursion_depth": 1,
+      "regression_case": "A count over all ledger records must not be subtracted from a strong-progress subset without an explicit crosswalk.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R27-DEMO"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-e5a44743da051471efac",
+      "created_at": "2026-07-23T12:05:16.349524Z",
+      "evidence_refs": [
+        {
+          "event_id": "TK-2d1664a94622547cbcf2",
+          "sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "failure_class": "PROOF_LEDGER_SCHEMA_GAP",
+      "finding_id": "F-a6191c18f866e5fd97d7",
+      "minimum_change": "Require proof_id, evidence family/source hash, verification method, status, timestamp and optional signature/readback fields.",
+      "proposal": "A ledger called proof lacks machine-verifiable proof identity fields",
+      "rationale": "The July meta-audit inspected 233 proof records and found none of these machine-verifiable fields.",
+      "recursion_depth": 1,
+      "regression_case": "A proof ledger with zero proof IDs, hashes, signatures and statuses must be classified as narrative evidence debt.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R27-DEMO"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-a8947a79053bcaced768",
+      "created_at": "2026-07-23T12:05:16.349554Z",
+      "evidence_refs": [
+        {
+          "event_id": "TK-2d1664a94622547cbcf2",
+          "sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "failure_class": "SPEC_IMPLEMENTATION_CONFLATION",
+      "finding_id": "F-3f3c84de5d37663dd1cd",
+      "minimum_change": "Keep architecture/canon status separate from implementation evidence, Git baseline, tests and target readback.",
+      "proposal": "A coherent specification was promoted as current implementation",
+      "rationale": "BitEvo canon contains strong event-log and governed-memory rules, while MAIN-033 still finds no root Git baseline and unresolved state identity.",
+      "recursion_depth": 1,
+      "regression_case": "Unified Canonical State or Truth Kernel language without current implementation receipts must remain a design candidate.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R27-DEMO"
+    }
+  ],
+  "latest_findings": [
+    {
+      "can_trade": false,
+      "code": "AUTHORITY_SURFACE_MULTIPLICITY",
+      "event_id": "TK-2d1664a94622547cbcf2",
+      "event_sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+      "evidence_refs": [
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "finding_id": "F-69040d47d8ef45eeb36d",
+      "observed_at": "2026-07-23T12:05:16.348397Z",
+      "rationale": "The archive repeatedly shows canonical runtime, sibling package repository, direct CLI paths, swarm_sync, bridges and nested repositories competing for authority.",
+      "schema_version": 1,
+      "severity": "CRITICAL",
+      "step_id": "TRUTH-KERNEL-01",
+      "task_id": "R27-DEMO",
+      "title": "More than one mutable current authority surface exists without one verified effect broker"
+    },
+    {
+      "can_trade": false,
+      "code": "ARITHMETIC_PARTITION_INCONSISTENCY",
+      "event_id": "TK-2d1664a94622547cbcf2",
+      "event_sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+      "evidence_refs": [
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "finding_id": "F-a38ef56714ee301cb042",
+      "observed_at": "2026-07-23T12:05:16.348397Z",
+      "rationale": "Archive reports can be broadly correct while mixing copied representatives, duplicate occurrences and excluded candidates into one invalid sum.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "TRUTH-KERNEL-01",
+      "task_id": "R27-DEMO",
+      "title": "Declared numerical partition does not reconcile to its total"
+    },
+    {
+      "can_trade": false,
+      "code": "COUNT_UNIVERSE_CONFLATION",
+      "event_id": "TK-2d1664a94622547cbcf2",
+      "event_sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+      "evidence_refs": [
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "finding_id": "F-b1de97266a7a7bfdd9f9",
+      "observed_at": "2026-07-23T12:05:16.348397Z",
+      "rationale": "The checkpoint audit reports 327 evidenced across 970 records and 551 claimed inside a 787-record strong-progress subset; these are not one direct partition.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "TRUTH-KERNEL-01",
+      "task_id": "R27-DEMO",
+      "title": "Counts from different universes or subsets were compared as one partition"
+    },
+    {
+      "can_trade": false,
+      "code": "PROOF_LEDGER_SCHEMA_GAP",
+      "event_id": "TK-2d1664a94622547cbcf2",
+      "event_sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+      "evidence_refs": [
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "finding_id": "F-a6191c18f866e5fd97d7",
+      "observed_at": "2026-07-23T12:05:16.348397Z",
+      "rationale": "The July meta-audit inspected 233 proof records and found none of these machine-verifiable fields.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "TRUTH-KERNEL-01",
+      "task_id": "R27-DEMO",
+      "title": "A ledger called proof lacks machine-verifiable proof identity fields"
+    },
+    {
+      "can_trade": false,
+      "code": "SPEC_IMPLEMENTATION_CONFLATION",
+      "event_id": "TK-2d1664a94622547cbcf2",
+      "event_sha256": "305d890da186c13bef23712a178a226aaedcd19326342c1efd30a6a2748204c2",
+      "evidence_refs": [
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "HANDOFF_CANDIDATES.csv"
+        },
+        {
+          "sha256": "physical-ledger-bound",
+          "source": "CONTINUITY_META_AUDIT_V1.md"
+        }
+      ],
+      "finding_id": "F-3f3c84de5d37663dd1cd",
+      "observed_at": "2026-07-23T12:05:16.348397Z",
+      "rationale": "BitEvo canon contains strong event-log and governed-memory rules, while MAIN-033 still finds no root Git baseline and unresolved state identity.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "TRUTH-KERNEL-01",
+      "task_id": "R27-DEMO",
+      "title": "A coherent specification was promoted as current implementation"
+    }
+  ],
+  "max_recursion_depth": 2,
+  "mode": "BOUNDED_RECURSIVE_SHADOW",
+  "new_candidates": 5,
+  "new_decisions": 0,
+  "new_events": 1,
+  "new_findings": 5,
+  "pending_human_decisions": 5,
+  "program_version": "27.0.0",
+  "run_id": "20260723T120516Z_4718fb44",
+  "schema_version": 1,
+  "secret_findings": [],
+  "shadow_only": true,
+  "stop_reasons": [],
+  "total_candidates": 5,
+  "total_findings": 5
+}

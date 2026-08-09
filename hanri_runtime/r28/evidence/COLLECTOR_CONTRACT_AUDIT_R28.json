@@ -1,0 +1,79 @@
+{
+  "version": "COLLECTOR_CONTRACT_AUDIT_R28",
+  "generated_at": "2026-07-23T13:50:25.092042+00:00",
+  "collector_source": {
+    "filename": "handoff_collector_r28_source.ps1",
+    "size_bytes": 9896,
+    "sha256": "14589b7089c35d1f16f52a1d8448b3f1dd09505c6ca0546e0fd5a52695f9da48"
+  },
+  "run": {
+    "files_seen": 141769,
+    "candidates": 206,
+    "unique_hashes": 121,
+    "safe_candidates": 183,
+    "copied_unique": 99,
+    "duplicate_paths": 85,
+    "unsafe_or_excluded": 23,
+    "errors": 0
+  },
+  "verified_disjoint_partition": {
+    "copied_unique_representatives": 99,
+    "additional_safe_duplicates": 84,
+    "unsafe_or_excluded": 23,
+    "sum": 206
+  },
+  "verified_hash_partition": {
+    "unique_hashes": 121,
+    "duplicate_occurrences": 85,
+    "sum": 206
+  },
+  "label_defect": {
+    "field": "excluded_pointer_only",
+    "value": 23,
+    "non_pointer_unsafe_rows": 12,
+    "recommended_name": "excluded_or_unsafe_count"
+  },
+  "self_ingestion": {
+    "candidate_rows": 3,
+    "copied_rows": 2,
+    "status": "RECOVERY_SELF_INGESTION"
+  },
+  "scanner_limitations": {
+    "full_scan_limit_bytes": 5242880,
+    "patterns_are_enumerated_not_complete": true,
+    "missed_copied_secret_occurrences": 12,
+    "missed_unique_fingerprints": 3
+  },
+  "proof_scope": {
+    "source_effect_proof_valid_within_scope": true,
+    "content_secret_proof_valid": false,
+    "copy_safe_equals_safe_to_distribute": false
+  },
+  "role_counts": {
+    "AGENT_RETURN": 24,
+    "CONTROL_METADATA": 10,
+    "DERIVATIVE_REPORT": 55,
+    "PRIMARY_SOURCE": 4,
+    "RECOVERY_SELF_DERIVATIVE": 2,
+    "RESTRICTED_SECRET_BEARING": 2,
+    "UNKNOWN": 2
+  },
+  "surface_counts": {
+    "AGENT_RETURN_SURFACE": 24,
+    "ARCHIVED_PROJECT_SURFACE": 16,
+    "CLAUDE_COWORK_SURFACE": 10,
+    "CONTROL_CENTER_OTHER": 4,
+    "CURRENT_PROJECT_SURFACE": 31,
+    "DOWNLOADS_SURFACE": 12,
+    "PRIOR_RECOVERY_OUTPUT": 2
+  },
+  "unsafe_reason_counts": {
+    "POINTER_ONLY_TYPE": 11,
+    "SECRET_PATTERN:openai_key": 1,
+    "SECRET_PATTERN:secret_assignment": 4,
+    "SECRET_PATTERN:telegram_token": 1,
+    "TOO_LARGE_TO_FULL_SCAN": 2,
+    "UNSUPPORTED_COPY_TYPE": 18
+  },
+  "can_trade": false
+}

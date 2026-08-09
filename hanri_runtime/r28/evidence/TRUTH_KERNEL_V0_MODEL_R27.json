@@ -1,0 +1,105 @@
+{
+  "version": "TRUTH_KERNEL_V0_R27",
+  "status": "SPECIFICATION_CANDIDATE / NO_IMPLEMENTATION_AUTHORITY",
+  "entities": {
+    "Claim": [
+      "claim_id",
+      "entity_id",
+      "field",
+      "value",
+      "evidence_class",
+      "universe_id",
+      "event_time",
+      "observation_time",
+      "freshness",
+      "status"
+    ],
+    "EvidenceOccurrence": [
+      "occurrence_id",
+      "source_id",
+      "path_or_object_id",
+      "sha256",
+      "captured_at"
+    ],
+    "EvidenceFamily": [
+      "evidence_family_id",
+      "origin_sha256",
+      "occurrence_ids",
+      "independent_corroboration_count"
+    ],
+    "MetricObservation": [
+      "metric_id",
+      "entity_id",
+      "measurement_class",
+      "unit",
+      "sample_size",
+      "event_time",
+      "value",
+      "source_refs"
+    ],
+    "ContradictionCluster": [
+      "cluster_id",
+      "claim_ids",
+      "conflict_type",
+      "resolution_status",
+      "required_evidence"
+    ],
+    "Decision": [
+      "decision_id",
+      "authority",
+      "verdict",
+      "scope",
+      "evidence_set",
+      "supersedes",
+      "accepted_at"
+    ],
+    "AuthoritySurface": [
+      "surface_id",
+      "root_or_target",
+      "mutation_path",
+      "current_authority",
+      "freshness",
+      "broker_binding"
+    ],
+    "Effect": [
+      "effect_id",
+      "action_spec_id",
+      "reversibility",
+      "precondition",
+      "target"
+    ],
+    "Receipt": [
+      "receipt_id",
+      "effect_id",
+      "provider_response",
+      "target_readback",
+      "semantic_verification"
+    ],
+    "Unknown": [
+      "unknown_id",
+      "question",
+      "decision_impact",
+      "owner",
+      "required_evidence",
+      "recheck_trigger"
+    ],
+    "ScopeCertificate": [
+      "scope_id",
+      "manifest_sha256",
+      "numerator",
+      "denominator",
+      "evidence_ceiling"
+    ]
+  },
+  "invariants": [
+    "occurrence_count != independent_evidence_count",
+    "every number binds to one universe_id and measurement_class",
+    "a declared disjoint partition must sum to its total",
+    "specification status and implementation status remain separate",
+    "more than one mutable current authority requires one verified effect broker or HOLD",
+    "proof ledger requires proof identity fields",
+    "past and future cannot update present without promotion and acceptance",
+    "can_trade=false"
+  ],
+  "can_trade": false
+}

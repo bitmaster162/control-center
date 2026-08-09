@@ -1,0 +1,18 @@
+{
+  "can_trade": false,
+  "candidates_generated": 5,
+  "config_path": "/mnt/data/r26_demo_runtime/config.json",
+  "config_sha256": "54c1af6609a532f465ca440b5c5e3b2408734fc41bce467537bd2dbeff909892",
+  "decisions_processed": 0,
+  "events_processed": 2,
+  "external_model_api_calls": 0,
+  "findings_generated": 5,
+  "generated_at": "2026-07-23T08:58:20.600022Z",
+  "human_digest_sha256": "99fa1873674c811e66d9a2153eed90f39c177a548c7d7b928eff75a6054a1c47",
+  "program_version": "26.0.0",
+  "run_id": "20260723T085820Z_cbc6ad99",
+  "schema_version": 1,
+  "self_application": false,
+  "state_sha256": "34dfc296d19f797749ccb6552cffea27556493c5ed3d60b4527dae11c152f1ab",
+  "stop_reasons": []
+}

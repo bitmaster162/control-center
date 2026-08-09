@@ -1,0 +1,37 @@
+{
+  "version": "R27",
+  "generated_at": "2026-07-23T12:05:16.350133Z",
+  "past": {
+    "handoff_recovery_scope": "PHYSICAL_COUNTS_RECONCILED",
+    "collector_partition": "99 safe representatives + 84 safe duplicates + 23 excluded = 206",
+    "checkpoint_universe": "970 all records; 787 strong-progress subset; prior report conflation corrected",
+    "bit_evo_canon": "5 byte-identical occurrences / 1 evidence family",
+    "source001_wave013": "USER_CONFIRMED_COMPLETE / PHYSICAL_INGESTION_PENDING / RERUN_DENIED"
+  },
+  "present": {
+    "truth_kernel": "V0 SPECIFICATION CANDIDATE",
+    "continuityos": "CURRENT_CAPTURE_ACCEPTED_BOUNDED / ROOT_GIT_BASELINE_NOT_SATISFIED",
+    "post_fable_current_state": "20/20 NOT_EVALUATED in V10 snapshot; newer return ingestion pending",
+    "authority_surfaces": "REGISTERED / CURRENT_EXCLUSIVITY_UNPROVEN",
+    "hanri_r27": "BUILT_IN_VERIFIED_GIT_WORKTREE / COMPILE_PASS / UNIT_TESTS_28_OF_28_PASS / RUNTIME_DEMO_PASS / NOT_INSTALLED",
+    "truth_kernel_runtime_demo": {
+      "run_id": "20260723T120516Z_4718fb44",
+      "events_processed": 1,
+      "findings_generated": 5,
+      "candidates_generated": 5,
+      "pending_human_decisions": 5,
+      "external_model_api_calls": 0,
+      "self_application": false,
+      "can_trade": false
+    }
+  },
+  "future": {
+    "sccs": "EXP_ONLY_CANDIDATE",
+    "pandora_cosmos": "SIMULATION_ONLY"
+  },
+  "global": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "external_model_api": "DENY"
+  }
+}

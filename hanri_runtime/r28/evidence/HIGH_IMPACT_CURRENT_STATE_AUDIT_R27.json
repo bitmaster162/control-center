@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "source_member": "handoff_recovery_local/HANDOFF_RECOVERY_20260721T185816Z/payload/PROJECTS_417a3384/continuity_os/universe_hub/artifact_state_v4/HIGH_IMPACT_CURRENT_STATE.csv",
+  "source_member_sha256": "b524a6162590fc5741b8c0e5b6c144579aaaf466f03302e0037a2cf186375982",
+  "rows": 20,
+  "v10_adjudication_counts": {
+    "DEGRADED_OR_FALSIFIED": 17,
+    "NARROW_POSITIVE_SIGNAL": 2,
+    "WARN_OR_UNRESOLVED": 1
+  },
+  "post_fable_state_counts": {
+    "NOT_EVALUATED": 20
+  },
+  "exact_statements": {
+    "degraded_or_falsified": "17/20",
+    "narrow_positive_signal": "2/20",
+    "warn_or_unresolved": "1/20",
+    "post_fable_not_evaluated": "20/20"
+  },
+  "verdict": "FABLE_SUMMARY_MATERIALLY_CORRECT_WITH_SCOPE_BINDING",
+  "can_trade": false
+}

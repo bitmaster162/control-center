@@ -1,0 +1,32 @@
+{
+  "can_trade": false,
+  "cases": [
+    {
+      "candidate_id": "C-f336931f3a8678a8c1e6",
+      "failure_class": "ROOT_REPOSITORY_CONFLATION",
+      "regression_case": "A directory with nested repositories and no root .git must remain AMBIGUOUS_NESTED_REPOSITORY."
+    },
+    {
+      "candidate_id": "C-484f8c717290cd2fbf8a",
+      "failure_class": "COMPLETENESS_SCOPE_LEAKAGE",
+      "regression_case": "A 99/99 result for one recovery payload must not become all-archives-complete."
+    },
+    {
+      "candidate_id": "C-19ff3fd823011e204cbd",
+      "failure_class": "HISTORICAL_LIVENESS_PROMOTION",
+      "regression_case": "A July handoff saying a service worked cannot establish current liveness without a fresh readback."
+    },
+    {
+      "candidate_id": "C-f49bff158507add76520",
+      "failure_class": "PRIMARY_SECONDARY_CURSOR_CONFLATION",
+      "regression_case": "A 473-conversation legacy cursor must never be numerically equated to the 536-conversation Source-001 chronology."
+    },
+    {
+      "candidate_id": "C-1e3955cd0a19a9a7d388",
+      "failure_class": "PROBE_ROOT_CAUSE_CONFLATION",
+      "regression_case": "Multiple failing probes over one shared defect must not be counted as independent root causes."
+    }
+  ],
+  "generated_at": "2026-07-23T08:58:20.600022Z",
+  "schema_version": 1
+}

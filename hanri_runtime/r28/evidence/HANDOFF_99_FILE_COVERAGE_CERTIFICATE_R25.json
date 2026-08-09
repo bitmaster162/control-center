@@ -1,0 +1,13 @@
+{
+  "version": "R25",
+  "generated_at": "2026-07-23T06:25:13.517024+00:00",
+  "payload_unique_files": 99,
+  "fable_v4_reported_full_read": 80,
+  "independently_full_read_from_fable_unread_set": 19,
+  "union_full_read": 99,
+  "union_status": "PASS_WITH_CONDITIONS",
+  "condition": "The Fable 80/99 aggregate is report-backed but its exact 80-row file ledger is not embedded; the 19-file remainder is independently hash-bound and full-read across R22/R24/R25.",
+  "remaining_unread": 0,
+  "substantive_unread": 0,
+  "classification_correction": "Four systempacks are project corpus, not Zxcvbn; two actual Zxcvbn dictionaries are separate files and were read in R25."
+}

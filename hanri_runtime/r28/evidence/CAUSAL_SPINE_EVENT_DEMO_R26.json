@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "event_id": "ACS-81053b68cab873316858",
+  "timestamp": "2026-07-23T08:55:37.286558Z",
+  "task_id": "ARCHIVE_CAUSAL_SPINE",
+  "step_id": "archive_continuation_308_317.md__CONTINUITY_META_AUDIT_V1.md__MAIN033_INDEPENDENT_INTAKE_R22.json",
+  "event_type": "ARCHIVE_CAUSAL_SPINE",
+  "actor": "HANRI_R26",
+  "goal": "Advance origin, correction/pivot and current frontiers without collapsing archive scope or authority.",
+  "human_summary": "Origin: archive_continuation_308_317.md; Pivot: CONTINUITY_META_AUDIT_V1.md; Current: MAIN033_INDEPENDENT_INTAKE_R22.json.",
+  "checks": {
+    "changed_evidence": true,
+    "origin_frontier_processed": true,
+    "pivot_frontier_processed": true,
+    "current_frontier_processed": true,
+    "content_signature_verified": true,
+    "same_name_multiple_hashes": false,
+    "version_lineage_recorded": false,
+    "completeness_claim_present": true,
+    "coverage_scope_bound": true,
+    "per_file_coverage_ledger_present": true,
+    "causal_spine_complete": true
+  },
+  "payload": {
+    "schema_version": 1,
+    "generated_at": "2026-07-23T08:55:37.286558Z",
+    "scope_id": "R26_DEMO_ORIGIN_AUDIT_MAIN033",
+    "origin": {
+      "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+      "name": "archive_continuation_308_317.md",
+      "suffix": ".md",
+      "size_bytes": 17327,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 10923,
+      "line_count_read": 297,
+      "first_nonempty_lines": [
+        "# CONTINUATION CHECKPOINT — Batch 308–317",
+        "Source: `/mnt/data/2503.zip` → `2503/conversations-003.json`",
+        "Coverage: conversations **308–317**",
+        "---",
+        "## 1) Что это за кусок в целом"
+      ],
+      "last_nonempty_lines": [
+        "Тут формируются:",
+        "- **Archive OS** — вскрыть, почистить, собрать, читать построчно;",
+        "- **Trading OS** — роли, арбитр, правила, ловушки, сетапы;",
+        "- **Memory OS** — память как вызов, наблюдение, фрактальная запись.",
+        "Это уже не три случайные темы. Это три столба одного ядра."
+      ]
+    },
+    "pivot": {
+      "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+      "name": "CONTINUITY_META_AUDIT_V1.md",
+      "suffix": ".md",
+      "size_bytes": 20228,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 20106,
+      "line_count_read": 729,
+      "first_nonempty_lines": [
+        "# ContinuityOS Deep Meta-Audit v1",
+        "**Audit date:** 2026-07-10 (Asia/Bangkok context)",
+        "**Input:** `continuity_os.zip`",
+        "**Mode:** exhaustive inventory + exhaustive text-line traversal + AST/static analysis + dynamic adversarial tests + concurrency stress + checkpoint forensics + claim/proof comparison.",
+        "---"
+      ],
+      "last_nonempty_lines": [
+        "---",
+        "## Final conclusion",
+        "The core thesis is stronger after deep audit, not weaker:",
+        "> **ContinuityOS's real moat candidate is not memory. It is limiting model sovereignty through external canon, authority, causal history and proof.**",
+        "But the current private monorepo violates that thesis at critical boundaries because safety degradation often increases execution freedom. The next decisive move is to make the system obey its own constitution under failure."
+      ]
+    },
+    "current": {
+      "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "name": "MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "suffix": ".json",
+      "size_bytes": 1448,
+      "mtime_utc": "2026-07-23T08:35:53.701622Z",
+      "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 1448,
+      "line_count_read": 42,
+      "first_nonempty_lines": [
+        "{",
+        "\"version\": \"MAIN033_INTAKE_R22\",",
+        "\"zip\": {",
+        "\"filename\": \"MAIN_CODEX_MAIN-033_20260722T141355968Z.zip\",",
+        "\"size_bytes\": 237299,"
+      ],
+      "last_nonempty_lines": [
+        "]",
+        "},",
+        "\"verdict\": \"CURRENT_SOURCE_CAPTURE_ACCEPTED_BOUNDED / GIT_BASELINE_NOT_SATISFIED\",",
+        "\"can_trade\": false",
+        "}"
+      ]
+    },
+    "origin_files_seen": 1,
+    "pivot_files_seen": 1,
+    "current_files_seen": 1,
+    "same_name_collisions": [],
+    "coverage_certificate": {
+      "schema_version": 1,
+      "scope_id": "R26_DEMO_ORIGIN_AUDIT_MAIN033",
+      "generated_at": "2026-07-23T08:55:37.286549Z",
+      "scope_manifest_sha256": "b1a2e740e923293e5c518444a5af2991ed96015484d6c77aa09e320d09682d88",
+      "numerator": 3,
+      "denominator": 3,
+      "coverage_ratio": "3/3",
+      "coverage_percent": 100.0,
+      "required_full_text": false,
+      "evidence_ceiling": "REGISTERED_CAUSAL_FRONTIER_FILES_ONLY",
+      "status": "COMPLETE",
+      "files": [
+        {
+          "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+          "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+          "size_bytes": 1448,
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true
+        },
+        {
+          "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+          "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+          "size_bytes": 17327,
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true
+        },
+        {
+          "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+          "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+          "size_bytes": 20228,
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true
+        }
+      ],
+      "can_trade": false
+    },
+    "status": "SPINE_READY",
+    "inventory_cache_entries": 3,
+    "causal_claim_authority": "NONE_UNTIL_HUMAN_OR_PRIMARY_EVIDENCE_ADJUDICATION",
+    "can_trade": false
+  },
+  "evidence_refs": [
+    {
+      "type": "ARCHIVE_ORIGIN",
+      "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+      "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+      "content_class": "GENERIC_TEXT",
+      "evidence_class": "VERIFIED_FACT"
+    },
+    {
+      "type": "ARCHIVE_PIVOT",
+      "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+      "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+      "content_class": "GENERIC_TEXT",
+      "evidence_class": "VERIFIED_FACT"
+    },
+    {
+      "type": "ARCHIVE_CURRENT",
+      "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+      "content_class": "GENERIC_TEXT",
+      "evidence_class": "VERIFIED_FACT"
+    }
+  ],
+  "recursion_depth": 0,
+  "can_trade": false
+}

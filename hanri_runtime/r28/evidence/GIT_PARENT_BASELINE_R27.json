@@ -1,0 +1,10 @@
+{
+  "version": "GIT_PARENT_BASELINE_R27",
+  "verified_at": "2026-07-23T12:02:20.643124Z",
+  "repository": "HANRI_R27_REPO",
+  "head": "c7d1c6f39c389400aeadba4906e16882098d700b",
+  "tree": "f05721344e2570d6096952b58ceea5c58bfd4d40",
+  "worktree_clean_before_changes": true,
+  "source_bundle": "HANRI_R26_REPO.bundle",
+  "can_trade": false
+}

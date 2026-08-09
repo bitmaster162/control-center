@@ -1,0 +1,688 @@
+﻿{
+    "schema":  "hanri.r28.forensic_source_manifest.v1",
+    "generated_at_utc":  "2026-08-09T15:27:41.9229480Z",
+    "source":  "C:\\Users\\coins\\AppData\\Local\\ControlCenterHANRIR28\\app",
+    "destination":  "C:\\PROJECTS\\hanri-control-center\\hanri_runtime\\r28",
+    "expected_program_version":  "28.0.0",
+    "observed_runtime_config_sha256_reference":  "0e0652621528597770d57a848e46f9ad7ae32123db70fbd496bf38a6b70cdabb",
+    "copied_runtime_config_sha256":  "0e0652621528597770d57a848e46f9ad7ae32123db70fbd496bf38a6b70cdabb",
+    "file_count":  126,
+    "files":  [
+                  {
+                      "path":  ".gitignore",
+                      "size":  75,
+                      "sha256":  "87524229ed9a397a7a25e2dde81536775873863b4e96044d28ea7aa8d4e12325"
+                  },
+                  {
+                      "path":  "AGENTS.md",
+                      "size":  1671,
+                      "sha256":  "13b439142b766a434a44aec4a0fc21979b06851233edceaee2802d294d3a91e9"
+                  },
+                  {
+                      "path":  "config/r24.windows.json",
+                      "size":  773,
+                      "sha256":  "26d9ecfd044475ab71158df522d33110224637d0d2685189ff5e08ea72a5dc43"
+                  },
+                  {
+                      "path":  "config/r25.windows.json",
+                      "size":  1178,
+                      "sha256":  "f46c769d02bd1ed30f8e14ec29009f08f98166b699716b211542759f914fe25d"
+                  },
+                  {
+                      "path":  "config/r26.windows.json",
+                      "size":  1271,
+                      "sha256":  "4a833f5b899cc466317b77a2d33c400fb574b84b5ed93eab8daab61f198231c0"
+                  },
+                  {
+                      "path":  "config/r27.windows.json",
+                      "size":  1271,
+                      "sha256":  "2592c9c43124c9bf510e44faf39178166544f4f412886535a237d1cc03b32c12"
+                  },
+                  {
+                      "path":  "config/r28.windows.json",
+                      "size":  1271,
+                      "sha256":  "0e0652621528597770d57a848e46f9ad7ae32123db70fbd496bf38a6b70cdabb"
+                  },
+                  {
+                      "path":  "docs/ARCHITECTURE.md",
+                      "size":  2306,
+                      "sha256":  "49dea9c83bcd78acd64cd62d6e358b6575dced6ff009adec032a29c948f7c284"
+                  },
+                  {
+                      "path":  "docs/ARCHIVE_FINDINGS_R24.md",
+                      "size":  3898,
+                      "sha256":  "c6e3c963a1d10a28789a490e6e4ec4b1f82a466f31fed80c0b0c6847b0880fd3"
+                  },
+                  {
+                      "path":  "docs/CAUSAL_SPINE_ARCHIVE_PROTOCOL_R26.md",
+                      "size":  1604,
+                      "sha256":  "01830962bc25333a36b91985a8796497a73b9673685f29ea56f7158d09fbc964"
+                  },
+                  {
+                      "path":  "docs/COLLECTOR_CONTRACT_CORRECTION_R28.md",
+                      "size":  1233,
+                      "sha256":  "2b9ca2963c9511e16596c3fd353598d8cdce22f191102352500fc04453a11a19"
+                  },
+                  {
+                      "path":  "docs/CORE_BRAIN_DELTA_R24.md",
+                      "size":  2319,
+                      "sha256":  "2cf624d599f698db7607e5516e062f781f01a4fc438a504cce32e2318de2e5e9"
+                  },
+                  {
+                      "path":  "docs/CORE_BRAIN_DELTA_R25.md",
+                      "size":  1624,
+                      "sha256":  "f5ab2542d9de0233b0f3ec3a30cd00eb758c583021a775059b2ec9dca3433511"
+                  },
+                  {
+                      "path":  "docs/CORE_BRAIN_DELTA_R26.md",
+                      "size":  1170,
+                      "sha256":  "71413d3fc8db79a66271e7c42a22a28aea73079dab8d5182e5e060cc96d2f845"
+                  },
+                  {
+                      "path":  "docs/CORE_BRAIN_DELTA_R27.md",
+                      "size":  1381,
+                      "sha256":  "de4fe2b3d408856be641774383291187321ea354c91eed92361bbaeb72aeb2a6"
+                  },
+                  {
+                      "path":  "docs/CORE_BRAIN_DELTA_R28.md",
+                      "size":  1363,
+                      "sha256":  "d4cec79ee774fa8f56ab468a805aee218eec122233f0a69107b38bb85d9091e4"
+                  },
+                  {
+                      "path":  "docs/DEEP_ARCHIVE_CAUSAL_SPINE_R26.md",
+                      "size":  2603,
+                      "sha256":  "0b40b7603327419f8fe67ecf91bc6df049577d49981c63e3ead31f929db46bf0"
+                  },
+                  {
+                      "path":  "docs/DEEP_ARCHIVE_PROVENANCE_R28.md",
+                      "size":  3013,
+                      "sha256":  "4383fd9d22e616fb2f92cda2fc4a532d21a9969d0a2d4c5559ce054625c0db10"
+                  },
+                  {
+                      "path":  "docs/DEEP_ARCHIVE_TRUTH_KERNEL_R27.md",
+                      "size":  3467,
+                      "sha256":  "bd78f263250195bb95fcb3ee9860d33af805980a2f0435dfab810079b5660cac"
+                  },
+                  {
+                      "path":  "docs/DUAL_FRONTIER_ARCHIVE_PROTOCOL_R25.md",
+                      "size":  1364,
+                      "sha256":  "0bf272666f4cc05de3657b5b21276cf5bc17258f2b31ae678a3ca833825ce468"
+                  },
+                  {
+                      "path":  "docs/FABLE_GLOBAL_COMPLETENESS_CORRECTION_R26.md",
+                      "size":  1297,
+                      "sha256":  "c2f8dea7c5e69c75c7b6ff579f118684d39918793dd406415927e0db7a66a4c5"
+                  },
+                  {
+                      "path":  "docs/HANRI_R28_ARCHITECTURE.md",
+                      "size":  630,
+                      "sha256":  "77e01cc00116ed70d68200813885619028fca59fc441c272d06aa1223fb3faa0"
+                  },
+                  {
+                      "path":  "docs/HUMAN_AI_NATIVE_CONTRACT.md",
+                      "size":  2210,
+                      "sha256":  "0ba0112509ff1f6ad6ae75f475561d561c8bb4e8677e7f3b56c33869b72a99ae"
+                  },
+                  {
+                      "path":  "docs/NEXT_STRONG_MOVE_R26.md",
+                      "size":  916,
+                      "sha256":  "b931aab905dc6404762416e6a81bc5fec0e631f91e048636b825e2c58ec8b98d"
+                  },
+                  {
+                      "path":  "docs/NEXT_STRONG_MOVE_R27.md",
+                      "size":  958,
+                      "sha256":  "e6a0b3ebb2bc26ff52b58ed737f8e5c343e327b3ccd48121f2b1501953dff896"
+                  },
+                  {
+                      "path":  "docs/NEXT_STRONG_MOVE_R28.md",
+                      "size":  1247,
+                      "sha256":  "e330afe17ca25b4d93074946310554c18482cf4e931a6747fa6aac4eb927a8c4"
+                  },
+                  {
+                      "path":  "docs/PER_TURN_PROTOCOL.md",
+                      "size":  1416,
+                      "sha256":  "dd158a5fa9c85c4a6f7fa169209eaef4ffbb16538a6911166cf4da7d5f8fe4e0"
+                  },
+                  {
+                      "path":  "docs/SCOPE_BOUND_COMPLETENESS_R26.md",
+                      "size":  660,
+                      "sha256":  "a78193139cdf8cfc490d23e285eabd250688228db73d3538b75f6a78b48cdb1e"
+                  },
+                  {
+                      "path":  "docs/TRUTH_KERNEL_AND_ARCHIVE_ARITHMETIC_R27.md",
+                      "size":  964,
+                      "sha256":  "81248109a6e910204789a464776249bdd20f03ca0197233d5373f8c83bde8203"
+                  },
+                  {
+                      "path":  "evidence/ARCHIVE_METRICS_R24.json",
+                      "size":  8671,
+                      "sha256":  "6e2ce9e1289d43ed7d9671916cf5c6d90fc1b84b3a1b9c4a4f39d1d006a509cc"
+                  },
+                  {
+                      "path":  "evidence/ARCHIVE_SCOPE_REGISTRY_R26.csv",
+                      "size":  1768,
+                      "sha256":  "c967273da0953d282edc26febe174ad5bbaccceae998bee9442018ff24935674"
+                  },
+                  {
+                      "path":  "evidence/ARCHIVE_SOURCE_REGISTER_R24.csv",
+                      "size":  2045,
+                      "sha256":  "a476ce1bb1f5ae5880d09bb6ede57705b2f6da6225559800f604c4618da595f5"
+                  },
+                  {
+                      "path":  "evidence/AUTHORITY_SURFACE_REGISTER_R27.csv",
+                      "size":  1273,
+                      "sha256":  "62b03715193c7ecd349b2c049d239e7f7607560495dc513c9ba57bd32d0a3d0c"
+                  },
+                  {
+                      "path":  "evidence/BITEVO_UNIFIED_CANONICAL_STATE_EVIDENCE_FAMILY_R27.json",
+                      "size":  1439,
+                      "sha256":  "14fbb60e6c4c820677847cdfd1ba2d572c3e690f34b9e09e322f3dc940c5876c"
+                  },
+                  {
+                      "path":  "evidence/CAUSAL_SPINE_CACHE_DEMO_R26.json",
+                      "size":  4208,
+                      "sha256":  "da0a93147c3345c4aa6a07f7576636675aebbb5eecac775f572fc74e78def3eb"
+                  },
+                  {
+                      "path":  "evidence/CAUSAL_SPINE_DEMO_R26.json",
+                      "size":  5410,
+                      "sha256":  "9372a13bc4368f7b2fce24918692592fc78d6091e5b293a8963efd5fcc91f0e4"
+                  },
+                  {
+                      "path":  "evidence/CAUSAL_SPINE_EVENT_DEMO_R26.json",
+                      "size":  7665,
+                      "sha256":  "cca8498a759c9f8d997f468698294daa8ce15b03ca60e91c25475552d17ed990"
+                  },
+                  {
+                      "path":  "evidence/CAUSAL_SPINE_LEDGER_R26.csv",
+                      "size":  2473,
+                      "sha256":  "852cb30126be8dfa8126e3f18b05999c5b18dab978d494a6af3024cf47552e71"
+                  },
+                  {
+                      "path":  "evidence/CHECKPOINT_COUNT_UNIVERSE_AUDIT_R27.json",
+                      "size":  1252,
+                      "sha256":  "579199b54905b06b97bad1c9ad0dfff99a228d2b1ccf003cb0b440662c4fe9b7"
+                  },
+                  {
+                      "path":  "evidence/CLAUDE_FABLE_UPDATE_ADJUDICATION_R25.md",
+                      "size":  2046,
+                      "sha256":  "5bd9501e60d01921912f5045ff148e44be8cb64d49a8210b97bc91dcc78a3c5f"
+                  },
+                  {
+                      "path":  "evidence/COLLECTOR_CONTRACT_AUDIT_R28.json",
+                      "size":  2165,
+                      "sha256":  "6f8559c5c72665410bbd9d0e5dd120ac105316a851dc55e5e82044af425e44fb"
+                  },
+                  {
+                      "path":  "evidence/CONTRADICTION_CLUSTER_REGISTER_R27.csv",
+                      "size":  1622,
+                      "sha256":  "15350cd9450cbb8ba684b3418d476b880f3964a9eefeb65a6cb76619e68ae194"
+                  },
+                  {
+                      "path":  "evidence/CURRENT_STATE_R26.json",
+                      "size":  1608,
+                      "sha256":  "7085bd335314fcbfd8f690e999ba49e27fa294861eea2df55311512e9c7c192d"
+                  },
+                  {
+                      "path":  "evidence/CURRENT_STATE_R27.json",
+                      "size":  1497,
+                      "sha256":  "79a8d1daf1882fda2d1654da332dd2fe04b44c5c2614658d931a71a9c7c5286e"
+                  },
+                  {
+                      "path":  "evidence/CURRENT_STATE_R28.json",
+                      "size":  1297,
+                      "sha256":  "2f7377995176152f768fdbd06c7ebde045cfe822138da800111a3a344943eecf"
+                  },
+                  {
+                      "path":  "evidence/DEEP_ARCHIVE_PASS_R24.md",
+                      "size":  4122,
+                      "sha256":  "9c635121731c172a80741c95296eb9294bb4b84e3fa051812d9cb5e57cbdbc94"
+                  },
+                  {
+                      "path":  "evidence/demo/LATEST_AI_STATE_DEMO.json",
+                      "size":  18434,
+                      "sha256":  "dc14c044719666bee6125d74b4c88be6dd59babaa3b3861968e4ada80b7e4727"
+                  },
+                  {
+                      "path":  "evidence/demo/LATEST_HUMAN_DIGEST_DEMO.md",
+                      "size":  5734,
+                      "sha256":  "9df99cdae7de851453ef8eb60c6f055fd3ed6fae5428ff7d805b20645c8ad568"
+                  },
+                  {
+                      "path":  "evidence/demo/REGRESSION_SUITE_DEMO.json",
+                      "size":  2039,
+                      "sha256":  "e6b1b6d48066e77c014dc99dd7d57f81af6262a9548bbc1e177f06c853f53ac4"
+                  },
+                  {
+                      "path":  "evidence/demo/RUN_RECEIPT_DEMO.json",
+                      "size":  717,
+                      "sha256":  "6ed65f421305558a2eaca8aca242d12523c0cb5618a3d7d48359bd67211def31"
+                  },
+                  {
+                      "path":  "evidence/DEMO_AI_STATE_R26.json",
+                      "size":  18836,
+                      "sha256":  "34dfc296d19f797749ccb6552cffea27556493c5ed3d60b4527dae11c152f1ab"
+                  },
+                  {
+                      "path":  "evidence/DEMO_HUMAN_DIGEST_R26.md",
+                      "size":  3979,
+                      "sha256":  "99fa1873674c811e66d9a2153eed90f39c177a548c7d7b928eff75a6054a1c47"
+                  },
+                  {
+                      "path":  "evidence/DEMO_REGRESSION_SUITE_R26.json",
+                      "size":  1314,
+                      "sha256":  "d244fb252d21c0434848355053a354bc1b9d3508c74f3da24b99768032004abc"
+                  },
+                  {
+                      "path":  "evidence/DEMO_RUN_RECEIPT_R26.json",
+                      "size":  687,
+                      "sha256":  "9988b34219fa3167699a8754004432a3c53dfe68a48ac6dff0274e432cea8487"
+                  },
+                  {
+                      "path":  "evidence/FABLE_COLLECTOR_ARITHMETIC_AUDIT_R27.json",
+                      "size":  1469,
+                      "sha256":  "a4ce4d50a349959445ec8fc23b23b3113c2a64b3df7325163694275c2a3f987d"
+                  },
+                  {
+                      "path":  "evidence/FABLE_V3_V4_EXACT_DIFF_R26.json",
+                      "size":  11902,
+                      "sha256":  "7ccdef19587505a62d99b10aacf745d16192c3c6e0ee9082b0ee3c0bff621a4c"
+                  },
+                  {
+                      "path":  "evidence/GIT_BASELINE_RECEIPT.json",
+                      "size":  344,
+                      "sha256":  "b2d4b13ef88289b82337ffebc2acf4a6a7f8be107532bf75d4ebe3ad72e9501a"
+                  },
+                  {
+                      "path":  "evidence/GIT_PARENT_BASELINE_R26.json",
+                      "size":  508,
+                      "sha256":  "0217dec91e1e82ffa71ccb51333e6b3178c21532ce47dbd7a077d826cb4d37bc"
+                  },
+                  {
+                      "path":  "evidence/GIT_PARENT_BASELINE_R27.json",
+                      "size":  340,
+                      "sha256":  "9af3bf8da8abacd1918d35d6ca3a9d815553d832e5ee127fa2e6e557f2fcc61a"
+                  },
+                  {
+                      "path":  "evidence/GIT_PARENT_BASELINE_R28.json",
+                      "size":  334,
+                      "sha256":  "cebdc8ead531e703d2020b9cfd59480b35c440007019bfeb9a934b3aafcd8831"
+                  },
+                  {
+                      "path":  "evidence/HANDOFF_99_FILE_COVERAGE_CERTIFICATE_R25.json",
+                      "size":  668,
+                      "sha256":  "94685fa23c259c43ff0aa5a449c4ac111e236a8fd1bde31fea7ea0a3835a47e4"
+                  },
+                  {
+                      "path":  "evidence/HANDOFF_RECOVERY_PROVENANCE_LEDGER_R28.csv",
+                      "size":  46107,
+                      "sha256":  "acb16243b8e5f059c6874b4572b39df2805ad73b18850f53c8c64a05f7a221df"
+                  },
+                  {
+                      "path":  "evidence/HIGH_IMPACT_CURRENT_STATE_AUDIT_R27.json",
+                      "size":  773,
+                      "sha256":  "076750222c58b243a180c705a63ae9a164e7d0aeaea2885c109282869cc9b25e"
+                  },
+                  {
+                      "path":  "evidence/NO_EFFECT_PROOF_R28.json",
+                      "size":  484,
+                      "sha256":  "13a1fc02f9d6029fe4b263eff9aae09d18ede0ebee6f2ed9f13bf533d35117ea"
+                  },
+                  {
+                      "path":  "evidence/RECOVERY_PROVENANCE_RUNTIME_DEMO_R28.json",
+                      "size":  3875,
+                      "sha256":  "05c8c7af23673337f93b85e0bfef37e75fc790cdebed1e7a1b94453120809225"
+                  },
+                  {
+                      "path":  "evidence/RECOVERY_SELF_INGESTION_REGISTER_R28.csv",
+                      "size":  805,
+                      "sha256":  "59871b64398c28b9ebf1f9a06f9b7b101b7047a305709f57f066db4c4d5a34c2"
+                  },
+                  {
+                      "path":  "evidence/SOURCE_REGISTER_R26.csv",
+                      "size":  3979,
+                      "sha256":  "052f34af012e3cce68ab99c313f714d8764cb58a835013d0388a6b8e2ff09c71"
+                  },
+                  {
+                      "path":  "evidence/SOURCE_REGISTER_R27.csv",
+                      "size":  927,
+                      "sha256":  "5da33c3f3692ee7143dd4cb85afdbf0d03f4a5322c29c1d99bb506e1d6ca5416"
+                  },
+                  {
+                      "path":  "evidence/SOURCE_REGISTER_R28.csv",
+                      "size":  328,
+                      "sha256":  "e5347b4585a315bea9ecb5ee72ce0a851653b31596d8d5b45b591d2c2d891efd"
+                  },
+                  {
+                      "path":  "evidence/SYSTEMPACK_CLASSIFICATION_CORRECTION_R25.json",
+                      "size":  2343,
+                      "sha256":  "85c6ccdfe9ee1d2d9c862bf5cff281e389ffa47337e08930dd3ed9502ac10b8f"
+                  },
+                  {
+                      "path":  "evidence/TEST_RECEIPT_R24.json",
+                      "size":  429,
+                      "sha256":  "a296dfb4442e40798c9c32061c4edf9d31c7fe1763b407618080be13aaf32efa"
+                  },
+                  {
+                      "path":  "evidence/TEST_RECEIPT_R26.json",
+                      "size":  652,
+                      "sha256":  "21d76b7407d64de2d5b6650031c96098a093efe865555a643afe3ba192008fd4"
+                  },
+                  {
+                      "path":  "evidence/TEST_RECEIPT_R28.json",
+                      "size":  273,
+                      "sha256":  "e0dba1abe80975dde854148e18b64ce520614abc99eae24dd90ac695b6e10008"
+                  },
+                  {
+                      "path":  "evidence/TRUTH_KERNEL_DEMO_R27.json",
+                      "size":  3270,
+                      "sha256":  "3a2d015ee5b754bdb41c32e68c66f89ca25fbb5e2940589faaf428ee5895ea60"
+                  },
+                  {
+                      "path":  "evidence/TRUTH_KERNEL_RUNTIME_DEMO_HUMAN_DIGEST_R27.md",
+                      "size":  4290,
+                      "sha256":  "06188d63ec723ab900a2bcb2bfdb1dc54dcd807ab0f6cc25c91ee4017399eba1"
+                  },
+                  {
+                      "path":  "evidence/TRUTH_KERNEL_RUNTIME_DEMO_RECEIPT_R27.json",
+                      "size":  689,
+                      "sha256":  "a51cffd8baa06c177d81f95ca69efc914c6db16dc739a896da9568d9e7cbb6ca"
+                  },
+                  {
+                      "path":  "evidence/TRUTH_KERNEL_RUNTIME_DEMO_STATE_R27.json",
+                      "size":  13061,
+                      "sha256":  "5ec4329792bd2cd3137395369554ec3e286b7620b6d9df6e2615833aff16978d"
+                  },
+                  {
+                      "path":  "evidence/TRUTH_KERNEL_V0_MODEL_R27.json",
+                      "size":  2399,
+                      "sha256":  "6e71175ad7a803bf280ddcb639a249c3dbff837324399882b31b0b6390595595"
+                  },
+                  {
+                      "path":  "evidence/UNIFIED_CANONICAL_STATE_REALITY_MATRIX_R27.csv",
+                      "size":  1371,
+                      "sha256":  "60746dc48a4ee6165032f2661d1c84a7aff829ed4c75b6d59aebe469df82a155"
+                  },
+                  {
+                      "path":  "evidence/UNIT_TESTS_R24.txt",
+                      "size":  1599,
+                      "sha256":  "5c3504ed1aa53c436474065c4c556feca15c7b5aba142c50c9307e55449a4503"
+                  },
+                  {
+                      "path":  "evidence/UNIT_TESTS_R26.txt",
+                      "size":  2744,
+                      "sha256":  "e4d55b62d935dcb1f5f0c184a9e4211694862c9bf0e5ba288febd09f61cfad4a"
+                  },
+                  {
+                      "path":  "evidence/UNIT_TESTS_R28.txt",
+                      "size":  3872,
+                      "sha256":  "7b3f6231e2e2199f489ca8d02a7a7f8b2eeb9361c65fc7c57c9e77502b8a7dd9"
+                  },
+                  {
+                      "path":  "examples/step_event.json",
+                      "size":  665,
+                      "sha256":  "ba09722e228878ab2438560dee3148566b6a11faba5b6bfb7cdd116d418c3dde"
+                  },
+                  {
+                      "path":  "pyproject.toml",
+                      "size":  425,
+                      "sha256":  "bd9008a34569653237a52c5caeeaf85b65b0bf16922f4fce57c0536da9f9219e"
+                  },
+                  {
+                      "path":  "README.md",
+                      "size":  2951,
+                      "sha256":  "150972c8d8436f35d9f19e37aeb99c3b1aa6d324f68a35d4028112557e58bc0c"
+                  },
+                  {
+                      "path":  "schemas/artifact_provenance_v1.schema.json",
+                      "size":  1542,
+                      "sha256":  "b5c7ec5fa210d2ba630aed2dc10aa03d8981310408e46a3251e87895f36598f8"
+                  },
+                  {
+                      "path":  "schemas/candidate_delta.schema.json",
+                      "size":  810,
+                      "sha256":  "f738a24ac1d67b283d6e528e5e2796c07cb9a9604bd5b369bdb9f5d1ee346cfe"
+                  },
+                  {
+                      "path":  "schemas/event.schema.json",
+                      "size":  1463,
+                      "sha256":  "ca556cac5704b26d617e8394f48ffb8f7ac6be212c7373f70f0385ab32973035"
+                  },
+                  {
+                      "path":  "schemas/truth_kernel_v0.schema.json",
+                      "size":  2380,
+                      "sha256":  "2eba2bbcb1606acbe70d1a446403f0d3eb57d56385cd7cc5c6176f1337f06bbb"
+                  },
+                  {
+                      "path":  "scripts/Get-R24Status.ps1",
+                      "size":  323,
+                      "sha256":  "a0ecb83f72a4bea999afb372b540b3a33caafde16f4ecffef208b4ee5b72184f"
+                  },
+                  {
+                      "path":  "scripts/Get-R25Status.ps1",
+                      "size":  323,
+                      "sha256":  "5d36fc39924ae4eb45a1fcf77a5da89c285fb5e28496ed70e2a3b5d2a752dd36"
+                  },
+                  {
+                      "path":  "scripts/Get-R26Status.ps1",
+                      "size":  323,
+                      "sha256":  "1c80085989ef863e5ec7880cb19702f6180c47eddbe0a1bf77f255f248219435"
+                  },
+                  {
+                      "path":  "scripts/Get-R27Status.ps1",
+                      "size":  323,
+                      "sha256":  "6357c84e6742fb341372c9653b5c3621e18ec1018995d3cbd78def9adf51d692"
+                  },
+                  {
+                      "path":  "scripts/Get-R28Status.ps1",
+                      "size":  323,
+                      "sha256":  "82829f20bca88f06da799412c5900a51aac7c1fec3a15faf0935d974ef325aba"
+                  },
+                  {
+                      "path":  "scripts/Install-R24ImprovementTask.ps1",
+                      "size":  2490,
+                      "sha256":  "96d375a59a3c8aa551e0eea6ea290bd82c2f222664c2fc16960d7c4704658f52"
+                  },
+                  {
+                      "path":  "scripts/Install-R25ImprovementTask.ps1",
+                      "size":  2490,
+                      "sha256":  "de1ccd836f341d11e19c5a0971be00a2e4173f049c1b205ea404547454a4633a"
+                  },
+                  {
+                      "path":  "scripts/Install-R26ImprovementTask.ps1",
+                      "size":  4199,
+                      "sha256":  "4a0538561904fb9a6e97ea71ed914f2f40a5de72b4cd70a7e4da16dc617ddad4"
+                  },
+                  {
+                      "path":  "scripts/Install-R27ImprovementTask.ps1",
+                      "size":  4233,
+                      "sha256":  "8c5500156b222542ad1fe4d68379bdb0b0d99e0af75ccb2de240d90ffbbdf69e"
+                  },
+                  {
+                      "path":  "scripts/Install-R28ImprovementTask.ps1",
+                      "size":  4260,
+                      "sha256":  "8f94b9c377909bf8d1d430f87335af7828c3c23b33023c4f87030bde78515f5c"
+                  },
+                  {
+                      "path":  "scripts/Record-R24Decision.ps1",
+                      "size":  766,
+                      "sha256":  "a8b91ce8720d38bbdd2a292aca0425399735ff9908723cbe650a0916c479e0f4"
+                  },
+                  {
+                      "path":  "scripts/Record-R24Step.ps1",
+                      "size":  1228,
+                      "sha256":  "99ccb2bcf936514c9c75709decdd4da957897fe5af934881807ed0ce61af4b56"
+                  },
+                  {
+                      "path":  "scripts/Record-R25Decision.ps1",
+                      "size":  766,
+                      "sha256":  "da707bae1a67a24956edd27613a10fd041cdb18bad7798a09e9d81b5226e7156"
+                  },
+                  {
+                      "path":  "scripts/Record-R25Step.ps1",
+                      "size":  1228,
+                      "sha256":  "539954cd8a546242159e19c7224c0ce7ee789ac44488d7af296b80db70de9c4b"
+                  },
+                  {
+                      "path":  "scripts/Record-R26Decision.ps1",
+                      "size":  766,
+                      "sha256":  "28051e1c9fdc26b5c86f13f7c68db25b8a1da6f5717fc089c4cd5bdeac9e10ff"
+                  },
+                  {
+                      "path":  "scripts/Record-R26Step.ps1",
+                      "size":  1278,
+                      "sha256":  "627d2c239ab7bec4ad243fb8c44ad9f28e705e4b4b81227ab2e824efc62bef0b"
+                  },
+                  {
+                      "path":  "scripts/Record-R27Decision.ps1",
+                      "size":  766,
+                      "sha256":  "2212520aa10d930cc0baa0912d82a95aca1ca2a09b5e9feb174c93d78d5ce4ee"
+                  },
+                  {
+                      "path":  "scripts/Record-R27Step.ps1",
+                      "size":  1299,
+                      "sha256":  "988490a9dfe035bfcd4da0b55ae41fcad683b3e45b24f00661bc853514e7d73d"
+                  },
+                  {
+                      "path":  "scripts/Record-R28Decision.ps1",
+                      "size":  766,
+                      "sha256":  "6ca229e9e81ba1b9ad1b2eb7864d6f41d12b469dbce905a1cd7885727bc2d4bc"
+                  },
+                  {
+                      "path":  "scripts/Record-R28Step.ps1",
+                      "size":  1299,
+                      "sha256":  "986bc9d2af1790dbbda667ca7e9a05cdbfdda420dd7fdf993101ed07b8e74a58"
+                  },
+                  {
+                      "path":  "scripts/Set-R28Interval-5min.ps1",
+                      "size":  894,
+                      "sha256":  "cc02434079c0bc306774f4e1f7063dc2b7fbf73f62c2cbb11e96b8d4c99de793"
+                  },
+                  {
+                      "path":  "scripts/Start-R24Once.ps1",
+                      "size":  321,
+                      "sha256":  "99d05a44beb4ceb8b4837e57a321d6f9a4e54ae1ff1231a02b8aa06dc4da68b7"
+                  },
+                  {
+                      "path":  "scripts/Start-R25Once.ps1",
+                      "size":  321,
+                      "sha256":  "7c0caf926b7f9227989ac6687b39b30889f4716e913a68f08da832c1ee8d3626"
+                  },
+                  {
+                      "path":  "scripts/Start-R26Once.ps1",
+                      "size":  321,
+                      "sha256":  "9f5996d66cd36bad2a81c5ccaa4ac79e33e3d51882b63386fded0c76df4d6557"
+                  },
+                  {
+                      "path":  "scripts/Start-R27Once.ps1",
+                      "size":  321,
+                      "sha256":  "7298c4404fb0b57465381be8e3c4b3d83b4aae1e5be9923c2aff7f9c29f3ef1e"
+                  },
+                  {
+                      "path":  "scripts/Start-R28Once.ps1",
+                      "size":  321,
+                      "sha256":  "93382180cea329178b5d4ed6437b31e2ea0ec0332479dac26b832e522699a76a"
+                  },
+                  {
+                      "path":  "scripts/Uninstall-R24ImprovementTask.ps1",
+                      "size":  613,
+                      "sha256":  "86be15b79b08a2f8438997b77169d034ce684844e9e179b9bd27f5588bab8a72"
+                  },
+                  {
+                      "path":  "scripts/Uninstall-R25ImprovementTask.ps1",
+                      "size":  613,
+                      "sha256":  "a84525b39a2d27bc16eb0b893dcbf7d81fb3be91850c03c9c4965d2ffbcc72d2"
+                  },
+                  {
+                      "path":  "scripts/Uninstall-R26ImprovementTask.ps1",
+                      "size":  613,
+                      "sha256":  "43266e55816f51b19fb07a5bc6f8d744142b4173227e0ec1991d86cd2913f97d"
+                  },
+                  {
+                      "path":  "scripts/Uninstall-R27ImprovementTask.ps1",
+                      "size":  613,
+                      "sha256":  "394364c58ac6d709c7e60922e9ca0dcca9d238263d8eb5b998a5b061d6f46d48"
+                  },
+                  {
+                      "path":  "scripts/Uninstall-R28ImprovementTask.ps1",
+                      "size":  613,
+                      "sha256":  "ae82533f0d368f64166036df357360ff8c76907a03dde76289a7f38f1a780aed"
+                  },
+                  {
+                      "path":  "src/hanri/__init__.py",
+                      "size":  80,
+                      "sha256":  "55ac19d6c89224d632116a3f02a7d3d4392c2908b71ef464899ceeb3d115a163"
+                  },
+                  {
+                      "path":  "src/hanri/__main__.py",
+                      "size":  48,
+                      "sha256":  "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+                  },
+                  {
+                      "path":  "src/hanri/archive.py",
+                      "size":  17925,
+                      "sha256":  "6eab6b642c6ca8860012a52218ae9b792b0d0af7ce9ec1d064a78a44e668601f"
+                  },
+                  {
+                      "path":  "src/hanri/cli.py",
+                      "size":  67580,
+                      "sha256":  "d79c71c5e83523a0d8c41f63e6795fbffbcedc36cbca6bc8a2738c3c69d6d5d4"
+                  },
+                  {
+                      "path":  "src/hanri/truth.py",
+                      "size":  13471,
+                      "sha256":  "25b909973c526fb9aeeac75806bd93da55395b7d1baacc54116748b4cbac19e1"
+                  },
+                  {
+                      "path":  "tests/test_hanri.py",
+                      "size":  21768,
+                      "sha256":  "371b4106287a80cddc90b2b65ec6588d3b65e18f406ae8093c85e237712927fa"
+                  }
+              ],
+    "excluded_count":  10,
+    "excluded":  [
+                     {
+                         "path":  "evidence\\SECRET_BOUNDARY_AUDIT_R28.json",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "evidence\\SECRET_FINDING_FINGERPRINTS_R28.csv",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "evidence\\SECRET_SCAN_R26.json",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "evidence\\SECRET_SCAN_R27.json",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "evidence\\SECRET_SCAN_R28.json",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "src\\hanri\\__pycache__\\__init__.cpython-311.pyc",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "src\\hanri\\__pycache__\\__main__.cpython-311.pyc",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "src\\hanri\\__pycache__\\archive.cpython-311.pyc",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "src\\hanri\\__pycache__\\cli.cpython-311.pyc",
+                         "reason":  "policy_exclusion"
+                     },
+                     {
+                         "path":  "src\\hanri\\__pycache__\\truth.cpython-311.pyc",
+                         "reason":  "policy_exclusion"
+                     }
+                 ],
+    "can_trade":  false,
+    "self_application":  false,
+    "note":  "Read-only forensic export. Review for secrets before git add/commit. No runtime mutation performed."
+}

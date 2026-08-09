@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TRUTH_KERNEL_V0_R27",
+  "title": "Minimal Truth Kernel Event",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "entity_id",
+    "field",
+    "value",
+    "evidence_class",
+    "universe_id",
+    "event_time",
+    "observation_time",
+    "freshness",
+    "source_refs",
+    "status"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entity_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {},
+    "evidence_class": {
+      "enum": [
+        "VERIFIED_FACT",
+        "SOURCE_BACKED_CLAIM",
+        "INFERENCE",
+        "ASSUMPTION",
+        "HYPOTHESIS",
+        "UNKNOWN"
+      ]
+    },
+    "universe_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_time": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "observation_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "acceptance_time": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "freshness": {
+      "enum": [
+        "CURRENT_READBACK",
+        "CURRENT_SOURCE",
+        "HISTORICAL",
+        "STALE",
+        "UNKNOWN"
+      ]
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "evidence_family_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "ACCEPTED",
+        "REJECTED",
+        "SUPERSEDED",
+        "HOLD",
+        "UNKNOWN"
+      ]
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "can_trade": {
+      "const": false
+    }
+  },
+  "additionalProperties": true
+}

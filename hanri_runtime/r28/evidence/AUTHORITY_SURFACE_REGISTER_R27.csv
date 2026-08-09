@@ -1,0 +1,8 @@
+﻿surface_id,root_or_target,role,mutation_or_effect_path,evidence_state,material_note,disposition
+AS-01,C:/PROJECTS/continuity_os,Canonical external runtime,swarm_sync / bounded work orders,CURRENT_SOURCE_CAPTURE,Root exists; root Git baseline NOT satisfied,HOLD
+AS-02,C:/PROJECTS/continuity_os/BIN/continuity.py,Historical checkpoint CLI path,checkpoint mutation path,HISTORICAL_CONFIRMED / CURRENT_POST_FIX_UNKNOWN,Contract conflicted with AGENTS/swarm_sync in July audit,REVERIFY
+AS-03,C:/PROJECTS/continuity_os/BIN/swarm_sync.py,Declared canonical mutation plane,runtime/canon mutations,HISTORICAL_SOURCE / CURRENT_POST_FIX_UNKNOWN,Must be proven exclusive,REVERIFY
+AS-04,C:/PROJECTS/continuityos,Sibling Python governance/product repository,package/gate code,SEPARATE_REPOSITORY,Must not be confused with canonical runtime,SEPARATE
+AS-05,C:/PROJECTS/continuity_os/mind,Nested Git repository,subsystem code,CURRENT_NESTED_REPOSITORY_CAPTURE,Not root authority,READ_ONLY_UNTIL_BOUND
+AS-06,BitEvo continuity_bridge.py,Shadow ledger bridge,shadow writes,HISTORICAL_2026-07-19,Ledger reportedly had one test record only; no current readback,STALE
+AS-07,Brain journal API,Observability projection,journal events,HISTORICAL,"Projection, not authority",NON_AUTHORITY

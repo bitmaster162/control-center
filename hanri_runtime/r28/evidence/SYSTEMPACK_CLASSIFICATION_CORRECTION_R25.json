@@ -1,0 +1,53 @@
+{
+  "version": "R25",
+  "claim_rejected": "systempack_*.md are Zxcvbn password dictionaries",
+  "physical_finding": "The four 5.2MB files live under continuity_os archive paths, begin with # SYSTEMPACK_* and contain # >>> segment_* project sections.",
+  "files": [
+    {
+      "path": "payload/PROJECTS_417a3384/_ARCHIVE/continuity_os_attic/gdrive_harvest_2026-04-12/docs/general/systempack_ultimate.md",
+      "size_bytes": 5208892,
+      "sha256": "cdad66819bb6a682df8c0069add7b596952d0a29a2e98c189d42fe08c8638613",
+      "lines": 62538,
+      "content_class": "SYSTEMPACK_PROJECT_CORPUS_DERIVATIVE_WRAPPER",
+      "read_by": "R24_FULL_TEXT",
+      "full_text_read": true,
+      "project_substantive": true
+    },
+    {
+      "path": "payload/PROJECTS_417a3384/_ARCHIVE/continuity_os_attic/gdrive_harvest_2026-04-12/docs/general/systempack_extended.md",
+      "size_bytes": 5208882,
+      "sha256": "cfc52c4d645efa35542cc3c4e14bec77df494f1ebafe85fa09050ceb2e6fc0d2",
+      "lines": 62538,
+      "content_class": "SYSTEMPACK_PROJECT_CORPUS_DERIVATIVE_WRAPPER",
+      "read_by": "R24_FULL_TEXT",
+      "full_text_read": true,
+      "project_substantive": true
+    },
+    {
+      "path": "payload/PROJECTS_417a3384/_ARCHIVE/continuity_os_attic/gdrive_harvest_2026-04-12/docs/general/systempack_battle.md",
+      "size_bytes": 5208320,
+      "sha256": "265993ef50526c0f022e6c1962ef92ae9884b5cd01ee5320042231d50b03f1bd",
+      "lines": 62508,
+      "content_class": "SYSTEMPACK_PROJECT_CORPUS_DERIVATIVE_WRAPPER",
+      "read_by": "R24_FULL_TEXT",
+      "full_text_read": true,
+      "project_substantive": true
+    },
+    {
+      "path": "payload/PROJECTS_417a3384/_ARCHIVE/continuity_os_attic/gdrive_harvest_2026-04-12/docs/general/systempack_strict.md",
+      "size_bytes": 5208320,
+      "sha256": "e0655aba31a90ccbf8825f72c7a105a3324f03057adf9c9e566e4dd84374a647",
+      "lines": 62508,
+      "content_class": "SYSTEMPACK_PROJECT_CORPUS_DERIVATIVE_WRAPPER",
+      "read_by": "R24_FULL_TEXT",
+      "full_text_read": true,
+      "project_substantive": true
+    }
+  ],
+  "normalized_evidence_family": {
+    "occurrences": 4,
+    "independent_families": 1,
+    "normalized_sha256": "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18"
+  },
+  "disposition": "FABLE_V4_REVISE_CLASSIFICATION / SYSTEMPACK_CONTENT_ALREADY_READ_R24"
+}

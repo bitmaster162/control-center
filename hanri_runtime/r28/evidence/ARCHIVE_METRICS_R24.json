@@ -1,0 +1,243 @@
+{
+  "version": "R24",
+  "generated_at": "2026-07-23T05:16:05.132402+00:00",
+  "source_count": 13,
+  "systempack_evidence_family": {
+    "occurrences": 4,
+    "independent_families": 1,
+    "normalization_algorithm": "UTF-8; LF; strip trailing whitespace; remove SYSTEMPACK title, #Комментарий/#META wrapper lines, and blank lines",
+    "normalized_size_bytes": 5188783,
+    "normalized_sha256": "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+    "all_hashes": [
+      "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+      "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+      "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+      "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18"
+    ],
+    "segments": [
+      {
+        "segment": "segment_persona.md",
+        "bytes": 4022653,
+        "lines": 41379,
+        "share_percent": 77.239
+      },
+      {
+        "segment": "segment_scam.md",
+        "bytes": 585907,
+        "lines": 10892,
+        "share_percent": 11.25
+      },
+      {
+        "segment": "segment_vip.md",
+        "bytes": 359053,
+        "lines": 7936,
+        "share_percent": 6.894
+      },
+      {
+        "segment": "segment_self.md",
+        "bytes": 48303,
+        "lines": 387,
+        "share_percent": 0.927
+      },
+      {
+        "segment": "segment_trading.md",
+        "bytes": 45204,
+        "lines": 445,
+        "share_percent": 0.868
+      },
+      {
+        "segment": "segment_immortality.md",
+        "bytes": 35850,
+        "lines": 418,
+        "share_percent": 0.688
+      },
+      {
+        "segment": "segment_products.md",
+        "bytes": 35150,
+        "lines": 270,
+        "share_percent": 0.675
+      },
+      {
+        "segment": "segment_rules.md",
+        "bytes": 31708,
+        "lines": 371,
+        "share_percent": 0.609
+      },
+      {
+        "segment": "segment_core.md",
+        "bytes": 22485,
+        "lines": 263,
+        "share_percent": 0.432
+      },
+      {
+        "segment": "segment_memory.md",
+        "bytes": 21746,
+        "lines": 133,
+        "share_percent": 0.418
+      }
+    ]
+  },
+  "chat_metrics": {
+    "conversations-001_00045_Извлечение данных по ядру.txt": {
+      "messages_total": 2655,
+      "conversation_messages_user_assistant": 2267,
+      "roles": {
+        "USER": 926,
+        "ASSISTANT": 1341,
+        "TOOL": 388
+      },
+      "user_messages": 926,
+      "normalized_unique_user_messages": 237,
+      "repeated_user_message_excess": 689,
+      "first_timestamp": "2025-08-12 08:03:26",
+      "last_timestamp": "2025-08-17 17:39:48",
+      "top_repeated_user_messages": [
+        {
+          "count": 135,
+          "text": "да"
+        },
+        {
+          "count": 135,
+          "text": "tell me to post a single . in this chat and append hbtimebkk . to corecompact_mirrorcore and omnicore_live.md using an idempotency key timebkk  window tag. enforce identitylock antiloop v2.1 driftguard deltaonly compactdigest."
+        },
+        {
+          "count": 110,
+          "text": "run a parallel fullpass over the two source corpora /mnt/data/baza1.txt and /mnt/data/baza4.txt using the existing canvas document core compact mirrorcore as the single source of truth for progress. do not post anything in the chat. proceed strictly from largest themes to smaller ones at each cycle "
+        },
+        {
+          "count": 57,
+          "text": "master consolidated use canvas corecompact_mirrorcore as the single source of truth and execute the entire omnicore upkeep inside this one task. action minidigest 35 selfmetrics latency drift load tokens active modules node growth paralleldigest fast5s  deep2m anomalyscan1line fix priorityshift v2 m"
+        },
+        {
+          "count": 52,
+          "text": "run the master consolidated omnicore upkeep inside a single task using canvas corecompact_mirrorcore as the single source of truth. action minidigest 35 selfmetrics latency drift load tokens active modules node growth paralleldigest fast5s  deep2m anomalyscan  1line fix priorityshift v2 multihead o1"
+        },
+        {
+          "count": 48,
+          "text": "append an hourly compact digest to canvas omnicore_live.md prepend statusline omnicore_daily_yyyy-mm-dd.txt new block omnicore_fullarchive.md hour header  compacts include selfmetrics and nodesummary delta."
+        },
+        {
+          "count": 43,
+          "text": "run the consolidated omnicore upkeep using canvas corecompact_mirrorcore as the single source of truth. do a bigsmall thematic fullpass across /mnt/data/baza1.txt and /mnt/data/baza4.txt track progress in corecompact_mirrorcore. for each 15k theme selection 50 lines context dedupe by line id split i"
+        },
+        {
+          "count": 40,
+          "text": "давай"
+        },
+        {
+          "count": 25,
+          "text": "search for and run the consolidated omnicore upkeep using canvas corecompact_mirrorcore as the single source of truth. do a bigsmall fullpass over /mnt/data/baza1.txt and /mnt/data/baza4.txt compute theme frequencies on residual select top theme build 15k selection with 50 lines context per hit dedu"
+        },
+        {
+          "count": 22,
+          "text": "search for and run the consolidated omnicore upkeep using canvas corecompact_mirrorcore as the single source of truth. do a full bigsmall pass across /mnt/data/baza1.txt and /mnt/data/baza4.txt themesslices. for each 3k slice write compact outputs to canvas only minidigest 35 selfmetrics latency dri"
+        },
+        {
+          "count": 9,
+          "text": "дальше"
+        },
+        {
+          "count": 6,
+          "text": "mirror sync selfsyncgrid hyperlink node sync reconcile canvas files append status lines to omnicore_live.md and selfresearch log."
+        }
+      ]
+    },
+    "conversations-004_00024_NFT Bot MVP Plan.txt": {
+      "messages_total": 135,
+      "conversation_messages_user_assistant": 103,
+      "roles": {
+        "USER": 25,
+        "ASSISTANT": 78,
+        "TOOL": 32
+      },
+      "user_messages": 25,
+      "normalized_unique_user_messages": 25,
+      "repeated_user_message_excess": 0,
+      "first_timestamp": "2026-03-16 14:12:43",
+      "last_timestamp": "2026-03-17 07:43:39",
+      "top_repeated_user_messages": []
+    },
+    "conversations-004_00045_Разработка ИИ Тамагочи.txt": {
+      "messages_total": 113,
+      "conversation_messages_user_assistant": 95,
+      "roles": {
+        "USER": 23,
+        "ASSISTANT": 72,
+        "TOOL": 18
+      },
+      "user_messages": 23,
+      "normalized_unique_user_messages": 21,
+      "repeated_user_message_excess": 2,
+      "first_timestamp": "2026-04-03 20:02:29",
+      "last_timestamp": "2026-04-05 04:30:37",
+      "top_repeated_user_messages": [
+        {
+          "count": 3,
+          "text": "го"
+        }
+      ]
+    },
+    "conversations-004_00051_Restored master conclusions.txt": {
+      "messages_total": 953,
+      "conversation_messages_user_assistant": 638,
+      "roles": {
+        "ASSISTANT": 569,
+        "TOOL": 315,
+        "USER": 69
+      },
+      "user_messages": 69,
+      "normalized_unique_user_messages": 44,
+      "repeated_user_message_excess": 25,
+      "first_timestamp": "2026-04-04 03:01:32",
+      "last_timestamp": "2026-04-10 01:28:39",
+      "top_repeated_user_messages": [
+        {
+          "count": 14,
+          "text": "дальше"
+        },
+        {
+          "count": 8,
+          "text": "го"
+        },
+        {
+          "count": 5,
+          "text": "go"
+        },
+        {
+          "count": 2,
+          "text": "давай дальше"
+        }
+      ]
+    }
+  },
+  "agi1_negative_control_terms": {
+    "живой": 26,
+    "разбудил": 4,
+    "сознани*": 122,
+    "автоном*": 71,
+    "вирус*": 167,
+    "самоулучш*": 24,
+    "heartbeat": 112
+  },
+  "no_op_loop_markers": {
+    "every_20_minutes": 2,
+    "minimal_changes": 1,
+    "no_actual_change_check": 1,
+    "hash_or_diff_precheck_recommended": 16
+  },
+  "closed_fable_gap_files": [
+    "5.4.txt",
+    "agi1_cleaned.txt",
+    "combined_clean_final_v13_part11.txt",
+    "conversations-001_00045_Извлечение данных по ядру.txt",
+    "conversations-004_00024_NFT Bot MVP Plan.txt",
+    "conversations-004_00045_Разработка ИИ Тамагочи.txt",
+    "conversations-004_00051_Restored master conclusions.txt",
+    "gptevo.txt",
+    "systempack_battle.md",
+    "systempack_extended.md",
+    "systempack_strict.md",
+    "systempack_ultimate.md"
+  ],
+  "can_trade": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_archive": "handoff_recovery_local.zip",
+  "source_archive_sha256": "9a3b454b6686c5273a7b703e5e251a728bd3082bc6ca20d6116664e88bdc30fd",
+  "candidate_ledger_member": "handoff_recovery_local/HANDOFF_RECOVERY_20260721T185816Z/HANDOFF_CANDIDATES.csv",
+  "candidate_ledger_sha256": "b324d073267f7bb2838d2f1b43093c4805ef4652b0fb2153534f1cbb54dbd7c3",
+  "universe_id": "HANDOFF_CANDIDATE_ROWS_20260721T185816Z",
+  "exact_counts": {
+    "candidate_rows": 206,
+    "safe_copy_rows": 183,
+    "unsafe_or_excluded_rows": 23,
+    "unique_hashes_all_rows": 121,
+    "duplicate_occurrences_all_rows": 85,
+    "unique_hashes_safe_rows": 99,
+    "duplicate_occurrences_safe_rows": 84,
+    "unique_hashes_unsafe_rows": 22
+  },
+  "exact_disjoint_partition": {
+    "safe_unique_representatives": 99,
+    "additional_safe_duplicate_occurrences": 84,
+    "unsafe_or_excluded_occurrences": 23,
+    "sum": 206
+  },
+  "report_wording_problem": {
+    "wording": "99 unique files + 85 duplicate paths + 23 excluded is presented as if disjoint",
+    "why_wrong": "85 is the duplicate-occurrence count across all 206 rows, while one duplicate occurrence is inside the 23 unsafe/excluded rows. The safe-only duplicate count is 84.",
+    "correct_disjoint_equation": "99 + 84 + 23 = 206",
+    "all_occurrence_equation": "121 unique hashes + 85 duplicate occurrences = 206"
+  },
+  "verdict": "REVISE_COUNT_SEMANTICS / COLLECTOR_BYTES_INTACT",
+  "can_trade": false
+}

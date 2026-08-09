@@ -1,0 +1,18 @@
+test_dual_native_outputs_and_decision (test_hanri.IntegrationTests.test_dual_native_outputs_and_decision) ... ok
+test_event_is_processed_once_by_hash (test_hanri.IntegrationTests.test_event_is_processed_once_by_hash) ... ok
+test_candidate_requires_human_gate_and_passes_falsification (test_hanri.RuleTests.test_candidate_requires_human_gate_and_passes_falsification) ... ok
+test_depth_above_two_stops (test_hanri.RuleTests.test_depth_above_two_stops) ... ok
+test_dual_native_and_correction_learning (test_hanri.RuleTests.test_dual_native_and_correction_learning) ... ok
+test_duplicate_evidence_is_detected (test_hanri.RuleTests.test_duplicate_evidence_is_detected) ... ok
+test_false_interiority_and_persona_confusion (test_hanri.RuleTests.test_false_interiority_and_persona_confusion) ... ok
+test_git_baseline_and_temporal_leakage (test_hanri.RuleTests.test_git_baseline_and_temporal_leakage) ... ok
+test_human_agency_stack_and_p0_precedence (test_hanri.RuleTests.test_human_agency_stack_and_p0_precedence) ... ok
+test_no_material_delta_stops_recursion (test_hanri.RuleTests.test_no_material_delta_stops_recursion) ... ok
+test_tool_success_is_not_effect (test_hanri.RuleTests.test_tool_success_is_not_effect) ... ok
+test_user_completion_blocks_rerun_and_missing_without_coverage (test_hanri.RuleTests.test_user_completion_blocks_rerun_and_missing_without_coverage) ... ok
+test_secret_value_is_replaced_by_fingerprint (test_hanri.SanitizationTests.test_secret_value_is_replaced_by_fingerprint) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.012s
+
+OK

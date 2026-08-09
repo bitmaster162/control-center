@@ -1,0 +1,6 @@
+﻿source_id,name,sha256,size_bytes,class,use
+SRC-R27-001,handoff_recovery_local.zip,9a3b454b6686c5273a7b703e5e251a728bd3082bc6ca20d6116664e88bdc30fd,13310626,PHYSICAL_ZIP,"Primary for collector, audit and high-impact ledgers"
+SRC-R27-002,Consolidated_Report_20260722_1.docx,0e772ec024ddae01108fccdb5501a49369cf8ee4ec21b8de32be8cee006f6130,38946,PHYSICAL_DOCX,Latest Fable forensic report
+SRC-R27-003,Bit Evo Unified Canonical State.docx,a96b9c26eb45a77b8341d04d5173cdd05df45f32524aa95910b43ae54c90b654,26754,PHYSICAL_DOCX / 5 IDENTICAL DRIVE OCCURRENCES,Origin specification
+SRC-R27-004,MAIN_CODEX_MAIN-033_20260722T141355968Z.zip,dced80ef6e49c7b5e3831b9c56ce11d4ba1a23cc50d311d5a2ed4c29b7101257,237299,PHYSICAL_AGENT_RETURN,Current root/Git/state capture
+SRC-R27-005,CAUSAL_ARCHIVE_AND_HANRI_R26_20260723.zip,73fb354afb3677cdec43a0db213494ef853493b30b653e30451f259134281617,260690,SEALED_PARENT,Parent module and state

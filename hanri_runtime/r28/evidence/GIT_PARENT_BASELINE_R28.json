@@ -1,0 +1,10 @@
+{
+  "version": "GIT_PARENT_BASELINE_R28",
+  "recorded_at": "2026-07-23T13:52:13.116126+00:00",
+  "parent_commit": "0782ba4965ff61ffae0e487dc542f6e595bf8f41",
+  "parent_tree": "18be439690826ec19a189699c6cbff033ce28106",
+  "baseline_verified": true,
+  "baseline_worktree_clean": true,
+  "secrets_excluded": true,
+  "can_trade": false
+}

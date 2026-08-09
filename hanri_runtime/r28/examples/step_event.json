@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "task_id": "EXAMPLE-TASK",
+  "step_id": "STEP-01",
+  "event_type": "STEP_END",
+  "actor": "GPT-5.6-Pro",
+  "goal": "Find and accept an existing agent return.",
+  "human_summary": "The first return folder was empty, but Robert stated the work was complete.",
+  "recursion_depth": 0,
+  "checks": {
+    "user_confirmed_completion": true,
+    "rerun_requested": true,
+    "negative_claim": "MISSING",
+    "coverage_certificate_present": false,
+    "avoidable_operator_burden": true,
+    "changed_control": true
+  },
+  "evidence_refs": [
+    {"type": "OPERATOR_CORRECTION", "evidence_class": "SOURCE_BACKED_CLAIM"}
+  ],
+  "can_trade": false
+}

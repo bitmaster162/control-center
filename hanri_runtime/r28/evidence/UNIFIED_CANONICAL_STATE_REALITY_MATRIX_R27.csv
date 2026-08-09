@@ -1,0 +1,8 @@
+﻿id,canon_claim,current_evidence,disposition,required_gate
+TK-01,One agreed source of truth,"Root runtime exists, but root is not a Git worktree and current checkpoint identity diverges from historical cp-0388.",REVISE,Need explicit operational projection and repository-bound authority.
+TK-02,Raw archive is source; derived layers recomputable,Supported by archive method and content-addressed evidence families.,ADOPT,Bind every derivative to source family and scope certificate.
+TK-03,Model proposes writes; controlled layer commits,Historically violated by direct/fallback mutation paths; current post-fix status not physically admitted.,HOLD,Require current fail-closed truth-kernel verification.
+TK-04,Contradiction tracker mandatory,"Archive repeatedly shows numeric, version and identity contradictions.",ADOPT,"Promote as deterministic ledger, not prose."
+TK-05,Cognitive energy budget limits useless loops,Directly supported by quota/operator-burden incidents.,ADOPT,Keep API/retry default DENY and no-material-delta stop.
+TK-06,Event log/reducers/snapshots/rebuild,Coherent design; implementation not verified end-to-end.,EXP_ONLY,Test in new disposable SCCS-LAB after Git baseline.
+TK-07,Human coevolution layer,Useful only as consented feedback and explicit decision loop.,REVISE,"No hidden adaptation, identity fusion or autonomous self-rewrite."

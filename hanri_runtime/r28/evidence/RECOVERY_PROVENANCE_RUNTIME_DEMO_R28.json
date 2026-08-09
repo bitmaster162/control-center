@@ -1,0 +1,117 @@
+{
+  "audit": {
+    "schema_version": 1,
+    "artifact_count": 99,
+    "copied_count": 99,
+    "primary_source_eligible_count": 4,
+    "control_or_self_derivative_count": 12,
+    "self_ingested_count": 2,
+    "secret_finding_count": 12,
+    "claims": {
+      "credential_values_output_false": true,
+      "no_source_effect_proof_claimed": true,
+      "no_secret_content_proof_inferred": true,
+      "claimed_primary_coverage_count": 99,
+      "unsafe_count_label": "excluded_pointer_only",
+      "unsafe_non_pointer_count": 12,
+      "secret_scanner_claimed_complete": true,
+      "secret_findings_escaped_scan": 12
+    },
+    "self_ingested_artifact_ids": [
+      "HR99-003",
+      "HR99-077"
+    ],
+    "statuses": [
+      "CONTENT_SECRET_SAFETY_FALSE_CLAIM",
+      "CONTROL_ARTIFACT_COVERAGE_INFLATION",
+      "PROOF_SCOPE_CONFLATION",
+      "RECOVERY_SELF_INGESTION",
+      "SECRET_SCANNER_COVERAGE_GAP",
+      "UNSAFE_ROW_LABEL_MISMATCH"
+    ],
+    "status": "REVISE",
+    "can_trade": false,
+    "audit_sha256": "eafaade8313c6d6ca09830fb529be8241a420d3b1cea8d7e85ee6d1b55ee909e"
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "RP-7f839d7f898f95591a84",
+    "task_id": "ARCHIVE-R28",
+    "step_id": "HANDOFF-RECOVERY-PROVENANCE",
+    "event_type": "RECOVERY_PROVENANCE_AUDIT",
+    "actor": "HANRI_R28",
+    "goal": "Audit recovery provenance, self-ingestion and secret-content boundaries.",
+    "human_summary": "Recovery package provenance and content-safety audit.",
+    "checks": {
+      "changed_evidence": true,
+      "recovery_self_ingestion": true,
+      "content_secret_safety_false_claim": true,
+      "control_artifact_coverage_inflation": true,
+      "proof_scope_conflation": true,
+      "unsafe_row_label_mismatch": true,
+      "secret_scanner_coverage_gap": true
+    },
+    "payload": {
+      "recovery_provenance_audit": {
+        "schema_version": 1,
+        "artifact_count": 99,
+        "copied_count": 99,
+        "primary_source_eligible_count": 4,
+        "control_or_self_derivative_count": 12,
+        "self_ingested_count": 2,
+        "secret_finding_count": 12,
+        "claims": {
+          "credential_values_output_false": true,
+          "no_source_effect_proof_claimed": true,
+          "no_secret_content_proof_inferred": true,
+          "claimed_primary_coverage_count": 99,
+          "unsafe_count_label": "excluded_pointer_only",
+          "unsafe_non_pointer_count": 12,
+          "secret_scanner_claimed_complete": true,
+          "secret_findings_escaped_scan": 12
+        },
+        "self_ingested_artifact_ids": [
+          "HR99-003",
+          "HR99-077"
+        ],
+        "statuses": [
+          "CONTENT_SECRET_SAFETY_FALSE_CLAIM",
+          "CONTROL_ARTIFACT_COVERAGE_INFLATION",
+          "PROOF_SCOPE_CONFLATION",
+          "RECOVERY_SELF_INGESTION",
+          "SECRET_SCANNER_COVERAGE_GAP",
+          "UNSAFE_ROW_LABEL_MISMATCH"
+        ],
+        "status": "REVISE",
+        "can_trade": false,
+        "audit_sha256": "eafaade8313c6d6ca09830fb529be8241a420d3b1cea8d7e85ee6d1b55ee909e"
+      }
+    },
+    "evidence_refs": [
+      {
+        "type": "ZIP",
+        "sha256": "9a3b454b6686c5273a7b703e5e251a728bd3082bc6ca20d6116664e88bdc30fd",
+        "filename": "handoff_recovery_local.zip"
+      },
+      {
+        "type": "COLLECTOR_SOURCE",
+        "sha256": "14589b7089c35d1f16f52a1d8448b3f1dd09505c6ca0546e0fd5a52695f9da48",
+        "filename": "handoff_collector_r28_source.ps1"
+      }
+    ],
+    "recursion_depth": 0,
+    "can_trade": false
+  },
+  "detected_failure_classes": [
+    "CONTENT_SECRET_SAFETY_FALSE_CLAIM",
+    "SECRET_SCANNER_COVERAGE_GAP",
+    "CONTROL_ARTIFACT_COVERAGE_INFLATION",
+    "PROOF_SCOPE_CONFLATION",
+    "RECOVERY_SELF_INGESTION",
+    "UNSAFE_ROW_LABEL_MISMATCH"
+  ],
+  "stop_reason": null,
+  "self_applied_changes": 0,
+  "external_model_api_calls": 0,
+  "can_trade": false
+}

@@ -1,0 +1,107 @@
+{
+  "collector_correct_partition": {
+    "schema_version": 1,
+    "universe_id": "HANDOFF_CANDIDATE_ROWS",
+    "total": 206,
+    "components": {
+      "safe_unique_representatives": 99,
+      "safe_duplicate_occurrences": 84,
+      "unsafe_or_excluded_occurrences": 23
+    },
+    "component_sum": 206,
+    "delta": 0,
+    "declared_disjoint": true,
+    "overlap_matrix_required": false,
+    "status": "PASS",
+    "can_trade": false,
+    "audit_sha256": "627c18ffc4a8b03bbd6acc10db2789b010e5cef0d3bcfa25dfa3a3c1c0229a7a"
+  },
+  "collector_report_mixed_partition": {
+    "schema_version": 1,
+    "universe_id": "HANDOFF_REPORT_MIXED_COUNTS",
+    "total": 206,
+    "components": {
+      "safe_unique_representatives": 99,
+      "all_duplicate_occurrences": 85,
+      "unsafe_or_excluded_occurrences": 23
+    },
+    "component_sum": 207,
+    "delta": 1,
+    "declared_disjoint": true,
+    "overlap_matrix_required": false,
+    "status": "ARITHMETIC_PARTITION_INCONSISTENCY",
+    "can_trade": false,
+    "audit_sha256": "5d4bb96da9fb6974becc665b5c820266e78dad90fbb80401e4e8a7fd6815387d"
+  },
+  "checkpoint_all_partition": {
+    "schema_version": 1,
+    "universe_id": "ALL_CHECKPOINT_RECORDS",
+    "total": 970,
+    "components": {
+      "evidenced": 327,
+      "at_most_claimed": 643
+    },
+    "component_sum": 970,
+    "delta": 0,
+    "declared_disjoint": true,
+    "overlap_matrix_required": false,
+    "status": "PASS",
+    "can_trade": false,
+    "audit_sha256": "a2b66749474c12b4abd9bd59153d7654ba6c6b492f013320e1523bea0966aac9"
+  },
+  "checkpoint_mixed_partition": {
+    "schema_version": 1,
+    "universe_id": "STRONG_PROGRESS_MIXED_WITH_ALL_RECORDS",
+    "total": 787,
+    "components": {
+      "evidenced_all_records": 327,
+      "claimed_strong_progress": 551
+    },
+    "component_sum": 878,
+    "delta": 91,
+    "declared_disjoint": true,
+    "overlap_matrix_required": false,
+    "status": "ARITHMETIC_PARTITION_INCONSISTENCY",
+    "can_trade": false,
+    "audit_sha256": "dc91d3c9df1c7247e0fab233df9ccdb0a7e536bbb939c01dc5813c09e7e35ec8"
+  },
+  "authority_surface_audit": {
+    "schema_version": 1,
+    "surfaces": [
+      {
+        "surface_id": "continuity_os_runtime",
+        "root_or_target": "C:/PROJECTS/continuity_os",
+        "mutable": true,
+        "current_authority": true,
+        "evidence_state": "CURRENT_SOURCE_CAPTURE",
+        "notes": ""
+      },
+      {
+        "surface_id": "continuityos_package_repo",
+        "root_or_target": "C:/PROJECTS/continuityos",
+        "mutable": true,
+        "current_authority": true,
+        "evidence_state": "SEPARATE_REPOSITORY",
+        "notes": ""
+      },
+      {
+        "surface_id": "nested_mind_repo",
+        "root_or_target": "C:/PROJECTS/continuity_os/mind",
+        "mutable": true,
+        "current_authority": false,
+        "evidence_state": "NESTED_REPOSITORY",
+        "notes": ""
+      }
+    ],
+    "active_mutable_authority_surfaces": [
+      "continuity_os_runtime",
+      "continuityos_package_repo"
+    ],
+    "active_mutable_authority_count": 2,
+    "single_effect_broker_verified": false,
+    "status": "AUTHORITY_SURFACE_MULTIPLICITY",
+    "can_trade": false,
+    "audit_sha256": "ead3798ab899edebe7fbfb09a2d3822a0ef2d732d097ab4c176782ae02bd81ae"
+  },
+  "can_trade": false
+}

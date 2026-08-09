@@ -1,0 +1,47 @@
+{
+  "version": "R26",
+  "generated_at": "2026-07-23T00:00:00Z",
+  "past": {
+    "archive_method": "CAUSAL_SPINE_ORIGIN_PIVOT_CURRENT",
+    "source001_primary": {
+      "mechanical_conversations": 536,
+      "chronology": "PARTIAL / DISTINCT CURSOR",
+      "wave013_241_260": "USER_CONFIRMED_COMPLETE / PHYSICAL_PACKAGE_NOT_FOUND_IN_CURRENT_DRIVE_SEARCH",
+      "next_cursor": "DO_NOT_ADVANCE_UNTIL_INGESTION"
+    },
+    "legacy_2503": {
+      "conversations": 473,
+      "analytical_steps": "001-473",
+      "authority": "SECONDARY_ANALYTICAL / NOT SOURCE001 RANKS"
+    },
+    "handoff_recovery_99": "COMPLETE_WITHIN_SCOPE / PASS_WITH_CONDITIONS",
+    "global_archive_completeness": "UNKNOWN"
+  },
+  "present": {
+    "continuityos_main033": "CURRENT_CAPTURE_ACCEPTED_BOUNDED / ROOT_GIT_BASELINE_NOT_SATISFIED",
+    "maworld": "LOCAL_EVIDENCE_STRONG / LIVE_OFF / PRODUCTION_HOLD",
+    "hanri_r26": {
+      "status": "IMPLEMENTED_IN_VERIFIED_R25_GIT_LINEAGE / TESTED / NOT_INSTALLED",
+      "parent_commit": "36f13a6819dadb05f43e4441e9fd93b5e3dc29ea",
+      "features": [
+        "CAUSAL_SPINE",
+        "SCOPE_BOUND_COMPLETENESS",
+        "LIVENESS_FRESHNESS",
+        "PROBE_ROOT_CAUSE_SEPARATION",
+        "ROOT_REPOSITORY_SEPARATION",
+        "MULTI_CURSOR_ARCHIVE"
+      ],
+      "self_apply": false,
+      "external_model_api": "DENY"
+    }
+  },
+  "future": {
+    "sccs": "EXP_ONLY_CANDIDATE",
+    "next_build": "BLOCKED_UNTIL_RETURN_INGESTION + BUILD_DECISION + NEW_GIT_BASELINE",
+    "pandora_cosmos": "SIMULATION_ONLY"
+  },
+  "global": {
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}

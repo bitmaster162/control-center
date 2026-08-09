@@ -1,0 +1,8 @@
+﻿cluster_id,topic,claim_a,claim_b_or_correction,status,primary_basis
+CC-01,HANDOFF_COLLECTOR_COUNTS,206 candidates; 121 unique hashes; 183 safe; 99 copied; 23 excluded; 85 duplicates,The counts use overlapping universes. Correct disjoint partition is 99 safe representatives + 84 additional safe duplicates + 23 excluded = 206.,RESOLVED,Exact HANDOFF_CANDIDATES.csv
+CC-02,CHECKPOINT_PROGRESS_COUNTS,787 strong progress; 327 evidenced; 551 claimed,327 is over all 970 records; 551 is inside the 787 strong-progress subset. Correct all-record partition is 327+643=970; strong-progress non-claimed derives as 236.,RESOLVED,CONTINUITY_META_AUDIT_V1.md
+CC-03,UNIFIED_CANONICAL_STATE,One versioned/replayable governed state,Current canonical root has no root Git baseline; nested repos and historical mutation-path conflict remain.,OPEN_CURRENT_IMPLEMENTATION_GAP,BitEvo canon + MAIN-033
+CC-04,POST_FABLE_FIX_STATUS,Three Fable work orders issued,V10 matrix has 20/20 post_fable_state NOT_EVALUATED; current Claude verification return not physically ingested here.,OPEN,HIGH_IMPACT_CURRENT_STATE.csv
+CC-05,ARCHIVE_COMPLETENESS,99-file recovery corpus complete,Complete only within exact handoff-recovery scope; global archive completeness remains unknown.,RESOLVED_SCOPE,R25/R26 coverage certificates
+CC-06,PAPER_VS_LIVE,Grid Lab +83k vs $0 live P&L,Different measurement classes; not contradictory.,RESOLVED,Fable consolidated report
+CC-07,PASS_READY_VS_PRODUCTION,Local test/package PASS,"PASS/READY does not authorize production, capital, credentials or deployment.",RESOLVED_INVARIANT,MAWorld and control receipts

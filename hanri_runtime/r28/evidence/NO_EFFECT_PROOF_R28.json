@@ -1,0 +1,14 @@
+{
+  "version": "NO_EFFECT_PROOF_R28",
+  "generated_at": "2026-07-23T13:52:13.116126+00:00",
+  "source_archives_modified": false,
+  "repositories_outside_hanri_modified": false,
+  "runtime_or_scheduler_modified": false,
+  "drive_authority_modified": false,
+  "credentials_accessed_as_values_for_use": false,
+  "raw_secret_values_exported": false,
+  "external_model_api_calls": 0,
+  "trading_or_capital_effects": false,
+  "local_hanri_repository_modified": true,
+  "can_trade": false
+}

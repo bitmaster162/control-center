@@ -1,0 +1,8 @@
+﻿scope_id,scope_definition,denominator,numerator_or_progress,status,evidence_ceiling,material_condition
+SCOPE-HANDOFF-RECOVERY-99,HANDOFF_RECOVERY_20260721T185816Z payload candidates,99,99,PASS_WITH_CONDITIONS,Recovery-candidate manifest only,Fable aggregate 80 lacks embedded 80-row ledger; R25 independently binds remaining 19
+SCOPE-LOCAL-RUNTIME-R16-1,29 top-level local ZIP/DOCX roots available in that runtime,2061,2061 detected text objects; 1 known read error,COMPLETE_FOR_DETECTED_TEXT_WITH_KNOWN_ERROR,Detected text only,Not PDFs/images/OCR; one corrupted Bitunix member; not File Library/Drive global scope
+SCOPE-LEGACY-2503,legacy raw 2503.zip,473 conversations,mechanical source audit,SOURCE_AUDITED,Legacy export only,Separate from Source-001 536; cumulative 001-307 and analytical 308-473 are not Source-001 ranks
+SCOPE-SOURCE001-536,primary ChatGPT Source-001,536 conversations,536 mechanically indexed,MECHANICAL_COMPLETE / CHRONOLOGY_PARTIAL,Primary conversation export,Exact chronology is a separate cursor; attachment debt remains
+SCOPE-SOURCE001-ATTACHMENTS,Source-001 referenced attachments,1340 IDs,195 present-and-linked in prior audit,PARTIAL,Attachment identity scope,1145 referenced assets missing in prior ledger; no global completeness
+SCOPE-CURRENT-RETURNS,current agent-return surfaces,all user-confirmed complete,physical intake incomplete in this chat,DISCOVERY/INGESTION_PENDING,Return-surface scope,R23/R26 local sync must discover and freeze exact bytes; no reruns
+SCOPE-CONTINUITYOS-MAIN033,C:\PROJECTS\continuity_os current recapture,3882 source rows,3882 captured; 1332 secret/bulk exclusions,CURRENT_CAPTURE_ACCEPTED_BOUNDED,Current source snapshot,Root Git baseline absent; three nested repositories; cp-0388 mismatch

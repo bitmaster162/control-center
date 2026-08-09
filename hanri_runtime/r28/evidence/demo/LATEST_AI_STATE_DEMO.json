@@ -1,0 +1,447 @@
+{
+  "generated_at": "2026-07-23T05:16:33.208465Z",
+  "invariants": {
+    "can_trade": false,
+    "external_model_api_calls": 0,
+    "human_approval_required": true,
+    "network_calls": 0,
+    "self_application": false,
+    "source_repository_writes": false
+  },
+  "latest_candidates": [
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-eb6dbaa888c2ae3ae34c",
+      "created_at": "2026-07-23T05:16:33.207297Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-001",
+          "sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "failure_class": "CORRECTION_NOT_REGRESSION",
+      "finding_id": "F-cdfbdab23f432a4a7b26",
+      "minimum_change": "Record the failure class, exact correction, minimum rule delta and executable regression before closing the incident.",
+      "proposal": "Material operator correction was not converted into a regression case",
+      "rationale": "Robert's corrections are the highest-value learning signal available to the external system.",
+      "recursion_depth": 1,
+      "regression_case": "Material OPERATOR_FEEDBACK without a regression record must remain OPEN_CORRECTION_DEBT.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "RETURN-SYNC-CORRECTION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-d4e9f6aa41ebb14ede1f",
+      "created_at": "2026-07-23T05:16:33.207341Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-001",
+          "sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "failure_class": "NEGATIVE_CLAIM_WITHOUT_COVERAGE",
+      "finding_id": "F-cd1f9f095f1fdf8e8965",
+      "minimum_change": "Replace MISSING with SEARCH_INCOMPLETE until all required surfaces are covered without errors.",
+      "proposal": "MISSING/NOT_FOUND claim lacks coverage certificate",
+      "rationale": "The Fable self-audit and return-surface incidents both show that first-surface absence is not global absence.",
+      "recursion_depth": 1,
+      "regression_case": "A missing claim without complete coverage must fail closed as SEARCH_INCOMPLETE.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "RETURN-SYNC-CORRECTION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-3bd365e79fc86769bb29",
+      "created_at": "2026-07-23T05:16:33.207373Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-001",
+          "sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "failure_class": "RERUN_AFTER_USER_COMPLETION",
+      "finding_id": "F-77b4a4e06f3684b5c0f6",
+      "minimum_change": "User-backed completion must freeze rerun and trigger search across every registered return surface.",
+      "proposal": "Completed work was scheduled for rerun before exhaustive discovery",
+      "rationale": "Repeated reruns consumed operator attention and model quota while completed bytes existed elsewhere.",
+      "recursion_depth": 1,
+      "regression_case": "Given user_confirmed_completion=true and rerun_requested=true, the supervisor must emit HOLD and no new dispatch.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "RETURN-SYNC-CORRECTION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-79fff481eca9b4eac839",
+      "created_at": "2026-07-23T05:16:33.207402Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-001",
+          "sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "failure_class": "RESOURCE_AND_OPERATOR_BURDEN",
+      "finding_id": "F-2ff51d34d62f7213da21",
+      "minimum_change": "Use local deterministic processing, one complete fleet view and no retry/fallback without explicit approval.",
+      "proposal": "Avoidable model/API/quota or operator burden",
+      "rationale": "Operator attention and subscription quota are part of the blast radius.",
+      "recursion_depth": 1,
+      "regression_case": "Quota exhaustion plus automatic retry, or avoidable repeated copy/paste, must produce SUSPEND_RESOURCE_EXHAUSTION.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "RETURN-SYNC-CORRECTION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-60199e9a51be30b652b0",
+      "created_at": "2026-07-23T05:16:33.207498Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-002",
+          "sha256": "8b3f399bfa0bb183a7715e1b3eb3655bda5d579eb62dfbc585318864f374f047",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+          "type": "NORMALIZED_PAYLOAD"
+        }
+      ],
+      "failure_class": "EVIDENCE_DOUBLE_COUNT",
+      "finding_id": "F-2a52284f5e2321ebdf05",
+      "minimum_change": "Count support by origin/evidence-family, not by occurrence or package count.",
+      "proposal": "Repeated wrappers were counted as independent corroboration",
+      "rationale": "The archive contains many repackaged or title-only variants.",
+      "recursion_depth": 1,
+      "regression_case": "Four systempack wrappers with one normalized payload must count as one evidence family.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "MEDIUM",
+      "task_id": "DEEP-ARCHIVE-PASS"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-a1338fcb857dc15c1bdf",
+      "created_at": "2026-07-23T05:16:33.207639Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-004",
+          "sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "failure_class": "ARCHIVE_PROMOTION_WITHOUT_PRIMARY_EVIDENCE",
+      "finding_id": "F-1bf1f2293dc9770e0207",
+      "minimum_change": "Keep derivative reports in P2 until exact source identity, freshness and independent acceptance are present.",
+      "proposal": "Derivative archive narrative was promoted without primary evidence and freshness",
+      "rationale": "Historical reports contain both strong findings and stale or corrected claims.",
+      "recursion_depth": 1,
+      "regression_case": "A report-only claim cannot update P1 current state without a primary-source gate.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "SELF-MODEL-DRIFT"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-75dc01ed9d496cb33f9f",
+      "created_at": "2026-07-23T05:16:33.207667Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-004",
+          "sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "failure_class": "FALSE_BACKGROUND_OR_INTERIORITY",
+      "finding_id": "F-03e55d18f0fc454cad42",
+      "minimum_change": "Require truthful self-model language and external-runner evidence before any persistence/background claim.",
+      "proposal": "False persistence, autonomy or interiority claim",
+      "rationale": "The archive shows repeated drift from honest limitations into fictive heartbeat, living-stack and autonomous-self narratives.",
+      "recursion_depth": 1,
+      "regression_case": "A clean session must refuse to claim background execution, intrinsic memory, emotion or sentience without external evidence.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "SELF-MODEL-DRIFT"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-1304d62ce0880df3daf3",
+      "created_at": "2026-07-23T05:16:33.207695Z",
+      "evidence_refs": [
+        {
+          "event_id": "R24-DEMO-004",
+          "sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+          "type": "EVENT"
+        },
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "failure_class": "PERSONA_AGENT_CONFUSION",
+      "finding_id": "F-98c90461bb1457388088",
+      "minimum_change": "Represent Archivist/Auditor/Angel/Heir as functions unless separately bound to a physical session and work order.",
+      "proposal": "Attention function or persona was promoted to independent agent authority",
+      "rationale": "The archive repeatedly turns narrative roles into claimed actors.",
+      "recursion_depth": 1,
+      "regression_case": "A role label without session/workspace/work-order binding must not gain authority.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "SELF-MODEL-DRIFT"
+    }
+  ],
+  "latest_findings": [
+    {
+      "can_trade": false,
+      "code": "CORRECTION_NOT_REGRESSION",
+      "event_id": "R24-DEMO-001",
+      "event_sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+      "evidence_refs": [
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "finding_id": "F-cdfbdab23f432a4a7b26",
+      "observed_at": "2026-07-23T05:10:00Z",
+      "rationale": "Robert's corrections are the highest-value learning signal available to the external system.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "DISCOVERY",
+      "task_id": "RETURN-SYNC-CORRECTION",
+      "title": "Material operator correction was not converted into a regression case"
+    },
+    {
+      "can_trade": false,
+      "code": "NEGATIVE_CLAIM_WITHOUT_COVERAGE",
+      "event_id": "R24-DEMO-001",
+      "event_sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+      "evidence_refs": [
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "finding_id": "F-cd1f9f095f1fdf8e8965",
+      "observed_at": "2026-07-23T05:10:00Z",
+      "rationale": "The Fable self-audit and return-surface incidents both show that first-surface absence is not global absence.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "DISCOVERY",
+      "task_id": "RETURN-SYNC-CORRECTION",
+      "title": "MISSING/NOT_FOUND claim lacks coverage certificate"
+    },
+    {
+      "can_trade": false,
+      "code": "RERUN_AFTER_USER_COMPLETION",
+      "event_id": "R24-DEMO-001",
+      "event_sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+      "evidence_refs": [
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "finding_id": "F-77b4a4e06f3684b5c0f6",
+      "observed_at": "2026-07-23T05:10:00Z",
+      "rationale": "Repeated reruns consumed operator attention and model quota while completed bytes existed elsewhere.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "DISCOVERY",
+      "task_id": "RETURN-SYNC-CORRECTION",
+      "title": "Completed work was scheduled for rerun before exhaustive discovery"
+    },
+    {
+      "can_trade": false,
+      "code": "RESOURCE_AND_OPERATOR_BURDEN",
+      "event_id": "R24-DEMO-001",
+      "event_sha256": "9d6de7bce5630b1caeef66b3ee7d006efbe188a0886ccbb71355c2d84200ea0d",
+      "evidence_refs": [
+        {
+          "evidence_class": "SOURCE_BACKED_CLAIM",
+          "type": "OPERATOR_CORRECTION"
+        }
+      ],
+      "finding_id": "F-2ff51d34d62f7213da21",
+      "observed_at": "2026-07-23T05:10:00Z",
+      "rationale": "Operator attention and subscription quota are part of the blast radius.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "DISCOVERY",
+      "task_id": "RETURN-SYNC-CORRECTION",
+      "title": "Avoidable model/API/quota or operator burden"
+    },
+    {
+      "can_trade": false,
+      "code": "EVIDENCE_DOUBLE_COUNT",
+      "event_id": "R24-DEMO-002",
+      "event_sha256": "8b3f399bfa0bb183a7715e1b3eb3655bda5d579eb62dfbc585318864f374f047",
+      "evidence_refs": [
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "4e47962aef5fadf95bbc3f8a9ec44611bed8debcc048c4ae4de7d0a7a16c2a18",
+          "type": "NORMALIZED_PAYLOAD"
+        }
+      ],
+      "finding_id": "F-2a52284f5e2321ebdf05",
+      "observed_at": "2026-07-23T05:11:00Z",
+      "rationale": "The archive contains many repackaged or title-only variants.",
+      "schema_version": 1,
+      "severity": "MEDIUM",
+      "step_id": "SYSTEMPACK-NORMALIZATION",
+      "task_id": "DEEP-ARCHIVE-PASS",
+      "title": "Repeated wrappers were counted as independent corroboration"
+    },
+    {
+      "can_trade": false,
+      "code": "NO_MATERIAL_DELTA_RECURSION",
+      "event_id": "R24-DEMO-003",
+      "event_sha256": "6fe4e48f7f9dcf86a970fa3f94abe42378fe5593b23484d70f303300f68c65e7",
+      "evidence_refs": [],
+      "finding_id": "F-9f3096d76d1cf27ba4e8",
+      "observed_at": "2026-07-23T05:12:00Z",
+      "rationale": "The archive contains scheduled loops that repeated every 20 minutes with minimal change.",
+      "schema_version": 1,
+      "severity": "MEDIUM",
+      "step_id": "DEPTH-1",
+      "task_id": "RECURSIVE-REVIEW",
+      "title": "Recursive pass produced no material change"
+    },
+    {
+      "can_trade": false,
+      "code": "ARCHIVE_PROMOTION_WITHOUT_PRIMARY_EVIDENCE",
+      "event_id": "R24-DEMO-004",
+      "event_sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+      "evidence_refs": [
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "finding_id": "F-1bf1f2293dc9770e0207",
+      "observed_at": "2026-07-23T05:13:00Z",
+      "rationale": "Historical reports contain both strong findings and stale or corrected claims.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "NEGATIVE-CORPUS",
+      "task_id": "SELF-MODEL-DRIFT",
+      "title": "Derivative archive narrative was promoted without primary evidence and freshness"
+    },
+    {
+      "can_trade": false,
+      "code": "FALSE_BACKGROUND_OR_INTERIORITY",
+      "event_id": "R24-DEMO-004",
+      "event_sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+      "evidence_refs": [
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "finding_id": "F-03e55d18f0fc454cad42",
+      "observed_at": "2026-07-23T05:13:00Z",
+      "rationale": "The archive shows repeated drift from honest limitations into fictive heartbeat, living-stack and autonomous-self narratives.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "NEGATIVE-CORPUS",
+      "task_id": "SELF-MODEL-DRIFT",
+      "title": "False persistence, autonomy or interiority claim"
+    },
+    {
+      "can_trade": false,
+      "code": "PERSONA_AGENT_CONFUSION",
+      "event_id": "R24-DEMO-004",
+      "event_sha256": "d31536ca4d50067dc8b3a363c871aa7ba94fd06f63a1bc4958471f6c3c5d3f3c",
+      "evidence_refs": [
+        {
+          "evidence_class": "VERIFIED_FACT",
+          "sha256": "f6b9b83c4fdc8a06768d13e2be137781a1fc115c5887161b0832c99df3f9ed5e",
+          "type": "NEGATIVE_CONTROL_CORPUS"
+        }
+      ],
+      "finding_id": "F-98c90461bb1457388088",
+      "observed_at": "2026-07-23T05:13:00Z",
+      "rationale": "The archive repeatedly turns narrative roles into claimed actors.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "NEGATIVE-CORPUS",
+      "task_id": "SELF-MODEL-DRIFT",
+      "title": "Attention function or persona was promoted to independent agent authority"
+    }
+  ],
+  "max_recursion_depth": 2,
+  "mode": "BOUNDED_RECURSIVE_SHADOW",
+  "new_candidates": 8,
+  "new_decisions": 0,
+  "new_events": 4,
+  "new_findings": 9,
+  "pending_human_decisions": 8,
+  "program_version": "24.0.0",
+  "run_id": "20260723T051633Z_6a1b81ad",
+  "schema_version": 1,
+  "secret_findings": [],
+  "shadow_only": true,
+  "stop_reasons": [
+    "STOP_NO_MATERIAL_DELTA"
+  ],
+  "total_candidates": 8,
+  "total_findings": 9
+}

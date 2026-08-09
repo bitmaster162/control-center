@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "source_member": "handoff_recovery_local/HANDOFF_RECOVERY_20260721T185816Z/payload/Downloads_19440c3d/Contgpt/CONTINUITY_META_AUDIT_V1.md",
+  "source_member_sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+  "all_records_universe": {
+    "total": 970,
+    "evidenced": 327,
+    "at_most_claimed": 643,
+    "sum": 970,
+    "status": "PASS"
+  },
+  "strong_progress_universe": {
+    "total": 787,
+    "at_most_claimed": 551,
+    "derived_not_in_claimed_bucket": 236,
+    "status": "PASS_DERIVED_FROM_SOURCE_COUNTS"
+  },
+  "report_wording_problem": {
+    "wording": "Of 787 strong-progress records, 327 are evidenced and 551 remain claimed.",
+    "why_wrong": "327 is the evidenced count over all 970 parsed records, not the 787 strong-progress subset. The source does not state 327 evidenced inside the strong-progress universe.",
+    "mixed_sum": 878,
+    "mixed_delta_against_787": 91
+  },
+  "proof_ledger": {
+    "records_inspected": 233,
+    "proof_id_present": 0,
+    "hash_or_digest_present": 0,
+    "signature_present": 0,
+    "status_present": 0,
+    "verdict": "NARRATIVE_LEDGER / NOT_MACHINE_VERIFIABLE_PROOF"
+  },
+  "verdict": "COUNT_UNIVERSE_CONFLATION_CONFIRMED",
+  "can_trade": false
+}

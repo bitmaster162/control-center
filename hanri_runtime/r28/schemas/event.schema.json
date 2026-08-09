@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "HANRI_R26_EVENT",
+  "type": "object",
+  "required": [
+    "task_id",
+    "step_id",
+    "event_type",
+    "actor",
+    "can_trade"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "step_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_type": {
+      "enum": [
+        "TASK_START",
+        "STEP_START",
+        "EVIDENCE_ADDED",
+        "TOOL_RESULT",
+        "STEP_END",
+        "TASK_END",
+        "OPERATOR_FEEDBACK",
+        "STATE_SNAPSHOT",
+        "DISPATCH",
+        "SIMULATION_RESULT",
+        "ARCHIVE_PROMOTION",
+        "ARCHIVE_FRONTIER_ADVANCE",
+        "ARCHIVE_CAUSAL_SPINE"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string"
+    },
+    "human_summary": {
+      "type": "string"
+    },
+    "recursion_depth": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "checks": {
+      "type": "object"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "payload": {
+      "type": "object"
+    },
+    "can_trade": {
+      "const": false
+    }
+  },
+  "additionalProperties": true
+}

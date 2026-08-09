@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "version": "R26",
+  "repository": "HANRI_R26_REPO",
+  "verified_parent_commit": "36f13a6819dadb05f43e4441e9fd93b5e3dc29ea",
+  "verified_parent_tree": "1728214ee3dbc26868720b3049b47cfdd47d729a",
+  "parent_branch": "main",
+  "parent_worktree_clean": true,
+  "material_changes_started_after_parent_verification": true,
+  "final_commit_binding": "RECORDED_OUTSIDE_REPOSITORY_IN_R26_PACKAGE_RECEIPT",
+  "external_model_api_calls": 0,
+  "self_application": false,
+  "can_trade": false
+}

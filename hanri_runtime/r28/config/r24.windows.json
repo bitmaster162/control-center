@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "program_version": "24.0.0",
+  "shadow_only": true,
+  "external_model_api": "DENY",
+  "can_trade": false,
+  "max_recursion_depth": 2,
+  "lock_stale_seconds": 1800,
+  "state_root": "%LOCALAPPDATA%\\ControlCenterHANRIR24\\state",
+  "lock_file": "%LOCALAPPDATA%\\ControlCenterHANRIR24\\state\\hanri.lock",
+  "event_inbox": "%LOCALAPPDATA%\\ControlCenterHANRIR24\\event_inbox",
+  "decision_inbox": "%LOCALAPPDATA%\\ControlCenterHANRIR24\\decision_inbox",
+  "human_output_root": "%USERPROFILE%\\My Drive\\Control canter\\00_CONTROL\\HANRI_R24",
+  "r23_state_path": "%LOCALAPPDATA%\\ControlCenterReturnSyncR23\\state\\latest_state.json",
+  "current_state_paths": [
+    "%USERPROFILE%\\My Drive\\Control canter\\CONTROL_CENTER_CURRENT_STATE.json"
+  ]
+}

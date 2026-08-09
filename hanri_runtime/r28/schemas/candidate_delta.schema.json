@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "HANRI_R26_CANDIDATE_DELTA",
+  "type": "object",
+  "required": ["candidate_id", "finding_id", "failure_class", "minimum_change", "regression_case", "authority", "self_apply", "can_trade"],
+  "properties": {
+    "candidate_id": {"type": "string", "pattern": "^C-[a-f0-9]{20}$"},
+    "finding_id": {"type": "string", "pattern": "^F-[a-f0-9]{20}$"},
+    "failure_class": {"type": "string"},
+    "minimum_change": {"type": "string", "minLength": 1},
+    "regression_case": {"type": "string", "minLength": 1},
+    "authority": {"const": "HUMAN_REVIEW_REQUIRED"},
+    "self_apply": {"const": false},
+    "recursion_depth": {"type": "integer", "minimum": 1, "maximum": 2},
+    "can_trade": {"const": false}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "control-center-hanri"
+version = "28.0.0"
+description = "Human-AI Native truth-kernel causal bounded recursive improvement supervisor"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+cc-hanri = "hanri.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

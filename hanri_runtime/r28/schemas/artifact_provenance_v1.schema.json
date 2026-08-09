@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-center.local/schemas/artifact-provenance-v1.json",
+  "title": "Archive Artifact Provenance V1",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "path",
+    "sha256",
+    "artifact_role",
+    "derivation_depth",
+    "primary_source_eligible",
+    "secret_finding_count"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact_role": {
+      "enum": [
+        "PRIMARY_SOURCE",
+        "DERIVATIVE_REPORT",
+        "AGENT_RETURN",
+        "CONTROL_METADATA",
+        "RECOVERY_SELF_DERIVATIVE",
+        "RESTRICTED_SECRET_BEARING",
+        "UNKNOWN"
+      ]
+    },
+    "derivation_depth": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "collector_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_scope_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "copied": {
+      "type": "boolean"
+    },
+    "primary_source_eligible": {
+      "type": "boolean"
+    },
+    "secret_finding_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "secret_fingerprints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "can_trade": {
+      "const": false
+    }
+  },
+  "additionalProperties": true
+}

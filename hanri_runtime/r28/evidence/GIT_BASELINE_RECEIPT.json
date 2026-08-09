@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "repository": "HANRI_R24_REPO",
+  "baseline_commit": "871c8e33d1f8f025788a36815d244b6ed1365928",
+  "baseline_tree": "b8c025ddd947e78bf59aae2b9cc588df4e397ed1",
+  "baseline_branch": "main",
+  "baseline_clean": true,
+  "material_changes_started_after_baseline": true,
+  "secrets_excluded": true,
+  "can_trade": false
+}

@@ -1,0 +1,445 @@
+{
+  "archive_causal_spine": {
+    "can_trade": false,
+    "causal_claim_authority": "NONE_UNTIL_HUMAN_OR_PRIMARY_EVIDENCE_ADJUDICATION",
+    "coverage_certificate": {
+      "can_trade": false,
+      "coverage_percent": 100.0,
+      "coverage_ratio": "3/3",
+      "denominator": 3,
+      "evidence_ceiling": "REGISTERED_CAUSAL_FRONTIER_FILES_ONLY",
+      "files": [
+        {
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true,
+          "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+          "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+          "size_bytes": 1448
+        },
+        {
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true,
+          "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+          "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+          "size_bytes": 17327
+        },
+        {
+          "content_class": "GENERIC_TEXT",
+          "full_text_read": true,
+          "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+          "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+          "size_bytes": 20228
+        }
+      ],
+      "generated_at": "2026-07-23T08:58:20.598381Z",
+      "numerator": 3,
+      "required_full_text": false,
+      "schema_version": 1,
+      "scope_id": "R26_DEMO_ORIGIN_AUDIT_MAIN033",
+      "scope_manifest_sha256": "b1a2e740e923293e5c518444a5af2991ed96015484d6c77aa09e320d09682d88",
+      "status": "COMPLETE"
+    },
+    "current": {
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "first_nonempty_lines": [
+        "{",
+        "\"version\": \"MAIN033_INTAKE_R22\",",
+        "\"zip\": {",
+        "\"filename\": \"MAIN_CODEX_MAIN-033_20260722T141355968Z.zip\",",
+        "\"size_bytes\": 237299,"
+      ],
+      "full_text_read": true,
+      "last_nonempty_lines": [
+        "]",
+        "},",
+        "\"verdict\": \"CURRENT_SOURCE_CAPTURE_ACCEPTED_BOUNDED / GIT_BASELINE_NOT_SATISFIED\",",
+        "\"can_trade\": false",
+        "}"
+      ],
+      "line_count_read": 42,
+      "mtime_utc": "2026-07-23T08:35:53.701622Z",
+      "name": "MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+      "size_bytes": 1448,
+      "suffix": ".json",
+      "text_characters_read": 1448
+    },
+    "current_files_seen": 1,
+    "generated_at": "2026-07-23T08:58:20.598393Z",
+    "inventory_cache_entries": 3,
+    "origin": {
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "first_nonempty_lines": [
+        "# CONTINUATION CHECKPOINT — Batch 308–317",
+        "Source: `/mnt/data/2503.zip` → `2503/conversations-003.json`",
+        "Coverage: conversations **308–317**",
+        "---",
+        "## 1) Что это за кусок в целом"
+      ],
+      "full_text_read": true,
+      "last_nonempty_lines": [
+        "Тут формируются:",
+        "- **Archive OS** — вскрыть, почистить, собрать, читать построчно;",
+        "- **Trading OS** — роли, арбитр, правила, ловушки, сетапы;",
+        "- **Memory OS** — память как вызов, наблюдение, фрактальная запись.",
+        "Это уже не три случайные темы. Это три столба одного ядра."
+      ],
+      "line_count_read": 297,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "name": "archive_continuation_308_317.md",
+      "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+      "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+      "size_bytes": 17327,
+      "suffix": ".md",
+      "text_characters_read": 10923
+    },
+    "origin_files_seen": 1,
+    "pivot": {
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "first_nonempty_lines": [
+        "# ContinuityOS Deep Meta-Audit v1",
+        "**Audit date:** 2026-07-10 (Asia/Bangkok context)",
+        "**Input:** `continuity_os.zip`",
+        "**Mode:** exhaustive inventory + exhaustive text-line traversal + AST/static analysis + dynamic adversarial tests + concurrency stress + checkpoint forensics + claim/proof comparison.",
+        "---"
+      ],
+      "full_text_read": true,
+      "last_nonempty_lines": [
+        "---",
+        "## Final conclusion",
+        "The core thesis is stronger after deep audit, not weaker:",
+        "> **ContinuityOS's real moat candidate is not memory. It is limiting model sovereignty through external canon, authority, causal history and proof.**",
+        "But the current private monorepo violates that thesis at critical boundaries because safety degradation often increases execution freedom. The next decisive move is to make the system obey its own constitution under failure."
+      ],
+      "line_count_read": 729,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "name": "CONTINUITY_META_AUDIT_V1.md",
+      "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+      "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+      "size_bytes": 20228,
+      "suffix": ".md",
+      "text_characters_read": 20106
+    },
+    "pivot_files_seen": 1,
+    "same_name_collisions": [],
+    "scan_interval_seconds": 900,
+    "schema_version": 1,
+    "scope_id": "R26_DEMO_ORIGIN_AUDIT_MAIN033",
+    "status": "SPINE_READY"
+  },
+  "archive_frontier": null,
+  "archive_scope_certificate": {
+    "can_trade": false,
+    "coverage_percent": 100.0,
+    "coverage_ratio": "3/3",
+    "denominator": 3,
+    "evidence_ceiling": "REGISTERED_CAUSAL_FRONTIER_FILES_ONLY",
+    "files": [
+      {
+        "content_class": "GENERIC_TEXT",
+        "full_text_read": true,
+        "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+        "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+        "size_bytes": 1448
+      },
+      {
+        "content_class": "GENERIC_TEXT",
+        "full_text_read": true,
+        "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+        "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+        "size_bytes": 17327
+      },
+      {
+        "content_class": "GENERIC_TEXT",
+        "full_text_read": true,
+        "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+        "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+        "size_bytes": 20228
+      }
+    ],
+    "generated_at": "2026-07-23T08:58:20.598381Z",
+    "numerator": 3,
+    "required_full_text": false,
+    "schema_version": 1,
+    "scope_id": "R26_DEMO_ORIGIN_AUDIT_MAIN033",
+    "scope_manifest_sha256": "b1a2e740e923293e5c518444a5af2991ed96015484d6c77aa09e320d09682d88",
+    "status": "COMPLETE"
+  },
+  "generated_at": "2026-07-23T08:58:20.600022Z",
+  "invariants": {
+    "can_trade": false,
+    "external_model_api_calls": 0,
+    "human_approval_required": true,
+    "network_calls": 0,
+    "self_application": false,
+    "source_repository_writes": false
+  },
+  "latest_candidates": [
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-f336931f3a8678a8c1e6",
+      "created_at": "2026-07-23T08:58:20.598888Z",
+      "evidence_refs": [
+        {
+          "event_id": "R26-NEGATIVE-DEMO",
+          "sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "failure_class": "ROOT_REPOSITORY_CONFLATION",
+      "finding_id": "F-a9dcefb3cdfc6cc5d12a",
+      "minimum_change": "Bind git_toplevel, HEAD, tree and porcelain for the exact physical worktree before repository authority.",
+      "proposal": "A filesystem project root was treated as a verified Git repository root",
+      "rationale": "MAIN-033 found the ContinuityOS filesystem root but no root Git baseline and three nested repositories.",
+      "recursion_depth": 1,
+      "regression_case": "A directory with nested repositories and no root .git must remain AMBIGUOUS_NESTED_REPOSITORY.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "CRITICAL",
+      "task_id": "R26_REGRESSION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-484f8c717290cd2fbf8a",
+      "created_at": "2026-07-23T08:58:20.598925Z",
+      "evidence_refs": [
+        {
+          "event_id": "R26-NEGATIVE-DEMO",
+          "sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "failure_class": "COMPLETENESS_SCOPE_LEAKAGE",
+      "finding_id": "F-0555bb6fab5a53161422",
+      "minimum_change": "Bind every completeness statement to scope_id, manifest hash, numerator, denominator and evidence ceiling.",
+      "proposal": "A bounded archive-coverage result was promoted to global completeness",
+      "rationale": "The recovery corpus can be complete within its 99-file manifest while Source-001 attachments, legacy exports and session mechanisms remain incomplete.",
+      "recursion_depth": 1,
+      "regression_case": "A 99/99 result for one recovery payload must not become all-archives-complete.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R26_REGRESSION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-19ff3fd823011e204cbd",
+      "created_at": "2026-07-23T08:58:20.598953Z",
+      "evidence_refs": [
+        {
+          "event_id": "R26-NEGATIVE-DEMO",
+          "sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "failure_class": "HISTORICAL_LIVENESS_PROMOTION",
+      "finding_id": "F-fc15ba1cbb61b5a93f17",
+      "minimum_change": "Require fresh observed_at, target identity and cache-free target-state readback for current liveness.",
+      "proposal": "Historical service liveness was promoted to current liveness",
+      "rationale": "Archive reports repeatedly preserve valid historical observations whose freshness later expires.",
+      "recursion_depth": 1,
+      "regression_case": "A July handoff saying a service worked cannot establish current liveness without a fresh readback.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R26_REGRESSION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-f49bff158507add76520",
+      "created_at": "2026-07-23T08:58:20.598980Z",
+      "evidence_refs": [
+        {
+          "event_id": "R26-NEGATIVE-DEMO",
+          "sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "failure_class": "PRIMARY_SECONDARY_CURSOR_CONFLATION",
+      "finding_id": "F-fdd817f423b35d1162f9",
+      "minimum_change": "Maintain separate cursor IDs, source hashes, denominators and promotion ceilings for every archive lineage.",
+      "proposal": "Primary Source-001 ranks and legacy analytical step numbers were treated as one cursor",
+      "rationale": "The archive contains both a 473-conversation legacy raw export and a later 536-conversation Source-001 export.",
+      "recursion_depth": 1,
+      "regression_case": "A 473-conversation legacy cursor must never be numerically equated to the 536-conversation Source-001 chronology.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "HIGH",
+      "task_id": "R26_REGRESSION"
+    },
+    {
+      "authority": "HUMAN_REVIEW_REQUIRED",
+      "can_trade": false,
+      "candidate_id": "C-1e3955cd0a19a9a7d388",
+      "created_at": "2026-07-23T08:58:20.599005Z",
+      "evidence_refs": [
+        {
+          "event_id": "R26-NEGATIVE-DEMO",
+          "sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+          "type": "EVENT"
+        },
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "failure_class": "PROBE_ROOT_CAUSE_CONFLATION",
+      "finding_id": "F-21c0b5544e08af0e65fe",
+      "minimum_change": "Track probe_count, failing_probe_count, root_cause_count and evidence_family_count separately.",
+      "proposal": "Probe/test count was presented as unique defect or root-cause count",
+      "rationale": "The ContinuityOS audit explicitly warns that 198 failed checks triangulate a much smaller set of systemic clusters.",
+      "recursion_depth": 1,
+      "regression_case": "Multiple failing probes over one shared defect must not be counted as independent root causes.",
+      "rollback": "Do not promote the candidate; preserve the prior accepted version.",
+      "schema_version": 1,
+      "self_apply": false,
+      "severity": "MEDIUM",
+      "task_id": "R26_REGRESSION"
+    }
+  ],
+  "latest_findings": [
+    {
+      "can_trade": false,
+      "code": "ROOT_REPOSITORY_CONFLATION",
+      "event_id": "R26-NEGATIVE-DEMO",
+      "event_sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+      "evidence_refs": [
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "finding_id": "F-a9dcefb3cdfc6cc5d12a",
+      "observed_at": "2026-07-23T00:00:00Z",
+      "rationale": "MAIN-033 found the ContinuityOS filesystem root but no root Git baseline and three nested repositories.",
+      "schema_version": 1,
+      "severity": "CRITICAL",
+      "step_id": "SCOPE_LIVENESS_ROOT_CAUSE_ROOT_CURSOR",
+      "task_id": "R26_REGRESSION",
+      "title": "A filesystem project root was treated as a verified Git repository root"
+    },
+    {
+      "can_trade": false,
+      "code": "COMPLETENESS_SCOPE_LEAKAGE",
+      "event_id": "R26-NEGATIVE-DEMO",
+      "event_sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+      "evidence_refs": [
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "finding_id": "F-0555bb6fab5a53161422",
+      "observed_at": "2026-07-23T00:00:00Z",
+      "rationale": "The recovery corpus can be complete within its 99-file manifest while Source-001 attachments, legacy exports and session mechanisms remain incomplete.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "SCOPE_LIVENESS_ROOT_CAUSE_ROOT_CURSOR",
+      "task_id": "R26_REGRESSION",
+      "title": "A bounded archive-coverage result was promoted to global completeness"
+    },
+    {
+      "can_trade": false,
+      "code": "HISTORICAL_LIVENESS_PROMOTION",
+      "event_id": "R26-NEGATIVE-DEMO",
+      "event_sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+      "evidence_refs": [
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "finding_id": "F-fc15ba1cbb61b5a93f17",
+      "observed_at": "2026-07-23T00:00:00Z",
+      "rationale": "Archive reports repeatedly preserve valid historical observations whose freshness later expires.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "SCOPE_LIVENESS_ROOT_CAUSE_ROOT_CURSOR",
+      "task_id": "R26_REGRESSION",
+      "title": "Historical service liveness was promoted to current liveness"
+    },
+    {
+      "can_trade": false,
+      "code": "PRIMARY_SECONDARY_CURSOR_CONFLATION",
+      "event_id": "R26-NEGATIVE-DEMO",
+      "event_sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+      "evidence_refs": [
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "finding_id": "F-fdd817f423b35d1162f9",
+      "observed_at": "2026-07-23T00:00:00Z",
+      "rationale": "The archive contains both a 473-conversation legacy raw export and a later 536-conversation Source-001 export.",
+      "schema_version": 1,
+      "severity": "HIGH",
+      "step_id": "SCOPE_LIVENESS_ROOT_CAUSE_ROOT_CURSOR",
+      "task_id": "R26_REGRESSION",
+      "title": "Primary Source-001 ranks and legacy analytical step numbers were treated as one cursor"
+    },
+    {
+      "can_trade": false,
+      "code": "PROBE_ROOT_CAUSE_CONFLATION",
+      "event_id": "R26-NEGATIVE-DEMO",
+      "event_sha256": "be5f2f06a2eadc6d3da3b4fff787eebed553a0705081694d95d66dc6d5923940",
+      "evidence_refs": [
+        {
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "TEST"
+        }
+      ],
+      "finding_id": "F-21c0b5544e08af0e65fe",
+      "observed_at": "2026-07-23T00:00:00Z",
+      "rationale": "The ContinuityOS audit explicitly warns that 198 failed checks triangulate a much smaller set of systemic clusters.",
+      "schema_version": 1,
+      "severity": "MEDIUM",
+      "step_id": "SCOPE_LIVENESS_ROOT_CAUSE_ROOT_CURSOR",
+      "task_id": "R26_REGRESSION",
+      "title": "Probe/test count was presented as unique defect or root-cause count"
+    }
+  ],
+  "max_recursion_depth": 2,
+  "mode": "BOUNDED_RECURSIVE_SHADOW",
+  "new_candidates": 5,
+  "new_decisions": 0,
+  "new_events": 2,
+  "new_findings": 5,
+  "pending_human_decisions": 5,
+  "program_version": "26.0.0",
+  "run_id": "20260723T085820Z_cbc6ad99",
+  "schema_version": 1,
+  "secret_findings": [],
+  "shadow_only": true,
+  "stop_reasons": [],
+  "total_candidates": 5,
+  "total_findings": 5
+}

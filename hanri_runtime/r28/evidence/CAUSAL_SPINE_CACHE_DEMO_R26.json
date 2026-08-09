@@ -1,0 +1,95 @@
+{
+  "/mnt/data/r26_sources/archive_continuation_308_317.md": {
+    "size_bytes": 17327,
+    "mtime_ns": 1784796150409633272,
+    "record": {
+      "path": "/mnt/data/r26_sources/archive_continuation_308_317.md",
+      "name": "archive_continuation_308_317.md",
+      "suffix": ".md",
+      "size_bytes": 17327,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "sha256": "10f347710b66056eb0368f6d6eadc44fb3f657847807b5b0aae42ee8fe8d85c1",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 10923,
+      "line_count_read": 297,
+      "first_nonempty_lines": [
+        "# CONTINUATION CHECKPOINT — Batch 308–317",
+        "Source: `/mnt/data/2503.zip` → `2503/conversations-003.json`",
+        "Coverage: conversations **308–317**",
+        "---",
+        "## 1) Что это за кусок в целом"
+      ],
+      "last_nonempty_lines": [
+        "Тут формируются:",
+        "- **Archive OS** — вскрыть, почистить, собрать, читать построчно;",
+        "- **Trading OS** — роли, арбитр, правила, ловушки, сетапы;",
+        "- **Memory OS** — память как вызов, наблюдение, фрактальная запись.",
+        "Это уже не три случайные темы. Это три столба одного ядра."
+      ]
+    }
+  },
+  "/mnt/data/r26_sources/continuity_meta_audit_v1.md": {
+    "size_bytes": 20228,
+    "mtime_ns": 1784796150409633272,
+    "record": {
+      "path": "/mnt/data/r26_sources/CONTINUITY_META_AUDIT_V1.md",
+      "name": "CONTINUITY_META_AUDIT_V1.md",
+      "suffix": ".md",
+      "size_bytes": 20228,
+      "mtime_utc": "2026-07-23T08:42:30.409633Z",
+      "sha256": "ba507753cbeef188fe8b7cc8e5129b4d34752aa674c3eee81882f0acaee76b05",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 20106,
+      "line_count_read": 729,
+      "first_nonempty_lines": [
+        "# ContinuityOS Deep Meta-Audit v1",
+        "**Audit date:** 2026-07-10 (Asia/Bangkok context)",
+        "**Input:** `continuity_os.zip`",
+        "**Mode:** exhaustive inventory + exhaustive text-line traversal + AST/static analysis + dynamic adversarial tests + concurrency stress + checkpoint forensics + claim/proof comparison.",
+        "---"
+      ],
+      "last_nonempty_lines": [
+        "---",
+        "## Final conclusion",
+        "The core thesis is stronger after deep audit, not weaker:",
+        "> **ContinuityOS's real moat candidate is not memory. It is limiting model sovereignty through external canon, authority, causal history and proof.**",
+        "But the current private monorepo violates that thesis at critical boundaries because safety degradation often increases execution freedom. The next decisive move is to make the system obey its own constitution under failure."
+      ]
+    }
+  },
+  "/mnt/data/archive_legacy_completion_and_return_intake_r22_20260722/main033_independent_intake_r22.json": {
+    "size_bytes": 1448,
+    "mtime_ns": 1784795753701621569,
+    "record": {
+      "path": "/mnt/data/ARCHIVE_LEGACY_COMPLETION_AND_RETURN_INTAKE_R22_20260722/MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "name": "MAIN033_INDEPENDENT_INTAKE_R22.json",
+      "suffix": ".json",
+      "size_bytes": 1448,
+      "mtime_utc": "2026-07-23T08:35:53.701622Z",
+      "sha256": "73f12c6d5e2a2a0d406fd0b3f03288188fc86e708c524fe4dff4193e4f0d0c97",
+      "content_class": "GENERIC_TEXT",
+      "content_signature_verified": true,
+      "full_text_read": true,
+      "text_characters_read": 1448,
+      "line_count_read": 42,
+      "first_nonempty_lines": [
+        "{",
+        "\"version\": \"MAIN033_INTAKE_R22\",",
+        "\"zip\": {",
+        "\"filename\": \"MAIN_CODEX_MAIN-033_20260722T141355968Z.zip\",",
+        "\"size_bytes\": 237299,"
+      ],
+      "last_nonempty_lines": [
+        "]",
+        "},",
+        "\"verdict\": \"CURRENT_SOURCE_CAPTURE_ACCEPTED_BOUNDED / GIT_BASELINE_NOT_SATISFIED\",",
+        "\"can_trade\": false",
+        "}"
+      ]
+    }
+  }
+}
