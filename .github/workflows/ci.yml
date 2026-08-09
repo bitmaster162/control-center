@@ -21,6 +21,27 @@ jobs:
       - run: python -m pip install --disable-pip-version-check pytest jsonschema
       - run: python scripts/validate.py
       - run: python -m pytest -q
+      - name: Parse R29 PS5.1 release entrypoints
+        shell: pwsh
+        run: |
+          $files = @(
+            'hanri_runtime/r28/scripts/Install-R29RC2SideBySide-PS51.ps1',
+            'hanri_runtime/r28/scripts/Verify-R29RC2Runtime-PS51.ps1',
+            'hanri_runtime/r28/scripts/Restore-R29RC1FromRC2.ps1'
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref]$tokens,
+              [ref]$errors
+            ) | Out-Null
+            if ($errors.Count -ne 0) {
+              $errors | ForEach-Object { Write-Error $_.Message }
+              exit 1
+            }
+          }
       - run: node --check assets/app.js
       - name: Verify deterministic generated assets
         run: |
