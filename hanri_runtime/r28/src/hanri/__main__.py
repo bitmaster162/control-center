@@ -1,3 +1,3 @@
-from .identity_cli import main
+from .delta_cli import main
 
 raise SystemExit(main())
