@@ -14,11 +14,12 @@ $DigestPath = Join-Path $StateRoot "latest_human_digest.md"
 $ProjectionReceiptPath = Join-Path $StateRoot "latest_projection_receipt.json"
 $CausalPath = Join-Path $StateRoot "latest_archive_causal_spine.json"
 $ScopePath = Join-Path $StateRoot "latest_archive_scope_certificate.json"
-$InstallReceiptPath = Join-Path $ReceiptRoot "INSTALL_R33_RC1_RECEIPT.json"
+$InstallReceiptPath = Join-Path $ReceiptRoot "INSTALL_R33_RC1_1_RECEIPT.json"
 $ExpectedIntegrityMode = "STREAMING_SHA256_NO_JSON_PARSE"
 $ExpectedIntegrityPolicy = "33.0.0-steady-integrity-inherited-v1"
 $ExpectedScanPolicy = "33.0.0-scandir-metadata-cache-v1"
 $ExpectedScanEngine = "OS_SCANDIR_SINGLE_STAT_CACHE_REUSE"
+$ExpectedProjectionRetryPolicy = "33.0.0-drive-atomic-replace-retry-v1"
 
 $Checks = [ordered]@{}
 $Checks.install_root_exists = Test-Path $InstallRoot
@@ -92,6 +93,9 @@ if ($Checks.projection_receipt_exists) {
     $Checks.projection_scan_engine = ($Projection.material_policy.archive_scan_engine -eq $ExpectedScanEngine)
     $Checks.projection_cache_reuse_true = ($Projection.material_policy.archive_scan_cache_hit_record_reuse -eq $true)
     $Checks.projection_single_stat_true = ($Projection.material_policy.archive_scan_single_stat_metadata_path -eq $true)
+    $Checks.projection_retry_policy = ($Projection.material_policy.projection_atomic_replace_policy -eq $ExpectedProjectionRetryPolicy)
+    $Checks.projection_retry_bounded = ($Projection.material_policy.projection_atomic_replace_retry_bounded -eq $true)
+    $Checks.projection_direct_overwrite_denied = ($Projection.material_policy.projection_atomic_replace_direct_overwrite -eq $false)
     $Checks.projection_integrity_policy = ($Projection.integrity_policy_version -eq $ExpectedIntegrityPolicy)
     $Checks.projection_integrity_mode = ($Projection.heavy_snapshot_integrity_mode -eq $ExpectedIntegrityMode)
     $Checks.projection_streaming_integrity_true = ($Projection.material_policy.fast_path_streaming_sha256_integrity -eq $true)
@@ -139,8 +143,10 @@ if ($Checks.causal_spine_exists -and $Checks.scope_certificate_exists) {
 if ($Checks.install_receipt_exists) {
     $InstallReceipt = Get-Content $InstallReceiptPath -Raw | ConvertFrom-Json
     $Checks.install_receipt_pass = ($InstallReceipt.status -eq "PASS")
+    $Checks.install_release_rc1_1 = ($InstallReceipt.release -eq "HANRI_R33_RC1_1")
     $Checks.install_scan_engine = ($InstallReceipt.scan_engine -eq $ExpectedScanEngine)
     $Checks.install_scan_policy = ($InstallReceipt.scan_policy -eq $ExpectedScanPolicy)
+    $Checks.install_projection_retry_policy = ($InstallReceipt.projection_atomic_replace_policy -eq $ExpectedProjectionRetryPolicy)
     $Checks.install_direct_scan_metrics_present = [bool]$InstallReceipt.direct_scan_metrics
     if ($InstallReceipt.direct_scan_metrics) {
         $Checks.install_direct_scan_files_positive = ([int]$InstallReceipt.direct_scan_metrics.files_seen -gt 0)
@@ -158,7 +164,7 @@ New-Item -ItemType Directory -Force -Path $ReceiptRoot | Out-Null
 $Receipt = [ordered]@{
     schema_version = 1
     status = $Status
-    release = "HANRI_R33_RC1"
+    release = "HANRI_R33_RC1_1"
     verified_at_utc = [DateTime]::UtcNow.ToString("o")
     checks = $Checks
     failed_checks = $Failed
