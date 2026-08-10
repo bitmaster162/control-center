@@ -26,7 +26,8 @@ class R33ArchiveScanProfilerTests(unittest.TestCase):
         origin = root / "origin"
         pivot = root / "pivot"
         current = root / "current"
-        for directory in (state, origin, pivot, current):
+        human_output = pivot / "HANRI_R32"
+        for directory in (state, origin, pivot, current, human_output):
             directory.mkdir(parents=True, exist_ok=True)
 
         origin_file = origin / "a.txt"
@@ -36,6 +37,8 @@ class R33ArchiveScanProfilerTests(unittest.TestCase):
         pivot_file.write_text("{}", encoding="utf-8")
         current_file.write_text("current", encoding="utf-8")
         (current / "ignored.bin").write_bytes(b"binary")
+        for index in range(8):
+            (human_output / f"self_{index}.json").write_text("{}", encoding="utf-8")
 
         cache = {
             str(origin_file.resolve()).casefold(): self._cache_row(origin_file),
@@ -62,6 +65,7 @@ class R33ArchiveScanProfilerTests(unittest.TestCase):
                 "external_model_api": "DENY",
                 "can_trade": False,
                 "state_root": str(state),
+                "human_output_root": str(human_output),
                 "archive_frontier": {
                     "enabled": True,
                     "scope_id": "TEST_R32",
@@ -74,16 +78,30 @@ class R33ArchiveScanProfilerTests(unittest.TestCase):
         )
         return config, state
 
+    def test_probe_matches_runtime_scope_and_excludes_self_projection(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config, _ = self._fixture(Path(tmp))
+            result = profiler.profile_archive_scan(config)
+            self.assertEqual(result["parity"]["status"], "PASS")
+            self.assertTrue(result["parity"]["path_set_equal"])
+            self.assertTrue(result["parity"]["cache_classification_equal"])
+            self.assertTrue(result["parity"]["runtime_scope_denominator_equal"])
+            self.assertEqual(result["legacy"]["totals"]["files_seen"], 3)
+            self.assertEqual(result["scandir_candidate"]["totals"]["files_seen"], 3)
+            self.assertEqual(result["legacy"]["totals"]["excluded_projection_files"], 8)
+            self.assertEqual(result["scandir_candidate"]["totals"]["excluded_projection_files"], 8)
+
     def test_probe_counts_hits_and_stale_without_content_inspection(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             config, _ = self._fixture(Path(tmp))
             result = profiler.profile_archive_scan(config)
-            totals = result["totals"]
-            self.assertEqual(totals["files_seen"], 3)
-            self.assertEqual(totals["cache_hits"], 2)
-            self.assertEqual(totals["cache_stale"], 1)
-            self.assertEqual(totals["cache_missing"], 0)
-            self.assertEqual(totals["would_require_content_inspection"], 1)
+            for mode in ("legacy", "scandir_candidate"):
+                totals = result[mode]["totals"]
+                self.assertEqual(totals["files_seen"], 3)
+                self.assertEqual(totals["cache_hits"], 2)
+                self.assertEqual(totals["cache_stale"], 1)
+                self.assertEqual(totals["cache_missing"], 0)
+                self.assertEqual(totals["would_require_content_inspection"], 1)
             self.assertEqual(result["previous_scope_certificate"]["coverage_ratio"], "3/3")
             self.assertTrue(result["safety"]["read_only"])
             self.assertEqual(result["safety"]["writes_performed"], 0)
