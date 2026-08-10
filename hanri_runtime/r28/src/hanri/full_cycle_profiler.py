@@ -6,7 +6,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 from . import cli as core
 from .r34_profile_instrument import NON_OVERLAP_KEYS, run_profiled_process
@@ -20,8 +20,8 @@ from .r34_profile_support import (
     validate_source_config,
 )
 
-PROBE_VERSION = "34.0.0-probe-v1"
-PROBE_MODE = "ISOLATED_ACCEPTED_R33_FULL_CYCLE_REPLAY"
+PROBE_VERSION = "34.1.0-probe-v1"
+PROBE_MODE = "ISOLATED_ACCEPTED_R33_FULL_CYCLE_REPLAY_WITH_MANIFEST_DELTA"
 
 _validate_source_config = validate_source_config
 _state_metadata_snapshot = state_metadata_snapshot
@@ -31,6 +31,61 @@ _isolated_config = isolated_config
 
 def _percent(value: float, total: float) -> float:
     return round((value / total * 100.0), 3) if total > 0 else 0.0
+
+
+def _manifest_index(scope: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    for raw in scope.get("files", []):
+        if not isinstance(raw, dict):
+            continue
+        path = str(raw.get("path", ""))
+        if not path:
+            continue
+        result[path.casefold()] = {
+            "path": path,
+            "sha256": str(raw.get("sha256", "")),
+            "size_bytes": int(raw.get("size_bytes", 0) or 0),
+            "content_class": str(raw.get("content_class", "")),
+            "full_text_read": bool(raw.get("full_text_read", False)),
+        }
+    return result
+
+
+def _manifest_delta(live_scope: Mapping[str, Any], replay_scope: Mapping[str, Any]) -> dict[str, Any]:
+    live = _manifest_index(live_scope)
+    replay = _manifest_index(replay_scope)
+    live_keys = set(live)
+    replay_keys = set(replay)
+    added = [replay[key] for key in sorted(replay_keys - live_keys)]
+    removed = [live[key] for key in sorted(live_keys - replay_keys)]
+    changed: list[dict[str, Any]] = []
+    unchanged = 0
+    for key in sorted(live_keys & replay_keys):
+        before = live[key]
+        after = replay[key]
+        comparable = ("sha256", "size_bytes", "content_class", "full_text_read")
+        fields = [name for name in comparable if before.get(name) != after.get(name)]
+        if not fields:
+            unchanged += 1
+            continue
+        changed.append({
+            "path": after["path"],
+            "changed_fields": fields,
+            "before": {name: before.get(name) for name in comparable},
+            "after": {name: after.get(name) for name in comparable},
+        })
+    return {
+        "path_set_equal": not added and not removed,
+        "live_paths": len(live),
+        "replay_paths": len(replay),
+        "added_count": len(added),
+        "removed_count": len(removed),
+        "changed_same_path_count": len(changed),
+        "unchanged_same_path_count": unchanged,
+        "added": added,
+        "removed": removed,
+        "changed_same_path": changed,
+    }
 
 
 def profile_full_cycle(config_path: Path) -> dict[str, Any]:
@@ -76,7 +131,10 @@ def profile_full_cycle(config_path: Path) -> dict[str, Any]:
 
         live_denominator = int(live_scope_before.get("denominator", 0) or 0)
         sandbox_denominator = int(scope.get("denominator", 0) or 0)
-        scope_manifest_equal = bool(live_scope_before.get("scope_manifest_sha256") and scope.get("scope_manifest_sha256") and live_scope_before.get("scope_manifest_sha256") == scope.get("scope_manifest_sha256"))
+        live_manifest_sha = str(live_scope_before.get("scope_manifest_sha256", ""))
+        replay_manifest_sha = str(scope.get("scope_manifest_sha256", ""))
+        scope_manifest_equal = bool(live_manifest_sha and replay_manifest_sha and live_manifest_sha == replay_manifest_sha)
+        manifest_delta = _manifest_delta(live_scope_before, scope)
         self_rows = [row for row in scope.get("files", []) if "HANRI_R33" in str(row.get("path", ""))]
 
         failures: list[str] = []
@@ -119,6 +177,9 @@ def profile_full_cycle(config_path: Path) -> dict[str, Any]:
                 "denominator": sandbox_denominator,
                 "live_denominator_before": live_denominator,
                 "manifest_equal_to_live_before": scope_manifest_equal,
+                "live_manifest_sha256": live_manifest_sha,
+                "replay_manifest_sha256": replay_manifest_sha,
+                "manifest_delta": manifest_delta,
                 "live_r33_self_projection_excluded": not self_rows,
             },
             "result": {
@@ -144,7 +205,7 @@ def profile_full_cycle(config_path: Path) -> dict[str, Any]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="R34 isolated full-cycle profiler for accepted HANRI R33")
+    parser = argparse.ArgumentParser(description="R34.1 isolated full-cycle profiler with exact manifest delta")
     parser.add_argument("--config", type=Path, required=True)
     return parser
 
