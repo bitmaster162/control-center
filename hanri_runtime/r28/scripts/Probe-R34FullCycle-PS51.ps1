@@ -31,5 +31,10 @@ Write-Host "HEAD:   $Head"
 Write-Host "Live R33 state and Drive output are read-only; replay writes only under TEMP."
 
 $env:PYTHONPATH = Join-Path $SourceRoot "src"
+$env:PYTHONDONTWRITEBYTECODE = "1"
 & $Python -m hanri.full_cycle_profiler --config $Config
 if ($LASTEXITCODE -ne 0) { throw "R34 profiler failed with exit code $LASTEXITCODE" }
+
+$DirtyAfter = (& git -C $SourceRoot status --porcelain 2>$null | Out-String).Trim()
+if ($LASTEXITCODE -ne 0) { throw "R34 probe gate: post-probe git status failed" }
+if ($DirtyAfter) { throw "R34 probe gate: source worktree changed during probe" }
