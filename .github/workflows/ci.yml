@@ -39,7 +39,10 @@ jobs:
             'hanri_runtime/r28/scripts/Restore-R31FromR32.ps1',
             'hanri_runtime/r28/scripts/Install-R33ReleaseCandidate-PS51.ps1',
             'hanri_runtime/r28/scripts/Verify-R33Runtime-PS51.ps1',
-            'hanri_runtime/r28/scripts/Restore-R32FromR33.ps1'
+            'hanri_runtime/r28/scripts/Restore-R32FromR33.ps1',
+            'hanri_runtime/r28/scripts/Install-R35ReleaseCandidate-PS51.ps1',
+            'hanri_runtime/r28/scripts/Verify-R35Runtime-PS51.ps1',
+            'hanri_runtime/r28/scripts/Restore-R33FromR35.ps1'
           )
           foreach ($file in $files) {
             $bytes = [System.IO.File]::ReadAllBytes((Resolve-Path $file))
