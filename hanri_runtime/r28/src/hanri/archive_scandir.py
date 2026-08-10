@@ -10,6 +10,7 @@ from . import delta_cli as r30
 
 SCAN_POLICY_VERSION = "33.0.0-scandir-metadata-cache-v1"
 SCAN_ENGINE = "OS_SCANDIR_SINGLE_STAT_CACHE_REUSE"
+_LAST_SCAN_METRICS: dict[str, Any] = {}
 
 
 def _path_key(path: Path) -> str:
@@ -35,6 +36,10 @@ def _excluded_roots() -> tuple[Path, ...]:
 
 def _is_excluded(path: Path, excluded: Sequence[Path]) -> bool:
     return any(_within(path, root) for root in excluded)
+
+
+def get_last_scan_metrics() -> dict[str, Any]:
+    return dict(_LAST_SCAN_METRICS)
 
 
 def iter_file_metadata_scandir(
@@ -66,18 +71,13 @@ def iter_file_metadata_scandir(
         stack = [root]
         while stack:
             directory = stack.pop()
-            try:
-                entries = os.scandir(directory)
-            except OSError:
-                raise
-            with entries:
+            with os.scandir(directory) as entries:
                 for entry in entries:
                     if entry.is_dir(follow_symlinks=False):
                         child = Path(entry.path)
                         if not _is_excluded(child, excluded):
                             stack.append(child)
                         continue
-
                     if Path(entry.name).suffix.lower() not in suffixes:
                         continue
                     if not entry.is_file(follow_symlinks=True):
@@ -137,6 +137,21 @@ def _scan_records(
     return rows, next_cache, metrics
 
 
+def _publish_metrics(kind: str, sections: Mapping[str, Mapping[str, int]], started: float) -> None:
+    global _LAST_SCAN_METRICS
+    _LAST_SCAN_METRICS = {
+        "scan_engine": SCAN_ENGINE,
+        "scan_policy_version": SCAN_POLICY_VERSION,
+        "scan_kind": kind,
+        "sections": {str(key): dict(value) for key, value in sections.items()},
+        "files_seen": sum(int(value.get("files_seen", 0)) for value in sections.values()),
+        "cache_hits": sum(int(value.get("cache_hits", 0)) for value in sections.values()),
+        "cache_misses": sum(int(value.get("cache_misses", 0)) for value in sections.values()),
+        "elapsed_ms": int(round((time.perf_counter() - started) * 1000.0)),
+        "content_inspection_required_only_on_cache_miss": True,
+    }
+
+
 def scan_frontier_pair_scandir(
     origin_paths: Sequence[str | Path],
     current_paths: Sequence[str | Path],
@@ -144,10 +159,11 @@ def scan_frontier_pair_scandir(
     max_bytes: int = 16 * 1024 * 1024,
     inventory_cache: Mapping[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    started = time.perf_counter()
     processed = processed_hashes or set()
     cache = inventory_cache or {}
-    origin_items, origin_cache, _ = _scan_records(origin_paths, cache, max_bytes)
-    current_items, current_cache, _ = _scan_records(current_paths, cache, max_bytes)
+    origin_items, origin_cache, origin_metrics = _scan_records(origin_paths, cache, max_bytes)
+    current_items, current_cache, current_metrics = _scan_records(current_paths, cache, max_bytes)
     next_cache = {**origin_cache, **current_cache}
 
     origin_unseen = [row for row in origin_items if row["sha256"] not in processed]
@@ -167,6 +183,7 @@ def scan_frontier_pair_scandir(
         "inventory_cache_entries": len(next_cache),
         "can_trade": False,
     }
+    _publish_metrics("FRONTIER_PAIR", {"origin": origin_metrics, "current": current_metrics}, started)
     return pair, next_cache
 
 
@@ -179,12 +196,13 @@ def scan_causal_spine_scandir(
     inventory_cache: Mapping[str, Any] | None = None,
     scope_id: str = "ARCHIVE_CAUSAL_SPINE",
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    started = time.perf_counter()
     processed = processed_hashes or set()
     cache = inventory_cache or {}
 
-    origin_items, origin_cache, _ = _scan_records(origin_paths, cache, max_bytes)
-    pivot_items, pivot_cache, _ = _scan_records(pivot_paths, cache, max_bytes)
-    current_items, current_cache, _ = _scan_records(current_paths, cache, max_bytes)
+    origin_items, origin_cache, origin_metrics = _scan_records(origin_paths, cache, max_bytes)
+    pivot_items, pivot_cache, pivot_metrics = _scan_records(pivot_paths, cache, max_bytes)
+    current_items, current_cache, current_metrics = _scan_records(current_paths, cache, max_bytes)
     next_cache = {**origin_cache, **pivot_cache, **current_cache}
 
     def unseen(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -221,4 +239,9 @@ def scan_causal_spine_scandir(
         "causal_claim_authority": "NONE_UNTIL_HUMAN_OR_PRIMARY_EVIDENCE_ADJUDICATION",
         "can_trade": False,
     }
+    _publish_metrics(
+        "CAUSAL_SPINE",
+        {"origin": origin_metrics, "pivot": pivot_metrics, "current": current_metrics},
+        started,
+    )
     return spine, next_cache
