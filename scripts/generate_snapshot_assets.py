@@ -19,7 +19,7 @@ def pretty_bytes(payload: object) -> bytes:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--snapshot", type=Path, default=ROOT / "data/snapshot.v1.example.json")
+    parser.add_argument("--snapshot", type=Path, default=ROOT / "data/snapshot.current.v1.json")
     parser.add_argument("--out-js", type=Path, default=ROOT / "data/snapshot.js")
     parser.add_argument("--out-hash", type=Path, default=ROOT / "data/snapshot.sha256")
     parser.add_argument("--standalone", type=Path, default=ROOT / "HANRI_R64_DASHBOARD_STANDALONE_CONTRACT_V1.html")
