@@ -1,3 +1,3 @@
-from .steady_integrity_cli import main
+from .scandir_cli import main
 
 raise SystemExit(main())
