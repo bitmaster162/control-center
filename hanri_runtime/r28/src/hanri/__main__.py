@@ -1,3 +1,3 @@
-from .scandir_cli import main
+from .sqlite_cli import main
 
 raise SystemExit(main())
