@@ -104,11 +104,56 @@ class R33ScandirRuntimeTests(unittest.TestCase):
             key = str(changed.resolve()).casefold()
             self.assertEqual(next_cache[key]["record"]["sha256"], legacy.sha256_file(changed))
 
+    def test_transient_projection_lock_retries_atomic_replace_and_succeeds(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source.json"
+            destination = root / "drive" / "latest_run_receipt.json"
+            source.write_text('{"ok": true}', encoding="utf-8")
+            real_replace = scandir_cli.os.replace
+            calls = {"count": 0}
+
+            def flaky_replace(src: object, dst: object) -> None:
+                calls["count"] += 1
+                if calls["count"] <= 2:
+                    raise PermissionError(5, "Access is denied")
+                real_replace(src, dst)
+
+            with (
+                mock.patch.object(scandir_cli.os, "replace", side_effect=flaky_replace),
+                mock.patch.object(scandir_cli.time, "sleep") as sleep,
+            ):
+                scandir_cli._atomic_copy_r33(source, destination)
+
+            self.assertEqual(calls["count"], 3)
+            self.assertEqual(sleep.call_count, 2)
+            self.assertEqual(destination.read_text(encoding="utf-8"), '{"ok": true}')
+            self.assertEqual(list(destination.parent.glob("*.tmp-*")), [])
+
+    def test_persistent_projection_lock_fails_closed_after_bounded_retries(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source.json"
+            destination = root / "drive" / "latest_run_receipt.json"
+            source.write_text('{"ok": true}', encoding="utf-8")
+            with (
+                mock.patch.object(scandir_cli.os, "replace", side_effect=PermissionError(5, "Access is denied")) as replace,
+                mock.patch.object(scandir_cli.time, "sleep") as sleep,
+            ):
+                with self.assertRaises(PermissionError):
+                    scandir_cli._atomic_copy_r33(source, destination)
+            self.assertEqual(replace.call_count, len(scandir_cli.PROJECTION_REPLACE_DELAYS_SECONDS) + 1)
+            self.assertEqual(sleep.call_count, len(scandir_cli.PROJECTION_REPLACE_DELAYS_SECONDS))
+            self.assertFalse(destination.exists())
+            self.assertEqual(list(destination.parent.glob("*.tmp-*")), [])
+
     def test_runtime_wrapper_preserves_authority_denials(self) -> None:
         text = Path(scandir_cli.__file__).read_text(encoding="utf-8")
         self.assertIn('PROGRAM_VERSION = "33.0.0"', text)
         self.assertIn("integrity.install_r32_integrity_guard()", text)
         self.assertIn("core.scan_causal_spine = archive_scandir.scan_causal_spine_scandir", text)
+        self.assertIn("r30._atomic_copy = _atomic_copy_r33", text)
+        self.assertIn("projection_atomic_replace_retry_bounded", text)
         self.assertNotIn("requests.", text)
         self.assertNotIn("subprocess", text)
         self.assertNotIn("can_trade = True", text)
