@@ -68,6 +68,32 @@ class R34FullCycleProfilerTests(unittest.TestCase):
                 self.assertTrue((live / name).exists())
                 self.assertFalse((sandbox / name).exists())
 
+    def test_manifest_delta_separates_path_and_same_path_content_changes(self) -> None:
+        live = {"files": [
+            {"path": "C:/a.json", "sha256": "a1", "size_bytes": 1, "content_class": "GENERIC_TEXT", "full_text_read": True},
+            {"path": "C:/b.json", "sha256": "b1", "size_bytes": 2, "content_class": "GENERIC_TEXT", "full_text_read": True},
+        ]}
+        replay = {"files": [
+            {"path": "C:/a.json", "sha256": "a2", "size_bytes": 3, "content_class": "GENERIC_TEXT", "full_text_read": True},
+            {"path": "C:/c.json", "sha256": "c1", "size_bytes": 4, "content_class": "GENERIC_TEXT", "full_text_read": True},
+        ]}
+        delta = profiler._manifest_delta(live, replay)
+        self.assertFalse(delta["path_set_equal"])
+        self.assertEqual(delta["added_count"], 1)
+        self.assertEqual(delta["removed_count"], 1)
+        self.assertEqual(delta["changed_same_path_count"], 1)
+        self.assertEqual(delta["changed_same_path"][0]["path"], "C:/a.json")
+        self.assertEqual(delta["changed_same_path"][0]["changed_fields"], ["sha256", "size_bytes"])
+
+    def test_manifest_delta_reports_equal_path_set_when_only_hash_changes(self) -> None:
+        live = {"files": [{"path": "C:/a.json", "sha256": "a1", "size_bytes": 1, "content_class": "GENERIC_TEXT", "full_text_read": True}]}
+        replay = {"files": [{"path": "C:/a.json", "sha256": "a2", "size_bytes": 1, "content_class": "GENERIC_TEXT", "full_text_read": True}]}
+        delta = profiler._manifest_delta(live, replay)
+        self.assertTrue(delta["path_set_equal"])
+        self.assertEqual(delta["added_count"], 0)
+        self.assertEqual(delta["removed_count"], 0)
+        self.assertEqual(delta["changed_same_path_count"], 1)
+
     def test_timing_book_reports_elapsed_and_calls(self) -> None:
         book = profiler.TimingBook()
         book.add("stage.example", 0.001)
@@ -90,7 +116,7 @@ class R34FullCycleProfilerTests(unittest.TestCase):
         self.assertNotIn("subprocess", text)
 
     def test_probe_version_is_fixed(self) -> None:
-        self.assertEqual(profiler.PROBE_VERSION, "34.0.0-probe-v1")
+        self.assertEqual(profiler.PROBE_VERSION, "34.1.0-probe-v1")
         self.assertEqual(profiler.EXPECTED_PROGRAM_VERSION, "33.0.0")
 
 
