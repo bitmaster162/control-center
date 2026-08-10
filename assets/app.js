@@ -29,7 +29,8 @@
 
   function render() {
     const m = snapshot.meta;
-    $('snapshot-subtitle').textContent = `${m.snapshot_id} · ${m.freshness.mode}/${m.freshness.state} · authority ${m.authority_generation} ${m.authority_status}`;
+    const canonical = snapshot.kpis.find(k => k.label === 'Canonical authority')?.value || `${m.authority_generation} ${m.authority_status}`;
+    $('snapshot-subtitle').textContent = `${m.snapshot_id} · ${m.freshness.mode}/${m.freshness.state} · canonical ${canonical}`;
     $('contract-meta').textContent = `contract ${snapshot.contract.version}`;
     $('contract-meta').className = 'badge badge-info';
     $('global-mode').textContent = `${m.global_mode} · ${m.implementation_layer}`;
