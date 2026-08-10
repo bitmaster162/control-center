@@ -9,7 +9,7 @@ APP_ROOT = Path(__file__).resolve().parents[1]
 class R33ReleaseGateTests(unittest.TestCase):
     def test_installer_is_side_by_side_and_seeds_only_inventory_cache(self) -> None:
         text = (APP_ROOT / "scripts" / "Install-R33ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
-        self.assertIn('ExpectedBranch = "hanri/r33-release-candidate"', text)
+        self.assertIn('ExpectedBranch = "hanri/r33-release-candidate-1.1"', text)
         self.assertIn("ControlCenterHANRIR33", text)
         self.assertIn("ControlCenter-HANRI-R33", text)
         self.assertIn("ControlCenter-HANRI-R32", text)
@@ -45,6 +45,15 @@ class R33ReleaseGateTests(unittest.TestCase):
         ):
             self.assertIn(required, text)
 
+    def test_installer_requires_bounded_atomic_replace_retry_policy(self) -> None:
+        text = (APP_ROOT / "scripts" / "Install-R33ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
+        self.assertIn('ExpectedProjectionRetryPolicy = "33.0.0-drive-atomic-replace-retry-v1"', text)
+        self.assertIn("projection atomic-replace retry policy mismatch", text)
+        self.assertIn("bounded projection retry invariant missing", text)
+        self.assertIn("projection direct-overwrite denial missing", text)
+        self.assertIn('release = "HANRI_R33_RC1_1"', text)
+        self.assertIn('INSTALL_R33_RC1_1_RECEIPT.json', text)
+
     def test_failure_path_stops_r33_and_restores_r32(self) -> None:
         text = (APP_ROOT / "scripts" / "Install-R33ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
         catch = text[text.rfind("catch {"):]
@@ -52,7 +61,7 @@ class R33ReleaseGateTests(unittest.TestCase):
         self.assertIn("Stop-ScheduledTask -TaskName $R33TaskName", catch)
         self.assertIn("Enable-ScheduledTask -TaskName $R32TaskName", catch)
 
-    def test_verifier_rechecks_scope_integrity_and_authority(self) -> None:
+    def test_verifier_rechecks_scope_integrity_authority_and_retry_policy(self) -> None:
         text = (APP_ROOT / "scripts" / "Verify-R33Runtime-PS51.ps1").read_text(encoding="ascii")
         for required in (
             "receipt_fast_path_true",
@@ -61,16 +70,22 @@ class R33ReleaseGateTests(unittest.TestCase):
             "state_repo_writes_false",
             "projection_scan_policy",
             "projection_scan_engine",
+            "projection_retry_policy",
+            "projection_retry_bounded",
+            "projection_direct_overwrite_denied",
             "projection_streaming_integrity_true",
             "scope_complete",
             "scope_coverage_100",
             "scope_excludes_r33_projection",
             "scope_retains_r32_predecessor",
+            "install_projection_retry_policy",
             "install_direct_scan_metrics_present",
             "install_r32_not_modified",
             "install_cutover_order_proven",
         ):
             self.assertIn(required, text)
+        self.assertIn('INSTALL_R33_RC1_1_RECEIPT.json', text)
+        self.assertIn('release = "HANRI_R33_RC1_1"', text)
         self.assertIn('if ($Status -ne "PASS") { exit 2 }', text)
 
     def test_rollback_restores_r32_without_deleting_bytes(self) -> None:
