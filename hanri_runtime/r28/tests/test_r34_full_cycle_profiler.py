@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from hanri import full_cycle_profiler as profiler
+from hanri import r34_profile_instrument as instrument
 
 
 class R34FullCycleProfilerTests(unittest.TestCase):
@@ -75,7 +76,9 @@ class R34FullCycleProfilerTests(unittest.TestCase):
         self.assertEqual(book.call_counts()["stage.example"], 2)
 
     def test_profiler_source_has_no_scheduler_or_network_calls(self) -> None:
-        text = Path(profiler.__file__).read_text(encoding="utf-8")
+        entry = Path(profiler.__file__).read_text(encoding="utf-8")
+        hooks = Path(instrument.__file__).read_text(encoding="utf-8")
+        text = entry + hooks
         self.assertIn("TemporaryDirectory", text)
         self.assertIn("r30.configure_excluded_roots([live_projection_root, sandbox_projection_root])", text)
         self.assertIn('"drive_hanri_r33_writes": 0', text)
