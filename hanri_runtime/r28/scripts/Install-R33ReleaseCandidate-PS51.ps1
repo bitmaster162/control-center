@@ -15,7 +15,7 @@ $LogRoot = Join-Path $InstallBase "logs"
 $ReceiptRoot = Join-Path $InstallBase "receipts"
 $R32StateRoot = Join-Path $env:LOCALAPPDATA "ControlCenterHANRIR32\state"
 $ConfigSource = Join-Path $SourceRoot "config\r33.windows.json"
-$ExpectedBranch = "hanri/r33-release-candidate"
+$ExpectedBranch = "hanri/r33-release-candidate-1.1"
 $ExpectedDigestIdentity = "HANRI R33"
 $ForbiddenDigestIdentity = "HANRI R32"
 $ExpectedMaterialPolicy = "31.0.0-ai-state-stability-v2"
@@ -24,6 +24,7 @@ $ExpectedIntegrityPolicy = "33.0.0-steady-integrity-inherited-v1"
 $ExpectedIntegrityMode = "STREAMING_SHA256_NO_JSON_PARSE"
 $ExpectedScanPolicy = "33.0.0-scandir-metadata-cache-v1"
 $ExpectedScanEngine = "OS_SCANDIR_SINGLE_STAT_CACHE_REUSE"
+$ExpectedProjectionRetryPolicy = "33.0.0-drive-atomic-replace-retry-v1"
 $SchedulerRunningResult = 267009
 $SchedulerExecutionLimitMinutes = 20
 $SchedulerGateTimeoutMinutes = 21
@@ -78,6 +79,9 @@ function Assert-BaseSafety($Run, $State, [string]$FirstLine, $Projection) {
     if ($Projection.material_policy.archive_scan_engine -ne $ExpectedScanEngine) { throw "R33 scan engine mismatch" }
     if ($Projection.material_policy.archive_scan_cache_hit_record_reuse -ne $true) { throw "R33 cache-hit record reuse policy missing" }
     if ($Projection.material_policy.archive_scan_single_stat_metadata_path -ne $true) { throw "R33 single-stat metadata policy missing" }
+    if ($Projection.material_policy.projection_atomic_replace_policy -ne $ExpectedProjectionRetryPolicy) { throw "R33 projection atomic-replace retry policy mismatch" }
+    if ($Projection.material_policy.projection_atomic_replace_retry_bounded -ne $true) { throw "R33 bounded projection retry invariant missing" }
+    if ($Projection.material_policy.projection_atomic_replace_direct_overwrite -ne $false) { throw "R33 projection direct-overwrite denial missing" }
     if ($Projection.material_policy.fast_path_streaming_sha256_integrity -ne $true) { throw "R33 streaming integrity policy missing" }
     if ($Projection.material_policy.heavy_json_parse_required_on_fast_path -ne $false) { throw "R33 fast-path JSON parse policy mismatch" }
     if ($Projection.integrity_policy_version -ne $ExpectedIntegrityPolicy) { throw "R33 integrity policy mismatch" }
@@ -166,7 +170,7 @@ if (-not $R32WasEnabled) { throw "Promotion gate: accepted R32 task is not enabl
 $R32CachePath = Join-Path $R32StateRoot "archive_inventory_cache.json"
 if (-not (Test-Path $R32CachePath)) { throw "Promotion gate: accepted R32 inventory cache missing" }
 
-Write-Host "HANRI R33 RC1 scandir side-by-side install gate (PS5.1 safe)"
+Write-Host "HANRI R33 RC1.1 scandir side-by-side install gate (PS5.1 safe)"
 Write-Host "Source:  $SourceRoot"
 Write-Host "HEAD:    $Head"
 Write-Host "Install: $InstallRoot"
@@ -265,7 +269,7 @@ try {
     $Receipt = [ordered]@{
         schema_version = 1
         status = "PASS"
-        release = "HANRI_R33_RC1"
+        release = "HANRI_R33_RC1_1"
         installed_at_utc = [DateTime]::UtcNow.ToString("o")
         source_commit = $Head
         source_branch = $Branch
@@ -294,15 +298,16 @@ try {
         digest_identity = "HANRI R33"
         scan_policy = $ExpectedScanPolicy
         scan_engine = $ExpectedScanEngine
+        projection_atomic_replace_policy = $ExpectedProjectionRetryPolicy
         integrity_mode = $ExpectedIntegrityMode
         self_application = $false
         external_model_api_calls = 0
         can_trade = $false
         rollback = "scripts/Restore-R32FromR33.ps1"
     }
-    $ReceiptPath = Join-Path $ReceiptRoot "INSTALL_R33_RC1_RECEIPT.json"
+    $ReceiptPath = Join-Path $ReceiptRoot "INSTALL_R33_RC1_1_RECEIPT.json"
     $Receipt | ConvertTo-Json -Depth 16 | Set-Content -Encoding UTF8 $ReceiptPath
-    Write-Host "PASS: HANRI R33 RC1 installed side-by-side; full scandir scope and fast heartbeat readbacks verified."
+    Write-Host "PASS: HANRI R33 RC1.1 installed side-by-side; full scandir scope, bounded Drive projection retry and fast heartbeat readbacks verified."
     Write-Host "Receipt: $ReceiptPath"
     Write-Host "Accepted R32 files/state were not modified; R32 task was disabled only after R33 PASS."
 }
