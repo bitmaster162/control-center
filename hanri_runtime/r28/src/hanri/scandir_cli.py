@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from typing import Sequence
+from pathlib import Path
+from typing import Any, Sequence
 
 from . import archive as archive_mod
 from . import archive_scandir
 from . import cli as core
+from . import delta_cli as r30
 from . import steady_cli as r32
 from . import steady_integrity_cli as integrity
 
@@ -15,6 +17,7 @@ SCAN_POLICY_VERSION = archive_scandir.SCAN_POLICY_VERSION
 SCAN_ENGINE = archive_scandir.SCAN_ENGINE
 
 _BASE_MATERIAL_POLICY = r32._material_policy
+_BASE_INTEGRITY_COPY = integrity.copy_latest_outputs_r32_integrity
 
 
 def _material_policy_r33() -> dict[str, object]:
@@ -25,6 +28,17 @@ def _material_policy_r33() -> dict[str, object]:
     policy["archive_scan_single_stat_metadata_path"] = True
     policy["archive_scan_scope_semantics_inherited"] = True
     return policy
+
+
+def copy_latest_outputs_r33(source_root: Path, target_root: Path) -> dict[str, Any]:
+    receipt = _BASE_INTEGRITY_COPY(source_root, target_root)
+    metrics = archive_scandir.get_last_scan_metrics()
+    if metrics:
+        receipt["archive_scan_runtime_metrics"] = metrics
+    local = source_root / "latest_projection_receipt.json"
+    core.atomic_write_json(local, receipt)
+    r30._atomic_copy(local, target_root / "latest_projection_receipt.json")
+    return receipt
 
 
 def install_r33_guard() -> None:
@@ -48,6 +62,7 @@ def install_r33_guard() -> None:
     archive_mod.scan_causal_spine = archive_scandir.scan_causal_spine_scandir
     core.scan_frontier_pair = archive_scandir.scan_frontier_pair_scandir
     core.scan_causal_spine = archive_scandir.scan_causal_spine_scandir
+    core.copy_latest_outputs = copy_latest_outputs_r33
 
 
 def main(argv: Sequence[str] | None = None) -> int:
