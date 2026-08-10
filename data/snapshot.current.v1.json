@@ -1,14 +1,14 @@
 {
   "contract": {
     "name": "hanri.control_center.snapshot",
-    "version": "1.1.0",
+    "version": "1.0.0",
     "schema_uri": "contracts/hanri-dashboard-snapshot.schema.json",
     "compatible_ui": ["R64", "R64-P1", "R64-P2"],
-    "breaking_change_policy": "Major version changes require a new UI compatibility declaration; minor additions remain backward-compatible."
+    "breaking_change_policy": "Major version changes require a new UI compatibility declaration; minor additions must remain backward-compatible."
   },
   "meta": {
     "snapshot_id": "R64-P2-R35-CURRENT-20260810",
-    "authority_generation": "R64",
+    "authority_generation": "R63",
     "authority_status": "ACCEPTED",
     "implementation_layer": "R64-P2",
     "control_generation_created": false,
@@ -18,7 +18,7 @@
       "mode": "SNAPSHOT",
       "state": "CURRENT",
       "as_of": "2026-08-10T19:48:00+07:00",
-      "reason": "Current projection reconciles R64 canonical authority, accepted HANRI R35 runtime, Decision Governor Pilot 01, D4 acceptance, and independent P0-1 external readback."
+      "reason": "Schema v1 retains the R63 authority-binding field; current canonicality is separately evidenced by the R64 ACTIVE pointer and rendered as the primary KPI."
     },
     "global_mode": "APPROVAL_REQUIRED",
     "can_trade": false,
@@ -34,179 +34,99 @@
     "stale_override": "warn"
   },
   "sources": [
-    {
-      "source_id": "r64-pointer",
-      "kind": "CONTROL_ROOT",
-      "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json",
-      "sha256": null,
-      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
-      "evidence_state": "HASH_VERIFIED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-07T20:34:00Z",
-      "required": true,
-      "notes": "R64 canonical activation ACTIVE; provider readback all_exact; immutable CURRENT_STATE pre-promotion markers are superseded for canonicality only."
-    },
-    {
-      "source_id": "r64-state",
-      "kind": "CONTROL_ROOT",
-      "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_STATE.json",
-      "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
-      "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
-      "evidence_state": "HASH_VERIFIED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-07T20:08:00Z",
-      "required": true,
-      "notes": "CONTROL_FREEZE ACTIVE; effect ceilings remain deny-by-default."
-    },
-    {
-      "source_id": "r35-runtime",
-      "kind": "RUNTIME_STATE",
-      "locator": "GitHub hanri/r35-accepted-runtime @ 4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50 + Drive HANRI_R35 provider readback",
-      "sha256": null,
-      "drive_file_id": "1SfkhYbhCDgggWWdUOWnllIReYw1NJ4zZ",
-      "evidence_state": "HASH_VERIFIED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-10T11:44:54Z",
-      "required": true,
-      "notes": "Accepted/live R35; verifier PASS with zero failed checks; scope 8100/8100; SQLite quick_check ok; provider heavy-file SHA readback matched."
-    },
-    {
-      "source_id": "decision-pilot-01",
-      "kind": "RECEIPT",
-      "locator": "GitHub issue #23 / closed review-only PR #24 / local read-only probe",
-      "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-10T12:26:23Z",
-      "required": true,
-      "notes": "Pilot PASS: exactly three actionable cards D4, D1, D5; stale D2/D3/R64 candidate markers suppressed."
-    },
-    {
-      "source_id": "d4-gate",
-      "kind": "HUMAN_DECISION",
-      "locator": "GitHub issue #25 — D4 ACCEPTED: bounded P0 security closure window",
-      "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-10T12:29:43Z",
-      "required": true,
-      "notes": "Human gate is task-scoped to D4; no deploy/trading/capital/self-application authority expansion."
-    },
-    {
-      "source_id": "p0-register",
-      "kind": "PROOF_LEDGER",
-      "locator": "Control canter/.../R63_P0_SECURITY_REGISTER.json and P0_RECEIPTS/",
-      "sha256": null,
-      "drive_file_id": "103LyDJHp_mE2G5CYQUo5VHIhxyk0AKNC",
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-10T12:29:00Z",
-      "required": true,
-      "notes": "P0_RECEIPTS contains templates only; no complete closure receipt yet."
-    },
-    {
-      "source_id": "p0-1-offhost",
-      "kind": "PROOF_LEDGER",
-      "locator": "Issue #25 comment 5240447028 — independent off-host TCP probe 34.70.171.152:5432",
-      "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-08-10T12:44:00Z",
-      "required": true,
-      "notes": "TCP Connection refused independently verifies the former public PostgreSQL endpoint is no longer externally reachable; host-local bind and credential-rotation readback remain required for full closure."
-    }
+    {"source_id": "r64-pointer", "kind": "CONTROL_ROOT", "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json", "sha256": null, "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5", "evidence_state": "HASH_VERIFIED", "freshness": "CURRENT", "as_of": "2026-08-07T20:34:00Z", "required": true, "notes": "R64 canonical activation ACTIVE; provider stable-root readback all_exact."},
+    {"source_id": "r64-state", "kind": "CONTROL_ROOT", "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_STATE.json", "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd", "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_", "evidence_state": "HASH_VERIFIED", "freshness": "CURRENT", "as_of": "2026-08-07T20:08:00Z", "required": true, "notes": "CONTROL_FREEZE ACTIVE; all effect ceilings remain deny-by-default."},
+    {"source_id": "r35-runtime", "kind": "RUNTIME_STATE", "locator": "hanri/r35-accepted-runtime @ 4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50 + Drive HANRI_R35", "sha256": null, "drive_file_id": "1SfkhYbhCDgggWWdUOWnllIReYw1NJ4zZ", "evidence_state": "HASH_VERIFIED", "freshness": "CURRENT", "as_of": "2026-08-10T11:44:54Z", "required": true, "notes": "Accepted/live R35; verifier PASS, scope 8100/8100, SQLite quick_check ok, provider heavy-file SHA readback matched."},
+    {"source_id": "decision-pilot-01", "kind": "RECEIPT", "locator": "GitHub issue #23 / PR #24 closed without merge / local probe", "sha256": null, "drive_file_id": null, "evidence_state": "RECEIPTED", "freshness": "CURRENT", "as_of": "2026-08-10T12:26:23Z", "required": true, "notes": "PASS: D4, D1, D5 only; stale D2/D3/R64 candidate markers suppressed."},
+    {"source_id": "d4-gate", "kind": "HUMAN_DECISION", "locator": "GitHub issue #25 D4 accepted", "sha256": null, "drive_file_id": null, "evidence_state": "RECEIPTED", "freshness": "CURRENT", "as_of": "2026-08-10T12:29:43Z", "required": true, "notes": "Task-scoped P0 closure/readback gate only."},
+    {"source_id": "p0-register", "kind": "PROOF_LEDGER", "locator": "R63_P0_SECURITY_REGISTER.json + P0_RECEIPTS/", "sha256": null, "drive_file_id": "103LyDJHp_mE2G5CYQUo5VHIhxyk0AKNC", "evidence_state": "RECEIPTED", "freshness": "CURRENT", "as_of": "2026-08-10T12:29:00Z", "required": true, "notes": "Only templates are present; no complete closure receipt yet."},
+    {"source_id": "p0-1-offhost", "kind": "PROOF_LEDGER", "locator": "Issue #25 comment 5240447028 independent off-host TCP probe", "sha256": null, "drive_file_id": null, "evidence_state": "RECEIPTED", "freshness": "CURRENT", "as_of": "2026-08-10T12:44:00Z", "required": true, "notes": "34.70.171.152:5432 returned Connection refused; host-local bind/config and credential-rotation readback still required for full closure."}
   ],
   "kpis": [
     {"label": "Canonical authority", "value": "R64 ACTIVE", "tone": "ok", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer"], "freshness": "CURRENT"},
     {"label": "HANRI runtime", "value": "R35 LIVE", "tone": "ok", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"], "freshness": "CURRENT"},
     {"label": "Decision Governor", "value": "3/3 PASS", "tone": "ok", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"], "freshness": "CURRENT"},
-    {"label": "P0 security", "value": "P0-1 ext verified; 0/3 full", "tone": "warn", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "p0-1-offhost"], "freshness": "CURRENT"},
+    {"label": "P0 security", "value": "P0-1 external verified; full receipts pending", "tone": "warn", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "p0-1-offhost"], "freshness": "CURRENT"},
     {"label": "Effect ceiling", "value": "DENY / HUMAN GATE", "tone": "info", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-state", "d4-gate"], "freshness": "CURRENT"}
   ],
   "current_actions": [
-    {"id": "A-P0-1", "title": "P0-1 readback only", "text": "Do not remediate again. Collect fresh host-local PostgreSQL bind/firewall identity and credential-rotation evidence; external 5432 is already independently verified closed.", "status": "READBACK_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "d4-gate"]},
-    {"id": "A-D1", "title": "D1 broker slot", "text": "Human decision remains required before one broker-owned CLAUDE-BITUNIX slot registration; direct registry edit remains forbidden.", "status": "HUMAN_DECISION_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]},
-    {"id": "A-D5", "title": "D5 external pilot evidence", "text": "Roman outreach remains separately human-gated. No message may be sent from dashboard/governor authority.", "status": "HUMAN_DECISION_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]}
+    {"id": "A-P0-1", "title": "P0-1 readback only", "text": "Do not remediate again. Collect host-local PostgreSQL bind/firewall identity and credential-rotation evidence; external 5432 is already independently verified closed.", "status": "READBACK_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "d4-gate"]},
+    {"id": "A-D1", "title": "D1 broker slot", "text": "Separate human decision is still required before one broker-owned CLAUDE-BITUNIX slot registration; direct registry edit remains forbidden.", "status": "HUMAN_DECISION_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]},
+    {"id": "A-D5", "title": "D5 external pilot evidence", "text": "Roman outreach remains separately human-gated; dashboard/governor authority cannot send.", "status": "HUMAN_DECISION_REQUIRED", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]}
   ],
   "blockers": [
-    {"id": "B-P0-1-READBACK", "title": "P0-1 full receipt incomplete", "text": "External reachability is verified closed, but fresh host-local bind/config and credential-rotation proof are still missing from the closure receipt.", "severity": "P0", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "p0-register"]},
-    {"id": "B-P0-2", "title": "P0-2 static bearer credential", "text": "No complete token-revocation/redeploy/zero-literal closure receipt is present.", "severity": "P0", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register"]},
+    {"id": "B-P0-1", "title": "P0-1 full closure receipt incomplete", "text": "External reachability is verified closed, but fresh host-local bind/config and credential-rotation proof are missing.", "severity": "P0", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "p0-register"]},
+    {"id": "B-P0-2", "title": "P0-2 static bearer credential", "text": "No complete revocation/redeploy/zero-literal closure receipt is present.", "severity": "P0", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register"]},
     {"id": "B-P0-3", "title": "P0-3 remote-admin credential rotation", "text": "No complete rotation and old-secret negative-login closure receipt is present.", "severity": "P0", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register"]}
   ],
   "events": [
     {"event_id": "EV-R64-ACTIVE", "time": "2026-08-07T20:34:00Z", "title": "R64 canonical pointer activated", "text": "Exact human acceptance plus provider readback made R64 canonical ACTIVE; immutable CURRENT_STATE bytes were preserved.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer"]},
-    {"event_id": "EV-R35-VERIFY", "time": "2026-08-10T11:44:54Z", "title": "HANRI R35 runtime verified", "text": "Independent verifier PASS: zero failed checks, SQLite quick_check ok, migration parity verified, R33 disabled only after cutover.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"]},
-    {"event_id": "EV-GOV-PILOT", "time": "2026-08-10T12:26:23Z", "title": "Decision Governor Pilot 01 completed", "text": "Read-only pilot reconciled stale/current evidence into exactly three actionable human decisions: D4, D1, D5.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"]},
-    {"event_id": "EV-D4-ACCEPT", "time": "2026-08-10T12:29:43Z", "title": "D4 bounded security window accepted", "text": "Human gate authorizes P0 closure/readback only; all global effect ceilings remain unchanged.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate"]}
+    {"event_id": "EV-R35-VERIFY", "time": "2026-08-10T11:44:54Z", "title": "HANRI R35 runtime verified", "text": "Independent verifier PASS with zero failed checks; SQLite quick_check and migration parity verified.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"]},
+    {"event_id": "EV-GOV-PILOT", "time": "2026-08-10T12:26:23Z", "title": "Decision Governor Pilot 01 completed", "text": "Read-only pilot reconciled stale/current evidence into D4, D1 and D5 only.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"]},
+    {"event_id": "EV-D4-ACCEPT", "time": "2026-08-10T12:29:43Z", "title": "D4 bounded security gate accepted", "text": "P0 closure/readback only; global deny ceilings unchanged.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate"]}
   ],
   "systems": [
-    {"id": "control-center", "name": "Control Center", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "GPT_RUNTIME_CURRENT + ROBERT", "next": "Advance one bounded real-world gate and preserve append-only evidence.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r64-state"], "freshness": "CURRENT"},
-    {"id": "hanri", "name": "HANRI R35", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "APPROVAL_REQUIRED", "owner": "ROBERT", "next": "Use decision governance; stop infrastructure performance engineering unless a functional regression appears.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"], "freshness": "CURRENT"},
-    {"id": "decision-governor", "name": "Decision Governor", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "ROBERT", "next": "Reconcile evidence to <=3 human decisions; never auto-accept or auto-dispatch.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"], "freshness": "CURRENT"},
-    {"id": "dashboard", "name": "HANRI Control Center Dashboard", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "GPT_RUNTIME_CURRENT", "next": "Render current deterministic snapshot while preserving prior R64 snapshot as historical reference.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r35-runtime"], "freshness": "CURRENT"},
-    {"id": "return-broker", "name": "Return Broker", "operational": "DEGRADED", "truth": "EVIDENCED", "execution": "APPROVAL_REQUIRED", "owner": "BROKER PLANE", "next": "D1 human gate before broker-owned CLAUDE-BITUNIX slot registration.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"], "freshness": "CURRENT"},
-    {"id": "p0-security", "name": "P0 Security Gate", "operational": "DEGRADED", "truth": "VERIFIED", "execution": "APPROVAL_REQUIRED", "owner": "ROBERT + ANTIGRAVITY/HOST", "next": "Finish P0-1 readback, then P0-2 and P0-3 receipts in strict order.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate", "p0-register", "p0-1-offhost"], "freshness": "CURRENT"}
+    {"id": "control-center", "name": "Control Center", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "GPT_RUNTIME_CURRENT + ROBERT", "next": "Advance one bounded real-world gate with independent readback.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r64-state"], "freshness": "CURRENT"},
+    {"id": "hanri", "name": "HANRI R35", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "APPROVAL_REQUIRED", "owner": "ROBERT", "next": "Decision-governance value; no further performance work absent regression.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"], "freshness": "CURRENT"},
+    {"id": "decision-governor", "name": "Decision Governor", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "ROBERT", "next": "Reconcile evidence to <=3 human decisions without auto-effects.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"], "freshness": "CURRENT"},
+    {"id": "dashboard", "name": "HANRI Control Center Dashboard", "operational": "OPERATIONAL", "truth": "VERIFIED", "execution": "READ_ONLY", "owner": "GPT_RUNTIME_CURRENT", "next": "Render current deterministic snapshot; preserve old R64 example as reference.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r35-runtime"], "freshness": "CURRENT"},
+    {"id": "p0-security", "name": "P0 Security Gate", "operational": "DEGRADED", "truth": "VERIFIED", "execution": "APPROVAL_REQUIRED", "owner": "ROBERT + ANTIGRAVITY/HOST", "next": "Finish P0-1 readback, then P0-2 and P0-3 receipts.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate", "p0-register", "p0-1-offhost"], "freshness": "CURRENT"}
   ],
   "agents": [
     {"slot": "ROBERT", "role": "HUMAN_SOVEREIGN", "status": "ACTIVE", "channel": "EXACT_HUMAN_GATE", "memory": "Control roots + decision receipts", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "d4-gate"], "freshness": "CURRENT"},
-    {"slot": "HANRI", "role": "EFFECT_GATE", "status": "R35_ACCEPTED_LIVE", "channel": "LOCAL_RUNTIME + DRIVE_READBACK", "memory": "SQLite inventory + immutable evidence projections", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"], "freshness": "CURRENT"},
+    {"slot": "HANRI", "role": "EFFECT_GATE", "status": "R35_ACCEPTED_LIVE", "channel": "LOCAL_RUNTIME + DRIVE_READBACK", "memory": "SQLite inventory + evidence projections", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"], "freshness": "CURRENT"},
     {"slot": "GPT_RUNTIME_CURRENT", "role": "CURRENT_BUILD_CONTROLLER", "status": "ACTIVE_CONTROL_PLANE", "channel": "CONTROL_ROOTS + CONNECTORS", "memory": "CURRENT_POINTER -> CURRENT_STATE -> ROLE_VIEWS", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r64-state"], "freshness": "CURRENT"},
     {"slot": "ANTIGRAVITY", "role": "PHYSICAL_OBSERVER / HOST EXECUTOR", "status": "D4_BOUNDED", "channel": "HOST + RETURN EVIDENCE", "memory": "P0 runbook + closure receipts", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate", "p0-register"], "freshness": "CURRENT"},
-    {"slot": "CLAUDE-BITUNIX", "role": "PUBLIC_VENUE_EVIDENCE", "status": "GEN003_UNREGISTERED_PENDING_D1", "channel": "BROKER_ONLY", "memory": "Return lane; direct registry mutation forbidden", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-state", "decision-pilot-01"], "freshness": "CURRENT"}
+    {"slot": "CLAUDE-BITUNIX", "role": "PUBLIC_VENUE_EVIDENCE", "status": "GEN003_UNREGISTERED_PENDING_D1", "channel": "BROKER_ONLY", "memory": "Direct registry mutation forbidden", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-state", "decision-pilot-01"], "freshness": "CURRENT"}
   ],
   "decisions": [
-    {"id": "D4", "verdict": "ACCEPT", "action": "Bounded P0 security closure/readback", "implementation_status": "ACTIVE", "detail": "P0-1 external exposure is independently verified closed; full P0-1 closure awaits host-local bind/config and credential-rotation receipt. P0-2 and P0-3 remain open.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate", "p0-1-offhost", "p0-register"]},
-    {"id": "D1", "verdict": "PENDING", "action": "Register CLAUDE-BITUNIX slot through broker-owned mutation", "implementation_status": "PENDING", "detail": "Decision Governor recommends ACCEPT, but no separate human D1 verdict has been given. No direct registry edit.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]},
-    {"id": "D5", "verdict": "PENDING", "action": "Roman pilot outreach", "implementation_status": "PENDING", "detail": "External product-evidence opportunity remains separate human SEND/REVISE/HOLD gate. No message has been authorized or sent by this projection.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]}
+    {"id": "D4", "verdict": "ACCEPT", "action": "Bounded P0 security closure/readback", "implementation_status": "ACTIVE", "detail": "P0-1 external exposure independently verified closed; full P0-1 receipt awaits host-local readback. P0-2/P0-3 remain open.", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate", "p0-1-offhost", "p0-register"]},
+    {"id": "D1", "verdict": "HOLD", "action": "Register CLAUDE-BITUNIX slot through broker", "implementation_status": "PENDING", "detail": "No human D1 verdict yet. HOLD is the fail-closed no-effect projection until an exact separate gate; governor recommendation is ACCEPT.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]},
+    {"id": "D5", "verdict": "HOLD", "action": "Roman pilot outreach", "implementation_status": "PENDING", "detail": "No human SEND/REVISE/HOLD verdict has been issued in this current sequence. No message has been sent.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "r64-state"]}
   ],
   "memory_layers": [
-    {"name": "Canonical control roots", "status": "COMPLETE", "description": "R64 pointer is ACTIVE and binds immutable CURRENT_STATE / ROLE_INDEX / ROLE_VIEWS provider readbacks.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r64-state"]},
-    {"name": "HANRI runtime state", "status": "COMPLETE", "description": "Accepted R35 SQLite-backed inventory and evidence projection verified locally and against Drive provider bytes.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"]},
-    {"name": "Decision history", "status": "COMPLETE", "description": "Pilot 01 reconciles stale queue state against later receipts and current human gates without auto-execution.", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01", "d4-gate"]},
-    {"name": "P0 closure evidence", "status": "PARTIAL", "description": "P0-1 external reachability is verified closed; complete per-item closure receipts are still incomplete.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "p0-1-offhost"]}
+    {"name": "Canonical control roots", "status": "COMPLETE", "description": "R64 pointer ACTIVE binds immutable current roots and provider readback.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r64-pointer", "r64-state"]},
+    {"name": "HANRI runtime state", "status": "COMPLETE", "description": "Accepted R35 SQLite runtime and heavy projections verified locally and provider-side.", "evidence_state": "HASH_VERIFIED", "evidence_refs": ["r35-runtime"]},
+    {"name": "P0 closure evidence", "status": "PARTIAL", "description": "P0-1 external reachability verified closed; complete per-item closure receipts remain incomplete.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "p0-1-offhost"]}
   ],
   "memory_contract": {
     "load_order": ["CURRENT_POINTER.json", "CURRENT_STATE.json", "ROLE_INDEX.json", "ROLE_VIEWS.json", "bounded current-case evidence"],
     "authority_rule": "Explicit current human instruction is task-scoped and never silently clears global deny gates.",
-    "effect_rule": "candidate -> policy check -> human/control approval -> bounded execution -> independent readback -> receipt/rollback",
     "runtime_rule": "HANRI R35 is accepted/live; dashboard projection is read-only and is not runtime authority.",
     "safety": {"can_trade": false, "capital_permission": "DENY", "deploy_permission": "DENY", "self_application": false}
   },
-  "communication_flow": ["ROBERT human gate", "Decision Governor reconciliation", "HANRI effect gate", "Bounded executor/host", "Independent provider/readback", "Append-only receipt"],
+  "communication_flow": ["ROBERT human gate", "Decision Governor reconciliation", "HANRI effect gate", "Bounded executor/host", "Independent readback", "Append-only receipt"],
   "messages": [
     {"message_id": "MSG-GOV-01", "from": "Decision Governor Pilot 01", "to": "ROBERT", "type": "DECISION_CARDS", "status": "PASS_3_OF_3", "ref": "D4 -> D1 -> D5", "evidence_state": "RECEIPTED", "evidence_refs": ["decision-pilot-01"]},
     {"message_id": "MSG-D4-GATE", "from": "ROBERT", "to": "D4 SECURITY GATE", "type": "HUMAN_DECISION", "status": "ACCEPTED_BOUNDED", "ref": "Issue #25", "evidence_state": "RECEIPTED", "evidence_refs": ["d4-gate"]},
     {"message_id": "MSG-P0-1-PROBE", "from": "INDEPENDENT OFF-HOST PROBE", "to": "P0-1", "type": "READBACK", "status": "CONNECTION_REFUSED", "ref": "34.70.171.152:5432", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost"]}
   ],
   "security": [
-    {"id": "P0-1", "title": "Arena PostgreSQL public exposure", "status": "VERIFIED_PARTIAL", "action": "External 5432 is independently VERIFIED_CLOSED. Do not remediate again; collect fresh host-local bind/config identity and credential-rotation proof for full closure.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "p0-register"]},
-    {"id": "P0-2", "title": "Bearer credential in static HTML", "status": "OPEN", "action": "Require revocation timestamp/issuer confirmation, served-asset redeploy identity, and zero credential-shaped literals before closure.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "d4-gate"]},
+    {"id": "P0-1", "title": "Arena PostgreSQL public exposure", "status": "OPEN_REVERIFY", "action": "External 5432 is independently verified closed. Do not remediate again; collect host-local bind/config and credential-rotation proof for full receipt.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-1-offhost", "p0-register"]},
+    {"id": "P0-2", "title": "Bearer credential in static HTML", "status": "OPEN", "action": "Require revocation timestamp/issuer confirmation, redeploy identity, and zero credential-shaped literals before closure.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "d4-gate"]},
     {"id": "P0-3", "title": "Remote-admin credential rotation", "status": "OPEN", "action": "Require both rotation timestamps, old-secret negative login tests, and purge proof before closure.", "evidence_state": "RECEIPTED", "evidence_refs": ["p0-register", "d4-gate"]}
   ],
   "audit": {
     "authority": {"canonical_generation": "R64", "pointer_status": "ACTIVE", "human_sovereign": "ROBERT", "effect_gate": "HANRI R35", "control_freeze": "ACTIVE"},
     "hanri_decision_loop": {"runtime": "R35 ACCEPTED/LIVE", "pilot_01": "PASS", "decision_count": 3, "auto_accept": false, "auto_dispatch": false},
     "p0_receipts": [
-      {"id": "P0-1", "status": "VERIFIED_PARTIAL", "required": ["external refused", "host-local bind/config", "credential rotation timestamp", "operator identity"]},
+      {"id": "P0-1", "status": "OPEN_REVERIFY", "required": ["external refused PASS", "host-local bind/config", "credential rotation timestamp", "operator identity"]},
       {"id": "P0-2", "status": "OPEN", "required": ["old token revoked", "redeploy identity/time", "zero served credential literals"]},
       {"id": "P0-3", "status": "OPEN", "required": ["two rotation timestamps", "old-secret negative login tests", "purge proof"]}
     ],
     "defects": [
-      {"id": "DF1", "status": "RESOLVED_BY_LATER_DIGEST", "summary": "Decision-intake stale queue no longer emitted by Decision Governor."},
-      {"id": "DASHBOARD_STALE_SNAPSHOT", "status": "FIX_IN_PROGRESS", "summary": "July R64 snapshot is being replaced by current deterministic R35/governor projection while preserved as reference."}
+      {"id": "DF1", "status": "RESOLVED_BY_LATER_DIGEST", "summary": "Decision Governor suppresses the stale D2 queue after later decision evidence."},
+      {"id": "DASHBOARD_STALE_SNAPSHOT", "status": "REFRESH_IN_PROGRESS", "summary": "Current deterministic R35/governor projection supersedes the July view for display only; old snapshot remains preserved."}
     ],
     "acceptance": [
       {"artifact": "R64 canonical pointer", "status": "ACCEPTED", "checks": ["human manifest gate", "provider readback all_exact"]},
-      {"artifact": "HANRI R35 runtime", "status": "ACCEPTED", "checks": ["installer PASS", "independent verifier PASS", "Drive provider SHA readback PASS"], "sha256": null},
+      {"artifact": "HANRI R35 runtime", "status": "ACCEPTED", "checks": ["installer PASS", "independent verifier PASS", "Drive provider SHA readback PASS"]},
       {"artifact": "Decision Governor Pilot 01", "status": "PASS", "checks": ["167 tests", "3 decision cards", "stale D2/D3 suppressed", "no effects"]}
     ],
     "invariants": ["can_trade=false", "capital_permission=DENY", "deploy_permission=DENY", "self_application=false", "auto_accept=false", "auto_dispatch=false", "external_messages require exact separate human authorization"]
   },
   "arbiter_content": {
-    "summary": "EXACT_PHRASE_NOT_LOCATED: this refresh does not invent new arbiter-content truth; the dashboard keeps the prior arbiter surface as a read-only evidence view.",
+    "summary": "EXACT_PHRASE_NOT_LOCATED: this refresh does not invent new arbiter-content truth; prior arbiter material remains a read-only evidence surface.",
     "flow": ["Source evidence", "Causal reconciliation", "Human decision", "Bounded effect", "Independent readback"],
     "evidence_status": "SOURCE_BACKED / NO NEW ARBITER CLAIM",
     "sources": ["r64-pointer", "r64-state", "r35-runtime", "decision-pilot-01", "d4-gate", "p0-1-offhost"]
