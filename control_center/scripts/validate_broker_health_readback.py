@@ -15,7 +15,7 @@ def main() -> int:
     errors: list[str] = []
     if actual != expected:
         errors.append("broker_health_semantic_mismatch")
-    if actual.get("verdict") != "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE":
+    if actual.get("verdict") != "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE_RESEALED_ROOTS_ALIGNED":
         errors.append("health_verdict_mismatch")
     registry = actual.get("registry_health", {})
     if registry.get("master_entries") != 9 or registry.get("live_index_entries") != 9 or registry.get("master_live_count_match") is not True:
@@ -28,6 +28,14 @@ def main() -> int:
         errors.append("stable_registry_health_mismatch")
     if actual.get("runtime", {}).get("process_liveness") != "NOT_PROVIDER_OBSERVABLE" or actual.get("runtime", {}).get("receipt_pids_are_current_proof") is not False:
         errors.append("process_liveness_boundary_mismatch")
+    resolution = actual.get("contract_resolution", {})
+    if resolution.get("status") != "RESOLVED_BY_CANONICAL_REPAIR_AND_RESEAL" or resolution.get("previous_status") != "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE":
+        errors.append("contract_resolution_mismatch")
+    if actual.get("human_gate_required_for_root_repair") != "NONE_REPAIR_ALREADY_APPLIED_AND_RESEALED":
+        errors.append("stale_root_repair_gate")
+    invariants = actual.get("invariants", {})
+    if invariants.get("cross_layer_anchor_equality_required") is not True or invariants.get("canonical_contract_divergence_resolved") is not True:
+        errors.append("post_reseal_consistency_invariant_missing")
     policy = actual.get("policy", {})
     if any(policy.get(k) is not False for k in ("health_projection_grants_authority", "process_restart_authorized", "root_repair_authorized", "registry_mutation_authorized", "execution_authorized", "self_application")):
         errors.append("authority_leak")
