@@ -66,6 +66,10 @@ jobs:
         run: python control_center/scripts/validate_broker_health_readback.py
       - name: Adversarial Broker Health Readback tests
         run: python control_center/scripts/test_broker_health_readback.py
+      - name: Validate Post-Reseal Consistency Guard V1
+        run: python control_center/scripts/validate_post_reseal_consistency.py
+      - name: Adversarial Post-Reseal Consistency Guard tests
+        run: python control_center/scripts/test_post_reseal_consistency.py
       - name: Validate Canonical Contract Repair Proposal V1
         run: python control_center/scripts/validate_canonical_contract_repair_proposal.py
       - name: Validate applied Canonical Contract Repair receipt
