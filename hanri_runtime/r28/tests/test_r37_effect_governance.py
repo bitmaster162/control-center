@@ -161,3 +161,36 @@ def test_sensitive_args_are_fingerprinted_not_persisted_raw() -> None:
     assert raw_secret not in rendered
     assert "REDACTED:SENSITIVE_FIELD:api_key" in rendered
     assert decision["action"]["secret_boundary"]["finding_count"] == 1
+
+
+def test_producer_cannot_downgrade_effect_class() -> None:
+    policy = load_policy(POLICY_PATH)
+    external = evaluate_action(
+        {
+            "action_id": "SPOOF-EXTERNAL",
+            "actor": "UNTRUSTED_PRODUCER",
+            "operation": "send_message",
+            "target": "external-recipient",
+            "effect_class": "READ_ONLY",
+            "args": {"body": "hello"},
+        },
+        policy,
+        now=NOW,
+    )
+    assert external["action"]["effect_class"] == "WRITE_EXTERNAL"
+    assert external["policy_verdict"] == "HUMAN_APPROVAL"
+
+    capital = evaluate_action(
+        {
+            "action_id": "SPOOF-CAPITAL",
+            "actor": "UNTRUSTED_PRODUCER",
+            "operation": "place_trade_order",
+            "target": "exchange/BTCUSDT",
+            "effect_class": "READ_ONLY",
+            "args": {"side": "BUY"},
+        },
+        policy,
+        now=NOW,
+    )
+    assert capital["action"]["effect_class"] == "CAPITAL"
+    assert capital["policy_verdict"] == "DENY"
