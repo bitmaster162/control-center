@@ -1,0 +1,82 @@
+{
+  "schema": "control_center.provider_snapshot.v1",
+  "snapshot_kind": "NON_AUTHORITY_PROVIDER_READBACK",
+  "observed_at": "2026-08-11T23:45:00+07:00",
+  "canonical_roots": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+    "current_state_drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "role_index_drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+    "role_index_sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+    "role_views_drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+    "provider_readback": "all_exact",
+    "r63_is_current": false
+  },
+  "return_registry": {
+    "schema": "CONTROL_RETURN_REGISTRY_V4",
+    "stable_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "actual_file_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+    "registry_generation_label": "R50_AUDIT",
+    "payload_updated_at_utc": "2026-07-29T12:20:00Z",
+    "payload_last_updated_utc": "2026-07-29T16:30:55.468744+00:00",
+    "provider_fetch": "CURRENT_BYTES",
+    "slots": {
+      "CODEX-07": {"reported_state": "OUTCOME_PASS", "work_order": "CODEX07-R43-RETURN-PLANE-V2"},
+      "CODEX-08": {"reported_state": "PENDING_EXECUTION", "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN"},
+      "CLAUDE-BITUNIX": {"reported_state": "PENDING_OBSERVATION_WINDOW", "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW"},
+      "FABLE-5": {"reported_state": "GATED_RESERVED", "work_order": "FABLE5-R57-GATED-ADJUDICATION"}
+    }
+  },
+  "github_lanes": {
+    "control_center": {
+      "repo": "bitmaster162/control-center",
+      "pr": 30,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "head_sha": "af31f39280b9f32b30266ab47b52ba154acaa7dd"
+    },
+    "hanri": {
+      "repo": "bitmaster162/control-center",
+      "pr": 29,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "head_sha": "2cb2fb515b8ec310aaea40c0daf8ef37202f3181",
+      "accepted_live_r35_sha": "4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50",
+      "accepted_live_untouched": true
+    },
+    "bitevo_public": {
+      "repo": "bitmaster162/bitevo-agent-site",
+      "pr": 3,
+      "state": "closed",
+      "merged": true,
+      "head_sha": "245e10974d885642d61de26aa5863078eb6fb160",
+      "main_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
+      "merge_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
+      "vercel_deployment_id": "dpl_Vog78eigj9xUDHetbek5Cfs9fdir",
+      "vercel_state": "READY",
+      "vercel_target": "production",
+      "vercel_github_commit_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
+      "external_outreach_authorized": false
+    }
+  },
+  "hanri_evidence": {
+    "d4_issue": 25,
+    "issue_state": "closed",
+    "p0_1": "CLOSED",
+    "p0_2": "RE_CLOSED",
+    "p0_3": "CLOSED",
+    "consolidated_closure_comment_id": 5256118141,
+    "p0_1_closure_comment_id": 5252444131,
+    "p0_2_reclosure_comment_id": 5256109139,
+    "p0_3_closure_comment_id": 5256115234,
+    "authority_expansion": false
+  }
+}

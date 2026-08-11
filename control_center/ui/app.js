@@ -1,4 +1,4 @@
-const DATA_URL = "../data/current_control_plane.seed.v1.json";
+const DATA_URL = "../data/current_control_plane.generated.v1.json";
 
 const esc = (value) => String(value ?? "")
   .replaceAll("&", "&amp;")
@@ -81,7 +81,15 @@ function renderReturns(data) {
     <td>${badge(r.apply_status)}</td>
     <td>${esc(r.note)}</td>
   </tr>`);
-  document.querySelector("#returns-list").innerHTML = table(["Return", "Transport", "Semantic", "Apply", "Note"], rows);
+  const observations = (data.return_registry_observations || []).map((r) => `<tr>
+    <td><strong>${esc(r.slot)}</strong></td>
+    <td>${badge(r.reported_state)}</td>
+    <td>${esc(r.work_order)}</td>
+    <td>${esc(r.semantic_interpretation)}</td>
+  </tr>`);
+  const returnsTable = table(["Return", "Transport", "Semantic", "Apply", "Note"], rows);
+  const registryTable = observations.length ? `<h3>Registry observations</h3>${table(["Slot", "Reported state", "Work order", "Authority"], observations)}` : "";
+  document.querySelector("#returns-list").innerHTML = returnsTable + registryTable;
 }
 
 function renderDecisions(data) {
@@ -118,7 +126,7 @@ async function main() {
   const response = await fetch(DATA_URL, { cache: "no-store" });
   if (!response.ok) throw new Error(`projection fetch failed: ${response.status}`);
   const data = await response.json();
-  document.querySelector("#observed-at").textContent = `Observed ${data.observed_at} · ${data.projection_kind}`;
+  document.querySelector("#observed-at").textContent = `Observed ${data.observed_at} · ${data.projection_kind} · ${data.projection_source || "manual"}`;
   renderSafety(data);
   renderNow(data);
   renderAgents(data);

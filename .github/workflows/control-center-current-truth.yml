@@ -26,8 +26,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate non-authority current-control projection
-        run: python control_center/scripts/validate_control_plane_projection.py
+      - name: Validate seed projection contract
+        run: python control_center/scripts/validate_control_plane_projection.py control_center/data/current_control_plane.seed.v1.json
+      - name: Check provider snapshot -> generated projection
+        run: python control_center/scripts/compose_current_projection.py control_center/data/provider_snapshot.current.v1.json --check control_center/data/current_control_plane.generated.v1.json
+      - name: Validate generated current projection
+        run: python control_center/scripts/validate_control_plane_projection.py control_center/data/current_control_plane.generated.v1.json
+      - name: Test current projection composer
+        run: python control_center/scripts/test_current_projection_composer.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
