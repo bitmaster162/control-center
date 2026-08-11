@@ -54,6 +54,10 @@ jobs:
         run: python control_center/scripts/validate_command_queue.py
       - name: Adversarial Command Queue tests
         run: python control_center/scripts/test_command_queue.py
+      - name: Validate Human Gate Packet V1
+        run: python control_center/scripts/validate_human_gate_packets.py
+      - name: Adversarial Human Gate Packet tests
+        run: python control_center/scripts/test_human_gate_packets.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
@@ -67,3 +71,4 @@ jobs:
           node --check control_center/ui/decision_ledger.js
           node --check control_center/ui/effect_readback.js
           node --check control_center/ui/command_queue.js
+          node --check control_center/ui/human_gate_packets.js
