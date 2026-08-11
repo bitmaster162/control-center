@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.3.0-continuous-attention-loop-v1",
+  "loop_id": "HANRI_R39_CONTINUOUS_ATTENTION",
+  "mode": "LOCAL_STATEFUL_ATTENTION_LOOP_NO_SCHEDULER",
+  "max_history_tail": 20,
+  "no_delta_refresh_threshold": 3,
+  "semantic_rules": {
+    "same_evidence_set": "NO_DELTA",
+    "same_evidence_does_not_increment_semantic_cycle": true,
+    "same_evidence_does_not_duplicate_proposal_seen_cycles": true,
+    "coverage_loss_is_attention_repair": true,
+    "negative_recommendation_outcome_requires_self_review": true,
+    "under_observed_domains_are_next_attention_focus": true,
+    "absence_of_current_proposal_is_not_claimed_as_verified_improvement": true
+  },
+  "storage_boundary": {
+    "continuous_work_isolated_from_r39_receipt_scan": true,
+    "continuous_receipts_isolated_from_r39_receipt_scan": true,
+    "continuous_state_isolated_from_r39_receipt_scan": true,
+    "state_contains_bounded_proposal_metadata_only": true,
+    "authorization_utterances_persisted": false,
+    "decision_scopes_persisted": false
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "local_state_write_only": true,
+    "provider_calls": false,
+    "scheduler_install": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
