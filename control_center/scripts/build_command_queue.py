@@ -56,8 +56,9 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
     if len(expected_human) > MAX_HUMAN_NOW:
         errors.append("human_now_exceeds_max")
 
-    commands: list[dict[str, Any]] = []
+    routed: list[dict[str, Any]] = []
     divergences: list[dict[str, Any]] = []
+    human_now: list[dict[str, Any]] = []
     seen_work: set[str] = set()
     decision_ids: set[str] = set()
 
@@ -82,20 +83,17 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
         owner = str(decision.get("owner"))
         human = bool(decision.get("human_ripe"))
         dnt = bool(decision.get("do_not_touch"))
+        attn = attention.get(did)
+
         if dclass == "DISPATCH_AUTHORITY_EXCEPTION":
-            queue, state, priority = "BLOCKED_QUEUE", "BLOCKED_NOT_RIPE", 100
-            requested = "KEEP_BLOCKED_UNLESS_EXPLICIT_BOUNDED_OVERRIDE"
+            queue, priority = "BLOCKED_QUEUE", 100
         elif human and dstate == "OPEN":
-            queue, state, priority = "HUMAN_NOW", "RIPE_HUMAN_GATE", 1000
-            requested = decision.get("gate") or decision.get("authority_required")
+            queue, priority = "HUMAN_NOW", 1000
         elif owner == "CONTROL_CENTER" and dstate == "OPEN":
-            queue, state = "CONTROL_CENTER_QUEUE", "ROUTED_FOR_SEMANTIC_REVIEW"
-            attn = attention.get(did)
+            queue = "CONTROL_CENTER_QUEUE"
             priority = 900 + max(0, 20 - int(attn.get("rank", 99))) if attn else 500
-            requested = "CONTROL_CENTER_SEMANTIC_ADJUDICATION"
         else:
-            queue, state, priority = "PROJECT_OWNER_QUEUE", "ROUTED_TO_PROJECT_OWNER", 300
-            requested = decision.get("authority_required") or "PROJECT_OWNER_REVIEW"
+            queue, priority = "PROJECT_OWNER_QUEUE", 300
 
         if queue == "HUMAN_NOW" and did not in expected_human:
             errors.append(f"human_now_not_in_ledger::{did}")
@@ -112,6 +110,22 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
         if effect_row and (effect_row.get("effect_authorized") or effect_row.get("execution_authorized") or effect_row.get("execution_receipt_id") or effect_row.get("readback_receipt_id")):
             errors.append(f"current_effect_state_not_zero::{did}")
 
+        command_id = f"CMD::{work}"
+        routed.append({"command_id": command_id, "decision_id": did, "work_order": work, "queue": queue, "priority": priority})
+
+        if queue == "HUMAN_NOW":
+            human_now.append({
+                "command_id": command_id,
+                "decision_id": did,
+                "work_order": work,
+                "project": decision.get("project"),
+                "requested_action": decision.get("gate") or decision.get("authority_required"),
+                "allowed_decisions": list(decision.get("allowed_decisions", [])),
+                "effect_stage": effect_row.get("stage") if effect_row else "NOT_EFFECT_CANDIDATE",
+                "authority_granted": False,
+                "auto_execute": False,
+            })
+
         slot = str(decision.get("slot") or life.get("slot") or "UNBOUND")
         slot_state = slot_by_name.get(slot, {}).get("reported_state")
         source_state = life.get("reported_state")
@@ -123,33 +137,30 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
                 "slot_reported_state_observation": slot_state,
                 "action": "PRESERVE_BOTH_NO_SILENT_RECONCILIATION",
             })
-        attn = attention.get(did)
-        commands.append({
-            "command_id": f"CMD::{work}",
-            "decision_id": did,
-            "work_order": work,
-            "queue": queue,
-            "state": state,
-            "priority": priority,
-            "owner": owner,
-            "requested_action": requested,
-            "human_ripe": human,
-            "effect_stage": effect_row.get("stage") if effect_row else "NOT_EFFECT_CANDIDATE",
-            "operator_attention_rank": attn.get("rank") if attn else None,
-            "do_not_touch": dnt,
-            "authority_granted": False,
-            "auto_execute": False,
-        })
 
-    if decision_ids != {c["decision_id"] for c in commands}:
+    if decision_ids != {r["decision_id"] for r in routed}:
         errors.append("decision_command_coverage_mismatch")
     if errors:
         raise ValueError(";".join(errors))
 
-    commands.sort(key=lambda c: (-int(c["priority"]), str(c["work_order"])))
+    routed.sort(key=lambda r: (-int(r["priority"]), str(r["work_order"])))
     names = ["HUMAN_NOW", "CONTROL_CENTER_QUEUE", "PROJECT_OWNER_QUEUE", "BLOCKED_QUEUE"]
-    queues = {name: [c["command_id"] for c in commands if c["queue"] == name] for name in names}
-    counts = Counter(c["queue"] for c in commands)
+    queues = {name: [r["command_id"] for r in routed if r["queue"] == name] for name in names}
+    counts = Counter(r["queue"] for r in routed)
+    route_by_decision = {r["decision_id"]: r for r in routed}
+    attention_routing = []
+    for item in ledger.get("compressed_operator_attention", []):
+        did = str(item.get("decision_id") or "")
+        route = route_by_decision.get(did)
+        attention_routing.append({
+            "rank": item.get("rank"),
+            "decision_id": did or None,
+            "command_id": route.get("command_id") if route else None,
+            "queue": route.get("queue") if route else "UNBOUND",
+            "work_order": item.get("work_order"),
+            "reason": item.get("reason"),
+        })
+
     return {
         "schema": SCHEMA,
         "projection_kind": "NON_AUTHORITY_PROJECTION",
@@ -168,7 +179,7 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
             "self_application": False,
         },
         "summary": {
-            "commands_total": len(commands),
+            "commands_total": len(routed),
             "human_now": counts.get("HUMAN_NOW", 0),
             "control_center_queue": counts.get("CONTROL_CENTER_QUEUE", 0),
             "project_owner_queue": counts.get("PROJECT_OWNER_QUEUE", 0),
@@ -178,9 +189,12 @@ def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, An
             "effects_authorized": 0,
             "executions_authorized": 0,
         },
+        "ordered_command_ids": [r["command_id"] for r in routed],
         "queues": queues,
+        "human_now": human_now,
+        "attention_routing": attention_routing,
+        "owner_only_do_not_touch": [r["command_id"] for r in routed if r["queue"] == "PROJECT_OWNER_QUEUE" and lifecycle_by_work[r["work_order"]].get("do_not_touch")],
         "provenance_divergences": sorted(divergences, key=lambda d: d["work_order"]),
-        "commands": commands,
         "invariants": {
             "human_now_equals_open_human_ripe": True,
             "blocked_never_promoted_to_now": True,
