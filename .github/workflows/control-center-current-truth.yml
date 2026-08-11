@@ -46,6 +46,10 @@ jobs:
         run: python control_center/scripts/validate_decision_effect_ledger.py
       - name: Adversarial decision / effect gate tests
         run: python control_center/scripts/test_decision_effect_ledger.py
+      - name: Validate effect execution / readback plane
+        run: python control_center/scripts/validate_effect_readback_plane.py
+      - name: Adversarial effect / readback receipt tests
+        run: python control_center/scripts/test_effect_readback_plane.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
@@ -57,3 +61,4 @@ jobs:
           node --check control_center/ui/app.js
           node --check control_center/ui/lifecycle.js
           node --check control_center/ui/decision_ledger.js
+          node --check control_center/ui/effect_readback.js
