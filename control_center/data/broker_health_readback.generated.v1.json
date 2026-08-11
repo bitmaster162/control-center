@@ -1,0 +1,78 @@
+{
+  "schema": "control_center.broker_health_readback.v1",
+  "projection_kind": "NON_AUTHORITY_READ_ONLY_HEALTH_PROJECTION",
+  "observed_at": "2026-08-12T02:53:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+  },
+  "verdict": "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE",
+  "runtime": {
+    "generation": "R59",
+    "repository": "bitmaster162/control-return-broker",
+    "default_branch": "gpt/github-ready-r1",
+    "head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+    "tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+    "target": "C:\\PROJECTS\\control_return_broker",
+    "deploy_terminal": "DF6_RUNTIME_DEPLOY_PASS",
+    "process_liveness": "NOT_PROVIDER_OBSERVABLE",
+    "watcher_pids_at_deploy_receipt": [23940, 26660],
+    "receipt_pids_are_current_proof": false
+  },
+  "registry_health": {
+    "master_entries": 9,
+    "live_index_entries": 9,
+    "live_slots": ["ANTIGRAVITY", "CODEX-02", "CLAUDE-BITUNIX"],
+    "latest_slot": "CLAUDE-BITUNIX",
+    "latest_physical_status": "DELIVERY_VERIFIED",
+    "master_live_count_match": true,
+    "unique_exact_identities": 5,
+    "historical_duplicate_groups": 2,
+    "historical_excess_rows": 4,
+    "historical_duplicates_preserved_not_pruned": true,
+    "post_df6_duplicate_regression_observed": false
+  },
+  "controller_health": {
+    "readback_status": "PASS_MATCH",
+    "ready_status": "READY_FOR_CONTROLLER_REVIEW",
+    "ready_created_last": true,
+    "bundle_sha256_match": true,
+    "last_controller_seal_at_utc": "2026-08-11T18:07:08.102885Z",
+    "age_seconds_at_observation": 6351
+  },
+  "stable_registry_health": {
+    "drive_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+    "payload_updated_at_utc": "2026-07-29T12:20:00Z",
+    "unchanged": true,
+    "direct_broker_mutation_observed": false
+  },
+  "activity": {
+    "latest_broker_generated_artifact_at_utc": "2026-08-11T18:07:08.102885Z",
+    "latest_known_registration_receipt_at_utc": "2026-08-11T18:07:21.0078103Z",
+    "later_broker_generated_artifact_observed": false,
+    "liveness_evidence_class": "INDIRECT_ACTIVITY",
+    "process_liveness_observable": false
+  },
+  "contract_divergence": {
+    "status": "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE",
+    "canonical_root_sentence": "Only the broker mutates CURRENT_RETURN_REGISTRY.json.",
+    "verified_implementation_fact": "Broker mutates generation-scoped R59 master registry/live index; no direct CURRENT_RETURN_REGISTRY.json edit is implemented or observed.",
+    "authority_rule": "R64_ROOT_BYTES_REMAIN_IMMUTABLE_WITHOUT_SEPARATE_HUMAN_REPAIR_GATE"
+  },
+  "next_action": "NO_RUNTIME_ACTION_REQUIRED; OBSERVE_OR_SEPARATELY_GATE_CANONICAL_CONTRACT_REPAIR",
+  "human_gate_required_for_root_repair": "SEPARATE_EXPLICIT_CANONICAL_SEMANTIC_REPAIR_GATE",
+  "policy": {
+    "health_projection_grants_authority": false,
+    "process_restart_authorized": false,
+    "root_repair_authorized": false,
+    "registry_mutation_authorized": false,
+    "execution_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false
+  }
+}
