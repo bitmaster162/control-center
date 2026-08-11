@@ -1,0 +1,27 @@
+name: Control Center Current Truth Projection
+
+on:
+  push:
+    branches:
+      - control-center/current-truth-r1
+    paths:
+      - 'control_center/**'
+      - '.github/workflows/control-center-current-truth.yml'
+  pull_request:
+    paths:
+      - 'control_center/**'
+      - '.github/workflows/control-center-current-truth.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-control-plane:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate non-authority current-control projection
+        run: python control_center/scripts/validate_control_plane_projection.py
