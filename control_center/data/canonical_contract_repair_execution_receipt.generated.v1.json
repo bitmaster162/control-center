@@ -1,0 +1,75 @@
+{
+  "schema": "control_center.canonical_contract_repair_execution_receipt.v1",
+  "recorded_at": "2026-08-12T03:24:59+07:00",
+  "authority": {
+    "human_sovereign": "ROBERT",
+    "gate_class": "SEPARATE_EXPLICIT_CANONICAL_SEMANTIC_REPAIR_GATE",
+    "exact_authorization_phrase": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+    "generic_go_is_authorization": false
+  },
+  "target": {
+    "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "file": "CURRENT_STATE.json",
+    "json_pointer": "/broker_plane/registry_mutation_rule",
+    "field_scope_count": 1
+  },
+  "before": {
+    "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "bytes": 6277,
+    "value": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
+  },
+  "after": {
+    "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "bytes": 6506,
+    "value": "Only the broker mutates generation-scoped return-broker state for the active watcher generation (for R59: MASTER_RETURN_REGISTRY_R59.jsonl, MASTER_RETURN_REGISTRY_R59.json, and LIVE_INDEX_R59.json); agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration. The installed R59/DF6 broker does not directly mutate CURRENT_RETURN_REGISTRY.json."
+  },
+  "provider_write": {
+    "success": true,
+    "same_drive_file_id_preserved": true,
+    "content_changed_only_on_first_successful_upload": true,
+    "first_success_modified_time_utc": "2026-08-11T20:23:33.940Z",
+    "final_provider_modified_time_utc": "2026-08-11T20:24:59.622Z",
+    "idempotent_duplicate_uploads_after_first": 7,
+    "duplicate_upload_effect": "NO_ADDITIONAL_SEMANTIC_OR_BYTE_CHANGE; MODIFIED_TIME_ONLY",
+    "transport_note": "The same final 6506-byte payload was re-uploaded idempotently after the first successful semantic write. This is recorded as an execution-process defect and not hidden."
+  },
+  "provider_readback": {
+    "raw_fetch_completed": true,
+    "readback_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "readback_size_bytes": 6506,
+    "readback_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "exact_candidate_match": true
+  },
+  "canonical_integrity_after_write": {
+    "status": "AUTHORIZED_ROOT_REPAIR_APPLIED_RESEAL_REQUIRED",
+    "current_pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "current_pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "pointer_bound_current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "pointer_bound_current_state_bytes": 6277,
+    "manifest_drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+    "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+    "manifest_bound_current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "manifest_bound_current_state_bytes": 6277,
+    "historical_stable_root_readback_all_exact": true,
+    "current_all_exact": false,
+    "pointer_mutated_by_this_gate": false,
+    "manifest_mutated_by_this_gate": false,
+    "stable_root_readback_mutated_by_this_gate": false
+  },
+  "effect_boundary": {
+    "return_registry_mutated": false,
+    "runtime_mutated": false,
+    "routing_changed": false,
+    "agent_dispatch": false,
+    "external_message_sent": false,
+    "merge": false,
+    "deploy": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  },
+  "next": {
+    "action": "PREPARE_CANONICAL_RESEAL_PROPOSAL_V1",
+    "automatic_reseal_authorized": false,
+    "reason": "The authorized one-field root repair changed CURRENT_STATE bytes and SHA, while CURRENT_POINTER and the accepted R64 MANIFEST remain bound to the pre-repair bytes. A separate bounded human gate is required before any reseal/promotion writes."
+  }
+}
