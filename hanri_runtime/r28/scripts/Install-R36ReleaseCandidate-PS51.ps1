@@ -27,6 +27,7 @@ $R35Base = Join-Path $env:LOCALAPPDATA "ControlCenterHANRIR35"
 $R35App = Join-Path $R35Base "app"
 $R35State = Join-Path $R35Base "state"
 $R35Config = Join-Path $R35App "config\r35.windows.json"
+$R35LockPath = Join-Path $R35State "hanri.lock"
 
 function GitValue([string[]]$Arguments) {
     $old = $ErrorActionPreference
@@ -61,6 +62,36 @@ function Wait-TaskStopped([string]$TaskName, [int]$TimeoutSeconds) {
         Start-Sleep -Seconds 2
     }
     return $false
+}
+
+function Quiesce-HanriLock([string]$LockPath, [int]$TimeoutSeconds) {
+    $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
+    while ((Test-Path -LiteralPath $LockPath) -and [DateTime]::UtcNow -lt $deadline) {
+        Start-Sleep -Seconds 1
+    }
+    if (-not (Test-Path -LiteralPath $LockPath)) { return $null }
+
+    try {
+        $payload = Get-Content -LiteralPath $LockPath -Raw | ConvertFrom-Json
+        $ownerPid = [int]$payload.pid
+    }
+    catch {
+        throw "R35 lock remained after scheduler stop and payload is unreadable; refusing quarantine: $LockPath"
+    }
+    if ($ownerPid -le 0) { throw "R35 lock has invalid PID; refusing quarantine: $LockPath" }
+
+    $owner = Get-CimInstance Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
+    if ($owner) {
+        $commandLine = [string]$owner.CommandLine
+        throw "R35 lock still has a live PID $ownerPid; refusing quarantine. CommandLine=$commandLine"
+    }
+
+    $suffix = [DateTime]::UtcNow.ToString("yyyyMMddTHHmmssZ")
+    $quarantine = "$LockPath.orphaned-r36-cutover-$suffix"
+    Move-Item -LiteralPath $LockPath -Destination $quarantine -ErrorAction Stop
+    if (Test-Path -LiteralPath $LockPath) { throw "R35 orphan lock quarantine did not clear active lock path" }
+    if (-not (Test-Path -LiteralPath $quarantine)) { throw "R35 orphan lock quarantine evidence missing" }
+    return $quarantine
 }
 
 function Median([double[]]$Values) {
@@ -184,6 +215,7 @@ $timestamp = [DateTime]::UtcNow.ToString("yyyyMMddTHHmmssZ")
 $backupApp = $null
 $backupState = $null
 $cutoverStarted = $false
+$r35OrphanLockQuarantine = $null
 try {
     $oldPythonPath = $env:PYTHONPATH
     try {
@@ -199,6 +231,10 @@ try {
         Stop-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue
     }
     if (-not (Wait-TaskStopped $R35TaskName 60)) { throw "R35 task did not stop" }
+    $r35OrphanLockQuarantine = Quiesce-HanriLock $R35LockPath 15
+    if ($r35OrphanLockQuarantine) {
+        Write-Host "R35_ORPHAN_LOCK_QUARANTINED $r35OrphanLockQuarantine"
+    }
 
     $r35Samples = Collect-FastSamples $R35App $R35Config $R35State $BenchmarkSamples $ExpectedFullMode
     $r35Median = Median $r35Samples
@@ -287,6 +323,9 @@ try {
         r35_rollback_commit = "4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50"
         r35_task = $R35TaskName
         r36_task = $R36TaskName
+        r35_lock_path = $R35LockPath
+        r35_orphan_lock_quarantined = [bool]$r35OrphanLockQuarantine
+        r35_orphan_lock_quarantine_path = $r35OrphanLockQuarantine
         r35_samples_ms = @($r35Samples)
         r36_samples_ms = @($r36Samples)
         r35_median_ms = [math]::Round($r35Median, 3)
@@ -319,6 +358,15 @@ catch {
     Disable-ScheduledTask -TaskName $R36TaskName -ErrorAction SilentlyContinue | Out-Null
     Stop-ScheduledTask -TaskName $R36TaskName -ErrorAction SilentlyContinue
     if ($cutoverStarted -and $r35WasEnabled) {
+        try {
+            $rollbackQuarantine = Quiesce-HanriLock $R35LockPath 10
+            if ($rollbackQuarantine) {
+                Write-Warning "Rollback quarantined orphan R35 lock: $rollbackQuarantine"
+            }
+        }
+        catch {
+            Write-Warning "Rollback lock quiesce blocked by live/invalid lock: $($_.Exception.Message)"
+        }
         Enable-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue | Out-Null
         Start-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue
     }
