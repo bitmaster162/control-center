@@ -1,0 +1,57 @@
+{
+  "run_id": "R39-CONTROL-CENTER-PILOT-001",
+  "generated_at": "2026-08-12T04:50:00+07:00",
+  "observations": [
+    {
+      "observation_id": "OBS-SELF-001",
+      "domain": "SELF",
+      "subject_id": "HANRI",
+      "signal": "MISSED_DEFECT",
+      "severity": "HIGH",
+      "summary": "HANRI/control workflow allowed stale R35/R28 evidence to remain visually CURRENT in the dashboard until the operator challenged it.",
+      "evidence_refs": ["R38_TRUTH_AUDIT", "R38_LIVE_TRUTH_PROJECTION_RECEIPT"],
+      "repeated_count": 1,
+      "proposed_change": "audit freshness and supersession semantics before presenting any current-state claim as green"
+    },
+    {
+      "observation_id": "OBS-AGENT-001",
+      "domain": "AGENT",
+      "subject_id": "CODEX-01",
+      "signal": "SKILL_GAP",
+      "severity": "MEDIUM",
+      "summary": "Agent needs a reusable evidence-first current-truth verification procedure before proposing live-adapter changes.",
+      "evidence_refs": ["R38_CONTRACT_DEBT", "CONTROL_CENTER_CURRENT_TRUTH"],
+      "repeated_count": 3,
+      "proposed_change": "create a current-truth verification skill that resolves supersession, freshness and evidence strength before any implementation proposal"
+    },
+    {
+      "observation_id": "OBS-SYSTEM-001",
+      "domain": "SYSTEM",
+      "subject_id": "CONTROL_CENTER_DASHBOARD",
+      "signal": "STATIC_SNAPSHOT_DRIFT",
+      "severity": "HIGH",
+      "summary": "The dashboard reload path can re-render stale embedded bytes instead of re-reading current evidence sources.",
+      "evidence_refs": ["R38_TRUTH_AUDIT", "R38_POLICY_38_0_3"],
+      "repeated_count": 2,
+      "proposed_change": "separate evidence ingestion from browser rendering and regenerate the projection from verified source readbacks"
+    },
+    {
+      "observation_id": "OBS-OPERATOR-001",
+      "domain": "OPERATOR",
+      "subject_id": "ROBERT",
+      "signal": "MANUAL_REPEAT",
+      "severity": "MEDIUM",
+      "summary": "Operator had to manually challenge HANRI scope and dashboard truth instead of receiving proactive meta-audit findings.",
+      "evidence_refs": ["OPERATOR_CORRECTION_20260812", "R38_TRUTH_AUDIT"],
+      "repeated_count": 4,
+      "proposed_change": "surface a concise proactive attention report: what HANRI audited, what it did not audit, what needs operator judgment, and which improvements are proposed"
+    }
+  ],
+  "recommendation_outcomes": [
+    {
+      "recommendation_id": "R38-DASHBOARD-STATIC-TRUTH-ASSUMPTION",
+      "status": "VERIFIED_NO_EFFECT",
+      "evidence_refs": ["OPERATOR_CORRECTION_20260812"]
+    }
+  ]
+}
