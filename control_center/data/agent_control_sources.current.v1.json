@@ -1,7 +1,7 @@
 {
   "schema": "control_center.agent_control_sources.v1",
   "snapshot_kind": "NON_AUTHORITY_PROVIDER_READBACK",
-  "observed_at": "2026-08-12T00:43:00+07:00",
+  "observed_at": "2026-08-12T02:12:00+07:00",
   "pointer": {
     "provider": "GOOGLE_DRIVE",
     "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
@@ -22,6 +22,27 @@
       "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_HUMAN_AUTHORIZATION",
       "push": "DENY_WITHOUT_EXPLICIT_BOUNDED_AUTHORITY",
       "self_application": false
+    }
+  },
+  "canonical_current_state": {
+    "provider": "GOOGLE_DRIVE",
+    "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "raw_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "broker_plane": {
+      "status": "INSTALLED_AND_WATCHING",
+      "watcher_generation": "R59",
+      "registry_mutation_rule": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
+    }
+  },
+  "canonical_role_views": {
+    "provider": "GOOGLE_DRIVE",
+    "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "raw_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+    "roles": {
+      "CODEX-07": {
+        "lane": "Return Plane / broker hardening",
+        "state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign"
+      }
     }
   },
   "return_registry": {
@@ -61,6 +82,7 @@
   "boundaries": {
     "registry_is_transport_observation_only": true,
     "registry_cannot_accept_or_apply": true,
+    "historical_registry_next_cannot_override_canonical_runtime": true,
     "tradingos_do_not_touch": true,
     "max_operator_attention": 3
   }
