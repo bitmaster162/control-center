@@ -6,9 +6,11 @@ from build_provider_drift_operator_attention import (
     DRIFT_VERDICT,
     NEUTRAL_VERDICT,
     OUTPUT,
+    RESOLUTION,
     build_projection,
     load,
 )
+from provider_drift_resolution_transition import RESOLVED
 
 EXPECTED_FALSE_SAFETY = {
     "provider_write_authorized",
@@ -48,6 +50,7 @@ def validate_projection(data: dict) -> list[str]:
         "effect_candidate_created": False,
         "command_created": False,
         "system_attention_grants_authority": False,
+        "drift_alert_clear_requires_matching_resolution": True,
     }
     for key, expected in expected_invariants.items():
         if invariants.get(key) is not expected:
@@ -61,35 +64,51 @@ def validate_projection(data: dict) -> list[str]:
         errors.append("capital_permission_not_deny")
 
     verdict = data.get("source_status_verdict")
+    resolution_state = data.get("source_resolution_state")
+    resolution_applied = data.get("resolution_applied")
     items = data.get("system_attention", [])
     if summary.get("system_attention_count") != len(items):
         errors.append("attention_count_mismatch")
 
     if verdict == DRIFT_VERDICT:
-        if len(items) != 1:
-            errors.append("drift_must_emit_exactly_one_attention")
+        if resolution_applied is True:
+            if resolution_state != RESOLVED:
+                errors.append("resolved_drift_resolution_state_mismatch")
+            if items:
+                errors.append("matching_resolution_must_clear_drift_attention")
+            if not data.get("resolved_drift_fingerprint"):
+                errors.append("resolved_drift_fingerprint_missing")
         else:
-            item = items[0]
-            expected = {
-                "id": "SYSATTN::PROVIDER_DRIFT_HOLD",
-                "state": "DRIFT_HOLD",
-                "severity": "HIGH",
-                "owner": "CONTROL_CENTER",
-                "source_verdict": DRIFT_VERDICT,
-                "requested_action": "READ_ONLY_PROVIDER_DRIFT_INVESTIGATION",
-                "human_now": False,
-                "human_gate": False,
-                "effect_candidate": False,
-                "dispatch_authorized": False,
-                "apply_authorized": False,
-                "execution_authorized": False,
-                "write_authorized": False,
-                "auto_fix": False,
-            }
-            for key, value in expected.items():
-                if item.get(key) != value:
-                    errors.append(f"drift_item_mismatch:{key}")
+            if data.get("resolved_drift_fingerprint") is not None:
+                errors.append("unresolved_drift_has_resolved_fingerprint")
+            if len(items) != 1:
+                errors.append("drift_must_emit_exactly_one_attention")
+            else:
+                item = items[0]
+                expected = {
+                    "id": "SYSATTN::PROVIDER_DRIFT_HOLD",
+                    "state": "DRIFT_HOLD",
+                    "severity": "HIGH",
+                    "owner": "CONTROL_CENTER",
+                    "source_verdict": DRIFT_VERDICT,
+                    "requested_action": "READ_ONLY_PROVIDER_DRIFT_INVESTIGATION",
+                    "human_now": False,
+                    "human_gate": False,
+                    "effect_candidate": False,
+                    "dispatch_authorized": False,
+                    "apply_authorized": False,
+                    "execution_authorized": False,
+                    "write_authorized": False,
+                    "auto_fix": False,
+                }
+                for key, value in expected.items():
+                    if item.get(key) != value:
+                        errors.append(f"drift_item_mismatch:{key}")
     else:
+        if resolution_applied is not False:
+            errors.append("non_drift_must_not_apply_resolution")
+        if data.get("resolved_drift_fingerprint") is not None:
+            errors.append("non_drift_has_resolved_fingerprint")
         if items:
             errors.append("non_drift_verdict_must_not_emit_attention")
 
@@ -101,7 +120,7 @@ def validate_projection(data: dict) -> list[str]:
 
 def main() -> int:
     committed = load(OUTPUT)
-    deterministic = build_projection(load(DIAGNOSTIC), load(COMMAND_QUEUE))
+    deterministic = build_projection(load(DIAGNOSTIC), load(COMMAND_QUEUE), load(RESOLUTION))
     errors = validate_projection(committed)
     if committed != deterministic:
         errors.append("deterministic_projection_mismatch")
