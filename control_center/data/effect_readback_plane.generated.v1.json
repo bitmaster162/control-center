@@ -1,0 +1,57 @@
+{
+  "schema": "control_center.effect_readback_plane.v1",
+  "projection_kind": "NON_AUTHORITY_PROJECTION",
+  "observed_at": "2026-08-12T01:39:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "provider_readback": "all_exact"
+  },
+  "policy": {
+    "receipt_never_grants_authority": true,
+    "effect_authorization_does_not_execute": true,
+    "execution_requires_explicit_authorization": true,
+    "execution_requires_receipt": true,
+    "readback_required_after_execution": true,
+    "closure_requires_readback": true,
+    "auto_apply": false,
+    "self_application": false
+  },
+  "summary": {
+    "decision_objects_total": 14,
+    "effect_candidates_total": 1,
+    "effects_authorized": 0,
+    "executions_authorized": 0,
+    "execution_receipts": 0,
+    "readback_receipts": 0,
+    "closed_after_readback": 0
+  },
+  "effect_candidates": [
+    {
+      "decision_id": "DEC::CODEX07-R43-RETURN-PLANE-V2",
+      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
+      "slot": "CODEX-07",
+      "project": "Return Plane",
+      "gate": "ROBERT_MIGRATION_DECISION",
+      "decision_state": "OPEN",
+      "decision_outcome": null,
+      "effect_authorized": false,
+      "execution_authorized": false,
+      "apply_status": "NOT_APPLIED",
+      "execution_receipt_id": null,
+      "readback_receipt_id": null,
+      "stage": "AWAITING_HUMAN_EFFECT_AUTHORIZATION"
+    }
+  ],
+  "execution_receipts": [],
+  "readback_receipts": [],
+  "invariants": {
+    "no_receipt_can_authorize_effect": true,
+    "no_execution_without_prior_authority": true,
+    "no_closure_without_readback": true,
+    "tradingos_not_effect_candidate_without_owner_authority": true
+  }
+}
