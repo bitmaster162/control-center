@@ -68,6 +68,8 @@ jobs:
         run: python control_center/scripts/test_broker_health_readback.py
       - name: Validate Canonical Contract Repair Proposal V1
         run: python control_center/scripts/validate_canonical_contract_repair_proposal.py
+      - name: Validate applied Canonical Contract Repair receipt
+        run: python control_center/scripts/validate_canonical_contract_repair_execution_receipt.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
