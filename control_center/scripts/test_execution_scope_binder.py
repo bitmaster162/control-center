@@ -23,11 +23,21 @@ def main() -> int:
     command = load(DATA / "command_queue.generated.v1.json")
     effect = load(DATA / "effect_readback_plane.generated.v1.json")
     out = build(source, command, effect)
-    assert out["verdict"] == "NO_EXECUTABLE_GATE_STALE_R43_PREDECESSOR"
+    assert out["verdict"] == "NO_EXECUTABLE_GATE_RUNTIME_IDENTITY_VERIFIED_R43_HISTORICAL"
     assert out["binding"]["historical_gate_suppressed"] is True
+    assert out["binding"]["runtime_identity_bound"] is True
+    assert out["binding"]["provider_target_bound"] is True
+    assert out["binding"]["mutation_set_bound"] is True
+    assert out["binding"]["execution_scope_bound"] is False
     assert out["binding"]["execution_ready"] is False
     assert out["binding"]["execution_authorized"] is False
-    assert out["canonical_runtime"]["runtime_liveness_current"] == "UNVERIFIED_PROVIDER_READBACK_REQUIRED"
+    assert out["canonical_runtime"]["runtime_deployment_readback"] == "VERIFIED_DRIVE_RECEIPT"
+    assert out["canonical_runtime"]["runtime_head"] == "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785"
+    assert out["canonical_runtime"]["runtime_tree"] == "4762b2cdad463823e34da29e09b22ec580c6e778"
+    assert out["canonical_runtime"]["current_process_liveness"] == "NOT_DIRECTLY_VERIFIED_AT_BINDER_OBSERVED_AT"
+    assert out["canonical_runtime"]["receipt_pids_are_not_current_process_proof"] is True
+    assert out["implementation_binding"]["current_return_registry_reference_in_core"] is False
+    assert out["implementation_binding"]["direct_current_return_registry_edit_observed"] is False
 
     bad = copy.deepcopy(source); bad["canonical_current_state"]["watcher_generation"] = "R43"
     expect_fail("canonical_generation_tamper", bad, command, effect)
@@ -44,7 +54,19 @@ def main() -> int:
     bad = copy.deepcopy(source); bad["known_divergences"] = []
     expect_fail("divergence_suppressed", bad, command, effect)
 
-    print(json.dumps({"status":"PASS","verdict":out["verdict"],"adversarial_cases":5}, indent=2))
+    bad = copy.deepcopy(source); bad["provider_readback"]["runtime_receipt"]["accepted_head"] = "00" * 20
+    expect_fail("runtime_head_tamper", bad, command, effect)
+
+    bad = copy.deepcopy(source); bad["provider_readback"]["post_deploy_broker_activity"]["direct_current_return_registry_edit"] = True
+    expect_fail("forged_current_registry_edit", bad, command, effect)
+
+    bad = copy.deepcopy(source); bad["provider_readback"]["installed_implementation_semantics"]["current_return_registry_reference_in_core"] = True
+    expect_fail("invented_current_registry_reference", bad, command, effect)
+
+    bad = copy.deepcopy(source); bad["provider_readback"]["github_live"]["tree"] = "11" * 20
+    expect_fail("github_tree_tamper", bad, command, effect)
+
+    print(json.dumps({"status":"PASS","verdict":out["verdict"],"adversarial_cases":9}, indent=2))
     return 0
 
 
