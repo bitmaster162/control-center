@@ -28,19 +28,30 @@ def main() -> int:
     assert not validate(lifecycle, ledger), "baseline decision ledger must validate"
     assert build(lifecycle) == ledger, "generated ledger must equal builder semantics"
 
+    hist = next(d for d in ledger["decisions"] if d["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
+    assert hist["decision_class"] == "HISTORICAL_PREDECESSOR_NO_ACTION"
+    assert hist["decision_state"] == "CLOSED_NO_ACTION"
+    assert hist["owner"] == "NONE"
+    assert hist["allowed_decisions"] == []
+    assert hist["human_ripe"] is False
+    assert ledger["queues"]["human_ripe"] == []
+
     mutated = copy.deepcopy(ledger)
     mutated["policy"]["auto_apply"] = True
     expect_fail(lifecycle, mutated, "automatic_or_self_transition_forbidden")
 
     mutated = copy.deepcopy(ledger)
-    ripe = next(d for d in mutated["decisions"] if d["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
-    ripe["effect_authorized"] = True
+    hist = next(d for d in mutated["decisions"] if d["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
+    hist["effect_authorized"] = True
     expect_fail(lifecycle, mutated, "effect_authorized_without_gate")
 
     mutated = copy.deepcopy(ledger)
-    ripe = next(d for d in mutated["decisions"] if d["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
-    ripe["execution_authorized"] = True
-    expect_fail(lifecycle, mutated, "execution_authorized_without_execution_gate")
+    hist = next(d for d in mutated["decisions"] if d["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
+    hist["human_ripe"] = True
+    hist["decision_state"] = "OPEN"
+    hist["owner"] = "ROBERT"
+    hist["allowed_decisions"] = ["AUTHORIZE_APPLY"]
+    expect_fail(lifecycle, mutated, "historical_predecessor_boundary_broken")
 
     mutated = copy.deepcopy(ledger)
     trading = next(d for d in mutated["decisions"] if d["work_order"] == "CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP")
@@ -55,8 +66,8 @@ def main() -> int:
     expect_fail(lifecycle, mutated, "blocked_dispatch_surfaced_as_ripe")
 
     mutated = copy.deepcopy(ledger)
-    mutated["queues"]["human_ripe"].append("DEC::CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN")
-    expect_fail(lifecycle, mutated, "human_ripe_queue_not_exactly_return_plane_gate")
+    mutated["queues"]["human_ripe"].append("DEC::CODEX07-R43-RETURN-PLANE-V2")
+    expect_fail(lifecycle, mutated, "human_ripe_queue_must_be_empty")
 
     mutated = copy.deepcopy(ledger)
     decision = next(d for d in mutated["decisions"] if d["owner"] == "CONTROL_CENTER")
