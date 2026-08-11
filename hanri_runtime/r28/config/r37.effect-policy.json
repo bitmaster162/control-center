@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "policy_version": "37.0.0-effect-governance-v1",
+  "enforcement_mode": "SHADOW_ONLY",
+  "human_sovereign": "ROBERT",
+  "approval_expiry_seconds": 900,
+  "default_verdict": "DENY",
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "effect_classes": {
+    "READ_ONLY": {
+      "risk": "LOW",
+      "verdict": "ALLOW",
+      "reason": "Read-only inspection is permitted by the current Control Center effect ceiling."
+    },
+    "WRITE_REVERSIBLE": {
+      "risk": "MEDIUM",
+      "verdict": "HUMAN_APPROVAL",
+      "reason": "Persistent writes require an exact human approval in the R37 pilot."
+    },
+    "WRITE_EXTERNAL": {
+      "risk": "HIGH",
+      "verdict": "HUMAN_APPROVAL",
+      "reason": "External communications or publications require an exact human approval."
+    },
+    "AUTHORITY_CHANGE": {
+      "risk": "CRITICAL",
+      "verdict": "HUMAN_APPROVAL",
+      "reason": "Authority, credential or permission changes require explicit sovereign approval."
+    },
+    "IRREVERSIBLE": {
+      "risk": "CRITICAL",
+      "verdict": "HUMAN_APPROVAL",
+      "reason": "Irreversible actions require explicit sovereign approval and a separately verified rollback/containment plan."
+    },
+    "CAPITAL": {
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "Capital effects are denied by the current authority ceiling."
+    },
+    "UNKNOWN": {
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "Unknown effect class fails closed."
+    }
+  },
+  "target_overrides": [
+    {
+      "prefix": "TradingOS",
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "TradingOS is DO_NOT_TOUCH under the current R64 scope."
+    },
+    {
+      "prefix": "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json",
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "Direct CURRENT_POINTER writes are forbidden during the R37 product pilot."
+    },
+    {
+      "prefix": "Control canter/00_CONTROL_CURRENT/CURRENT_STATE.json",
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "Direct CURRENT_STATE writes are forbidden during the R37 product pilot."
+    },
+    {
+      "prefix": "Control canter/00_CONTROL_CURRENT/ROLE_INDEX.json",
+      "risk": "CRITICAL",
+      "verdict": "DENY",
+      "reason": "Direct ROLE_INDEX writes are forbidden during the R37 product pilot."
+    }
+  ]
+}
