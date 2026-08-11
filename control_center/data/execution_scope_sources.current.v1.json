@@ -1,0 +1,87 @@
+{
+  "schema": "control_center.execution_scope_sources.v1",
+  "snapshot_kind": "NON_AUTHORITY_PROVIDER_AND_HISTORICAL_EVIDENCE",
+  "observed_at": "2026-08-12T02:12:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "provider_readback": "all_exact"
+  },
+  "canonical_current_state": {
+    "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "broker_status": "INSTALLED_AND_WATCHING",
+    "watcher_generation": "R59",
+    "registry_mutation_rule": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
+  },
+  "canonical_role_views": {
+    "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+    "codex07_lane": "Return Plane / broker hardening",
+    "codex07_state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign"
+  },
+  "current_projection_bindings": {
+    "human_now_count": 0,
+    "effect_candidates_count": 0,
+    "historical_work_order": "CODEX07-R43-RETURN-PLANE-V2",
+    "historical_lifecycle_stage": "HISTORICAL_EVIDENCE_ONLY",
+    "historical_effect_gate": "NONE_STALE_PREDECESSOR_R59_ACTIVE"
+  },
+  "historical_evidence": [
+    {
+      "id": "R43_RETURN_PLANE_V2",
+      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
+      "evidence_quality": "REGISTRY_AND_CONTROL_PROJECTION_HISTORICAL",
+      "claim": "R43 return passed and was semantically accepted, but is not current runtime routing."
+    },
+    {
+      "id": "R57_SHADOW",
+      "drive_file_id": "12k3M9zZmsQ-vqrFRwk_kNbJ4nh6wgE39",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Shadow implementation only; do not switch live pointer or migrate current state; 20-cycle deterministic no-growth evidence."
+    },
+    {
+      "id": "R59_HARDENING",
+      "drive_file_id": "1OCXFZlQjwQkfLsHHwNDxTE8oQPaOUH1s",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Windows/DriveFS broker hardening at C:\\PROJECTS\\control_return_broker; historical test language includes that CURRENT_RETURN_REGISTRY.json is never written by broker."
+    },
+    {
+      "id": "R59_READ_FIRST",
+      "drive_file_id": "1kctV5IXtQvTIske3fDzfGr1MneVevogR",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Return broker repo C:\\PROJECTS\\control_return_broker and return root C:\\Users\\coins\\My Drive\\Control canter\\00_RETURN_DROP."
+    },
+    {
+      "id": "R59_INSTALL_WO045",
+      "drive_file_id": "1rZg8v3WajhKyhaEj3pWvyZb0fERlrnPe",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Install/start instructions and runtime receipt path for R59 broker; reported final HEAD 54e1c53acf07a4b87c68471dc5b7dbafcdd2e965 and tree d479f3fddef62c5ce555e7d97eb23246b1363423."
+    },
+    {
+      "id": "R61_SYNTHESIS",
+      "drive_file_id": "1qgeu-vKpfuRoE0h0DidDOP1yXXfb0-m0",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Later Return Broker install/harvest and CODEX-07 broker-hardening activity reported; no automatic authority promotion from predecessor migration evidence."
+    }
+  ],
+  "known_divergences": [
+    {
+      "id": "BROKER_REGISTRY_MUTATION_SEMANTICS_DIVERGENCE",
+      "historical_claim": "R59 hardening evidence includes a test that CURRENT_RETURN_REGISTRY.json is never written by broker.",
+      "canonical_claim": "R64 CURRENT_STATE says only the broker mutates CURRENT_RETURN_REGISTRY.json.",
+      "routing_rule": "CANONICAL_R64_WINS_CURRENT_ROUTING_BUT_IMPLEMENTATION_SEMANTICS_REQUIRE_READ_ONLY_VERIFICATION_BEFORE_ANY_CHANGE"
+    }
+  ],
+  "safety": {
+    "execution_authorized": false,
+    "auto_execute": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false
+  }
+}
