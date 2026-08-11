@@ -6,8 +6,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors
+
 SCHEMA = "control_center.decision_effect_ledger.v1"
-EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -82,10 +83,7 @@ def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
     policy = lifecycle.get("global_policy", {})
     if lifecycle.get("schema") != "control_center.work_order_lifecycle.v1":
         errors.append("lifecycle_schema_mismatch")
-    if anchor.get("generation") != "R64" or anchor.get("status") != "ACTIVE":
-        errors.append("r64_anchor_mismatch")
-    if anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA or anchor.get("provider_readback") != "all_exact":
-        errors.append("pointer_binding_mismatch")
+    append_anchor_errors("work_lifecycle", anchor, errors)
     if policy.get("auto_dispatch") is not False or policy.get("auto_accept") is not False or policy.get("auto_apply") is not False:
         errors.append("lifecycle_auto_transition_forbidden")
     if errors:
