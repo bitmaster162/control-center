@@ -1,4 +1,5 @@
 const DATA_URL = "../data/current_control_plane.generated.v1.json";
+const AGENT_CONTROL_URL = "../data/agent_control_plane.generated.v1.json";
 
 const esc = (value) => String(value ?? "")
   .replaceAll("&", "&amp;")
@@ -48,6 +49,53 @@ function renderAgents(data) {
     <td>${esc(a.current_assignment)}</td>
   </tr>`);
   document.querySelector("#agents-list").innerHTML = table(["Agent / owner", "Role", "State", "Current assignment"], rows);
+}
+
+function renderAgentControl(control) {
+  const global = control.global_dispatch || {};
+  const attention = (control.operator_attention || []).slice(0, 3);
+  const pending = control.blocked_dispatch_queue || [];
+  const slots = control.slots || [];
+
+  const attentionCards = attention.length ? attention.map((item) => `
+    <article class="card emphasis">
+      <div class="card-top"><strong>#${esc(item.rank)} · ${esc(item.slot)}</strong>${badge(item.reported_state)}</div>
+      <h3>${esc(item.project)}</h3>
+      <p><b>Why now:</b> ${esc(item.reason)}</p>
+      <p><b>Next:</b> ${esc(item.requested_next)}</p>
+      <p><b>Gate:</b> ${esc(item.human_gate)}</p>
+    </article>`).join("") : `<div class="empty">No bounded operator-attention items.</div>`;
+
+  const pendingRows = pending.map((item) => `<tr>
+    <td><strong>${esc(item.slot)}</strong></td>
+    <td>${esc(item.project)}</td>
+    <td>${badge(item.reported_state)}</td>
+    <td>${esc(item.work_order)}</td>
+    <td>${esc(item.blocker)}</td>
+  </tr>`);
+
+  const slotRows = slots.map((item) => `<tr>
+    <td><strong>${esc(item.slot)}</strong>${item.do_not_touch ? `<br><span class="muted">DO NOT TOUCH</span>` : ""}</td>
+    <td>${esc(item.project_hint)}</td>
+    <td>${badge(item.reported_state)}</td>
+    <td>${esc(item.operational_class)}</td>
+    <td>${esc(item.work_order || "—")}</td>
+    <td>${esc(item.reported_next || "—")}</td>
+    <td>${item.dispatch_authorized === false ? badge("DENY") : badge("UNKNOWN")}</td>
+  </tr>`);
+
+  document.querySelector("#agent-control-list").innerHTML = `
+    <div class="callout">
+      <strong>Global dispatch:</strong> ${badge(global.state)}
+      <p>${esc(global.note || "")}</p>
+    </div>
+    <h3>Operator attention · max 3</h3>
+    <div class="grid cards">${attentionCards}</div>
+    <h3>Pending but blocked</h3>
+    <div class="table-wrap">${table(["Slot", "Project", "Reported state", "Work order", "Blocker"], pendingRows)}</div>
+    <h3>Registry-backed fleet</h3>
+    <div class="table-wrap">${table(["Slot", "Project hint", "Reported", "Operational class", "Work order", "Reported next", "Dispatch"], slotRows)}</div>
+  `;
 }
 
 function renderProjects(data) {
@@ -122,14 +170,22 @@ function renderCommercial(data) {
   document.querySelector("#commercial-list").innerHTML = cards.join("");
 }
 
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) throw new Error(`${url} fetch failed: ${response.status}`);
+  return response.json();
+}
+
 async function main() {
-  const response = await fetch(DATA_URL, { cache: "no-store" });
-  if (!response.ok) throw new Error(`projection fetch failed: ${response.status}`);
-  const data = await response.json();
+  const [data, agentControl] = await Promise.all([
+    fetchJson(DATA_URL),
+    fetchJson(AGENT_CONTROL_URL)
+  ]);
   document.querySelector("#observed-at").textContent = `Observed ${data.observed_at} · ${data.projection_kind} · ${data.projection_source || "manual"}`;
   renderSafety(data);
   renderNow(data);
   renderAgents(data);
+  renderAgentControl(agentControl);
   renderProjects(data);
   renderWork(data);
   renderReturns(data);
