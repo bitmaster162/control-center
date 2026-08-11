@@ -1,7 +1,7 @@
 {
   "schema": "control_center.provider_snapshot.v1",
   "snapshot_kind": "NON_AUTHORITY_PROVIDER_READBACK",
-  "observed_at": "2026-08-11T23:45:00+07:00",
+  "observed_at": "2026-08-12T02:12:00+07:00",
   "canonical_roots": {
     "generation": "R64",
     "status": "ACTIVE",
@@ -17,6 +17,20 @@
     "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
     "provider_readback": "all_exact",
     "r63_is_current": false
+  },
+  "canonical_broker": {
+    "source": "R64_CURRENT_STATE_AND_ROLE_VIEWS_EXACT_READBACK",
+    "current_state_drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "role_views_drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+    "status": "INSTALLED_AND_WATCHING",
+    "watcher_generation": "R59",
+    "codex07_lane": "Return Plane / broker hardening",
+    "codex07_state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign",
+    "fresh_runtime_liveness": "UNVERIFIED_PROVIDER_READBACK_REQUIRED",
+    "historical_r43_gate_is_current": false,
+    "registry_mutation_rule": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
   },
   "return_registry": {
     "schema": "CONTROL_RETURN_REGISTRY_V4",
