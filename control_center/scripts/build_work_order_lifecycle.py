@@ -24,6 +24,8 @@ def _semantic_return_for(slot: str, current: dict[str, Any]) -> dict[str, Any] |
 
 
 def _stage(row: dict[str, Any]) -> str:
+    if row.get("historical_predecessor") is True:
+        return "HISTORICAL_EVIDENCE_ONLY"
     if row.get("apply_status") == "APPLIED":
         return "READBACK_REQUIRED"
     if row.get("semantic_status") == "ACCEPTED":
@@ -75,7 +77,11 @@ def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any
             "effect_gate": "OWNER_ONLY_DO_NOT_TOUCH" if src.get("do_not_touch") else "R64_NO_FURTHER_AGENT_WORK",
             "readback_status": "NOT_DUE_NO_EFFECT",
             "do_not_touch": bool(src.get("do_not_touch")),
+            "historical_predecessor": src.get("current_route") == "HISTORICAL_PREDECESSOR_NO_ACTION",
         }
+        if record["historical_predecessor"]:
+            record["canonical_runtime"] = src.get("canonical_runtime")
+            record["source_conflict"] = src.get("source_conflict")
         semantic_return = _semantic_return_for(slot, current)
         if semantic_return:
             record.update(
@@ -85,7 +91,10 @@ def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any
                 semantic_source="CURRENT_CONTROL_PLANE_RETURN",
                 return_id=semantic_return.get("return_id"),
             )
-            if record["semantic_status"] == "ACCEPTED" and not record["do_not_touch"]:
+            if record["historical_predecessor"]:
+                record["effect_gate"] = "NONE_STALE_PREDECESSOR_R59_ACTIVE"
+                record["readback_status"] = "NOT_DUE_HISTORICAL_EVIDENCE"
+            elif record["semantic_status"] == "ACCEPTED" and not record["do_not_touch"]:
                 record["effect_gate"] = src.get("reported_next") or "EXPLICIT_HUMAN_EFFECT_GATE"
         records[work_order] = record
 
@@ -119,6 +128,7 @@ def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any
             "effect_gate": "OWNER_ONLY_DO_NOT_TOUCH" if do_not_touch else "R64_NO_FURTHER_AGENT_WORK",
             "readback_status": "NOT_DUE_NO_EFFECT",
             "do_not_touch": do_not_touch,
+            "historical_predecessor": False,
             "entry_key": entry.get("entry_key"),
         }
 
@@ -192,6 +202,7 @@ def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any
             "source_divergences": len(divergences),
             "semantic_accepted": sum(1 for r in rows if r["semantic_status"] == "ACCEPTED"),
             "applied": sum(1 for r in rows if r["apply_status"] == "APPLIED"),
+            "historical_predecessor": sum(1 for r in rows if r.get("historical_predecessor") is True),
         },
         "operator_attention": attention,
         "source_divergences": divergences,
@@ -200,6 +211,7 @@ def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any
             "registry_observation_never_semantic_acceptance": True,
             "entry_verification_never_semantic_acceptance": True,
             "semantic_acceptance_never_implies_apply": True,
+            "historical_predecessor_never_effect_gate": True,
             "no_effect_without_explicit_gate": True,
             "tradingos_do_not_touch": True,
             "readback_required_after_any_effect": True,
