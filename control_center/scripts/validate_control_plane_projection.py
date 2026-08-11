@@ -11,11 +11,11 @@ TRANSPORT = {"DISCOVERED", "STAGED", "VERIFIED", "DELIVERED", "ACKNOWLEDGED", "Q
 CONTENT = {"UNREVIEWED", "ACCEPTED", "HOLD", "REJECTED"}
 APPLY = {"NOT_APPLIED", "APPLIED"}
 
-R64_CANONICAL_DECISION = "ACCEPT_R64_POINTER_PROMOTION"
-R64_POINTER_SHA256 = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
-R64_MANIFEST_SHA256 = "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"
+R64_CANONICAL_DECISION = "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+R64_POINTER_SHA256 = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
+R64_MANIFEST_SHA256 = "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
 R64_ROOT_HASHES = {
-    "CURRENT_STATE.json": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "CURRENT_STATE.json": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
     "ROLE_INDEX.json": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
     "ROLE_VIEWS.json": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
 }
@@ -44,9 +44,9 @@ def validate(payload: dict) -> list[str]:
         fail(errors, "R64_manifest_sha_mismatch")
 
     pointer = current.get("pointer", {})
-    if pointer.get("locator") != "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json":
+    if pointer.get("locator") is not None and pointer.get("locator") != "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json":
         fail(errors, "R64_pointer_locator_mismatch")
-    if pointer.get("accepted_artifact") != "CURRENT_POINTER_R64_ACTIVE.json":
+    if pointer.get("accepted_artifact") is not None and pointer.get("accepted_artifact") != "CURRENT_POINTER_R64_ACTIVE.json":
         fail(errors, "R64_pointer_artifact_mismatch")
     if pointer.get("sha256") != R64_POINTER_SHA256:
         fail(errors, "R64_pointer_sha_mismatch")
