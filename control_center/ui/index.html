@@ -18,6 +18,7 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#human-gate-packets">HUMAN GATE</a>
     <a href="#command-queue">COMMAND QUEUE</a>
     <a href="#agents">AGENTS</a>
     <a href="#agent-control">AGENT CONTROL</a>
@@ -36,9 +37,17 @@
     <section id="now" class="panel hero-panel">
       <div class="section-head">
         <div><p class="eyebrow">OPERATOR ATTENTION</p><h2>NOW</h2></div>
-        <span class="pill">Command Queue · HUMAN_NOW only</span>
+        <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
+    </section>
+
+    <section id="human-gate-packets" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">HUMAN AUTHORITY BOUNDARY</p><h2>Human Gate Packet</h2></div>
+        <span class="pill">packet ≠ authority ≠ execution</span>
+      </div>
+      <div id="human-gate-packets-list"></div>
     </section>
 
     <section id="command-queue" class="panel">
@@ -135,5 +144,6 @@
   <script src="./decision_ledger.js" defer></script>
   <script src="./effect_readback.js" defer></script>
   <script src="./command_queue.js" defer></script>
+  <script src="./human_gate_packets.js" defer></script>
 </body>
 </html>
