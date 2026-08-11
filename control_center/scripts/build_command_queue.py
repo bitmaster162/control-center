@@ -136,7 +136,6 @@ def build(
 
         slot = str(decision.get("slot") or lifecycle_row.get("slot") or "UNBOUND")
         agent_slot = slot_by_name.get(slot)
-        source_reported_state = agent_slot.get("reported_state") if agent_slot else lifecycle_row.get("reported_state")
         attention = attention_by_decision.get(decision_id)
 
         command = {
@@ -156,7 +155,9 @@ def build(
             "decision_outcome": decision.get("decision_outcome"),
             "human_ripe": human_ripe,
             "source_lifecycle_stage": lifecycle_row.get("lifecycle_stage"),
-            "source_reported_state": source_reported_state,
+            "source_reported_state": lifecycle_row.get("reported_state"),
+            "source_views": lifecycle_row.get("source_views", []),
+            "slot_reported_state_observation": agent_slot.get("reported_state") if agent_slot else None,
             "semantic_status": decision.get("semantic_status"),
             "apply_status": decision.get("apply_status"),
             "effect_stage": effect_row.get("stage") if effect_row else "NOT_EFFECT_CANDIDATE",
@@ -235,6 +236,7 @@ def build(
             "human_now_equals_open_human_ripe": True,
             "blocked_never_promoted_to_now": True,
             "tradingos_owner_only": True,
+            "work_order_provenance_preserved": True,
             "queue_never_grants_authority": True,
             "queue_never_executes": True,
             "effect_receipts_never_invented": True,
