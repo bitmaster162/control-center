@@ -29,27 +29,26 @@ function renderSafety(data) {
 }
 
 function renderNowPending() {
-  document.querySelector("#now-cards").innerHTML = `<div class="empty">Loading ripe human gates from Decision / Effect Gate Ledger…</div>`;
+  document.querySelector("#now-cards").innerHTML = `<div class="empty">Loading HUMAN_NOW from Command Queue…</div>`;
 }
 
-function renderRipeNow(ledger) {
-  const decisions = ledger.decisions || [];
-  const byId = new Map(decisions.map((d) => [d.decision_id, d]));
-  const ripe = (ledger.queues?.human_ripe || []).map((id) => byId.get(id)).filter(Boolean);
+function renderCommandNow(queue) {
+  const ripe = queue.human_now || [];
   document.querySelector("#now-cards").innerHTML = ripe.length
-    ? ripe.map((d) => `
+    ? ripe.map((item) => `
       <article class="card emphasis">
-        <div class="card-top"><strong>${esc(d.work_order)}</strong>${badge(d.decision_state)}</div>
-        <h3>${esc(d.project)}</h3>
-        <p><b>Gate:</b> ${esc(d.gate)}</p>
-        <p><b>Authority:</b> ${esc(d.authority_required)}</p>
-        <p><b>Allowed:</b> ${esc((d.allowed_decisions || []).join(" / "))}</p>
-        <p><b>Current:</b> semantic ${esc(d.semantic_status)} · apply ${esc(d.apply_status)} · execution ${d.execution_authorized === false ? "DENY" : "UNKNOWN"}</p>
+        <div class="card-top"><strong>${esc(item.work_order)}</strong>${badge("RIPE HUMAN GATE")}</div>
+        <h3>${esc(item.project)}</h3>
+        <p><b>Action:</b> ${esc(item.requested_action)}</p>
+        <p><b>Allowed:</b> ${esc((item.allowed_decisions || []).join(" / "))}</p>
+        <p><b>Effect stage:</b> ${esc(item.effect_stage)}</p>
+        <p><b>Authority granted by queue:</b> ${item.authority_granted === false ? "NO" : "UNKNOWN"}</p>
+        <p><b>Auto execute:</b> ${item.auto_execute === false ? "DENY" : "UNKNOWN"}</p>
       </article>`).join("")
     : `<div class="empty">No ripe human gates. Control Center and project-owner queues continue without escalating to Robert.</div>`;
 }
 
-window.addEventListener("control-center:decision-ledger", (event) => renderRipeNow(event.detail || {}));
+window.addEventListener("control-center:command-queue", (event) => renderCommandNow(event.detail || {}));
 
 function renderAgents(data) {
   const rows = (data.agents || []).map((a) => `<tr>
@@ -194,6 +193,7 @@ async function main() {
   document.querySelector("#observed-at").textContent = `Observed ${data.observed_at} · ${data.projection_kind} · ${data.projection_source || "manual"}`;
   renderSafety(data);
   renderNowPending();
+  if (window.__controlCenterCommandQueue) renderCommandNow(window.__controlCenterCommandQueue);
   renderAgents(data);
   renderAgentControl(agentControl);
   renderProjects(data);
