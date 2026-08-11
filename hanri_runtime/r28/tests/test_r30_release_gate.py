@@ -23,7 +23,15 @@ class R30ReleaseGateTests(unittest.TestCase):
         integrity = (APP_ROOT / "src" / "hanri" / "steady_integrity_cli.py").read_text(encoding="utf-8")
         steady = (APP_ROOT / "src" / "hanri" / "steady_cli.py").read_text(encoding="utf-8")
         stability = (APP_ROOT / "src" / "hanri" / "stability_cli.py").read_text(encoding="utf-8")
-        if "from .sqlite_cli import main" in entrypoint:
+        if "from .r36_cli import main" in entrypoint:
+            successor = (APP_ROOT / "src" / "hanri" / "r36_cli.py").read_text(encoding="utf-8")
+            sqlite_successor = (APP_ROOT / "src" / "hanri" / "sqlite_cli.py").read_text(encoding="utf-8")
+            self.assertIn("from . import sqlite_cli as r35", successor)
+            self.assertIn("r35.install_r35_guard()", successor)
+            self.assertIn("from . import steady_integrity_cli as integrity", sqlite_successor)
+            self.assertIn("integrity.install_r32_integrity_guard()", sqlite_successor)
+            self.assertIn("r30._atomic_copy = r33._atomic_copy_r33", sqlite_successor)
+        elif "from .sqlite_cli import main" in entrypoint:
             successor = (APP_ROOT / "src" / "hanri" / "sqlite_cli.py").read_text(encoding="utf-8")
             self.assertIn("from . import steady_integrity_cli as integrity", successor)
             self.assertIn("integrity.install_r32_integrity_guard()", successor)
