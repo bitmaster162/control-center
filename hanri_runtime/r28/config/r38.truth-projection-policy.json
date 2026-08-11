@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "38.0.0-live-truth-projection-v1",
+  "policy_version": "38.0.1-live-truth-projection-v1",
   "current_state_sections": [
     "kpis",
     "current_actions",
@@ -9,9 +9,9 @@
     "decisions"
   ],
   "superseded_by": {
-    "r35-runtime-current": "r36-host-cutover-pass",
-    "r35-latest-run": "r36-host-cutover-pass",
-    "r35-human-digest-current": "r36-host-cutover-pass",
+    "r35-runtime-current": "r36-operational-closure",
+    "r35-latest-run": "r36-operational-closure",
+    "r35-human-digest-current": "r36-operational-closure",
     "r35-accepted-git": "r36-accepted-git",
     "r37-phase1-accepted-git": "r37-phase3-accepted-git",
     "r37-phase2-accepted-git": "r37-phase3-accepted-git"
@@ -23,9 +23,9 @@
     "operator-d5-current": 86400
   },
   "freshness_basis": {
-    "r35-runtime-current": "R36 host cutover PASS supersedes R35 as the current HANRI runtime.",
-    "r35-latest-run": "R36 host cutover PASS supersedes R35 latest-run state for current-runtime claims.",
-    "r35-human-digest-current": "R36 host cutover PASS supersedes R35 human digest for current-runtime claims.",
+    "r35-runtime-current": "R36 operational closure receipt (CLOSED / ACCEPTED_LIVE) supersedes R35 as current HANRI runtime.",
+    "r35-latest-run": "R36 operational closure receipt supersedes R35 latest-run state for current-runtime claims.",
+    "r35-human-digest-current": "R36 operational closure receipt supersedes R35 human digest for current-runtime claims.",
     "r35-accepted-git": "Accepted R36 Git baseline supersedes R35 for current-runtime identity.",
     "r37-phase1-accepted-git": "R37 phase-3 accepted Git state supersedes phase-1 for current product-state claims.",
     "r37-phase2-accepted-git": "R37 phase-3 accepted Git state supersedes phase-2 for current product-state claims.",
