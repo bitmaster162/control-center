@@ -81,6 +81,21 @@ def make_decision(row: dict[str, Any]) -> dict[str, Any]:
     return base
 
 
+def queue_ref(decision: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "decision_id": decision["decision_id"],
+        "work_order": decision["work_order"],
+        "slot": decision.get("slot"),
+        "project": decision.get("project"),
+        "decision_class": decision["decision_class"],
+        "decision_state": decision["decision_state"],
+        "owner": decision["owner"],
+        "authority_required": decision["authority_required"],
+        "gate": decision.get("gate"),
+        "allowed_decisions": decision["allowed_decisions"],
+    }
+
+
 def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
     anchor = lifecycle.get("authority_anchor", {})
@@ -164,9 +179,9 @@ def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
             "effects_authorized": 0,
             "executions_authorized": 0,
         },
-        "human_ripe_queue": human_queue,
-        "control_center_semantic_queue": control_queue,
-        "project_owner_queue": owner_queue,
+        "human_ripe_queue": [queue_ref(d) for d in human_queue],
+        "control_center_semantic_queue": [queue_ref(d) for d in control_queue],
+        "project_owner_queue": [queue_ref(d) for d in owner_queue],
         "compressed_operator_attention": compressed_attention,
         "decisions": decisions,
         "invariants": {
