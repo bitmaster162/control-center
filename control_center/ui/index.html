@@ -18,6 +18,7 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#provider-lease">PROVIDER LEASE</a>
     <a href="#execution-scope">EXECUTION SCOPE</a>
     <a href="#human-gate-packets">HUMAN GATE</a>
     <a href="#command-queue">COMMAND QUEUE</a>
@@ -41,6 +42,14 @@
         <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
+    </section>
+
+    <section id="provider-lease" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">PROVIDER FRESHNESS</p><h2>Provider Lease</h2></div>
+        <span class="pill">fresh-at-capture ≠ continuous</span>
+      </div>
+      <div id="provider-lease-list"><div class="empty">Loading provider freshness lease…</div></div>
     </section>
 
     <section id="execution-scope" class="panel">
@@ -86,6 +95,7 @@
   <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
 
   <script src="./app.js" defer></script>
+  <script src="./provider_lease.js" defer></script>
   <script src="./lifecycle.js" defer></script>
   <script src="./decision_ledger.js" defer></script>
   <script src="./effect_readback.js" defer></script>
