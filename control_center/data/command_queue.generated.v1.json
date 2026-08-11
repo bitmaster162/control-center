@@ -2,50 +2,16 @@
   "schema": "control_center.command_queue.v1",
   "projection_kind": "NON_AUTHORITY_PROJECTION",
   "observed_at": "2026-08-12T01:39:00+07:00",
-  "authority_anchor": {
-    "generation": "R64",
-    "status": "ACTIVE",
-    "decision": "ACCEPT_R64_POINTER_PROMOTION",
-    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
-    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
-    "provider_readback": "all_exact"
-  },
-  "source_chain": [
-    "AGENT_CONTROL",
-    "WORK_ORDER_LIFECYCLE",
-    "DECISION_EFFECT_LEDGER",
-    "EFFECT_READBACK",
-    "COMMAND_QUEUE"
-  ],
-  "policy": {
-    "max_human_now": 3,
-    "routing_priority_only": true,
-    "queue_grants_authority": false,
-    "auto_dispatch": false,
-    "auto_accept": false,
-    "auto_apply": false,
-    "auto_execute": false,
-    "self_approval": false,
-    "self_application": false
-  },
-  "summary": {
-    "commands_total": 14,
-    "human_now": 1,
-    "control_center_queue": 8,
-    "project_owner_queue": 2,
-    "blocked_queue": 3,
-    "effect_candidates": 1,
-    "provenance_divergences": 2,
-    "effects_authorized": 0,
-    "executions_authorized": 0
-  },
+  "authority_anchor": {"generation":"R64","status":"ACTIVE","decision":"ACCEPT_R64_POINTER_PROMOTION","pointer_drive_file_id":"10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5","pointer_sha256":"3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef","provider_readback":"all_exact"},
+  "source_chain": ["AGENT_CONTROL","WORK_ORDER_LIFECYCLE","DECISION_EFFECT_LEDGER","EFFECT_READBACK","COMMAND_QUEUE"],
+  "policy": {"max_human_now":3,"routing_priority_only":true,"queue_grants_authority":false,"auto_dispatch":false,"auto_accept":false,"auto_apply":false,"auto_execute":false,"self_approval":false,"self_application":false},
+  "summary": {"commands_total":14,"human_now":0,"control_center_queue":8,"project_owner_queue":2,"blocked_queue":3,"historical_queue":1,"effect_candidates":0,"provenance_divergences":2,"effects_authorized":0,"executions_authorized":0},
   "ordered_command_ids": [
-    "CMD::CODEX07-R43-RETURN-PLANE-V2",
     "CMD::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
     "CMD::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
+    "CMD::CODEX01-R43-CONTINUITY-186-CLOSURE",
     "CMD::ANTIGRAVITY-R57-PRODUCT-SURFACE-SMOKE-AND-RETURN-INTAKE",
     "CMD::ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION",
-    "CMD::CODEX01-R43-CONTINUITY-186-CLOSURE",
     "CMD::CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21",
     "CMD::CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT",
     "CMD::CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE",
@@ -53,102 +19,26 @@
     "CMD::CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP",
     "CMD::CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW",
     "CMD::CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN",
-    "CMD::FABLE5-R57-GATED-ADJUDICATION"
+    "CMD::FABLE5-R57-GATED-ADJUDICATION",
+    "CMD::CODEX07-R43-RETURN-PLANE-V2"
   ],
   "queues": {
-    "HUMAN_NOW": [
-      "CMD::CODEX07-R43-RETURN-PLANE-V2"
-    ],
-    "CONTROL_CENTER_QUEUE": [
-      "CMD::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
-      "CMD::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
-      "CMD::ANTIGRAVITY-R57-PRODUCT-SURFACE-SMOKE-AND-RETURN-INTAKE",
-      "CMD::ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION",
-      "CMD::CODEX01-R43-CONTINUITY-186-CLOSURE",
-      "CMD::CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21",
-      "CMD::CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT",
-      "CMD::CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE"
-    ],
-    "PROJECT_OWNER_QUEUE": [
-      "CMD::CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE",
-      "CMD::CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP"
-    ],
-    "BLOCKED_QUEUE": [
-      "CMD::CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW",
-      "CMD::CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN",
-      "CMD::FABLE5-R57-GATED-ADJUDICATION"
-    ]
+    "HUMAN_NOW": [],
+    "CONTROL_CENTER_QUEUE": ["CMD::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE","CMD::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR","CMD::CODEX01-R43-CONTINUITY-186-CLOSURE","CMD::ANTIGRAVITY-R57-PRODUCT-SURFACE-SMOKE-AND-RETURN-INTAKE","CMD::ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION","CMD::CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21","CMD::CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT","CMD::CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE"],
+    "PROJECT_OWNER_QUEUE": ["CMD::CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE","CMD::CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP"],
+    "BLOCKED_QUEUE": ["CMD::CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW","CMD::CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN","CMD::FABLE5-R57-GATED-ADJUDICATION"],
+    "HISTORICAL_QUEUE": ["CMD::CODEX07-R43-RETURN-PLANE-V2"]
   },
-  "human_now": [
-    {
-      "command_id": "CMD::CODEX07-R43-RETURN-PLANE-V2",
-      "decision_id": "DEC::CODEX07-R43-RETURN-PLANE-V2",
-      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
-      "project": "Return Plane",
-      "requested_action": "ROBERT_MIGRATION_DECISION",
-      "allowed_decisions": [
-        "AUTHORIZE_APPLY",
-        "HOLD",
-        "REJECT_EFFECT"
-      ],
-      "effect_stage": "AWAITING_HUMAN_EFFECT_AUTHORIZATION",
-      "authority_granted": false,
-      "auto_execute": false
-    }
-  ],
+  "human_now": [],
   "attention_routing": [
-    {
-      "rank": 1,
-      "decision_id": "DEC::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
-      "command_id": "CMD::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
-      "queue": "CONTROL_CENTER_QUEUE",
-      "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
-      "reason": "FAILURE_DIAGNOSTIC"
-    },
-    {
-      "rank": 2,
-      "decision_id": "DEC::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
-      "command_id": "CMD::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
-      "queue": "CONTROL_CENTER_QUEUE",
-      "work_order": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
-      "reason": "HUMAN_GATE_READY"
-    },
-    {
-      "rank": 3,
-      "decision_id": "DEC::CODEX07-R43-RETURN-PLANE-V2",
-      "command_id": "CMD::CODEX07-R43-RETURN-PLANE-V2",
-      "queue": "HUMAN_NOW",
-      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
-      "reason": "ROBERT_MIGRATION_DECISION"
-    }
+    {"rank":1,"decision_id":"DEC::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE","command_id":"CMD::ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE","queue":"CONTROL_CENTER_QUEUE","work_order":"ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE","reason":"FAILURE_DIAGNOSTIC"},
+    {"rank":2,"decision_id":"DEC::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR","command_id":"CMD::CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR","queue":"CONTROL_CENTER_QUEUE","work_order":"CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR","reason":"HUMAN_GATE_READY"},
+    {"rank":3,"decision_id":"DEC::CODEX01-R43-CONTINUITY-186-CLOSURE","command_id":"CMD::CODEX01-R43-CONTINUITY-186-CLOSURE","queue":"CONTROL_CENTER_QUEUE","work_order":"CODEX01-R43-CONTINUITY-186-CLOSURE","reason":"ROBERT_DECISION"}
   ],
-  "owner_only_do_not_touch": [
-    "CMD::CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE",
-    "CMD::CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP"
-  ],
+  "owner_only_do_not_touch": ["CMD::CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE","CMD::CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP"],
   "provenance_divergences": [
-    {
-      "work_order": "CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP",
-      "slot": "CODEX-02",
-      "lifecycle_reported_state": "PRODUCT_MVP_PASS",
-      "slot_reported_state_observation": "OUTCOME_PASS",
-      "action": "PRESERVE_BOTH_NO_SILENT_RECONCILIATION"
-    },
-    {
-      "work_order": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
-      "slot": "CODEX-04",
-      "lifecycle_reported_state": "TRUTH_REPAIR_CANDIDATE_PASS",
-      "slot_reported_state_observation": "HUMAN_GATE_READY",
-      "action": "PRESERVE_BOTH_NO_SILENT_RECONCILIATION"
-    }
+    {"work_order":"CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP","slot":"CODEX-02","lifecycle_reported_state":"PRODUCT_MVP_PASS","slot_reported_state_observation":"OUTCOME_PASS","action":"PRESERVE_BOTH_NO_SILENT_RECONCILIATION"},
+    {"work_order":"CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR","slot":"CODEX-04","lifecycle_reported_state":"TRUTH_REPAIR_CANDIDATE_PASS","slot_reported_state_observation":"HUMAN_GATE_READY","action":"PRESERVE_BOTH_NO_SILENT_RECONCILIATION"}
   ],
-  "invariants": {
-    "human_now_equals_open_human_ripe": true,
-    "blocked_never_promoted_to_now": true,
-    "tradingos_owner_only": true,
-    "work_order_provenance_preserved": true,
-    "queue_never_grants_authority": true,
-    "queue_never_executes": true,
-    "max_human_now": 3
-  }
+  "invariants": {"human_now_equals_open_human_ripe":true,"blocked_never_promoted_to_now":true,"historical_never_promoted_to_now":true,"tradingos_owner_only":true,"work_order_provenance_preserved":true,"queue_never_grants_authority":true,"queue_never_executes":true,"max_human_now":3}
 }
