@@ -1,0 +1,46 @@
+{
+  "schema": "CONTROL_RETURN_REGISTRY_V4",
+  "registry_id": "CONTROL_CANTER_RETURN_REGISTRY",
+  "updated_at_utc": "2026-07-29T12:20:00Z",
+  "stable_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+  "stable_drive_root_id": "1mXhIluaCDATUSoiouLyFemu1eJbgbWcZ",
+  "generation": "R50_AUDIT",
+  "summary": {
+    "verified_codex_outcome_pass": 5,
+    "verified_antigravity_pass": 2,
+    "human_or_external_gate": 2,
+    "pending_agent_execution": 0,
+    "verified_failures": 1,
+    "working_product_surfaces_verified": 0,
+    "verified_product_mvp_pass": 1
+  },
+  "slots": {
+    "CODEX-07": {
+      "state": "OUTCOME_PASS",
+      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
+      "zip_sha256": "34eeb0b9991bc32b66160a1aef3995e6464c8d1a04aa20d2f4980fb87c145732",
+      "proof": "19/19 tests; 20 cycles; zero growth after cycle 1",
+      "next": "ROBERT_MIGRATION_DECISION"
+    },
+    "CLAUDE-BITUNIX": {
+      "state": "PENDING_OBSERVATION_WINDOW",
+      "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW"
+    },
+    "FABLE-5": {
+      "state": "GATED_RESERVED",
+      "work_order": "FABLE5-R57-GATED-ADJUDICATION"
+    }
+  },
+  "rules": {
+    "read_registry_before_drive_search": true,
+    "rerun_completed_work": false,
+    "merge_updates_by_slot": true,
+    "source_mutation": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  },
+  "entries": {},
+  "last_updated_utc": "2026-07-29T16:30:55.468744+00:00",
+  "append_only_deltas": [],
+  "registry_content_sha256": "fixture_declared_content_hash_not_self_hash"
+}
