@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "policy_version": "38.0.0-live-truth-projection-v1",
+  "current_state_sections": [
+    "kpis",
+    "current_actions",
+    "systems",
+    "agents",
+    "decisions"
+  ],
+  "superseded_by": {
+    "r35-runtime-current": "r36-host-cutover-pass",
+    "r35-latest-run": "r36-host-cutover-pass",
+    "r35-human-digest-current": "r36-host-cutover-pass",
+    "r35-accepted-git": "r36-accepted-git",
+    "r37-phase1-accepted-git": "r37-phase3-accepted-git",
+    "r37-phase2-accepted-git": "r37-phase3-accepted-git"
+  },
+  "source_ttl_seconds": {
+    "fable-handoff-r64": 86400,
+    "r64-package": 86400,
+    "decision-governor-01": 86400,
+    "operator-d5-current": 86400
+  },
+  "freshness_basis": {
+    "r35-runtime-current": "R36 host cutover PASS supersedes R35 as the current HANRI runtime.",
+    "r35-latest-run": "R36 host cutover PASS supersedes R35 latest-run state for current-runtime claims.",
+    "r35-human-digest-current": "R36 host cutover PASS supersedes R35 human digest for current-runtime claims.",
+    "r35-accepted-git": "Accepted R36 Git baseline supersedes R35 for current-runtime identity.",
+    "r37-phase1-accepted-git": "R37 phase-3 accepted Git state supersedes phase-1 for current product-state claims.",
+    "r37-phase2-accepted-git": "R37 phase-3 accepted Git state supersedes phase-2 for current product-state claims.",
+    "fable-handoff-r64": "Operational status claims from a handoff require a confirmation not older than 24 hours.",
+    "r64-package": "A package acceptance artifact does not prove current executor readiness after 24 hours.",
+    "decision-governor-01": "Operational decision-queue status requires confirmation not older than 24 hours.",
+    "operator-d5-current": "Human operator workflow status is treated as current for at most 24 hours without a newer report."
+  },
+  "history_policy": "events are append-only historical facts and are not evidence-ref rewritten",
+  "effect_boundary": {
+    "read_only": true,
+    "writes_performed": 0,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
