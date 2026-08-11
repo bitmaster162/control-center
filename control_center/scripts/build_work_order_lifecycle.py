@@ -6,8 +6,9 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors, canonical_roots
+
 SCHEMA = "control_center.work_order_lifecycle.v1"
-EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 EXPECTED_REGISTRY_ID = "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm"
 
 
@@ -38,17 +39,21 @@ def _stage(row: dict[str, Any]) -> str:
 
 def build(agent: dict[str, Any], entries: dict[str, Any], current: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
+    roots = canonical_roots()
     anchor = agent.get("authority_anchor", {})
-    if anchor.get("generation") != "R64" or anchor.get("status") != "ACTIVE":
-        errors.append("r64_anchor_mismatch")
-    if anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA or anchor.get("provider_readback") != "all_exact":
-        errors.append("pointer_binding_mismatch")
+    append_anchor_errors("agent_control", anchor, errors)
     if agent.get("global_dispatch", {}).get("auto_dispatch") is not False or agent.get("global_dispatch", {}).get("auto_accept") is not False:
         errors.append("agent_control_must_block_auto_transition")
     if entries.get("registry", {}).get("stable_drive_file_id") != EXPECTED_REGISTRY_ID:
         errors.append("registry_identity_mismatch")
-    if current.get("canonical_current", {}).get("generation") != "R64":
-        errors.append("current_projection_generation_mismatch")
+    canonical = current.get("canonical_current", {})
+    pointer = canonical.get("pointer", {})
+    if canonical.get("generation") != roots["generation"] or canonical.get("status") != roots["status"]:
+        errors.append("current_projection_generation_status_mismatch")
+    if canonical.get("canonical_decision") != roots["decision"] or canonical.get("accepted_manifest_sha256") != roots["manifest_sha256"]:
+        errors.append("current_projection_decision_manifest_mismatch")
+    if pointer.get("drive_file_id") != roots["pointer_drive_file_id"] or pointer.get("sha256") != roots["pointer_sha256"] or pointer.get("provider_readback") != roots["provider_readback"]:
+        errors.append("current_projection_pointer_mismatch")
     if errors:
         raise ValueError(";".join(errors))
 
