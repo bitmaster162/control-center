@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "policy_version": "37.1.0-bounded-projection-executor-v1",
+  "execution_mode": "APPROVAL_REQUIRED",
+  "allowed_operation": "update_dashboard_projection",
+  "allowed_effect_class": "WRITE_REVERSIBLE",
+  "allowed_target": "Control canter/00_DASHBOARD_CURRENT/HANRI_R64_DASHBOARD_CURRENT_R36_FULL_VERIFIED.html",
+  "allowed_provider": "GOOGLE_DRIVE",
+  "allowed_target_id": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
+  "expected_approver": "ROBERT",
+  "require_exact_before_sha256": true,
+  "require_exact_after_sha256": true,
+  "require_independent_readback": true,
+  "rollback_required": true,
+  "stable_roots_modified": false,
+  "can_trade": false,
+  "capital_permission": "DENY"
+}
