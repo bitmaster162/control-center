@@ -83,6 +83,20 @@ def test_exact_approval_and_bytes_prepare_authorized_plan() -> None:
     assert plan["invariants"]["can_trade"] is False
 
 
+def test_decision_action_mutation_after_approval_is_rejected() -> None:
+    before, desired, _, decision, approval = build_valid()
+    decision["action"]["actor"] = "SPOOFED_ACTOR"
+    with pytest.raises(EffectGovernanceError, match="action_hash"):
+        prepare_execution(
+            decision,
+            approval,
+            EXECUTOR_POLICY,
+            before_bytes=before,
+            desired_bytes=desired,
+            now="2026-08-12T03:21:00Z",
+        )
+
+
 def test_payload_substitution_after_approval_is_rejected() -> None:
     before, desired, _, decision, approval = build_valid()
     with pytest.raises(EffectGovernanceError, match="after_sha256"):

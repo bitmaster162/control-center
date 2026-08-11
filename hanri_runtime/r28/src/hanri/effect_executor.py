@@ -3,12 +3,12 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Protocol
 
 from .effect_governance import (
     EffectGovernanceError,
+    action_hash,
     approval_matches,
     canonical_json,
     iso_utc,
@@ -123,6 +123,10 @@ def prepare_execution(
     now: str | dt.datetime,
 ) -> dict[str, Any]:
     action = _require_exact_action_scope(decision, policy)
+
+    recomputed_hash, _ = action_hash(action)
+    if recomputed_hash != decision.get("action_hash"):
+        raise EffectGovernanceError("decision action payload no longer matches approved action_hash")
 
     if not approval_matches(
         decision,
