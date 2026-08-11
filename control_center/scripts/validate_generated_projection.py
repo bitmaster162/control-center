@@ -8,7 +8,7 @@ from validate_control_plane_projection import validate
 
 EXPECTED_SOURCE = "GENERATED_FROM_PROVIDER_SNAPSHOT"
 EXPECTED_DRIVE_FILE_ID = "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5"
-EXPECTED_POINTER_SHA256 = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
+EXPECTED_POINTER_SHA256 = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 PATH_ONLY_ERRORS = {"R64_pointer_locator_mismatch", "R64_pointer_artifact_mismatch"}
 
 
@@ -18,8 +18,6 @@ def check(payload: dict) -> list[str]:
         errors.append("generated_projection_source_mismatch")
         return errors
 
-    # Generated provider projections bind pointer identity by provider file ID,
-    # exact bytes hash, and all_exact readback rather than a local path alias.
     errors = [error for error in errors if error not in PATH_ONLY_ERRORS]
     pointer = payload.get("canonical_current", {}).get("pointer", {})
     if pointer.get("drive_file_id") != EXPECTED_DRIVE_FILE_ID:
