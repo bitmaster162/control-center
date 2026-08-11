@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 from hanri.attention_fabric import run_attention_fabric
 from hanri.producer_adapters_operator_receipts import (
@@ -9,6 +10,10 @@ from hanri.producer_adapters_operator_receipts import (
     adapt_artifacts,
     normalize_human_decision_receipt,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
+GOV_POLICY = json.loads((ROOT / "config" / "r39.attention-governor.json").read_text(encoding="utf-8"))
+FABRIC_POLICY = json.loads((ROOT / "config" / "r39.1.attention-fabric.json").read_text(encoding="utf-8"))
 
 
 def human_receipt(**overrides):
@@ -145,11 +150,15 @@ def test_valid_human_receipt_closes_operator_attention_when_other_domains_are_co
         coverage_env("AGENT"),
         coverage_env("SYSTEM"),
     ]
-    out = run_attention_fabric({
-        "fabric_run_id": "R39.2.2-DECISION-COVERAGE",
-        "generated_at": "2026-08-12T06:00:00+07:00",
-        "envelopes": envelopes,
-    })
+    out = run_attention_fabric(
+        {
+            "fabric_run_id": "R39.2.2-DECISION-COVERAGE",
+            "generated_at": "2026-08-12T06:00:00+07:00",
+            "envelopes": envelopes,
+        },
+        governor_policy=GOV_POLICY,
+        fabric_policy=FABRIC_POLICY,
+    )
     assert out["attention_summary"]["coverage_complete"] is True
     assert out["attention_summary"]["domain_counts"]["OPERATOR"] == 1
     assert out["attention_summary"]["material_domain_counts"]["OPERATOR"] == 0
