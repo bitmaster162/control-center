@@ -34,6 +34,10 @@ jobs:
         run: python control_center/scripts/validate_generated_projection.py control_center/data/current_control_plane.generated.v1.json
       - name: Test current projection composer
         run: python control_center/scripts/test_current_projection_composer.py
+      - name: Validate Provider Snapshot Freshness Gate V1
+        run: python control_center/scripts/validate_provider_snapshot_freshness.py
+      - name: Adversarial Provider Snapshot Freshness Gate tests
+        run: python control_center/scripts/test_provider_snapshot_freshness.py
       - name: Validate Agent Control Plane generated projection
         run: python control_center/scripts/validate_agent_control_plane.py
       - name: Adversarial Agent Control Plane self-tests
