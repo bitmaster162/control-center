@@ -28,5 +28,9 @@ jobs:
           node-version: '22'
       - name: Validate non-authority current-control projection
         run: python control_center/scripts/validate_control_plane_projection.py
+      - name: Reduce bounded source-envelope fixture
+        run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
+      - name: Adversarial reducer self-tests
+        run: python control_center/scripts/test_source_reducer.py
       - name: Validate operator cockpit JavaScript
         run: node --check control_center/ui/app.js
