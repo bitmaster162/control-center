@@ -19,6 +19,7 @@
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
     <a href="#agents">AGENTS</a>
+    <a href="#agent-control">AGENT CONTROL</a>
     <a href="#projects">PROJECTS</a>
     <a href="#work">WORK</a>
     <a href="#returns">RETURNS</a>
@@ -37,8 +38,16 @@
     </section>
 
     <section id="agents" class="panel">
-      <div class="section-head"><div><p class="eyebrow">FLEET</p><h2>Agents & Owners</h2></div></div>
+      <div class="section-head"><div><p class="eyebrow">FLEET OWNERSHIP</p><h2>Agents & Owners</h2></div></div>
       <div id="agents-list" class="table-wrap"></div>
+    </section>
+
+    <section id="agent-control" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">DISPATCH CONTROL</p><h2>Agent Control Plane</h2></div>
+        <span class="pill">observe ≠ dispatch</span>
+      </div>
+      <div id="agent-control-list"></div>
     </section>
 
     <section id="projects" class="panel">
