@@ -9,6 +9,7 @@ from current_authority_anchor import append_anchor_errors, canonical_authority_a
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
+SCRIPTS = ROOT / "scripts"
 
 PRE_RESEAL_POINTER_SHA = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
 PRE_REPAIR_CURRENT_STATE_SHA = "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd"
@@ -26,6 +27,17 @@ ANCHOR_DOCUMENTS = {
     "broker_health": "broker_health_readback.generated.v1.json",
 }
 
+DOWNSTREAM_BUILDERS = (
+    "build_work_order_lifecycle.py",
+    "build_decision_effect_ledger.py",
+    "build_effect_readback_plane.py",
+    "build_command_queue.py",
+    "build_human_gate_packets.py",
+    "build_execution_scope_binder.py",
+    "build_broker_health_readback.py",
+)
+ROOT_INGRESS_BUILDER = "build_agent_control_plane.py"
+
 
 def load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -37,15 +49,22 @@ def load_documents() -> dict[str, dict[str, Any]]:
     return docs
 
 
+def load_builder_texts() -> dict[str, str]:
+    names = (ROOT_INGRESS_BUILDER,) + DOWNSTREAM_BUILDERS
+    return {name: (SCRIPTS / name).read_text(encoding="utf-8") for name in names}
+
+
 def validate(
     snapshot: dict[str, Any] | None = None,
     documents: dict[str, dict[str, Any]] | None = None,
+    builder_texts: dict[str, str] | None = None,
 ) -> list[str]:
     errors: list[str] = []
     provider = snapshot or load_provider_snapshot()
     roots = canonical_roots(provider)
     expected_anchor = canonical_authority_anchor(provider)
     docs = deepcopy(documents) if documents is not None else load_documents()
+    builders = dict(builder_texts) if builder_texts is not None else load_builder_texts()
 
     current = docs["current_projection"].get("canonical_current", {})
     pointer = current.get("pointer", {})
@@ -99,6 +118,21 @@ def validate(
         if PRE_REPAIR_CURRENT_STATE_SHA in serialized:
             errors.append(f"pre_repair_state_leak:{name}")
 
+    # The Agent Control builder is the bounded root-ingress adapter: it may bind
+    # provider root literals. Every downstream builder must consume the shared
+    # current_authority_anchor helper instead of copying current root SHAs.
+    ingress = builders.get(ROOT_INGRESS_BUILDER, "")
+    if roots["pointer_sha256"] not in ingress or roots["current_state_sha256"] not in ingress:
+        errors.append("root_ingress_current_binding_missing")
+    for filename in DOWNSTREAM_BUILDERS:
+        text = builders.get(filename, "")
+        if not text:
+            errors.append(f"downstream_builder_missing:{filename}")
+            continue
+        for key in ("pointer_sha256", "current_state_sha256", "manifest_sha256", "role_views_sha256"):
+            if str(roots[key]) in text:
+                errors.append(f"current_root_literal_leak:{filename}:{key}")
+
     if docs["command_queue"].get("summary", {}).get("human_now") != 0:
         errors.append("human_now_not_zero")
     if docs["human_gate"].get("summary", {}).get("packets_total") != 0:
@@ -118,8 +152,6 @@ def validate(
         anchor = docs[name].get("authority_anchor", {})
         for key, value in expected_anchor.items():
             if anchor.get(key) != value:
-                # append_anchor_errors already records exact detail; this marker keeps the
-                # end-to-end invariant visible as one aggregate failure class.
                 errors.append(f"cross_layer_anchor_divergence:{name}:{key}")
 
     return errors
@@ -135,6 +167,8 @@ def main() -> int:
         "errors": errors,
         "guard": "POST_RESEAL_CONSISTENCY_V1",
         "anchor": canonical_authority_anchor(),
+        "root_ingress_builder": ROOT_INGRESS_BUILDER,
+        "downstream_sha_literals_forbidden": True,
     }, indent=2))
     return 0 if not errors else 2
 
