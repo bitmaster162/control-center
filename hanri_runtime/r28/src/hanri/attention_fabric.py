@@ -15,6 +15,7 @@ SOURCE_TYPES = {
     "OPERATOR_EVENT",
     "RECOMMENDATION_OUTCOME",
     "OBSERVATION",
+    "AUDIT_COVERAGE",
 }
 SEVERITY_WEIGHT = {"LOW": 1, "MEDIUM": 2, "HIGH": 3, "CRITICAL": 4}
 KIND_WEIGHT = {
@@ -63,7 +64,7 @@ def _observation_from_envelope(env: Mapping[str, Any]) -> dict[str, Any] | None:
     subject_id = str(env.get("subject_id") or payload.get("subject_id") or "UNKNOWN").strip()
     evidence_refs = sorted(set(list(env.get("evidence_refs", [])) + [f"ENVELOPE_SHA256:{env['envelope_sha256']}"]))
 
-    if source_type == "RECOMMENDATION_OUTCOME":
+    if source_type in {"RECOMMENDATION_OUTCOME", "AUDIT_COVERAGE"}:
         return None
 
     if source_type == "OBSERVATION":
@@ -127,6 +128,23 @@ def _observation_from_envelope(env: Mapping[str, Any]) -> dict[str, Any] | None:
         "evidence_refs": evidence_refs,
         "repeated_count": max(1, int(payload.get("repeated_count", 1))),
         "proposed_change": str(payload.get("proposed_change", "")).strip(),
+    }
+
+
+def _coverage_from_envelope(env: Mapping[str, Any]) -> dict[str, Any] | None:
+    if env["source_type"] != "AUDIT_COVERAGE":
+        return None
+    payload = dict(env.get("payload", {}))
+    domain = _as_nonempty(payload.get("domain"), "payload.domain").upper()
+    if domain not in DOMAINS:
+        raise ValueError(f"invalid coverage domain: {domain}")
+    evidence_refs = sorted(set(list(env.get("evidence_refs", [])) + [f"ENVELOPE_SHA256:{env['envelope_sha256']}"]))
+    return {
+        "coverage_id": f"ENV-{env['envelope_id']}",
+        "domain": domain,
+        "subject_id": str(env.get("subject_id") or payload.get("subject_id") or "UNKNOWN").strip(),
+        "observed_at": str(env.get("observed_at", "")),
+        "evidence_refs": evidence_refs,
     }
 
 
@@ -202,6 +220,7 @@ def run_attention_fabric(
     envelopes = sorted(by_id.values(), key=lambda x: (x["observed_at"], x["envelope_id"]))
     observations: list[dict[str, Any]] = []
     outcomes: list[dict[str, Any]] = []
+    coverage: list[dict[str, Any]] = []
     for env in envelopes:
         observation = _observation_from_envelope(env)
         if observation is not None:
@@ -209,11 +228,15 @@ def run_attention_fabric(
         outcome = _outcome_from_envelope(env)
         if outcome is not None:
             outcomes.append(outcome)
+        coverage_row = _coverage_from_envelope(env)
+        if coverage_row is not None:
+            coverage.append(coverage_row)
 
     governor_payload = {
         "run_id": f"{run_id}:GOVERNOR",
         "generated_at": generated_at,
         "observations": observations,
+        "attention_coverage": coverage,
         "recommendation_outcomes": outcomes,
     }
     governor = run_attention_governor(governor_payload, policy=governor_policy)
@@ -232,6 +255,7 @@ def run_attention_fabric(
             "duplicate_envelopes": duplicate_count,
             "source_counts": dict(sorted(source_counts.items())),
             "observation_count": len(observations),
+            "coverage_count": len(coverage),
             "outcome_count": len(outcomes),
             "envelope_hashes": [
                 {"envelope_id": env["envelope_id"], "sha256": env["envelope_sha256"], "source_type": env["source_type"]}
@@ -244,6 +268,8 @@ def run_attention_fabric(
             "coverage_complete": bool(governor["meta_audit"]["coverage_complete"]),
             "blind_spots": list(governor["meta_audit"]["blind_spots"]),
             "domain_counts": dict(governor["meta_audit"]["domain_counts"]),
+            "material_domain_counts": dict(governor["meta_audit"].get("material_domain_counts", {})),
+            "coverage_only_domain_counts": dict(governor["meta_audit"].get("coverage_only_domain_counts", {})),
             "proposal_count": len(prioritized),
             "top_proposal_id": prioritized[0]["proposal_id"] if prioritized else None,
             "negative_outcome_count": int(governor["meta_audit"]["negative_outcome_count"]),

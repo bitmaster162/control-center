@@ -127,6 +127,32 @@ def _proposal_for_observation(obs: Mapping[str, Any]) -> dict[str, Any]:
     raise ValueError(f"unsupported domain: {domain}")
 
 
+def _normalize_coverage(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    normalized: list[dict[str, Any]] = []
+    for row in rows:
+        coverage_id = str(row.get("coverage_id", "")).strip()
+        domain = str(row.get("domain", "")).strip().upper()
+        if not coverage_id or coverage_id in seen:
+            raise ValueError("coverage_id must be unique and non-empty")
+        if domain not in DOMAINS:
+            raise ValueError(f"invalid coverage domain: {domain}")
+        evidence_refs = sorted({str(x) for x in row.get("evidence_refs", []) if str(x).strip()})
+        if not evidence_refs:
+            raise ValueError(f"coverage {coverage_id} requires evidence_refs")
+        seen.add(coverage_id)
+        normalized.append({
+            "coverage_id": coverage_id,
+            "domain": domain,
+            "subject_id": str(row.get("subject_id", "")).strip(),
+            "evidence_refs": evidence_refs,
+            "observed_at": str(row.get("observed_at", "")).strip(),
+            "coverage_state": "AUDITED",
+        })
+    normalized.sort(key=lambda x: x["coverage_id"])
+    return normalized
+
+
 def run_attention_governor(
     payload: Mapping[str, Any],
     *,
@@ -134,6 +160,7 @@ def run_attention_governor(
 ) -> dict[str, Any]:
     observations = [copy.deepcopy(dict(x)) for x in payload.get("observations", [])]
     outcomes = [copy.deepcopy(dict(x)) for x in payload.get("recommendation_outcomes", [])]
+    coverage_rows = [copy.deepcopy(dict(x)) for x in payload.get("attention_coverage", [])]
     generated_at = str(payload.get("generated_at", "")).strip()
     run_id = str(payload.get("run_id", "")).strip()
     if not generated_at or not run_id:
@@ -167,6 +194,7 @@ def run_attention_governor(
             "proposed_change": str(obs.get("proposed_change", "")).strip(),
         })
     normalized.sort(key=lambda x: x["observation_id"])
+    coverage = _normalize_coverage(coverage_rows)
 
     findings: list[dict[str, Any]] = []
     proposals: list[dict[str, Any]] = []
@@ -183,16 +211,19 @@ def run_attention_governor(
         })
         proposals.append(_proposal_for_observation(obs))
 
-    counts = Counter(obs["domain"] for obs in normalized)
+    material_counts = Counter(obs["domain"] for obs in normalized)
+    coverage_only_counts = Counter(row["domain"] for row in coverage)
+    attention_counts = Counter(material_counts)
+    attention_counts.update(coverage_only_counts)
     min_per_domain = int(policy.get("attention_policy", {}).get("min_observations_per_domain", 1))
     max_share = float(policy.get("attention_policy", {}).get("max_single_domain_share", 0.60))
     blind_spots: list[str] = []
 
     for domain in DOMAINS:
-        if counts.get(domain, 0) < min_per_domain:
+        if attention_counts.get(domain, 0) < min_per_domain:
             blind_spots.append(domain)
             evidence = ["R39_META_AUDIT:COVERAGE_LEDGER"]
-            summary = f"HANRI has insufficient first-order attention coverage for {domain}."
+            summary = f"HANRI has insufficient evidence-backed attention coverage for {domain}."
             findings.append({
                 "finding_id": f"F-META-BLIND-{domain}",
                 "domain": "SELF",
@@ -210,17 +241,17 @@ def run_attention_governor(
                 "summary": summary,
                 "evidence_refs": evidence,
                 "repeated_count": 1,
-                "proposed_change": f"require evidence-backed observation coverage for {domain} before declaring the attention cycle complete",
+                "proposed_change": f"require evidence-backed attention coverage for {domain} before declaring the attention cycle complete",
             }))
 
-    total = len(normalized)
+    attention_total = sum(attention_counts.values())
     imbalanced_domain: str | None = None
-    if total:
-        dominant_domain, dominant_count = max(((d, counts.get(d, 0)) for d in DOMAINS), key=lambda x: (x[1], x[0]))
-        if dominant_count / total > max_share:
+    if attention_total:
+        dominant_domain, dominant_count = max(((d, attention_counts.get(d, 0)) for d in DOMAINS), key=lambda x: (x[1], x[0]))
+        if dominant_count / attention_total > max_share:
             imbalanced_domain = dominant_domain
             evidence = ["R39_META_AUDIT:DOMAIN_DISTRIBUTION"]
-            summary = f"HANRI attention is over-concentrated on {dominant_domain}: {dominant_count}/{total} observations."
+            summary = f"HANRI attention is over-concentrated on {dominant_domain}: {dominant_count}/{attention_total} attention records."
             findings.append({
                 "finding_id": "F-META-IMBALANCE",
                 "domain": "SELF",
@@ -279,11 +310,14 @@ def run_attention_governor(
         "generated_at": generated_at,
         "mission": "AUDIT_SELF_AGENTS_SYSTEMS_OPERATOR_AND_PROPOSE_EVIDENCE_BOUND_IMPROVEMENTS",
         "observations": normalized,
+        "attention_coverage": coverage,
         "findings": findings,
         "proposals": proposals,
         "meta_audit": {
             "attention_over_attention": True,
-            "domain_counts": {domain: counts.get(domain, 0) for domain in DOMAINS},
+            "domain_counts": {domain: attention_counts.get(domain, 0) for domain in DOMAINS},
+            "material_domain_counts": {domain: material_counts.get(domain, 0) for domain in DOMAINS},
+            "coverage_only_domain_counts": {domain: coverage_only_counts.get(domain, 0) for domain in DOMAINS},
             "blind_spots": blind_spots,
             "imbalanced_domain": imbalanced_domain,
             "coverage_complete": not blind_spots,
@@ -300,6 +334,7 @@ def run_attention_governor(
             "operator_audit": True,
             "operator_advice": True,
             "recommendation_outcome_audit": True,
+            "healthy_coverage_without_false_finding": True,
         },
         "effect_boundary": {
             "proposal_only": True,

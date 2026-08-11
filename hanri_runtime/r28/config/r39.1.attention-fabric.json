@@ -8,8 +8,14 @@
     "SYSTEM_HEALTH",
     "OPERATOR_EVENT",
     "RECOMMENDATION_OUTCOME",
-    "OBSERVATION"
+    "OBSERVATION",
+    "AUDIT_COVERAGE"
   ],
+  "coverage_semantics": {
+    "audit_coverage_is_not_a_finding": true,
+    "healthy_audit_may_satisfy_domain_coverage_without_creating_a_proposal": true,
+    "missing_domain_evidence_remains_a_blind_spot": true
+  },
   "dedupe": {
     "key": "envelope_id",
     "same_id_same_hash": "DEDUP",
