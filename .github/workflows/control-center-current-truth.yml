@@ -44,6 +44,10 @@ jobs:
         run: python control_center/scripts/validate_provider_refresh_controller_status.py
       - name: Adversarial Provider Drift Hold Diagnostic Projection V1 tests
         run: python control_center/scripts/test_provider_refresh_controller_status.py
+      - name: Validate Provider Drift Resolution Transition V1
+        run: python control_center/scripts/provider_drift_resolution_transition.py --check
+      - name: Adversarial Provider Drift Resolution Transition V1 tests
+        run: python control_center/scripts/provider_drift_resolution_transition.py --self-test
       - name: Check Provider Drift Operator Attention deterministic projection
         run: python control_center/scripts/build_provider_drift_operator_attention.py --check
       - name: Validate Provider Drift Operator Attention Bridge V1
