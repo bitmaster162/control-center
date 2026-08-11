@@ -1,7 +1,7 @@
 {
   "schema": "control_center.agent_control_plane.v1",
   "projection_kind": "NON_AUTHORITY_PROJECTION",
-  "observed_at": "2026-08-12T00:43:00+07:00",
+  "observed_at": "2026-08-12T02:12:00+07:00",
   "authority_anchor": {
     "generation": "R64",
     "status": "ACTIVE",
@@ -16,6 +16,19 @@
       "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
       "raw_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
       "provider_modified_time": "2026-08-07T20:36:18.030Z"
+    },
+    "current_state": {
+      "provider": "GOOGLE_DRIVE",
+      "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+      "raw_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+      "broker_status": "INSTALLED_AND_WATCHING",
+      "watcher_generation": "R59"
+    },
+    "role_views": {
+      "provider": "GOOGLE_DRIVE",
+      "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+      "raw_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+      "codex07_state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign"
     },
     "return_registry": {
       "provider": "GOOGLE_DRIVE",
@@ -46,7 +59,8 @@
       "GATED_RESERVED": 1
     },
     "pending_but_blocked": 3,
-    "operator_attention_count": 3
+    "operator_attention_count": 3,
+    "historical_predecessor_slots": 1
   },
   "slots": [
     {"slot": "ANTIGRAVITY_WO039", "project_hint": "ANTIGRAVITY", "reported_state": "CLOSEOUT_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": null, "reported_next": "NONE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
@@ -59,7 +73,7 @@
     {"slot": "CODEX-04", "project_hint": "Arena", "reported_state": "HUMAN_GATE_READY", "operational_class": "HUMAN_GATE_READY", "work_order": null, "reported_next": "TRUSTED_EXTERNAL_ED25519_SIGNATURE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
     {"slot": "CODEX-05", "project_hint": "HANRI", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT", "reported_next": "NONE_AGENT_SIDE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
     {"slot": "CODEX-06", "project_hint": "VisionAssist", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE", "reported_next": "HUMAN_FORWARD_LOCKED_CASE_CAPTURE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
-    {"slot": "CODEX-07", "project_hint": "Return Plane", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX07-R43-RETURN-PLANE-V2", "reported_next": "ROBERT_MIGRATION_DECISION", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-07", "project_hint": "Return Plane", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX07-R43-RETURN-PLANE-V2", "reported_next": "ROBERT_MIGRATION_DECISION", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false, "current_route": "HISTORICAL_PREDECESSOR_NO_ACTION", "source_conflict": "REGISTRY_R43_NEXT_SUPERSEDED_BY_CANONICAL_R59_RUNTIME", "canonical_runtime": {"broker_status": "INSTALLED_AND_WATCHING", "watcher_generation": "R59", "role_lane": "Return Plane / broker hardening", "role_state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign"}},
     {"slot": "CODEX-08", "project_hint": "Parasite-Killer", "reported_state": "PENDING_EXECUTION", "operational_class": "PENDING_EXECUTION_BLOCKED", "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN", "reported_next": null, "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
     {"slot": "FABLE-5", "project_hint": "UNBOUND", "reported_state": "GATED_RESERVED", "operational_class": "GATED_RESERVED", "work_order": "FABLE5-R57-GATED-ADJUDICATION", "reported_next": null, "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false}
   ],
@@ -71,11 +85,12 @@
   "operator_attention": [
     {"slot": "ANTIGRAVITY_WO041", "project": "MAWorld", "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB", "reason": "FAILURE_DIAGNOSTIC", "score": 102, "requested_next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 1},
     {"slot": "CODEX-04", "project": "Arena", "reported_state": "HUMAN_GATE_READY", "reason": "HUMAN_GATE_READY", "score": 90, "requested_next": "TRUSTED_EXTERNAL_ED25519_SIGNATURE", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 2},
-    {"slot": "CODEX-07", "project": "Return Plane", "reported_state": "OUTCOME_PASS", "reason": "ROBERT_MIGRATION_DECISION", "score": 88, "requested_next": "ROBERT_MIGRATION_DECISION", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 3}
+    {"slot": "CODEX-01", "project": "ContinuityOS", "reported_state": "OUTCOME_PASS", "reason": "ROBERT_DECISION", "score": 80, "requested_next": "ROBERT_ADOPTION_REVIEW", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 3}
   ],
   "invariants": {
     "registry_state_never_semantic_acceptance": true,
     "registry_state_never_apply_authority": true,
+    "canonical_runtime_outranks_historical_registry_routing": true,
     "no_auto_dispatch": true,
     "tradingos_do_not_touch": true,
     "max_operator_attention": 3
