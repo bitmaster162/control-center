@@ -11,15 +11,15 @@ OUTPUT_SCHEMA = "control_center.agent_control_plane.v1"
 
 R64_POINTER = {
     "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
-    "raw_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "raw_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
     "generation": "R64",
     "status": "ACTIVE",
-    "decision": "ACCEPT_R64_POINTER_PROMOTION",
-    "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
 }
 CURRENT_STATE = {
     "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
-    "raw_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "raw_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
 }
 ROLE_VIEWS = {
     "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
@@ -169,7 +169,8 @@ def validate_source(source: dict[str, Any]) -> list[str]:
     broker = current_state.get("broker_plane", {})
     if broker.get("status") != "INSTALLED_AND_WATCHING" or broker.get("watcher_generation") != "R59":
         errors.append("canonical_broker_state_mismatch")
-    if not str(broker.get("registry_mutation_rule", "")).startswith("Only the broker mutates CURRENT_RETURN_REGISTRY.json"):
+    rule = str(broker.get("registry_mutation_rule", ""))
+    if not rule.startswith("Only the broker mutates generation-scoped return-broker state") or "does not directly mutate CURRENT_RETURN_REGISTRY.json" not in rule:
         errors.append("canonical_broker_mutation_rule_mismatch")
 
     role_views = source.get("canonical_role_views", {})
@@ -192,13 +193,12 @@ def validate_source(source: dict[str, Any]) -> list[str]:
         errors.append("registry_raw_sha_invalid")
 
     rules = registry.get("rules", {})
-    rule_requirements = {
+    for key, expected in {
         "rerun_completed_work": False,
         "source_mutation": False,
         "can_trade": False,
         "capital_permission": "DENY",
-    }
-    for key, expected in rule_requirements.items():
+    }.items():
         if rules.get(key) != expected:
             errors.append(f"registry_rule_mismatch:{key}")
     if not isinstance(registry.get("slots"), dict) or not registry.get("slots"):
@@ -371,14 +371,12 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--check", type=Path)
     args = parser.parse_args()
-
     source = json.loads(args.source.read_text(encoding="utf-8"))
     try:
         output = build(source)
     except ValueError as exc:
         print(json.dumps({"status": "FAIL", "errors": str(exc).split(";")}, indent=2))
         return 2
-
     rendered = json.dumps(output, ensure_ascii=False, indent=2) + "\n"
     if args.check:
         expected = args.check.read_text(encoding="utf-8")
