@@ -80,7 +80,12 @@ function Quiesce-HanriLock([string]$LockPath, [int]$TimeoutSeconds) {
     }
     if ($ownerPid -le 0) { throw "R35 lock has invalid PID; refusing quarantine: $LockPath" }
 
-    $owner = Get-CimInstance Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
+    try {
+        $owner = Get-CimInstance Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction Stop
+    }
+    catch {
+        throw "R35 lock PID liveness check failed; refusing quarantine: $($_.Exception.Message)"
+    }
     if ($owner) {
         $commandLine = [string]$owner.CommandLine
         throw "R35 lock still has a live PID $ownerPid; refusing quarantine. CommandLine=$commandLine"
@@ -358,6 +363,7 @@ catch {
     Disable-ScheduledTask -TaskName $R36TaskName -ErrorAction SilentlyContinue | Out-Null
     Stop-ScheduledTask -TaskName $R36TaskName -ErrorAction SilentlyContinue
     if ($cutoverStarted -and $r35WasEnabled) {
+        $rollbackLockSafeToStart = $true
         try {
             $rollbackQuarantine = Quiesce-HanriLock $R35LockPath 10
             if ($rollbackQuarantine) {
@@ -365,10 +371,16 @@ catch {
             }
         }
         catch {
+            $rollbackLockSafeToStart = $false
             Write-Warning "Rollback lock quiesce blocked by live/invalid lock: $($_.Exception.Message)"
         }
         Enable-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue | Out-Null
-        Start-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue
+        if ($rollbackLockSafeToStart) {
+            Start-ScheduledTask -TaskName $R35TaskName -ErrorAction SilentlyContinue
+        }
+        else {
+            Write-Warning "R35 task re-enabled but not force-started because lock ownership was not safely quiesced."
+        }
     }
     if ($backupApp) {
         if (Test-Path $InstallRoot) { Remove-Item -Recurse -Force $InstallRoot }
