@@ -127,7 +127,7 @@ function Invoke-HanriOnce([string]$AppRoot, [string]$ConfigPath) {
     try {
         $env:PYTHONPATH = Join-Path $AppRoot "src"
         Set-Location $AppRoot
-        Invoke-Native $Python @("-m", "hanri", "once", "--config", $ConfigPath)
+        Invoke-Native $Python @("-m", "hanri", "once", "--config", $ConfigPath) | Out-Null
     } finally {
         Set-Location $oldLocation
         $env:PYTHONPATH = $oldPythonPath
