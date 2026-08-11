@@ -38,10 +38,15 @@ foreach ($path in @($workRoot, $stateRoot, $loopReceiptRoot, $fabricInput)) {
   New-Item -ItemType Directory -Force -Path $path | Out-Null
 }
 
-if ((Resolve-Path $workRoot).Path.StartsWith((Resolve-Path $scannedReceiptRoot -ErrorAction SilentlyContinue).Path + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
+$scannedRootPath = [System.IO.Path]::GetFullPath($scannedReceiptRoot).TrimEnd('\')
+$workRootPath = (Resolve-Path $workRoot).Path.TrimEnd('\')
+$loopReceiptRootPath = (Resolve-Path $loopReceiptRoot).Path.TrimEnd('\')
+if ($workRootPath.Equals($scannedRootPath, [System.StringComparison]::OrdinalIgnoreCase) -or
+    $workRootPath.StartsWith($scannedRootPath + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
   throw 'continuous_work_must_not_be_inside_scanned_receipt_root'
 }
-if ((Resolve-Path $loopReceiptRoot).Path.StartsWith((Resolve-Path $scannedReceiptRoot -ErrorAction SilentlyContinue).Path + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
+if ($loopReceiptRootPath.Equals($scannedRootPath, [System.StringComparison]::OrdinalIgnoreCase) -or
+    $loopReceiptRootPath.StartsWith($scannedRootPath + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
   throw 'continuous_receipts_must_not_be_inside_scanned_receipt_root'
 }
 
