@@ -1,0 +1,38 @@
+{
+  "absence_does_not_prove_no_drift": true,
+  "active_drift_hold_after": false,
+  "active_drift_hold_before": false,
+  "invariants": {
+    "resolution_bound_to_drift_fingerprint": true,
+    "silent_clear_forbidden": true,
+    "strictly_newer_exact_evidence_required": true,
+    "system_attention_clear_requires_matching_resolution": true
+  },
+  "projection_kind": "NON_AUTHORITY_PROVIDER_DRIFT_RESOLUTION_TRANSITION",
+  "reasons": [
+    "no_active_provider_drift_hold"
+  ],
+  "resolution": null,
+  "resolution_evidence_observed_at": null,
+  "safety": {
+    "apply_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_authorized": false,
+    "dispatch_authorized": false,
+    "execution_authorized": false,
+    "external_message_authorized": false,
+    "provider_write_authorized": false,
+    "registry_write_authorized": false,
+    "resolution_grants_authority": false,
+    "root_write_authorized": false,
+    "routing_mutation_authorized": false,
+    "runtime_mutation_authorized": false,
+    "self_application": false
+  },
+  "schema": "control_center.provider_drift_resolution.v1",
+  "source_diagnostic_verdict": "NO_HOLD_DIAGNOSTIC_RECORDED",
+  "source_drift_fingerprint": null,
+  "source_drift_observed_at": null,
+  "transition_state": "NO_ACTIVE_DRIFT_HOLD"
+}
