@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-center.local/contracts/hanri-attention-envelope.schema.json",
+  "title": "HANRI R39.1 Attention Envelope",
+  "type": "object",
+  "required": ["envelope_id", "source_type", "observed_at", "evidence_refs", "payload"],
+  "properties": {
+    "envelope_id": {"type": "string", "minLength": 1},
+    "source_type": {
+      "enum": ["HANRI_SELF_TRACE", "AGENT_RETURN", "SYSTEM_HEALTH", "OPERATOR_EVENT", "RECOMMENDATION_OUTCOME", "OBSERVATION"]
+    },
+    "observed_at": {"type": "string", "minLength": 1},
+    "producer": {"type": "string"},
+    "subject_id": {"type": "string"},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "payload": {"type": "object"}
+  },
+  "additionalProperties": false
+}

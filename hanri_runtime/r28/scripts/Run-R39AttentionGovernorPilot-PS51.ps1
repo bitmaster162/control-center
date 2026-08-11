@@ -28,12 +28,16 @@ if ($r.effect_boundary.operator_message) { throw 'operator_message=true' }
 if ($r.effect_boundary.auto_dispatch) { throw 'auto_dispatch=true' }
 if ($r.effect_boundary.can_trade) { throw 'can_trade=true' }
 if ($r.effect_boundary.capital_permission -ne 'DENY') { throw 'capital_permission_not_DENY' }
+$skillCandidates = @($r.proposals | Where-Object { $_.kind -eq 'SKILL_CANDIDATE' }).Count
+$operatorAdvice = @($r.proposals | Where-Object { $_.kind -eq 'OPERATOR_ADVICE' }).Count
+$systemImprovements = @($r.proposals | Where-Object { $_.kind -eq 'SYSTEM_IMPROVEMENT' }).Count
+$selfImprovements = @($r.proposals | Where-Object { $_.kind -eq 'HANRI_SELF_IMPROVEMENT' }).Count
 Write-Host 'HANRI_R39_ATTENTION_OVER_ATTENTION_PASS'
 Write-Host "RECEIPT $OutputPath"
-Write-Host "FINDINGS $($r.findings.Count)"
-Write-Host "PROPOSALS $($r.proposals.Count)"
-Write-Host "SKILL_CANDIDATES $(($r.proposals | Where-Object { $_.kind -eq 'SKILL_CANDIDATE' }).Count)"
-Write-Host "OPERATOR_ADVICE $(($r.proposals | Where-Object { $_.kind -eq 'OPERATOR_ADVICE' }).Count)"
-Write-Host "SYSTEM_IMPROVEMENTS $(($r.proposals | Where-Object { $_.kind -eq 'SYSTEM_IMPROVEMENT' }).Count)"
-Write-Host "SELF_IMPROVEMENTS $(($r.proposals | Where-Object { $_.kind -eq 'HANRI_SELF_IMPROVEMENT' }).Count)"
+Write-Host "FINDINGS $(@($r.findings).Count)"
+Write-Host "PROPOSALS $(@($r.proposals).Count)"
+Write-Host "SKILL_CANDIDATES $skillCandidates"
+Write-Host "OPERATOR_ADVICE $operatorAdvice"
+Write-Host "SYSTEM_IMPROVEMENTS $systemImprovements"
+Write-Host "SELF_IMPROVEMENTS $selfImprovements"
 Write-Host 'EXECUTION_EFFECTS_PERFORMED 0'
