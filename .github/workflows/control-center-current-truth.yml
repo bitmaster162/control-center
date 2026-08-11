@@ -44,6 +44,14 @@ jobs:
         run: python control_center/scripts/validate_provider_refresh_controller_status.py
       - name: Adversarial Provider Drift Hold Diagnostic Projection V1 tests
         run: python control_center/scripts/test_provider_refresh_controller_status.py
+      - name: Check Provider Drift Operator Attention deterministic projection
+        run: python control_center/scripts/build_provider_drift_operator_attention.py --check
+      - name: Validate Provider Drift Operator Attention Bridge V1
+        run: python control_center/scripts/validate_provider_drift_operator_attention.py
+      - name: Adversarial Provider Drift Operator Attention Bridge V1 tests
+        run: python control_center/scripts/test_provider_drift_operator_attention.py
+      - name: Validate Provider System Attention UI boundary
+        run: node control_center/ui/test_system_attention.js
       - name: Validate Provider Lease Expiry Operator Projection V1
         run: node control_center/ui/test_provider_lease.js
       - name: Validate Agent Control Plane generated projection
@@ -101,6 +109,7 @@ jobs:
       - name: Validate operator cockpit JavaScript
         run: |
           node --check control_center/ui/app.js
+          node --check control_center/ui/system_attention.js
           node --check control_center/ui/provider_lease.js
           node --check control_center/ui/lifecycle.js
           node --check control_center/ui/decision_ledger.js
