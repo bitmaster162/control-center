@@ -5,13 +5,13 @@ import json
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors, canonical_roots
+
 SCHEMA = "control_center.execution_scope_binder.v1"
-EXPECTED_POINTER_SHA = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
-EXPECTED_CURRENT_STATE_SHA = "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd"
-EXPECTED_ROLE_VIEWS_SHA = "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
 EXPECTED_BROKER_HEAD = "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785"
 EXPECTED_BROKER_TREE = "4762b2cdad463823e34da29e09b22ec580c6e778"
 EXPECTED_TARGET = "C:\\PROJECTS\\control_return_broker"
+RESOLVED_DIVERGENCE_ID = "BROKER_REGISTRY_MUTATION_CONTRACT_DIVERGENCE_RESOLVED_BY_R64_REPAIR_RESEAL"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -20,22 +20,44 @@ def load(path: Path) -> dict[str, Any]:
 
 def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
+    roots = canonical_roots()
     if source.get("schema") != "control_center.execution_scope_sources.v1":
         errors.append("source_schema_mismatch")
     anchor = source.get("authority_anchor", {})
-    if anchor.get("generation") != "R64" or anchor.get("status") != "ACTIVE" or anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA or anchor.get("provider_readback") != "all_exact":
-        errors.append("r64_anchor_mismatch")
+    append_anchor_errors("execution_scope_source", anchor, errors)
+
     state = source.get("canonical_current_state", {})
     role = source.get("canonical_role_views", {})
-    if state.get("sha256") != EXPECTED_CURRENT_STATE_SHA or state.get("broker_status") != "INSTALLED_AND_WATCHING" or state.get("watcher_generation") != "R59":
+    if (
+        state.get("drive_file_id") != roots["current_state_drive_file_id"]
+        or state.get("sha256") != roots["current_state_sha256"]
+        or state.get("broker_status") != "INSTALLED_AND_WATCHING"
+        or state.get("watcher_generation") != "R59"
+    ):
         errors.append("canonical_broker_state_mismatch")
-    if role.get("sha256") != EXPECTED_ROLE_VIEWS_SHA or role.get("codex07_lane") != "Return Plane / broker hardening" or not str(role.get("codex07_state", "")).startswith("R59_"):
+    rule = str(state.get("registry_mutation_rule", ""))
+    if not rule.startswith("Only the broker mutates generation-scoped return-broker state") or "does not directly mutate CURRENT_RETURN_REGISTRY.json" not in rule:
+        errors.append("canonical_broker_rule_mismatch")
+    if (
+        role.get("drive_file_id") != roots["role_views_drive_file_id"]
+        or role.get("sha256") != roots["role_views_sha256"]
+        or role.get("codex07_lane") != "Return Plane / broker hardening"
+        or not str(role.get("codex07_state", "")).startswith("R59_")
+    ):
         errors.append("canonical_role_view_mismatch")
-    if command.get("schema") != "control_center.command_queue.v1" or command.get("summary", {}).get("human_now") != 0 or command.get("queues", {}).get("HUMAN_NOW") != []:
+
+    if command.get("schema") != "control_center.command_queue.v1":
+        errors.append("command_queue_schema_mismatch")
+    append_anchor_errors("command_queue", command.get("authority_anchor", {}), errors)
+    if command.get("summary", {}).get("human_now") != 0 or command.get("queues", {}).get("HUMAN_NOW") != []:
         errors.append("command_queue_must_have_no_human_gate")
     if command.get("queues", {}).get("HISTORICAL_QUEUE") != ["CMD::CODEX07-R43-RETURN-PLANE-V2"]:
         errors.append("historical_r43_binding_missing")
-    if effect.get("schema") != "control_center.effect_readback_plane.v1" or effect.get("summary", {}).get("effect_candidates_total") != 0 or effect.get("effect_candidates") != []:
+
+    if effect.get("schema") != "control_center.effect_readback_plane.v1":
+        errors.append("effect_plane_schema_mismatch")
+    append_anchor_errors("effect_plane", effect.get("authority_anchor", {}), errors)
+    if effect.get("summary", {}).get("effect_candidates_total") != 0 or effect.get("effect_candidates") != []:
         errors.append("effect_plane_must_have_zero_candidates")
 
     provider = source.get("provider_readback", {})
@@ -71,9 +93,13 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
     safety = source.get("safety", {})
     if safety.get("execution_authorized") is not False or safety.get("auto_execute") is not False or safety.get("can_trade") is not False or safety.get("capital_permission") != "DENY" or safety.get("deploy_permission") != "DENY" or safety.get("self_application") is not False:
         errors.append("safety_ceiling_mismatch")
+
     divergences = source.get("known_divergences", [])
-    if not any(x.get("id") == "BROKER_REGISTRY_MUTATION_CONTRACT_DIVERGENCE_CONFIRMED" for x in divergences):
-        errors.append("required_contract_divergence_missing")
+    resolved = next((x for x in divergences if x.get("id") == RESOLVED_DIVERGENCE_ID), None)
+    if not resolved or resolved.get("status") != "RESOLVED_CANONICAL_TEXT_MATCHES_VERIFIED_IMPLEMENTATION":
+        errors.append("resolved_contract_history_missing")
+    if any(x.get("status") == "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE" for x in divergences):
+        errors.append("stale_open_contract_divergence")
     if errors:
         raise ValueError(";".join(errors))
 
@@ -82,7 +108,7 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
         "projection_kind": "NON_AUTHORITY_READ_ONLY_BINDING",
         "observed_at": source.get("observed_at"),
         "authority_anchor": anchor,
-        "verdict": "NO_EXECUTABLE_GATE_RUNTIME_IDENTITY_VERIFIED_R43_HISTORICAL",
+        "verdict": "NO_EXECUTABLE_GATE_RUNTIME_IDENTITY_VERIFIED_R43_HISTORICAL_RESEALED_ROOTS_ALIGNED",
         "canonical_runtime": {
             "broker_status": state.get("broker_status"),
             "watcher_generation": state.get("watcher_generation"),
@@ -134,8 +160,7 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
             "blockers": [
                 "NO_CURRENT_EFFECT_GATE",
                 "R43_IS_HISTORICAL_PREDECESSOR",
-                "CURRENT_PROCESS_LIVENESS_NOT_DIRECTLY_PROBED",
-                "CANONICAL_ROOT_MUTATION_CONTRACT_DIVERGENCE_UNRESOLVED"
+                "CURRENT_PROCESS_LIVENESS_NOT_DIRECTLY_PROBED"
             ]
         },
         "source_precedence": [
@@ -145,9 +170,9 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
             "HISTORICAL_IMPLEMENTATION_EVIDENCE",
             "RETURN_REGISTRY_OBSERVATION"
         ],
-        "precedence_note": "Canonical R64 controls authority boundaries; verified provider readback controls observed runtime/code facts. Their mutation-contract conflict is recorded, not silently reconciled.",
+        "precedence_note": "Resealed R64 canonical broker mutation semantics now match the verified R59/DF6 implementation. Historical pre-repair divergence remains evidence only and grants no authority.",
         "historical_evidence": source.get("historical_evidence", []),
-        "source_divergences": divergences,
+        "contract_history": divergences,
         "next_read_only_action": "READ_ONLY_CURRENT_PROCESS_LIVENESS_AND_R59_REGISTRY_HEALTH_CHECK",
         "next_readback_requirements": [
             "CURRENT_BROKER_PROCESS_OR_WATCHER_LIVENESS",
@@ -172,7 +197,8 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
             "historical_gate_never_execution_ready": True,
             "verified_runtime_identity_does_not_grant_execution_authority": True,
             "receipt_pids_are_not_current_liveness": True,
-            "contract_divergence_preserved": True,
+            "canonical_contract_divergence_resolved": True,
+            "cross_layer_anchor_equality_required": True,
             "no_scope_invention": True
         }
     }
@@ -180,15 +206,21 @@ def build(source: dict[str, Any], command: dict[str, Any], effect: dict[str, Any
 
 def main() -> int:
     p = argparse.ArgumentParser(description="Build read-only Execution Scope Binder V1.")
-    p.add_argument("source", type=Path); p.add_argument("command_queue", type=Path); p.add_argument("effect_plane", type=Path); p.add_argument("--output", type=Path)
+    p.add_argument("source", type=Path)
+    p.add_argument("command_queue", type=Path)
+    p.add_argument("effect_plane", type=Path)
+    p.add_argument("--output", type=Path)
     args = p.parse_args()
     try:
         out = build(load(args.source), load(args.command_queue), load(args.effect_plane))
     except ValueError as exc:
-        print(json.dumps({"status":"FAIL","errors":str(exc).split(";")}, indent=2)); return 2
+        print(json.dumps({"status": "FAIL", "errors": str(exc).split(";")}, indent=2))
+        return 2
     rendered = json.dumps(out, ensure_ascii=False, indent=2) + "\n"
-    if args.output: args.output.write_text(rendered, encoding="utf-8")
-    else: print(rendered, end="")
+    if args.output:
+        args.output.write_text(rendered, encoding="utf-8")
+    else:
+        print(rendered, end="")
     return 0
 
 
