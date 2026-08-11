@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.2.1-attention-coverage-closure-v1",
+  "mode": "READ_ONLY_PRODUCER_SCAN_WITH_OPERATOR_CONTRACT_AND_SKIP_EXPLANATION",
+  "max_file_bytes": 4194304,
+  "operator_contract": {
+    "canonical_event_type": "OPERATOR_FEEDBACK",
+    "canonical_operator_id": "ROBERT",
+    "event_schema": "hanri_runtime/r28/schemas/event.schema.json",
+    "synthetic_events_allowed": false
+  },
+  "sources": [
+    {
+      "source_id": "R36_AGENT_RETURN_INTAKE",
+      "adapter_type": "RETURN_ARTIFACT",
+      "path": "%USERPROFILE%\\My Drive\\Control canter\\00_INBOX_RAW\\agent_returns\\_R23_INTAKE",
+      "glob": "*.json",
+      "recursive": true,
+      "max_files": 50,
+      "max_age_seconds": 86400,
+      "enabled": true
+    },
+    {
+      "source_id": "R36_RUNTIME_STATE",
+      "adapter_type": "SYSTEM_RECEIPT",
+      "path": "%LOCALAPPDATA%\\ControlCenterHANRIR36\\state",
+      "glob": "*.json",
+      "recursive": false,
+      "max_files": 20,
+      "max_age_seconds": 7200,
+      "enabled": true
+    },
+    {
+      "source_id": "R23_RETURN_SYNC_STATE",
+      "adapter_type": "SYSTEM_RECEIPT",
+      "path": "%LOCALAPPDATA%\\ControlCenterReturnSyncR23\\state\\latest_state.json",
+      "max_files": 1,
+      "max_age_seconds": 7200,
+      "enabled": true
+    },
+    {
+      "source_id": "R36_OPERATOR_EVENT_INBOX",
+      "adapter_type": "OPERATOR_EVENT_ARTIFACT",
+      "path": "%LOCALAPPDATA%\\ControlCenterHANRIR36\\event_inbox",
+      "glob": "*.json",
+      "recursive": false,
+      "max_files": 100,
+      "max_age_seconds": 172800,
+      "enabled": true
+    },
+    {
+      "source_id": "R39_HANRI_RECEIPTS",
+      "adapter_type": "HANRI_RECEIPT",
+      "path": "%LOCALAPPDATA%\\ControlCenterHANRIR39\\receipts",
+      "glob": "*.json",
+      "recursive": false,
+      "max_files": 50,
+      "max_age_seconds": 172800,
+      "enabled": true
+    }
+  ],
+  "effect_boundary": {
+    "producer_reads_only": true,
+    "attention_inbox_write_only": true,
+    "provider_calls": false,
+    "stable_roots_modified": false,
+    "r36_runtime_modified": false,
+    "synthetic_operator_events": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
