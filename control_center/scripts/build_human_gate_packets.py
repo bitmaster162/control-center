@@ -5,8 +5,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors
+
 SCHEMA = "control_center.human_gate_packets.v1"
-EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -14,11 +15,7 @@ def load(path: Path) -> dict[str, Any]:
 
 
 def validate_anchor(name: str, source: dict[str, Any], errors: list[str]) -> None:
-    anchor = source.get("authority_anchor", {})
-    if anchor.get("generation") != "R64" or anchor.get("status") != "ACTIVE":
-        errors.append(f"{name}_r64_anchor_mismatch")
-    if anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA or anchor.get("provider_readback") != "all_exact":
-        errors.append(f"{name}_pointer_binding_mismatch")
+    append_anchor_errors(name, source.get("authority_anchor", {}), errors)
 
 
 def response_contract(response: str) -> dict[str, Any]:
