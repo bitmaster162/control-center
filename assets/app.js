@@ -1,9 +1,19 @@
 (() => {
   const snapshot = window.HANRI_SNAPSHOT;
+  const approvalQueue = window.HANRI_APPROVAL_QUEUE || {
+    policy_version: 'UNAVAILABLE',
+    mode: 'READ_ONLY_PROJECTION',
+    sovereign_channel: 'EXACT_HUMAN_GATE',
+    auto_approval: false,
+    auto_execution: false,
+    summary: {total: 0, pending: 0, approved_not_executed: 0, executed_verified: 0, denied: 0, expired: 0, rolled_back: 0, failed: 0},
+    items: []
+  };
   const $ = (id) => document.getElementById(id);
   const esc = (v) => String(v ?? "").replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const toneClass = (tone) => ({ok:'badge-ok',warn:'badge-warn',danger:'badge-danger',info:'badge-info',neutral:'badge-neutral'}[tone] || 'badge-neutral');
   const operationalTone = (s) => ({OPERATIONAL:'ok',DEGRADED:'warn',HALTED:'danger',PLANNED:'info',MAINTENANCE:'warn',UNKNOWN:'neutral'}[s] || 'neutral');
+  const approvalTone = (s) => ({PENDING_APPROVAL:'warn',APPROVED_NOT_EXECUTED:'info',EXECUTED_VERIFIED:'ok',DENIED:'danger',EXPIRED:'warn',ROLLED_BACK:'warn',FAILED:'danger',NOT_APPLICABLE:'neutral'}[s] || 'neutral');
   const evidenceTone = (state, freshness='CURRENT') => {
     if (state === 'CONFLICTED' || state === 'REJECTED') return 'danger';
     if (freshness === 'STALE') return 'warn';
@@ -41,6 +51,7 @@
     renderSystems();
     $('agents-table').innerHTML = table(['Слот','Роль','Статус','Канал','Память','Evidence'], snapshot.agents.map(a => [a.slot,a.role,a.status,a.channel,a.memory,`${a.evidence_state}/${a.freshness}`]));
     $('decisions-list').innerHTML = snapshot.decisions.map(d => `<div class="list-item"><div class="card-top"><strong>${esc(d.id)} · ${esc(d.action)}</strong><span class="badge ${toneClass(decisionTone(d.implementation_status, d.evidence_state))}">${esc(d.implementation_status)}</span></div><div class="muted">${esc(d.detail || '')}</div><div class="micro">${esc(d.verdict)} · ${esc(d.evidence_state)}</div></div>`).join('');
+    renderApprovalQueue();
     $('memory-layers').innerHTML = snapshot.memory_layers.map(m => `<article class="memory-card"><div class="card-top"><h3>${esc(m.name)}</h3>${evidenceBadge(m.evidence_state)}</div><div class="card-tags"><span class="badge ${toneClass(m.status==='COMPLETE'?'ok':m.status==='DEGRADED'?'danger':'warn')}">${esc(m.status)}</span></div><p class="muted">${esc(m.description)}</p></article>`).join('');
     $('memory-contract').textContent = JSON.stringify(snapshot.memory_contract, null, 2);
     $('communications-flow').innerHTML = flow(snapshot.communication_flow);
@@ -50,6 +61,55 @@
     $('arbiter-summary').textContent = snapshot.arbiter_content.summary;
     $('arbiter-flow').innerHTML = flow(snapshot.arbiter_content.flow);
     $('arbiter-evidence').innerHTML = `<div class="list-item"><strong>${esc(snapshot.arbiter_content.evidence_status)}</strong><div class="muted">Источники: ${snapshot.arbiter_content.sources.map(esc).join(', ')}</div></div>`;
+  }
+
+  function renderApprovalQueue() {
+    const s = approvalQueue.summary || {};
+    $('approval-queue-summary').innerHTML = [
+      ['Policy', approvalQueue.policy_version],
+      ['Mode', approvalQueue.mode],
+      ['Pending', s.pending ?? 0],
+      ['Approved / not executed', s.approved_not_executed ?? 0],
+      ['Executed verified', s.executed_verified ?? 0],
+      ['Sovereign channel', approvalQueue.sovereign_channel],
+      ['Auto approval', String(approvalQueue.auto_approval)],
+      ['Auto execution', String(approvalQueue.auto_execution)]
+    ].map(([k,v]) => `<div class="kv"><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join('');
+
+    const items = Array.isArray(approvalQueue.items) ? approvalQueue.items : [];
+    $('approval-queue-list').innerHTML = items.length ? items.map(item => {
+      const canCopy = item.status === 'PENDING_APPROVAL' && item.approval_command;
+      const hashes = [
+        item.before_sha256 ? `before ${item.before_sha256}` : null,
+        item.after_sha256 ? `after ${item.after_sha256}` : null,
+        item.receipt_sha256 ? `receipt ${item.receipt_sha256}` : null
+      ].filter(Boolean).map(esc).join('<br>');
+      return `<div class="list-item">
+        <div class="card-top"><strong>${esc(item.operation)} · ${esc(item.queue_id)}</strong><span class="badge ${toneClass(approvalTone(item.status))}">${esc(item.status)}</span></div>
+        <div class="kv-grid">
+          <div class="kv"><span>Effect class</span><strong>${esc(item.effect_class)}</strong></div>
+          <div class="kv"><span>Actor</span><strong>${esc(item.actor)}</strong></div>
+          <div class="kv"><span>Provider</span><strong>${esc(item.provider)}</strong></div>
+          <div class="kv"><span>Provider target</span><strong class="mono">${esc(item.provider_target_id)}</strong></div>
+          <div class="kv"><span>Action hash</span><strong class="mono">${esc(item.action_hash)}</strong></div>
+          <div class="kv"><span>Expiry</span><strong>${esc(item.expires_at || '—')}</strong></div>
+        </div>
+        <p class="muted"><strong>Target:</strong> ${esc(item.target)}</p>
+        <div class="micro mono">${hashes || 'No byte-hash scope on this item.'}</div>
+        ${canCopy ? `<div class="top-actions" style="margin-top:.8rem"><button class="btn" data-approval-copy="${esc(item.approval_command)}">Скопировать exact approval</button><span class="mono muted">${esc(item.approval_command)}</span></div>` : '<div class="micro">Approval command unavailable: item is not pending. Replay remains forbidden.</div>'}
+      </div>`;
+    }).join('') : '<div class="list-item muted">Нет действий, ожидающих или имеющих governance receipt.</div>';
+
+    document.querySelectorAll('[data-approval-copy]').forEach(btn => btn.addEventListener('click', async () => {
+      const command = btn.dataset.approvalCopy || '';
+      if (!command) return;
+      try {
+        await navigator.clipboard.writeText(command);
+        btn.textContent = 'Скопировано';
+      } catch (_) {
+        btn.textContent = 'Не удалось скопировать';
+      }
+    }));
   }
 
   function renderSystems() {
