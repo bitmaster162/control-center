@@ -3,10 +3,14 @@
   "projection_kind": "NON_AUTHORITY_OPERATOR_ATTENTION_PROJECTION",
   "source_chain": [
     "PROVIDER_REFRESH_CONTROLLER_STATUS",
+    "PROVIDER_DRIFT_RESOLUTION_TRANSITION",
     "COMMAND_QUEUE_INVARIANT_SNAPSHOT",
     "PROVIDER_SYSTEM_ATTENTION"
   ],
   "source_status_verdict": "NO_HOLD_DIAGNOSTIC_RECORDED",
+  "source_resolution_state": "NO_ACTIVE_DRIFT_HOLD",
+  "resolution_applied": false,
+  "resolved_drift_fingerprint": null,
   "source_projection_observed_at": "2026-08-12T01:39:00+07:00",
   "absence_does_not_prove_no_drift": true,
   "summary": {
@@ -24,7 +28,8 @@
     "human_gate_created": false,
     "effect_candidate_created": false,
     "command_created": false,
-    "system_attention_grants_authority": false
+    "system_attention_grants_authority": false,
+    "drift_alert_clear_requires_matching_resolution": true
   },
   "safety": {
     "provider_write_authorized": false,
