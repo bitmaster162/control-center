@@ -77,7 +77,7 @@ def main() -> int:
 
     bad_agent = deepcopy(AGENT)
     bad_agent["authority_anchor"]["pointer_sha256"] = "wrong"
-    expect_fail(bad_agent, deepcopy(ENTRIES), deepcopy(CURRENT), "pointer_binding_mismatch")
+    expect_fail(bad_agent, deepcopy(ENTRIES), deepcopy(CURRENT), "agent_control_anchor_mismatch:pointer_sha256")
 
     print("WORK_ORDER_LIFECYCLE_ADVERSARIAL_PASS")
     return 0
