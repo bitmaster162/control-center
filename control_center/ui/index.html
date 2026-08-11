@@ -21,10 +21,11 @@
     <a href="#agents">AGENTS</a>
     <a href="#agent-control">AGENT CONTROL</a>
     <a href="#work-lifecycle">WORK LIFECYCLE</a>
+    <a href="#decision-gates">DECISION GATES</a>
     <a href="#projects">PROJECTS</a>
     <a href="#work">WORK</a>
     <a href="#returns">RETURNS</a>
-    <a href="#decisions">DECISIONS</a>
+    <a href="#decisions">GOVERNANCE</a>
     <a href="#commercial">COMMERCIAL</a>
     <a href="#hanri">HANRI</a>
   </nav>
@@ -33,7 +34,7 @@
     <section id="now" class="panel hero-panel">
       <div class="section-head">
         <div><p class="eyebrow">OPERATOR ATTENTION</p><h2>NOW</h2></div>
-        <span class="pill">max 3 decisions</span>
+        <span class="pill">ripe human gates only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
     </section>
@@ -59,6 +60,14 @@
       <div id="work-lifecycle-list"></div>
     </section>
 
+    <section id="decision-gates" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">AUTHORITY COMPRESSION</p><h2>Decision / Effect Gate Ledger</h2></div>
+        <span class="pill">accept ≠ authorize ≠ execute</span>
+      </div>
+      <div id="decision-gates-list"></div>
+    </section>
+
     <section id="projects" class="panel">
       <div class="section-head"><div><p class="eyebrow">PORTFOLIO</p><h2>Projects</h2></div></div>
       <div id="projects-list" class="grid cards"></div>
@@ -78,7 +87,7 @@
     </section>
 
     <section id="decisions" class="panel">
-      <div class="section-head"><div><p class="eyebrow">HUMAN AUTHORITY</p><h2>Decisions</h2></div></div>
+      <div class="section-head"><div><p class="eyebrow">ACCEPTED CONTROL DECISIONS</p><h2>Governance</h2></div></div>
       <div id="decisions-list" class="grid cards"></div>
     </section>
 
@@ -105,5 +114,6 @@
 
   <script src="./app.js" defer></script>
   <script src="./lifecycle.js" defer></script>
+  <script src="./decision_ledger.js" defer></script>
 </body>
 </html>
