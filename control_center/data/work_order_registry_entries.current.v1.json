@@ -1,0 +1,80 @@
+{
+  "schema": "control_center.work_order_registry_entries.v1",
+  "snapshot_kind": "NON_AUTHORITY_PROVIDER_READBACK",
+  "observed_at": "2026-08-12T01:09:00+07:00",
+  "registry": {
+    "schema": "CONTROL_RETURN_REGISTRY_V4",
+    "stable_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "generation_label": "R50_AUDIT",
+    "registry_content_sha256": "b1139721e2ec6ebbb0c61dc6fc7c6dd9c34a61c0e9ae4b77583974934c46cda0",
+    "last_updated_utc": "2026-07-29T16:30:55.468744+00:00"
+  },
+  "entries": [
+    {
+      "entry_key": "CODEX-03_R49B",
+      "slot": "CODEX-03",
+      "project": "MAWorld",
+      "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21",
+      "verdict": "RLS_TEST_FAIL",
+      "verification_status": "VERIFIED_FAIL_INITDB",
+      "evidence_zip_sha256": "83919140df509fb735d6b6ef2ff4d9b4b1b2aa9f1952c63fc8f7951dccc9deb8"
+    },
+    {
+      "entry_key": "ANTIGRAVITY_WO041",
+      "slot": "ANTIGRAVITY_WO041",
+      "project": "MAWorld",
+      "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
+      "verdict": "ACCEPTANCE_VERIFIED_FAIL_INITDB",
+      "verification_status": "VERIFIED_PASS",
+      "evidence_zip_sha256": "ff3783de64c69acfd6289df4279f5dcae9bda1b6f675bc92814dbe77e5e2156f"
+    },
+    {
+      "entry_key": "CODEX-02_R50",
+      "slot": "CODEX-02",
+      "generation": "R50",
+      "project": "TradingOS / VIP Decision Brief",
+      "work_order": "CODEX02-R50-TRADINGOS-DECISION-BRIEF-MVP",
+      "verdict": "PRODUCT_MVP_PASS",
+      "verification_status": "VERIFIED_PRODUCT_MVP_PASS",
+      "production_adoption": false,
+      "orders_sent": false,
+      "capital_effect": false,
+      "no_further_agent_work": true,
+      "next": "RETURN_CODEX02_TO_TRADING_EDGE_RESEARCH_AND_RUN_HUMAN_DAY2_PILOT",
+      "can_trade": false,
+      "capital_permission": "DENY"
+    },
+    {
+      "entry_key": "CODEX-04_R51",
+      "slot": "CODEX-04",
+      "generation": "R51",
+      "project": "Sovereign Arena",
+      "work_order": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
+      "verdict": "TRUTH_REPAIR_CANDIDATE_PASS",
+      "verification_status": "VERIFIED_CANDIDATE_PASS_DEPLOYMENT_NOT_APPROVED",
+      "production_deployed": false,
+      "production_alias_changed": false,
+      "orders_sent": false,
+      "capital_effect": false,
+      "no_further_agent_work": true,
+      "next": "INDEPENDENT_PREVIEW_RELEASE_CHECK_THEN_HUMAN_PROMOTION_DECISION",
+      "can_trade": false,
+      "capital_permission": "DENY"
+    },
+    {
+      "entry_key": "ANTIGRAVITY_R57",
+      "slot": "ANTIGRAVITY_R57",
+      "generation": "R57",
+      "project": "Return intake / product surface",
+      "work_order": "ANTIGRAVITY-R57-PRODUCT-SURFACE-SMOKE-AND-RETURN-INTAKE",
+      "verdict": "PRODUCT_SURFACE_SMOKE_AND_INTAKE_READY",
+      "verification_status": "VERIFIED_PASS",
+      "evidence_zip_sha256": "a71880e90d65c279f2328b22c2483531915310ee40ebc9ff9beb11bfdfbe7e41"
+    }
+  ],
+  "boundaries": {
+    "entry_verification_is_not_semantic_acceptance": true,
+    "entry_verification_is_not_apply_authority": true,
+    "tradingos_do_not_touch": true
+  }
+}
