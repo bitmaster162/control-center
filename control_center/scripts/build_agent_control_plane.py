@@ -17,6 +17,14 @@ R64_POINTER = {
     "decision": "ACCEPT_R64_POINTER_PROMOTION",
     "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
 }
+CURRENT_STATE = {
+    "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "raw_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+}
+ROLE_VIEWS = {
+    "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "raw_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+}
 RETURN_REGISTRY_ID = "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm"
 RETURN_REGISTRY_SCHEMA = "CONTROL_RETURN_REGISTRY_V4"
 RETURN_REGISTRY_NAME = "CONTROL_CANTER_RETURN_REGISTRY"
@@ -69,7 +77,34 @@ def _operational_class(state: str) -> str:
     return "OBSERVED"
 
 
-def _attention_score(slot_id: str, row: dict[str, Any], project: str) -> tuple[int, str]:
+def _canonical_route(slot_id: str, row: dict[str, Any], source: dict[str, Any]) -> dict[str, Any] | None:
+    if slot_id != "CODEX-07":
+        return None
+    broker = source.get("canonical_current_state", {}).get("broker_plane", {})
+    role = source.get("canonical_role_views", {}).get("roles", {}).get("CODEX-07", {})
+    if (
+        row.get("work_order") == "CODEX07-R43-RETURN-PLANE-V2"
+        and row.get("next") == "ROBERT_MIGRATION_DECISION"
+        and broker.get("status") == "INSTALLED_AND_WATCHING"
+        and broker.get("watcher_generation") == "R59"
+        and str(role.get("state", "")).startswith("R59_")
+    ):
+        return {
+            "current_route": "HISTORICAL_PREDECESSOR_NO_ACTION",
+            "source_conflict": "REGISTRY_R43_NEXT_SUPERSEDED_BY_CANONICAL_R59_RUNTIME",
+            "canonical_runtime": {
+                "broker_status": broker.get("status"),
+                "watcher_generation": broker.get("watcher_generation"),
+                "role_lane": role.get("lane"),
+                "role_state": role.get("state"),
+            },
+        }
+    return None
+
+
+def _attention_score(slot_id: str, row: dict[str, Any], project: str, route: dict[str, Any] | None) -> tuple[int, str]:
+    if route and route.get("current_route") == "HISTORICAL_PREDECESSOR_NO_ACTION":
+        return (-1, "STALE_PREDECESSOR_EXCLUDED")
     state = str(row.get("state", "UNKNOWN"))
     nxt = str(row.get("next", ""))
     work_order = str(row.get("work_order", ""))
@@ -127,6 +162,24 @@ def validate_source(source: dict[str, Any]) -> list[str]:
         if ceiling.get(key) != expected:
             errors.append(f"effect_ceiling_mismatch:{key}")
 
+    current_state = source.get("canonical_current_state", {})
+    for key, expected in CURRENT_STATE.items():
+        if current_state.get(key) != expected:
+            errors.append(f"current_state_mismatch:{key}")
+    broker = current_state.get("broker_plane", {})
+    if broker.get("status") != "INSTALLED_AND_WATCHING" or broker.get("watcher_generation") != "R59":
+        errors.append("canonical_broker_state_mismatch")
+    if not str(broker.get("registry_mutation_rule", "")).startswith("Only the broker mutates CURRENT_RETURN_REGISTRY.json"):
+        errors.append("canonical_broker_mutation_rule_mismatch")
+
+    role_views = source.get("canonical_role_views", {})
+    for key, expected in ROLE_VIEWS.items():
+        if role_views.get(key) != expected:
+            errors.append(f"role_views_mismatch:{key}")
+    code7 = role_views.get("roles", {}).get("CODEX-07", {})
+    if code7.get("lane") != "Return Plane / broker hardening" or not str(code7.get("state", "")).startswith("R59_"):
+        errors.append("codex07_role_view_mismatch")
+
     registry = source.get("return_registry", {})
     if registry.get("drive_file_id") != RETURN_REGISTRY_ID:
         errors.append("registry_drive_id_mismatch")
@@ -156,6 +209,8 @@ def validate_source(source: dict[str, Any]) -> list[str]:
         errors.append("registry_transport_boundary_missing")
     if boundaries.get("registry_cannot_accept_or_apply") is not True:
         errors.append("registry_semantic_boundary_missing")
+    if boundaries.get("historical_registry_next_cannot_override_canonical_runtime") is not True:
+        errors.append("canonical_runtime_precedence_missing")
     if boundaries.get("tradingos_do_not_touch") is not True:
         errors.append("tradingos_boundary_missing")
     if boundaries.get("max_operator_attention") != 3:
@@ -170,14 +225,18 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
 
     pointer = source["pointer"]
     registry = source["return_registry"]
+    current_state = source["canonical_current_state"]
+    role_views = source["canonical_role_views"]
     slots_out: list[dict[str, Any]] = []
     candidates: list[dict[str, Any]] = []
+    stale_count = 0
 
     for slot_id in sorted(registry["slots"]):
         row = registry["slots"][slot_id]
         state = str(row.get("state", "UNKNOWN"))
         project = _project_hint(slot_id, row)
         do_not_touch = project == "TradingOS"
+        route = _canonical_route(slot_id, row, source)
         slot = {
             "slot": slot_id,
             "project_hint": project,
@@ -192,11 +251,14 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
             "rerun_allowed": False,
             "do_not_touch": do_not_touch,
         }
+        if route:
+            slot.update(route)
+            stale_count += 1
         if row.get("no_further_agent_work") is True:
             slot["slot_no_further_agent_work"] = True
         slots_out.append(slot)
 
-        score, reason = _attention_score(slot_id, row, project)
+        score, reason = _attention_score(slot_id, row, project, route)
         if score > 0:
             candidates.append({
                 "slot": slot_id,
@@ -254,6 +316,19 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
                 "raw_sha256": pointer["raw_sha256"],
                 "provider_modified_time": pointer["provider_modified_time"],
             },
+            "current_state": {
+                "provider": current_state["provider"],
+                "drive_file_id": current_state["drive_file_id"],
+                "raw_sha256": current_state["raw_sha256"],
+                "broker_status": current_state["broker_plane"]["status"],
+                "watcher_generation": current_state["broker_plane"]["watcher_generation"],
+            },
+            "role_views": {
+                "provider": role_views["provider"],
+                "drive_file_id": role_views["drive_file_id"],
+                "raw_sha256": role_views["raw_sha256"],
+                "codex07_state": role_views["roles"]["CODEX-07"]["state"],
+            },
             "return_registry": {
                 "provider": registry["provider"],
                 "drive_file_id": registry["drive_file_id"],
@@ -274,6 +349,7 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
             "reported_state_counts": state_counts,
             "pending_but_blocked": len(blocked_pending),
             "operator_attention_count": len(attention),
+            "historical_predecessor_slots": stale_count,
         },
         "slots": slots_out,
         "blocked_dispatch_queue": blocked_pending,
@@ -281,6 +357,7 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
         "invariants": {
             "registry_state_never_semantic_acceptance": True,
             "registry_state_never_apply_authority": True,
+            "canonical_runtime_outranks_historical_registry_routing": True,
             "no_auto_dispatch": True,
             "tradingos_do_not_touch": True,
             "max_operator_attention": 3,
