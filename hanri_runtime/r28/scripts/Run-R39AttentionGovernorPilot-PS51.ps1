@@ -2,8 +2,7 @@ param(
   [string]$OutputPath = "$env:LOCALAPPDATA\ControlCenterHANRIR39\receipts\R39_ATTENTION_OVER_ATTENTION_RECEIPT.json"
 )
 $ErrorActionPreference = 'Stop'
-$root = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))
-$runtime = Join-Path $root 'hanri_runtime\r28'
+$runtime = Split-Path -Parent $PSScriptRoot
 $env:PYTHONPATH = Join-Path $runtime 'src'
 $policy = Join-Path $runtime 'config\r39.attention-governor.json'
 $input = Join-Path $runtime 'data\r39_attention_fixture.json'
