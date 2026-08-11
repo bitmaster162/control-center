@@ -19,7 +19,15 @@ def make_decision(row: dict[str, Any]) -> dict[str, Any]:
     stage = str(row["lifecycle_stage"])
     do_not_touch = bool(row.get("do_not_touch"))
 
-    if stage == "EFFECT_GATE_WAIT":
+    if stage == "HISTORICAL_EVIDENCE_ONLY":
+        decision_class = "HISTORICAL_PREDECESSOR_NO_ACTION"
+        decision_state = "CLOSED_NO_ACTION"
+        owner = "NONE"
+        authority = "NONE_HISTORICAL_EVIDENCE"
+        allowed: list[str] = []
+        human_ripe = False
+        gate = row.get("effect_gate") or "NONE_STALE_PREDECESSOR"
+    elif stage == "EFFECT_GATE_WAIT":
         decision_class = "HUMAN_EFFECT_AUTHORIZATION"
         decision_state = "OPEN"
         owner = "ROBERT"
@@ -64,6 +72,7 @@ def make_decision(row: dict[str, Any]) -> dict[str, Any]:
         "execution_authorized": False,
         "readback_status": row.get("readback_status", "NOT_DUE_NO_EFFECT"),
         "do_not_touch": do_not_touch,
+        "historical_predecessor": bool(row.get("historical_predecessor")),
     }
 
 
@@ -90,34 +99,25 @@ def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
         work_order = item.get("work_order")
         decision = by_work.get(str(work_order)) if work_order else None
         if not decision:
-            attention.append({
-                "rank": item.get("rank"),
-                "work_order": work_order,
-                "route": "CONTROL_CENTER_BINDING_REVIEW",
-                "human_ripe": False,
-            })
+            attention.append({"rank": item.get("rank"), "work_order": work_order, "route": "CONTROL_CENTER_BINDING_REVIEW", "human_ripe": False})
             continue
         route = (
             "ROBERT_HUMAN_GATE" if decision["human_ripe"]
             else "CONTROL_CENTER_SEMANTIC_QUEUE" if decision["owner"] == "CONTROL_CENTER"
-            else "PROJECT_OWNER_QUEUE"
+            else "PROJECT_OWNER_QUEUE" if decision["owner"] not in {"NONE", "ROBERT"}
+            else "HISTORICAL_NO_ACTION"
         )
         attention.append({
-            "rank": item.get("rank"),
-            "work_order": work_order,
-            "slot": item.get("slot"),
-            "project": item.get("project"),
-            "route": route,
-            "human_ripe": decision["human_ripe"],
-            "decision_id": decision["decision_id"],
-            "reason": item.get("reason"),
+            "rank": item.get("rank"), "work_order": work_order, "slot": item.get("slot"), "project": item.get("project"),
+            "route": route, "human_ripe": decision["human_ripe"], "decision_id": decision["decision_id"], "reason": item.get("reason"),
         })
 
     class_counts = Counter(d["decision_class"] for d in decisions)
     owner_counts = Counter(d["owner"] for d in decisions)
     human_ids = [d["decision_id"] for d in decisions if d["human_ripe"] and d["decision_state"] == "OPEN"]
     control_ids = [d["decision_id"] for d in decisions if d["owner"] == "CONTROL_CENTER" and d["decision_state"] == "OPEN"]
-    owner_ids = [d["decision_id"] for d in decisions if d["owner"] not in {"CONTROL_CENTER", "ROBERT"}]
+    owner_ids = [d["decision_id"] for d in decisions if d["owner"] not in {"CONTROL_CENTER", "ROBERT", "NONE"}]
+    historical_ids = [d["decision_id"] for d in decisions if d["decision_class"] == "HISTORICAL_PREDECESSOR_NO_ACTION"]
 
     return {
         "schema": SCHEMA,
@@ -125,13 +125,9 @@ def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
         "observed_at": lifecycle.get("observed_at"),
         "authority_anchor": anchor,
         "policy": {
-            "auto_dispatch": False,
-            "auto_accept": False,
-            "auto_apply": False,
-            "self_approval": False,
-            "semantic_acceptance_grants_effect": False,
-            "effect_authorization_executes_effect": False,
-            "readback_required_after_any_effect": True,
+            "auto_dispatch": False, "auto_accept": False, "auto_apply": False, "self_approval": False,
+            "semantic_acceptance_grants_effect": False, "effect_authorization_executes_effect": False,
+            "historical_predecessor_grants_effect": False, "readback_required_after_any_effect": True,
         },
         "summary": {
             "decision_objects_total": len(decisions),
@@ -140,18 +136,20 @@ def build(lifecycle: dict[str, Any]) -> dict[str, Any]:
             "human_ripe_count": len(human_ids),
             "control_center_semantic_queue_count": len(control_ids),
             "project_owner_queue_count": len(owner_ids),
-            "effects_authorized": 0,
-            "executions_authorized": 0,
+            "historical_no_action_count": len(historical_ids),
+            "effects_authorized": 0, "executions_authorized": 0,
         },
         "queues": {
             "human_ripe": human_ids,
             "control_center_semantic": control_ids,
             "project_owner": owner_ids,
+            "historical_no_action": historical_ids,
         },
         "compressed_operator_attention": attention,
         "decisions": decisions,
         "invariants": {
             "accept_never_implies_apply": True,
+            "historical_predecessor_never_human_gate": True,
             "effect_gate_never_executes_effect": True,
             "dispatch_override_never_auto_runs": True,
             "tradingos_routes_to_owner_only": True,
