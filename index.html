@@ -26,6 +26,7 @@
     <button class="tab" data-view="systems">Системы</button>
     <button class="tab" data-view="agents">Агенты</button>
     <button class="tab" data-view="decisions">Решения</button>
+    <button class="tab" data-view="approvals">Approval Queue</button>
     <button class="tab" data-view="memory">Общая память</button>
     <button class="tab" data-view="communications">Связь агентов</button>
     <button class="tab" data-view="security">P0 безопасность</button>
@@ -82,6 +83,28 @@
       </article>
     </section>
 
+    <section id="view-approvals" class="view">
+      <article class="panel hero-panel">
+        <div class="panel-head"><h2>HANRI Approval Queue</h2><span class="muted">read-only · exact human gate</span></div>
+        <p class="lead">Очередь показывает точный scope, action hash, срок approval и receipt. UI не одобряет и не исполняет действия: он может только скопировать exact approval command для sovereign operator channel.</p>
+        <div id="approval-queue-summary" class="kv-grid"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Actions requiring governance</h2><span class="muted">copy-only; no provider calls</span></div>
+        <div id="approval-queue-list" class="list"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h2>Execution boundary</h2><span class="muted">fail-closed</span></div>
+        <div class="chip-row">
+          <span class="badge badge-neutral">auto_approval=false</span>
+          <span class="badge badge-neutral">auto_execution=false</span>
+          <span class="badge badge-neutral">replay_allowed=false</span>
+          <span class="badge badge-neutral">can_trade=false</span>
+          <span class="badge badge-neutral">capital_permission=DENY</span>
+        </div>
+      </article>
+    </section>
+
     <section id="view-memory" class="view">
       <div id="memory-layers" class="card-grid"></div>
       <article class="panel">
@@ -104,7 +127,6 @@
     <section id="view-security" class="view">
       <div id="security-grid" class="card-grid"></div>
     </section>
-
 
     <section id="view-audit" class="view">
       <div class="two-col">
@@ -150,11 +172,12 @@
   </main>
 
   <footer>
-    <span>R64-P1 contract-bound dashboard · authority R63 · read-only</span>
+    <span>R64-P4 · HANRI R37 governance · approval queue is read-only projection</span>
     <span>can_trade=false · capital_permission=DENY</span>
   </footer>
 
   <script src="data/snapshot.js"></script>
+  <script src="data/approval_queue.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

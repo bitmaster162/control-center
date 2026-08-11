@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/hanri-approval-queue.schema.json",
+  "title": "HANRI R37 Approval Queue Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_version",
+    "generated_at",
+    "mode",
+    "sovereign_channel",
+    "auto_approval",
+    "auto_execution",
+    "can_trade",
+    "capital_permission",
+    "summary",
+    "items",
+    "projection_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy_version": {"const": "37.2.0-approval-queue-v1"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "mode": {"const": "READ_ONLY_PROJECTION"},
+    "sovereign_channel": {"const": "EXACT_HUMAN_GATE"},
+    "auto_approval": {"const": false},
+    "auto_execution": {"const": false},
+    "can_trade": {"const": false},
+    "capital_permission": {"const": "DENY"},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total","pending","approved_not_executed","executed_verified","denied","expired","rolled_back","failed"],
+      "properties": {
+        "total": {"type": "integer", "minimum": 0},
+        "pending": {"type": "integer", "minimum": 0},
+        "approved_not_executed": {"type": "integer", "minimum": 0},
+        "executed_verified": {"type": "integer", "minimum": 0},
+        "denied": {"type": "integer", "minimum": 0},
+        "expired": {"type": "integer", "minimum": 0},
+        "rolled_back": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0}
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "queue_id","status","action_hash","actor","operation","effect_class","target","provider","provider_target_id",
+          "snapshot_id","before_sha256","after_sha256","approval_required","approval_command","expires_at",
+          "receipt_status","receipt_sha256","replay_allowed","evidence_state"
+        ],
+        "properties": {
+          "queue_id": {"type": "string", "pattern": "^AQ-[0-9a-f]{16}$"},
+          "status": {"enum": ["PENDING_APPROVAL","APPROVED_NOT_EXECUTED","EXECUTED_VERIFIED","DENIED","EXPIRED","ROLLED_BACK","FAILED","NOT_APPLICABLE"]},
+          "action_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "actor": {"type": "string"},
+          "operation": {"type": "string"},
+          "effect_class": {"type": "string"},
+          "target": {"type": "string"},
+          "provider": {"type": "string"},
+          "provider_target_id": {"type": "string"},
+          "snapshot_id": {"type": ["string","null"]},
+          "before_sha256": {"type": ["string","null"], "pattern": "^[0-9a-f]{64}$"},
+          "after_sha256": {"type": ["string","null"], "pattern": "^[0-9a-f]{64}$"},
+          "approval_required": {"type": "boolean"},
+          "approval_command": {"type": ["string","null"], "pattern": "^APPROVE_R37_EFFECT:[0-9a-f]{64}$"},
+          "expires_at": {"type": ["string","null"], "format": "date-time"},
+          "receipt_status": {"type": ["string","null"]},
+          "receipt_sha256": {"type": ["string","null"], "pattern": "^[0-9a-f]{64}$"},
+          "replay_allowed": {"const": false},
+          "evidence_state": {"enum": ["RECEIPTED","HASH_VERIFIED"]}
+        }
+      }
+    },
+    "projection_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
