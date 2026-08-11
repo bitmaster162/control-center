@@ -3,7 +3,6 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import json
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -18,6 +17,15 @@ EFFECT_CLASSES = {
     "IRREVERSIBLE",
     "CAPITAL",
     "UNKNOWN",
+}
+EFFECT_RANK = {
+    "READ_ONLY": 0,
+    "WRITE_REVERSIBLE": 1,
+    "WRITE_EXTERNAL": 2,
+    "AUTHORITY_CHANGE": 3,
+    "IRREVERSIBLE": 4,
+    "CAPITAL": 5,
+    "UNKNOWN": 6,
 }
 VERDICTS = {"ALLOW", "DENY", "HUMAN_APPROVAL"}
 UTC = dt.timezone.utc
@@ -65,11 +73,7 @@ def _operation_token(action: Mapping[str, Any]) -> str:
     return str(action.get("operation", "")).strip().lower().replace("-", "_")
 
 
-def infer_effect_class(action: Mapping[str, Any]) -> str:
-    explicit = str(action.get("effect_class", "")).strip().upper()
-    if explicit:
-        return explicit if explicit in EFFECT_CLASSES else "UNKNOWN"
-
+def _derive_effect_class(action: Mapping[str, Any]) -> str:
     operation = _operation_token(action)
     if any(token in operation for token in ("trade", "order", "transfer_funds", "withdraw", "deposit", "capital")):
         return "CAPITAL"
@@ -84,6 +88,18 @@ def infer_effect_class(action: Mapping[str, Any]) -> str:
     if any(token in operation for token in ("read", "get", "fetch", "list", "search", "inspect", "verify")):
         return "READ_ONLY"
     return "UNKNOWN"
+
+
+def infer_effect_class(action: Mapping[str, Any]) -> str:
+    derived = _derive_effect_class(action)
+    explicit_raw = str(action.get("effect_class", "")).strip().upper()
+    if not explicit_raw:
+        return derived
+    if explicit_raw not in EFFECT_CLASSES:
+        return "UNKNOWN"
+    if derived == "UNKNOWN":
+        return explicit_raw
+    return max((explicit_raw, derived), key=lambda value: EFFECT_RANK[value])
 
 
 def normalize_action(action: Mapping[str, Any]) -> dict[str, Any]:
