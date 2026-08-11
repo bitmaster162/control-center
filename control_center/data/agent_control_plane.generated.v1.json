@@ -1,0 +1,83 @@
+{
+  "schema": "control_center.agent_control_plane.v1",
+  "projection_kind": "NON_AUTHORITY_PROJECTION",
+  "observed_at": "2026-08-12T00:43:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "provider_readback": "all_exact"
+  },
+  "source_provenance": {
+    "pointer": {
+      "provider": "GOOGLE_DRIVE",
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "raw_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+      "provider_modified_time": "2026-08-07T20:36:18.030Z"
+    },
+    "return_registry": {
+      "provider": "GOOGLE_DRIVE",
+      "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+      "raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+      "provider_modified_time": "2026-07-29T16:30:55.472Z",
+      "generation_label": "R50_AUDIT"
+    }
+  },
+  "global_dispatch": {
+    "state": "BLOCKED_BY_R64_NO_FURTHER_AGENT_WORK",
+    "auto_dispatch": false,
+    "auto_accept": false,
+    "human_bounded_override_required": true,
+    "note": "Pending work may be observed and routed, but this projection grants no execution authority."
+  },
+  "fleet_summary": {
+    "slots_total": 13,
+    "reported_state_counts": {
+      "CLOSEOUT_PASS": 1,
+      "MAWORLD_TARGET_QUALIFICATION_READY": 1,
+      "ACCEPTANCE_VERIFIED_FAIL_INITDB": 1,
+      "PENDING_OBSERVATION_WINDOW": 1,
+      "OUTCOME_PASS": 5,
+      "RLS_TEST_FAIL": 1,
+      "HUMAN_GATE_READY": 1,
+      "PENDING_EXECUTION": 1,
+      "GATED_RESERVED": 1
+    },
+    "pending_but_blocked": 3,
+    "operator_attention_count": 3
+  },
+  "slots": [
+    {"slot": "ANTIGRAVITY_WO039", "project_hint": "ANTIGRAVITY", "reported_state": "CLOSEOUT_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": null, "reported_next": "NONE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "ANTIGRAVITY_WO040", "project_hint": "MAWorld", "reported_state": "MAWORLD_TARGET_QUALIFICATION_READY", "operational_class": "OBSERVED", "work_order": "ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION", "reported_next": "ROBERT_APPROVAL_FOR_ONE_DISPOSABLE_RLS_21_OF_21", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "ANTIGRAVITY_WO041", "project_hint": "MAWorld", "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB", "operational_class": "FAILURE_REQUIRES_DIAGNOSTIC_GATE", "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE", "reported_next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false, "slot_no_further_agent_work": true},
+    {"slot": "CLAUDE-BITUNIX", "project_hint": "UNBOUND", "reported_state": "PENDING_OBSERVATION_WINDOW", "operational_class": "PENDING_OBSERVATION_BLOCKED", "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW", "reported_next": null, "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-01", "project_hint": "ContinuityOS", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE", "reported_next": "ROBERT_ADOPTION_REVIEW", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-02", "project_hint": "TradingOS", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE", "reported_next": "ROBERT_EVIDENCE_EPOCH_DECISION", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": true},
+    {"slot": "CODEX-03", "project_hint": "MAWorld", "reported_state": "RLS_TEST_FAIL", "operational_class": "FAILURE_REQUIRES_DIAGNOSTIC_GATE", "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21", "reported_next": "CAPTURE_INITDB_STDOUT_STDERR_AND_FIX_ONE_ROOT_CAUSE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false, "slot_no_further_agent_work": true},
+    {"slot": "CODEX-04", "project_hint": "Arena", "reported_state": "HUMAN_GATE_READY", "operational_class": "HUMAN_GATE_READY", "work_order": null, "reported_next": "TRUSTED_EXTERNAL_ED25519_SIGNATURE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-05", "project_hint": "HANRI", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT", "reported_next": "NONE_AGENT_SIDE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-06", "project_hint": "VisionAssist", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE", "reported_next": "HUMAN_FORWARD_LOCKED_CASE_CAPTURE", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-07", "project_hint": "Return Plane", "reported_state": "OUTCOME_PASS", "operational_class": "RETURN_OR_DECISION_PENDING", "work_order": "CODEX07-R43-RETURN-PLANE-V2", "reported_next": "ROBERT_MIGRATION_DECISION", "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "CODEX-08", "project_hint": "Parasite-Killer", "reported_state": "PENDING_EXECUTION", "operational_class": "PENDING_EXECUTION_BLOCKED", "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN", "reported_next": null, "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false},
+    {"slot": "FABLE-5", "project_hint": "UNBOUND", "reported_state": "GATED_RESERVED", "operational_class": "GATED_RESERVED", "work_order": "FABLE5-R57-GATED-ADJUDICATION", "reported_next": null, "dispatch_authorized": false, "dispatch_blocker": "R64_NO_FURTHER_AGENT_WORK", "semantic_authority": "NONE_FROM_REGISTRY", "apply_authority": "NONE_FROM_REGISTRY", "rerun_allowed": false, "do_not_touch": false}
+  ],
+  "blocked_dispatch_queue": [
+    {"slot": "CLAUDE-BITUNIX", "project": "UNBOUND", "reported_state": "PENDING_OBSERVATION_WINDOW", "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW", "dispatch_authorized": false, "blocker": "R64_NO_FURTHER_AGENT_WORK"},
+    {"slot": "CODEX-08", "project": "Parasite-Killer", "reported_state": "PENDING_EXECUTION", "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN", "dispatch_authorized": false, "blocker": "R64_NO_FURTHER_AGENT_WORK"},
+    {"slot": "FABLE-5", "project": "UNBOUND", "reported_state": "GATED_RESERVED", "work_order": "FABLE5-R57-GATED-ADJUDICATION", "dispatch_authorized": false, "blocker": "R64_NO_FURTHER_AGENT_WORK"}
+  ],
+  "operator_attention": [
+    {"slot": "ANTIGRAVITY_WO041", "project": "MAWorld", "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB", "reason": "FAILURE_DIAGNOSTIC", "score": 102, "requested_next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 1},
+    {"slot": "CODEX-04", "project": "Arena", "reported_state": "HUMAN_GATE_READY", "reason": "HUMAN_GATE_READY", "score": 90, "requested_next": "TRUSTED_EXTERNAL_ED25519_SIGNATURE", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 2},
+    {"slot": "CODEX-07", "project": "Return Plane", "reported_state": "OUTCOME_PASS", "reason": "ROBERT_MIGRATION_DECISION", "score": 88, "requested_next": "ROBERT_MIGRATION_DECISION", "human_gate": "EXPLICIT_BOUNDED_HUMAN_OR_OWNER_GATE", "auto_dispatch": false, "rank": 3}
+  ],
+  "invariants": {
+    "registry_state_never_semantic_acceptance": true,
+    "registry_state_never_apply_authority": true,
+    "no_auto_dispatch": true,
+    "tradingos_do_not_touch": true,
+    "max_operator_attention": 3
+  }
+}
