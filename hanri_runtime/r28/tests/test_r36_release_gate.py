@@ -69,6 +69,18 @@ class R36ReleaseGateTests(unittest.TestCase):
         self.assertGreater(quiesce, stopped)
         self.assertGreater(benchmark, quiesce)
 
+    def test_sample_runner_suppresses_hanri_stdout_before_numeric_median(self) -> None:
+        install = (APP_ROOT / "scripts" / "Install-R36ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
+        start = install.index("function Invoke-HanriOnce")
+        end = install.index("function Assert-HeavyHashes", start)
+        invoke_once = install[start:end]
+        self.assertIn(
+            'Invoke-Native $Python @("-m", "hanri", "once", "--config", $ConfigPath) | Out-Null',
+            invoke_once,
+        )
+        self.assertIn("return [double[]]$samples", install)
+        self.assertIn("function Median([double[]]$Values)", install)
+
     def test_r35_wrapper_remains_r35(self) -> None:
         text = (APP_ROOT / "src" / "hanri" / "sqlite_cli.py").read_text(encoding="utf-8")
         self.assertIn('PROGRAM_VERSION = "35.0.0"', text)
