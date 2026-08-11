@@ -11,6 +11,15 @@ TRANSPORT = {"DISCOVERED", "STAGED", "VERIFIED", "DELIVERED", "ACKNOWLEDGED", "Q
 CONTENT = {"UNREVIEWED", "ACCEPTED", "HOLD", "REJECTED"}
 APPLY = {"NOT_APPLIED", "APPLIED"}
 
+R64_CANONICAL_DECISION = "ACCEPT_R64_POINTER_PROMOTION"
+R64_POINTER_SHA256 = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
+R64_MANIFEST_SHA256 = "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"
+R64_ROOT_HASHES = {
+    "CURRENT_STATE.json": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "ROLE_INDEX.json": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+    "ROLE_VIEWS.json": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+}
+
 
 def fail(errors: list[str], code: str) -> None:
     errors.append(code)
@@ -23,6 +32,36 @@ def validate(payload: dict) -> list[str]:
         fail(errors, "schema_mismatch")
     if payload.get("projection_kind") != "NON_AUTHORITY_PROJECTION":
         fail(errors, "projection_must_be_non_authority")
+
+    current = payload.get("canonical_current", {})
+    if current.get("generation") != "R64":
+        fail(errors, "current_generation_must_be_R64")
+    if current.get("status") != "ACTIVE":
+        fail(errors, "R64_current_status_must_be_ACTIVE")
+    if current.get("canonical_decision") != R64_CANONICAL_DECISION:
+        fail(errors, "R64_promotion_decision_mismatch")
+    if current.get("accepted_manifest_sha256") != R64_MANIFEST_SHA256:
+        fail(errors, "R64_manifest_sha_mismatch")
+
+    pointer = current.get("pointer", {})
+    if pointer.get("locator") != "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json":
+        fail(errors, "R64_pointer_locator_mismatch")
+    if pointer.get("accepted_artifact") != "CURRENT_POINTER_R64_ACTIVE.json":
+        fail(errors, "R64_pointer_artifact_mismatch")
+    if pointer.get("sha256") != R64_POINTER_SHA256:
+        fail(errors, "R64_pointer_sha_mismatch")
+    if pointer.get("provider_readback") != "all_exact":
+        fail(errors, "R64_provider_readback_must_be_all_exact")
+    if current.get("root_hashes") != R64_ROOT_HASHES:
+        fail(errors, "R64_root_hashes_mismatch")
+
+    predecessor = current.get("predecessor_lineage", {})
+    if predecessor.get("generation") != "R63":
+        fail(errors, "predecessor_generation_must_be_R63")
+    if predecessor.get("is_current") is not False:
+        fail(errors, "R63_must_not_be_current")
+    if "SUPERSEDED_AS_CURRENT" not in str(predecessor.get("status", "")):
+        fail(errors, "R63_predecessor_status_must_mark_supersession")
 
     safety = payload.get("safety", {})
     if safety.get("can_trade") is not False:
@@ -109,6 +148,8 @@ def validate(payload: dict) -> list[str]:
 
     invariants = set(payload.get("invariants", []))
     required = {
+        "CURRENT_CANONICAL_GENERATION == R64",
+        "R63 != CURRENT",
         "RETURNED != ACCEPTED",
         "DELIVERED != APPLIED",
         "BROKER_TRANSPORT != SEMANTIC_AUTHORITY",
