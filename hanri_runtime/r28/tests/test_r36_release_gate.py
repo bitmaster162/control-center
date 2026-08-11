@@ -4,16 +4,20 @@ import json
 import unittest
 from pathlib import Path
 
-from hanri import sqlite_cli
+from hanri import r36_cli
 
 APP_ROOT = Path(__file__).parents[1]
 
+
 class R36ReleaseGateTests(unittest.TestCase):
     def test_runtime_identity(self) -> None:
-        self.assertEqual(sqlite_cli.PROGRAM_VERSION, "36.0.0")
-        self.assertEqual(sqlite_cli.ACTOR, "HANRI_R36")
-        self.assertEqual(sqlite_cli.HUMAN_LABEL, "HANRI R36")
-        self.assertEqual(sqlite_cli.INTEGRITY_POLICY_VERSION, "36.0.0-heartbeat-integrity-fast-gate-v1")
+        self.assertEqual(r36_cli.PROGRAM_VERSION, "36.0.0")
+        self.assertEqual(r36_cli.ACTOR, "HANRI_R36")
+        self.assertEqual(r36_cli.HUMAN_LABEL, "HANRI R36")
+        self.assertEqual(
+            r36_cli.INTEGRITY_POLICY_VERSION,
+            "36.0.0-heartbeat-integrity-fast-gate-v1",
+        )
 
     def test_config(self) -> None:
         config = json.loads((APP_ROOT / "config" / "r36.windows.json").read_text(encoding="utf-8"))
@@ -29,12 +33,24 @@ class R36ReleaseGateTests(unittest.TestCase):
         install = (APP_ROOT / "scripts" / "Install-R36ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
         verify = (APP_ROOT / "scripts" / "Verify-R36Runtime-PS51.ps1").read_text(encoding="ascii")
         restore = (APP_ROOT / "scripts" / "Restore-R35FromR36.ps1").read_text(encoding="ascii")
-        for required in ("CACHED_STAT_GUARD", "Collect-FastSamples", "R35_MEDIAN_MS", "R36_MEDIAN_MS", "HANRI_R36_RUNTIME_CUTOVER_PASS"):
+        for required in (
+            "CACHED_STAT_GUARD",
+            "Collect-FastSamples",
+            "R35_MEDIAN_MS",
+            "R36_MEDIAN_MS",
+            "HANRI_R36_RUNTIME_CUTOVER_PASS",
+        ):
             self.assertIn(required, install)
         for required in ("CACHED_STAT_GUARD", "Get-FileHash", "HANRI_R36_RUNTIME_VERIFY_PASS"):
             self.assertIn(required, verify)
         for required in ("ControlCenter-HANRI-R35", "ControlCenter-HANRI-R36", "HANRI_R35_ROLLBACK_PASS"):
             self.assertIn(required, restore)
+
+    def test_r35_wrapper_remains_r35(self) -> None:
+        text = (APP_ROOT / "src" / "hanri" / "sqlite_cli.py").read_text(encoding="utf-8")
+        self.assertIn('PROGRAM_VERSION = "35.0.0"', text)
+        self.assertIn("r36-heartbeat-integrity-fast-gate", text)
+
 
 if __name__ == "__main__":
     unittest.main()
