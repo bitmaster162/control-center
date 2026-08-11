@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "38.0.2-live-truth-projection-v1",
+  "policy_version": "38.0.3-live-truth-projection-v1",
   "current_state_sections": [
     "kpis",
     "current_actions",
@@ -9,28 +9,38 @@
     "decisions"
   ],
   "superseded_by": {
+    "hanri-state": "r36-operational-closure",
     "r35-runtime-current": "r36-operational-closure",
     "r35-latest-run": "r36-operational-closure",
     "r35-human-digest-current": "r36-operational-closure",
     "r35-accepted-git": "r36-accepted-git",
     "r37-phase1-accepted-git": "r37-phase3-accepted-git",
-    "r37-phase2-accepted-git": "r37-phase3-accepted-git"
+    "r37-phase1-host-shadow": "r37-phase3-effect-receipt",
+    "r37-phase1-closure": "r37-phase3-effect-receipt",
+    "r37-phase2-accepted-git": "r37-phase3-accepted-git",
+    "r37-phase2-effect-receipt": "r37-phase3-effect-receipt"
   },
   "source_ttl_seconds": {
     "fable-handoff-r64": 86400,
     "r64-package": 86400,
+    "return-registry": 86400,
     "decision-governor-01": 86400,
     "operator-d5-current": 86400
   },
   "freshness_basis": {
+    "hanri-state": "The R28 local runtime state is superseded for current HANRI runtime claims by the RECEIPTED R36 operational closure.",
     "r35-runtime-current": "R36 operational closure receipt (CLOSED / ACCEPTED_LIVE) supersedes R35 as current HANRI runtime.",
     "r35-latest-run": "R36 operational closure receipt supersedes R35 latest-run state for current-runtime claims.",
     "r35-human-digest-current": "R36 operational closure receipt supersedes R35 human digest for current-runtime claims.",
     "r35-accepted-git": "Accepted R36 Git baseline supersedes R35 for current-runtime identity.",
     "r37-phase1-accepted-git": "R37 phase-3 accepted Git state supersedes phase-1 for current product-state claims.",
+    "r37-phase1-host-shadow": "The phase-3 independently verified governed effect supersedes phase-1 shadow execution for current effect-governance claims.",
+    "r37-phase1-closure": "The phase-3 independently verified governed effect supersedes phase-1 closure for current effect-governance claims.",
     "r37-phase2-accepted-git": "R37 phase-3 accepted Git state supersedes phase-2 for current product-state claims.",
+    "r37-phase2-effect-receipt": "The later phase-3 governed-effect receipt supersedes phase-2 for current effect-state claims; phase-2 remains valid history.",
     "fable-handoff-r64": "Operational status claims from a handoff require a confirmation not older than 24 hours.",
     "r64-package": "A package acceptance artifact does not prove current executor readiness after 24 hours.",
+    "return-registry": "The return registry is mutable operational state and requires a readback not older than 24 hours for current-state claims.",
     "decision-governor-01": "Operational decision-queue status requires confirmation not older than 24 hours.",
     "operator-d5-current": "Human operator workflow status is treated as current for at most 24 hours without a newer report."
   },
