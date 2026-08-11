@@ -70,6 +70,10 @@ jobs:
         run: python control_center/scripts/validate_canonical_contract_repair_proposal.py
       - name: Validate applied Canonical Contract Repair receipt
         run: python control_center/scripts/validate_canonical_contract_repair_execution_receipt.py
+      - name: Validate Canonical R64 Reseal Proposal V1
+        run: python control_center/scripts/validate_canonical_reseal_proposal.py
+      - name: Adversarial Canonical R64 Reseal Proposal tests
+        run: python control_center/scripts/test_canonical_reseal_proposal.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
