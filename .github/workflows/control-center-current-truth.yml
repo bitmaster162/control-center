@@ -42,6 +42,10 @@ jobs:
         run: python control_center/scripts/validate_work_order_lifecycle.py
       - name: Adversarial work-order lifecycle self-tests
         run: python control_center/scripts/test_work_order_lifecycle.py
+      - name: Validate decision / effect gate ledger
+        run: python control_center/scripts/validate_decision_effect_ledger.py
+      - name: Adversarial decision / effect gate tests
+        run: python control_center/scripts/test_decision_effect_ledger.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
@@ -52,3 +56,4 @@ jobs:
         run: |
           node --check control_center/ui/app.js
           node --check control_center/ui/lifecycle.js
+          node --check control_center/ui/decision_ledger.js
