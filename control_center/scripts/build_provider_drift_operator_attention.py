@@ -5,8 +5,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+from provider_drift_resolution_transition import RESOLVED, drift_fingerprint
+
 BASE = Path(__file__).resolve().parents[1]
 DIAGNOSTIC = BASE / "data" / "provider_refresh_controller_status.current.v1.json"
+RESOLUTION = BASE / "data" / "provider_drift_resolution.generated.v1.json"
 COMMAND_QUEUE = BASE / "data" / "command_queue.generated.v1.json"
 OUTPUT = BASE / "data" / "provider_system_attention.generated.v1.json"
 
@@ -18,13 +21,30 @@ def load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_projection(diagnostic: dict[str, Any], command_queue: dict[str, Any]) -> dict[str, Any]:
+def matching_resolution(diagnostic: dict[str, Any], resolution: dict[str, Any]) -> bool:
+    if str(diagnostic.get("verdict", "")) != DRIFT_VERDICT:
+        return False
+    if resolution.get("transition_state") != RESOLVED:
+        return False
+    if resolution.get("active_drift_hold_before") is not True or resolution.get("active_drift_hold_after") is not False:
+        return False
+    return resolution.get("source_drift_fingerprint") == drift_fingerprint(diagnostic)
+
+
+def build_projection(
+    diagnostic: dict[str, Any],
+    command_queue: dict[str, Any],
+    resolution: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    resolution = resolution or {}
     verdict = str(diagnostic.get("verdict", ""))
+    resolution_state = str(resolution.get("transition_state", ""))
+    resolution_applied = matching_resolution(diagnostic, resolution)
     human_now_count = len(command_queue.get("human_now", []))
     effect_candidates = int(command_queue.get("summary", {}).get("effect_candidates", 0))
     items: list[dict[str, Any]] = []
 
-    if verdict == DRIFT_VERDICT:
+    if verdict == DRIFT_VERDICT and not resolution_applied:
         items.append(
             {
                 "id": "SYSATTN::PROVIDER_DRIFT_HOLD",
@@ -52,10 +72,14 @@ def build_projection(diagnostic: dict[str, Any], command_queue: dict[str, Any]) 
         "projection_kind": "NON_AUTHORITY_OPERATOR_ATTENTION_PROJECTION",
         "source_chain": [
             "PROVIDER_REFRESH_CONTROLLER_STATUS",
+            "PROVIDER_DRIFT_RESOLUTION_TRANSITION",
             "COMMAND_QUEUE_INVARIANT_SNAPSHOT",
             "PROVIDER_SYSTEM_ATTENTION",
         ],
         "source_status_verdict": verdict,
+        "source_resolution_state": resolution_state,
+        "resolution_applied": resolution_applied,
+        "resolved_drift_fingerprint": resolution.get("source_drift_fingerprint") if resolution_applied else None,
         "source_projection_observed_at": command_queue.get("observed_at"),
         "absence_does_not_prove_no_drift": verdict == NEUTRAL_VERDICT,
         "summary": {
@@ -74,6 +98,7 @@ def build_projection(diagnostic: dict[str, Any], command_queue: dict[str, Any]) 
             "effect_candidate_created": False,
             "command_created": False,
             "system_attention_grants_authority": False,
+            "drift_alert_clear_requires_matching_resolution": True,
         },
         "safety": {
             "provider_write_authorized": False,
@@ -102,7 +127,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="Fail when committed projection differs from deterministic build")
     args = parser.parse_args()
 
-    built = serialize(build_projection(load(DIAGNOSTIC), load(COMMAND_QUEUE)))
+    built = serialize(build_projection(load(DIAGNOSTIC), load(COMMAND_QUEUE), load(RESOLUTION)))
     if args.check:
         committed = OUTPUT.read_text(encoding="utf-8")
         if committed != built:
