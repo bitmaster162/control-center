@@ -21,11 +21,12 @@ def must_fail(decisions, receipts, needle: str) -> None:
 
 def main() -> int:
     current = build(copy.deepcopy(DECISIONS), copy.deepcopy(RECEIPTS))
+    assert current["summary"]["effect_candidates_total"] == 0
     assert current["summary"]["effects_authorized"] == 0
     assert current["summary"]["executions_authorized"] == 0
     assert current["summary"]["execution_receipts"] == 0
     assert current["summary"]["readback_receipts"] == 0
-    assert current["effect_candidates"][0]["stage"] == "AWAITING_HUMAN_EFFECT_AUTHORIZATION"
+    assert current["effect_candidates"] == []
 
     fake_execution = copy.deepcopy(RECEIPTS)
     fake_execution["execution_receipts"] = [{
@@ -36,10 +37,7 @@ def main() -> int:
     must_fail(copy.deepcopy(DECISIONS), fake_execution, "unauthorized_execution_receipt")
 
     fake_orphan = copy.deepcopy(RECEIPTS)
-    fake_orphan["execution_receipts"] = [{
-        "receipt_id": "EXEC-ORPHAN-1",
-        "decision_id": "DEC::DOES-NOT-EXIST"
-    }]
+    fake_orphan["execution_receipts"] = [{"receipt_id": "EXEC-ORPHAN-1", "decision_id": "DEC::DOES-NOT-EXIST"}]
     must_fail(copy.deepcopy(DECISIONS), fake_orphan, "orphan_execution_receipt")
 
     fake_readback = copy.deepcopy(RECEIPTS)
