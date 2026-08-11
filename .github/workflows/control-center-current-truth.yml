@@ -58,6 +58,10 @@ jobs:
         run: python control_center/scripts/validate_human_gate_packets.py
       - name: Adversarial Human Gate Packet tests
         run: python control_center/scripts/test_human_gate_packets.py
+      - name: Validate Execution Scope Binder V1
+        run: python control_center/scripts/validate_execution_scope_binder.py
+      - name: Adversarial Execution Scope Binder tests
+        run: python control_center/scripts/test_execution_scope_binder.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
@@ -72,3 +76,4 @@ jobs:
           node --check control_center/ui/effect_readback.js
           node --check control_center/ui/command_queue.js
           node --check control_center/ui/human_gate_packets.js
+          node --check control_center/ui/execution_scope.js
