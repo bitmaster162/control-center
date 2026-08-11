@@ -1,0 +1,44 @@
+{
+  "schema": "control_center.provider_system_attention.v1",
+  "projection_kind": "NON_AUTHORITY_OPERATOR_ATTENTION_PROJECTION",
+  "source_chain": [
+    "PROVIDER_REFRESH_CONTROLLER_STATUS",
+    "COMMAND_QUEUE_INVARIANT_SNAPSHOT",
+    "PROVIDER_SYSTEM_ATTENTION"
+  ],
+  "source_status_verdict": "NO_HOLD_DIAGNOSTIC_RECORDED",
+  "source_projection_observed_at": "2026-08-12T01:39:00+07:00",
+  "absence_does_not_prove_no_drift": true,
+  "summary": {
+    "system_attention_count": 0,
+    "human_now_before": 0,
+    "human_now_after": 0,
+    "effect_candidates_before": 0,
+    "effect_candidates_after": 0
+  },
+  "system_attention": [],
+  "invariants": {
+    "command_queue_mutated": false,
+    "human_now_unchanged": true,
+    "effect_candidates_unchanged": true,
+    "human_gate_created": false,
+    "effect_candidate_created": false,
+    "command_created": false,
+    "system_attention_grants_authority": false
+  },
+  "safety": {
+    "provider_write_authorized": false,
+    "root_write_authorized": false,
+    "registry_write_authorized": false,
+    "runtime_mutation_authorized": false,
+    "routing_mutation_authorized": false,
+    "dispatch_authorized": false,
+    "apply_authorized": false,
+    "execution_authorized": false,
+    "deploy_authorized": false,
+    "external_message_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}
