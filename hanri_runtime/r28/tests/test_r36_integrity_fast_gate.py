@@ -6,6 +6,7 @@ from datetime import timedelta
 from pathlib import Path
 from unittest import mock
 
+from hanri import sqlite_cli as r35
 from hanri import steady_integrity_cli as integrity
 
 
@@ -193,6 +194,7 @@ class R36HeartbeatIntegrityFastGateTests(unittest.TestCase):
     def test_candidate_keeps_authority_fail_closed(self) -> None:
         text = Path(integrity.__file__).read_text(encoding="utf-8")
         self.assertIn('CACHED_INTEGRITY_MODE = "CACHED_STAT_GUARD"', text)
+        self.assertIn("r36-heartbeat-integrity-fast-gate", r35.INTEGRITY_POLICY_VERSION)
         self.assertIn("fast_path_full_rehash_required_periodically", text)
         self.assertNotIn("requests.", text)
         self.assertNotIn("subprocess", text)
