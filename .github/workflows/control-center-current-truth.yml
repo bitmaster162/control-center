@@ -31,7 +31,7 @@ jobs:
       - name: Check provider snapshot -> generated projection
         run: python control_center/scripts/compose_current_projection.py control_center/data/provider_snapshot.current.v1.json --check control_center/data/current_control_plane.generated.v1.json
       - name: Validate generated current projection
-        run: python control_center/scripts/validate_control_plane_projection.py control_center/data/current_control_plane.generated.v1.json
+        run: python control_center/scripts/validate_generated_projection.py control_center/data/current_control_plane.generated.v1.json
       - name: Test current projection composer
         run: python control_center/scripts/test_current_projection_composer.py
       - name: Reduce bounded source-envelope fixture
