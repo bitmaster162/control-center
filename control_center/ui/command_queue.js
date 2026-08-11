@@ -32,14 +32,15 @@ function renderCommandQueue(data) {
     ["Human NOW", summary.human_now],
     ["Control Center", summary.control_center_queue],
     ["Owner-only", summary.project_owner_queue],
-    ["Blocked", summary.blocked_queue]
+    ["Blocked", summary.blocked_queue],
+    ["Historical", summary.historical_queue]
   ].map(([label, value]) => `
     <article class="card">
       <div class="card-top"><strong>${cqEsc(label)}</strong></div>
       <h3>${cqEsc(value)}</h3>
     </article>`).join("");
 
-  const queueRows = ["HUMAN_NOW", "CONTROL_CENTER_QUEUE", "PROJECT_OWNER_QUEUE", "BLOCKED_QUEUE"]
+  const queueRows = ["HUMAN_NOW", "CONTROL_CENTER_QUEUE", "PROJECT_OWNER_QUEUE", "BLOCKED_QUEUE", "HISTORICAL_QUEUE"]
     .flatMap((queue) => (queues[queue] || []).map((commandId, index) => `<tr>
       <td>${cqEsc(index + 1)}</td>
       <td>${cqBadge(queue)}</td>
@@ -68,7 +69,7 @@ function renderCommandQueue(data) {
       auto-dispatch ${policy.auto_dispatch === false ? "DENY" : "UNKNOWN"} ·
       auto-apply ${policy.auto_apply === false ? "DENY" : "UNKNOWN"} ·
       auto-execute ${policy.auto_execute === false ? "DENY" : "UNKNOWN"}
-      <p>Priority controls what is surfaced or routed. It never authorizes execution.</p>
+      <p>Historical evidence is preserved outside active queues. Priority never authorizes execution.</p>
     </div>
     <div class="grid cards">${summaryCards}</div>
     <h3>Unified routing order</h3>
