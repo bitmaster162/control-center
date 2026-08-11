@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-center.local/contracts/hanri-producer-adapter-receipt.schema.json",
+  "title": "HANRI R39.2 Producer Adapter Receipt",
+  "type": "object",
+  "required": ["schema_version", "policy_version", "processed_sources", "emitted_envelopes", "dispositions", "source_receipts", "secret_boundary", "effect_boundary", "receipt_sha256"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy_version": {"const": "39.2.0-producer-adapters-v1"},
+    "processed_sources": {"type": "integer", "minimum": 0},
+    "emitted_envelopes": {"type": "integer", "minimum": 0},
+    "dispositions": {"type": "object"},
+    "source_receipts": {"type": "array"},
+    "secret_boundary": {
+      "type": "object",
+      "required": ["finding_count", "raw_values_persisted"],
+      "properties": {
+        "finding_count": {"type": "integer", "minimum": 0},
+        "raw_values_persisted": {"const": false}
+      }
+    },
+    "effect_boundary": {
+      "type": "object",
+      "required": ["producer_reads_only", "attention_inbox_write_only", "provider_calls", "self_apply", "skill_install", "system_write", "operator_message", "auto_dispatch", "external_messages", "can_trade", "capital_permission"],
+      "properties": {
+        "producer_reads_only": {"const": true},
+        "attention_inbox_write_only": {"const": true},
+        "provider_calls": {"const": false},
+        "self_apply": {"const": false},
+        "skill_install": {"const": false},
+        "system_write": {"const": false},
+        "operator_message": {"const": false},
+        "auto_dispatch": {"const": false},
+        "external_messages": {"const": false},
+        "can_trade": {"const": false},
+        "capital_permission": {"const": "DENY"}
+      }
+    },
+    "receipt_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}
