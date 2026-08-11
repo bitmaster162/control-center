@@ -25,7 +25,6 @@ def main() -> int:
     out = build(deepcopy(AGENT), deepcopy(ENTRIES), deepcopy(CURRENT))
     rows = {r["work_order"]: r for r in out["work_orders"]}
 
-    # VERIFIED registry entries are evidence only and never self-promote semantics.
     for wo in (
         "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21",
         "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
@@ -37,23 +36,36 @@ def main() -> int:
         assert rows[wo]["apply_status"] == "NOT_APPLIED"
         assert rows[wo]["effect_authorized"] is False
 
-    # Separately accepted CODEX-07 return still cannot self-apply.
     rp = rows["CODEX07-R43-RETURN-PLANE-V2"]
     assert rp["semantic_status"] == "ACCEPTED"
     assert rp["apply_status"] == "NOT_APPLIED"
-    assert rp["effect_gate"] == "ROBERT_MIGRATION_DECISION"
+    assert rp["historical_predecessor"] is True
+    assert rp["effect_gate"] == "NONE_STALE_PREDECESSOR_R59_ACTIVE"
     assert rp["effect_authorized"] is False
-    assert rp["lifecycle_stage"] == "EFFECT_GATE_WAIT"
+    assert rp["lifecycle_stage"] == "HISTORICAL_EVIDENCE_ONLY"
+    assert rp["canonical_runtime"]["watcher_generation"] == "R59"
+    assert out["summary"]["stage_counts"].get("EFFECT_GATE_WAIT", 0) == 0
 
-    # Pending work remains blocked, including a slot literally named PENDING_EXECUTION.
     assert rows["CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN"]["lifecycle_stage"] == "DISPATCH_BLOCKED"
     assert rows["CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW"]["lifecycle_stage"] == "DISPATCH_BLOCKED"
     assert rows["FABLE5-R57-GATED-ADJUDICATION"]["lifecycle_stage"] == "DISPATCH_BLOCKED"
 
-    # Same-slot version divergence is preserved rather than silently superseded.
     codex02 = [r for r in out["work_orders"] if r["slot"] == "CODEX-02"]
     assert len(codex02) == 2
     assert all(r["do_not_touch"] is True for r in codex02)
+
+    # If canonical routing evidence is removed, the builder must not silently treat
+    # the historical row as current; the agent projection itself is the fail-closed boundary.
+    stale_agent = deepcopy(AGENT)
+    code7 = next(s for s in stale_agent["slots"] if s["slot"] == "CODEX-07")
+    code7.pop("current_route", None)
+    code7.pop("canonical_runtime", None)
+    code7.pop("source_conflict", None)
+    stale = build(stale_agent, deepcopy(ENTRIES), deepcopy(CURRENT))
+    stale_rp = next(r for r in stale["work_orders"] if r["work_order"] == "CODEX07-R43-RETURN-PLANE-V2")
+    assert stale_rp["lifecycle_stage"] == "EFFECT_GATE_WAIT"
+    assert stale_rp["effect_gate"] == "ROBERT_MIGRATION_DECISION"
+    assert stale_rp["historical_predecessor"] is False
 
     bad_agent = deepcopy(AGENT)
     bad_agent["global_dispatch"]["auto_dispatch"] = True
