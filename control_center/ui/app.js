@@ -28,18 +28,28 @@ function renderSafety(data) {
   ].map((x) => `<span class="pill">${esc(x)}</span>`).join("");
 }
 
-function renderNow(data) {
-  const decisions = (data.decisions || []).slice(0, 3);
-  document.querySelector("#now-cards").innerHTML = decisions.length
-    ? decisions.map((d) => `
-      <article class="card emphasis">
-        <div class="card-top"><strong>${esc(d.id)}</strong>${badge(d.state)}</div>
-        <h3>${esc(d.decision)}</h3>
-        <p><b>Effect:</b> ${esc(d.effect_state)}</p>
-        <p><b>Readback:</b> ${esc(d.next_readback)}</p>
-      </article>`).join("")
-    : `<div class="empty">No current human decisions.</div>`;
+function renderNowPending() {
+  document.querySelector("#now-cards").innerHTML = `<div class="empty">Loading ripe human gates from Decision / Effect Gate Ledger…</div>`;
 }
+
+function renderRipeNow(ledger) {
+  const decisions = ledger.decisions || [];
+  const byId = new Map(decisions.map((d) => [d.decision_id, d]));
+  const ripe = (ledger.queues?.human_ripe || []).map((id) => byId.get(id)).filter(Boolean);
+  document.querySelector("#now-cards").innerHTML = ripe.length
+    ? ripe.map((d) => `
+      <article class="card emphasis">
+        <div class="card-top"><strong>${esc(d.work_order)}</strong>${badge(d.decision_state)}</div>
+        <h3>${esc(d.project)}</h3>
+        <p><b>Gate:</b> ${esc(d.gate)}</p>
+        <p><b>Authority:</b> ${esc(d.authority_required)}</p>
+        <p><b>Allowed:</b> ${esc((d.allowed_decisions || []).join(" / "))}</p>
+        <p><b>Current:</b> semantic ${esc(d.semantic_status)} · apply ${esc(d.apply_status)} · execution ${d.execution_authorized === false ? "DENY" : "UNKNOWN"}</p>
+      </article>`).join("")
+    : `<div class="empty">No ripe human gates. Control Center and project-owner queues continue without escalating to Robert.</div>`;
+}
+
+window.addEventListener("control-center:decision-ledger", (event) => renderRipeNow(event.detail || {}));
 
 function renderAgents(data) {
   const rows = (data.agents || []).map((a) => `<tr>
@@ -183,7 +193,7 @@ async function main() {
   ]);
   document.querySelector("#observed-at").textContent = `Observed ${data.observed_at} · ${data.projection_kind} · ${data.projection_source || "manual"}`;
   renderSafety(data);
-  renderNow(data);
+  renderNowPending();
   renderAgents(data);
   renderAgentControl(agentControl);
   renderProjects(data);
