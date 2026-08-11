@@ -1,441 +1,75 @@
 {
-  "schema": "control_center.current_control_plane_projection.v1",
-  "projection_kind": "NON_AUTHORITY_PROJECTION",
-  "projection_source": "GENERATED_FROM_PROVIDER_SNAPSHOT",
-  "observed_at": "2026-08-11T23:45:00+07:00",
-  "authority_note": "Generated read-only projection. R64 Drive roots remain canonical authority; GitHub/Vercel/registry/HANRI inputs are provider observations within bounded scopes.",
-  "canonical_current": {
-    "generation": "R64",
-    "status": "ACTIVE",
-    "canonical_decision": "ACCEPT_R64_POINTER_PROMOTION",
-    "accepted_manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
-    "pointer": {
-      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
-      "sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
-      "provider_readback": "all_exact"
-    },
-    "root_hashes": {
-      "CURRENT_STATE.json": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
-      "ROLE_INDEX.json": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
-      "ROLE_VIEWS.json": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
-    },
-    "predecessor_lineage": {
-      "generation": "R63",
-      "status": "SUPERSEDED_AS_CURRENT_RETAINED_AS_ACCEPTED_LINEAGE",
-      "is_current": false
-    }
+  "schema":"control_center.current_control_plane_projection.v1",
+  "projection_kind":"NON_AUTHORITY_PROJECTION",
+  "projection_source":"GENERATED_FROM_PROVIDER_SNAPSHOT",
+  "observed_at":"2026-08-12T02:12:00+07:00",
+  "authority_note":"Generated read-only projection. R64 Drive roots remain canonical authority; GitHub/Vercel/registry/HANRI inputs are provider observations within bounded scopes.",
+  "canonical_current":{"generation":"R64","status":"ACTIVE","canonical_decision":"ACCEPT_R64_POINTER_PROMOTION","accepted_manifest_sha256":"41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d","pointer":{"drive_file_id":"10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5","sha256":"3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef","provider_readback":"all_exact"},"root_hashes":{"CURRENT_STATE.json":"0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd","ROLE_INDEX.json":"e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567","ROLE_VIEWS.json":"9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"},"predecessor_lineage":{"generation":"R63","status":"SUPERSEDED_AS_CURRENT_RETAINED_AS_ACCEPTED_LINEAGE","is_current":false}},
+  "safety":{"can_trade":false,"capital_permission":"DENY","deploy_permission":"DENY","self_application":false,"external_messages_require_exact_send":true},
+  "owner_map":[
+    {"domain":"Control Center / Global Command","owner":"CONTROL_CENTER","authority":"CURRENT_TRUTH_DISPATCH_ACCEPTANCE_ROUTING_GATES"},
+    {"domain":"HANRI","owner":"HANRI_OWNER","authority":"OBSERVE_PROPOSE_ISOLATE_TEST_RECOMMEND"},
+    {"domain":"ContinuityOS","owner":"CONTINUITYOS_OWNER","authority":"EVENTS_CHECKPOINTS_REPLAY_DURABLE_HISTORY"},
+    {"domain":"Return Plane V2","owner":"RETURN_BROKER_OWNER","authority":"PHYSICAL_RETURN_CUSTODY_VERIFY_DELIVER_ACK_RETRY_QUARANTINE"},
+    {"domain":"BitEvo Public","owner":"BITEVO_PUBLIC_OWNER","authority":"SITE_IMPLEMENTATION_AND_PROMOTION_EVIDENCE"},
+    {"domain":"BitEvo Core / Future Runtime","owner":"FUTURE_RUNTIME_OWNER","authority":"CORE_RUNTIME_CUSTODY_AND_IMPLEMENTATION"},
+    {"domain":"TradingOS","owner":"TRADINGOS_OWNER","authority":"DEDICATED_OWNER_DO_NOT_TOUCH"}
+  ],
+  "agents":[
+    {"id":"ROBERT","role":"HUMAN_SOVEREIGN","state":"ACTIVE","current_assignment":"Exact material/irreversible gates only"},
+    {"id":"CONTROL_CENTER","role":"GLOBAL_COMMAND","state":"ACTIVE_R64_CONTROL_PLANE","current_assignment":"Provider-backed current projection, routing, return adjudication and decision compression"},
+    {"id":"HANRI_OWNER","role":"PROJECT_OWNER","state":"ACTIVE_PARALLEL","current_assignment":"D4/P0 closure complete; Decision Governor Pilot 02 remains review-only; accepted/live R35 untouched"},
+    {"id":"BITEVO_PUBLIC_OWNER","role":"PROJECT_OWNER","state":"PRODUCTION_V3_VERIFIED","current_assignment":"V3 production complete; any further commercial-site delta requires a new bounded owner task"},
+    {"id":"FUTURE_RUNTIME_OWNER","role":"PROJECT_OWNER","state":"PLANNED_PARALLEL","current_assignment":"Runtime/source binding before Core custody"},
+    {"id":"CONTINUITYOS_OWNER","role":"PROJECT_OWNER","state":"ACTIVE_PARALLEL","current_assignment":"Durable continuity/checkpoint/replay lane"},
+    {"id":"RETURN_BROKER_OWNER","role":"TRANSPORT_OWNER","state":"CANONICAL_R59_INSTALLED_AND_WATCHING","current_assignment":"Canonical R59 broker is installed/watching in R64 snapshot; fresh process/repo liveness remains read-only verification work. Historical R43 migration gate is not current."}
+  ],
+  "projects":[
+    {"id":"control-center","owner":"CONTROL_CENTER","state":"ACTIVE_R64_GENERATED_PROJECTION","next":"Extend provider adapters without mutating live R64 roots","blocked_by":[]},
+    {"id":"operator-sprint","owner":"CONTROL_CENTER","state":"SELF_PILOT_DAY_0_STARTED","next":"Run internal decision loop for 7 days; self-pilot does not count toward external 3/5 MVP","blocked_by":[]},
+    {"id":"agent-authority-audit","owner":"CONTROL_CENTER","state":"READY_INTERNAL_PREP_SEND_GATED","next":"Prepare Wave 1 candidates/drafts; each external message still requires exact SEND","blocked_by":[]},
+    {"id":"bitevo-public","owner":"BITEVO_PUBLIC_OWNER","state":"PRODUCTION_V3_VERIFIED","next":"Production proof satisfies Audit dependency; future site changes remain owner-lane work","blocked_by":[]},
+    {"id":"bitevo-core","owner":"FUTURE_RUNTIME_OWNER","state":"PLANNED_PARALLEL","next":"Read-only server/runtime source binding before GitHub custody","blocked_by":["runtime-source-binding"]},
+    {"id":"hanri","owner":"HANRI_OWNER","state":"ACTIVE_PARALLEL_P0_CLOSED","next":"PR #29 remains review-only; return future proposals/receipts upstream","blocked_by":[]},
+    {"id":"p0-security","owner":"HANRI_OWNER","state":"D4_CLOSED_ALL_THREE","next":"No rerun; preserve closure/readback receipts and detect regression only","blocked_by":[]},
+    {"id":"return-plane-v2","owner":"RETURN_BROKER_OWNER","state":"CANONICAL_R59_INSTALLED_AND_WATCHING","next":"Read-only current broker runtime/repo identity readback; do not execute migration or mutate registry during verification","blocked_by":["fresh-runtime-liveness-unverified"]},
+    {"id":"tradingos","owner":"TRADINGOS_OWNER","state":"OWNER_ONLY","next":"DO_NOT_TOUCH","blocked_by":[]}
+  ],
+  "work_items":[
+    {"id":"CC-001","project":"control-center","owner":"CONTROL_CENTER","state":"RUNNING","effect_class":"REPO_BRANCH_WRITE","human_gate":"AUTHORIZED_CURRENT_CONVERSATION","next":"Keep generated projection provider-backed and fail-closed"},
+    {"id":"SPRINT-SELF-001","project":"operator-sprint","owner":"CONTROL_CENTER","state":"RUNNING","effect_class":"READ_ANALYZE_REPORT","human_gate":"AUTHORIZED_CURRENT_CONVERSATION","next":"Day 1 daily decision brief"},
+    {"id":"AUDIT-WAVE1","project":"agent-authority-audit","owner":"CONTROL_CENTER","state":"READY_INTERNAL_PREP","effect_class":"EXTERNAL_MESSAGE","human_gate":"EXACT_SEND_PER_MESSAGE","next":"Research and draft only; do not send"},
+    {"id":"PUBLIC-V3","project":"bitevo-public","owner":"BITEVO_PUBLIC_OWNER","state":"RETURNED_PROVIDER_VERIFIED","effect_class":"PROJECT_OWNER_WRITE","human_gate":"OWNER_LANE","next":"No current implementation work; production V3 is complete"},
+    {"id":"HANRI-D4-P0","project":"p0-security","owner":"HANRI_OWNER","state":"RETURNED_CLOSED","effect_class":"BOUNDED_SECURITY_CLOSURE","human_gate":"EXISTING_D4_BOUNDED_GATE","next":"No rerun; regression detection/readback only"}
+  ],
+  "return_plane":{
+    "component":"Return Plane V2 / Return Broker",
+    "authority_boundary":"TRANSPORT_ONLY",
+    "predecessor_evidence":{"code":"CODEX-07","verdict":"OUTCOME_PASS","no_growth_cycles":20,"current_routing":false},
+    "current_mode":"CANONICAL_R59_INSTALLED_AND_WATCHING",
+    "canonical_runtime":{"source":"R64_CURRENT_STATE_AND_ROLE_VIEWS_EXACT_READBACK","status":"INSTALLED_AND_WATCHING","watcher_generation":"R59","role_lane":"Return Plane / broker hardening","role_state":"R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign","fresh_runtime_liveness":"UNVERIFIED_PROVIDER_READBACK_REQUIRED","historical_r43_gate_is_current":false,"registry_mutation_rule":"Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."},
+    "registry":{"schema":"CONTROL_RETURN_REGISTRY_V4","stable_drive_file_id":"1BXdqWzA74SvkgcygO_ktO_2uolqFshWm","actual_file_sha256":"ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f","registry_generation_label":"R50_AUDIT","provider_fetch":"CURRENT_BYTES"},
+    "state_machine":{"transport":["DISCOVERED","STAGED","VERIFIED","DELIVERED","ACKNOWLEDGED","QUARANTINED"],"semantic":["UNREVIEWED","ACCEPTED","HOLD","REJECTED"],"apply":["NOT_APPLIED","APPLIED"]}
   },
-  "safety": {
-    "can_trade": false,
-    "capital_permission": "DENY",
-    "deploy_permission": "DENY",
-    "self_application": false,
-    "external_messages_require_exact_send": true
-  },
-  "owner_map": [
-    {
-      "domain": "Control Center / Global Command",
-      "owner": "CONTROL_CENTER",
-      "authority": "CURRENT_TRUTH_DISPATCH_ACCEPTANCE_ROUTING_GATES"
-    },
-    {
-      "domain": "HANRI",
-      "owner": "HANRI_OWNER",
-      "authority": "OBSERVE_PROPOSE_ISOLATE_TEST_RECOMMEND"
-    },
-    {
-      "domain": "ContinuityOS",
-      "owner": "CONTINUITYOS_OWNER",
-      "authority": "EVENTS_CHECKPOINTS_REPLAY_DURABLE_HISTORY"
-    },
-    {
-      "domain": "Return Plane V2",
-      "owner": "RETURN_BROKER_OWNER",
-      "authority": "PHYSICAL_RETURN_CUSTODY_VERIFY_DELIVER_ACK_RETRY_QUARANTINE"
-    },
-    {
-      "domain": "BitEvo Public",
-      "owner": "BITEVO_PUBLIC_OWNER",
-      "authority": "SITE_IMPLEMENTATION_AND_PROMOTION_EVIDENCE"
-    },
-    {
-      "domain": "BitEvo Core / Future Runtime",
-      "owner": "FUTURE_RUNTIME_OWNER",
-      "authority": "CORE_RUNTIME_CUSTODY_AND_IMPLEMENTATION"
-    },
-    {
-      "domain": "TradingOS",
-      "owner": "TRADINGOS_OWNER",
-      "authority": "DEDICATED_OWNER_DO_NOT_TOUCH"
-    }
+  "return_registry_observations":[
+    {"slot":"CLAUDE-BITUNIX","reported_state":"PENDING_OBSERVATION_WINDOW","work_order":"CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW","semantic_interpretation":"NONE_REGISTRY_OBSERVATION_ONLY"},
+    {"slot":"CODEX-07","reported_state":"OUTCOME_PASS","work_order":"CODEX07-R43-RETURN-PLANE-V2","semantic_interpretation":"NONE_REGISTRY_OBSERVATION_ONLY"},
+    {"slot":"CODEX-08","reported_state":"PENDING_EXECUTION","work_order":"CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN","semantic_interpretation":"NONE_REGISTRY_OBSERVATION_ONLY"},
+    {"slot":"FABLE-5","reported_state":"GATED_RESERVED","work_order":"FABLE5-R57-GATED-ADJUDICATION","semantic_interpretation":"NONE_REGISTRY_OBSERVATION_ONLY"}
   ],
-  "agents": [
-    {
-      "id": "ROBERT",
-      "role": "HUMAN_SOVEREIGN",
-      "state": "ACTIVE",
-      "current_assignment": "Exact material/irreversible gates only"
-    },
-    {
-      "id": "CONTROL_CENTER",
-      "role": "GLOBAL_COMMAND",
-      "state": "ACTIVE_R64_CONTROL_PLANE",
-      "current_assignment": "Provider-backed current projection, routing, return adjudication and decision compression"
-    },
-    {
-      "id": "HANRI_OWNER",
-      "role": "PROJECT_OWNER",
-      "state": "ACTIVE_PARALLEL",
-      "current_assignment": "D4/P0 closure complete; Decision Governor Pilot 02 remains review-only; accepted/live R35 untouched"
-    },
-    {
-      "id": "BITEVO_PUBLIC_OWNER",
-      "role": "PROJECT_OWNER",
-      "state": "PRODUCTION_V3_VERIFIED",
-      "current_assignment": "V3 production complete; any further commercial-site delta requires a new bounded owner task"
-    },
-    {
-      "id": "FUTURE_RUNTIME_OWNER",
-      "role": "PROJECT_OWNER",
-      "state": "PLANNED_PARALLEL",
-      "current_assignment": "Runtime/source binding before Core custody"
-    },
-    {
-      "id": "CONTINUITYOS_OWNER",
-      "role": "PROJECT_OWNER",
-      "state": "ACTIVE_PARALLEL",
-      "current_assignment": "Durable continuity/checkpoint/replay lane"
-    },
-    {
-      "id": "RETURN_BROKER_OWNER",
-      "role": "TRANSPORT_OWNER",
-      "state": "REGISTRY_OBSERVED_LIVE_MIGRATION_UNAPPROVED",
-      "current_assignment": "Transport/registry only; no semantic acceptance or apply"
-    }
+  "returns":[
+    {"return_id":"return-plane-v2-r43-predecessor","project":"return-plane-v2","transport_status":"ACKNOWLEDGED","content_status":"ACCEPTED","apply_status":"NOT_APPLIED","evidence":"R43 CODEX-07 predecessor closure","note":"Historical verified predecessor only; canonical R59 runtime supersedes its migration-next routing; no current broker effect authority."},
+    {"return_id":"hanri-pr29-review-only","project":"hanri","transport_status":"ACKNOWLEDGED","content_status":"UNREVIEWED","apply_status":"NOT_APPLIED","evidence":"GitHub PR #29","note":"Review-only product delta; accepted/live R35 remains untouched"},
+    {"return_id":"hanri-d4-p0-consolidated","project":"p0-security","transport_status":"ACKNOWLEDGED","content_status":"ACCEPTED","apply_status":"NOT_APPLIED","evidence":"GitHub issue #25 consolidated closure comment 5256118141","note":"P0-1 CLOSED; P0-2 RE-CLOSED; P0-3 CLOSED. Closure does not expand trading/capital/deploy/external-message authority"}
   ],
-  "projects": [
-    {
-      "id": "control-center",
-      "owner": "CONTROL_CENTER",
-      "state": "ACTIVE_R64_GENERATED_PROJECTION",
-      "next": "Extend provider adapters without mutating live R64 roots",
-      "blocked_by": []
-    },
-    {
-      "id": "operator-sprint",
-      "owner": "CONTROL_CENTER",
-      "state": "SELF_PILOT_DAY_0_STARTED",
-      "next": "Run internal decision loop for 7 days; self-pilot does not count toward external 3/5 MVP",
-      "blocked_by": []
-    },
-    {
-      "id": "agent-authority-audit",
-      "owner": "CONTROL_CENTER",
-      "state": "READY_INTERNAL_PREP_SEND_GATED",
-      "next": "Prepare Wave 1 candidates/drafts; each external message still requires exact SEND",
-      "blocked_by": []
-    },
-    {
-      "id": "bitevo-public",
-      "owner": "BITEVO_PUBLIC_OWNER",
-      "state": "PRODUCTION_V3_VERIFIED",
-      "next": "Production proof satisfies Audit dependency; future site changes remain owner-lane work",
-      "blocked_by": []
-    },
-    {
-      "id": "bitevo-core",
-      "owner": "FUTURE_RUNTIME_OWNER",
-      "state": "PLANNED_PARALLEL",
-      "next": "Read-only server/runtime source binding before GitHub custody",
-      "blocked_by": [
-        "runtime-source-binding"
-      ]
-    },
-    {
-      "id": "hanri",
-      "owner": "HANRI_OWNER",
-      "state": "ACTIVE_PARALLEL_P0_CLOSED",
-      "next": "PR #29 remains review-only; return future proposals/receipts upstream",
-      "blocked_by": []
-    },
-    {
-      "id": "p0-security",
-      "owner": "HANRI_OWNER",
-      "state": "D4_CLOSED_ALL_THREE",
-      "next": "No rerun; preserve closure/readback receipts and detect regression only",
-      "blocked_by": []
-    },
-    {
-      "id": "return-plane-v2",
-      "owner": "RETURN_BROKER_OWNER",
-      "state": "REGISTRY_OBSERVED_LIVE_MIGRATION_UNAPPROVED",
-      "next": "Use current registry observations without granting semantic authority",
-      "blocked_by": [
-        "live-migration-not-approved"
-      ]
-    },
-    {
-      "id": "tradingos",
-      "owner": "TRADINGOS_OWNER",
-      "state": "OWNER_ONLY",
-      "next": "DO_NOT_TOUCH",
-      "blocked_by": []
-    }
+  "decisions":[
+    {"id":"CC-DASH-ARCH","state":"ACCEPTED","owner":"ROBERT","decision":"Use one primary Control Center / Work Cockpit operator surface; HANRI remains a technical subview with cross-links","effect_state":"IN_PROGRESS","next_readback":"Cockpit consumes generated provider snapshot rather than manual seed"},
+    {"id":"SPRINT-SELF","state":"ACCEPTED","owner":"ROBERT","decision":"Run 7-Day Operator Decision Sprint on our own operation first; do not count it toward external 3/5 MVP","effect_state":"IN_PROGRESS","next_readback":"Daily briefs and Day 7 retrospective"},
+    {"id":"CC-ROLE","state":"ACCEPTED","owner":"ROBERT","decision":"Control Center routes agents/work, adjudicates returns and improves the command system; it is not merely a dashboard","effect_state":"IN_PROGRESS","next_readback":"Provider-backed R64 control-plane projection"}
   ],
-  "work_items": [
-    {
-      "id": "CC-001",
-      "project": "control-center",
-      "owner": "CONTROL_CENTER",
-      "state": "RUNNING",
-      "effect_class": "REPO_BRANCH_WRITE",
-      "human_gate": "AUTHORIZED_CURRENT_CONVERSATION",
-      "next": "Keep generated projection provider-backed and fail-closed"
-    },
-    {
-      "id": "SPRINT-SELF-001",
-      "project": "operator-sprint",
-      "owner": "CONTROL_CENTER",
-      "state": "RUNNING",
-      "effect_class": "READ_ANALYZE_REPORT",
-      "human_gate": "AUTHORIZED_CURRENT_CONVERSATION",
-      "next": "Day 1 daily decision brief"
-    },
-    {
-      "id": "AUDIT-WAVE1",
-      "project": "agent-authority-audit",
-      "owner": "CONTROL_CENTER",
-      "state": "READY_INTERNAL_PREP",
-      "effect_class": "EXTERNAL_MESSAGE",
-      "human_gate": "EXACT_SEND_PER_MESSAGE",
-      "next": "Research and draft only; do not send"
-    },
-    {
-      "id": "PUBLIC-V3",
-      "project": "bitevo-public",
-      "owner": "BITEVO_PUBLIC_OWNER",
-      "state": "RETURNED_PROVIDER_VERIFIED",
-      "effect_class": "PROJECT_OWNER_WRITE",
-      "human_gate": "OWNER_LANE",
-      "next": "No current implementation work; production V3 is complete"
-    },
-    {
-      "id": "HANRI-D4-P0",
-      "project": "p0-security",
-      "owner": "HANRI_OWNER",
-      "state": "RETURNED_CLOSED",
-      "effect_class": "BOUNDED_SECURITY_CLOSURE",
-      "human_gate": "EXISTING_D4_BOUNDED_GATE",
-      "next": "No rerun; regression detection/readback only"
-    }
-  ],
-  "return_plane": {
-    "component": "Return Plane V2 / Return Broker",
-    "authority_boundary": "TRANSPORT_ONLY",
-    "predecessor_evidence": {
-      "code": "CODEX-07",
-      "verdict": "OUTCOME_PASS",
-      "no_growth_cycles": 20
-    },
-    "current_mode": "REGISTRY_OBSERVED_LIVE_MIGRATION_UNAPPROVED",
-    "registry": {
-      "schema": "CONTROL_RETURN_REGISTRY_V4",
-      "stable_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
-      "actual_file_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
-      "registry_generation_label": "R50_AUDIT",
-      "provider_fetch": "CURRENT_BYTES"
-    },
-    "state_machine": {
-      "transport": [
-        "DISCOVERED",
-        "STAGED",
-        "VERIFIED",
-        "DELIVERED",
-        "ACKNOWLEDGED",
-        "QUARANTINED"
-      ],
-      "semantic": [
-        "UNREVIEWED",
-        "ACCEPTED",
-        "HOLD",
-        "REJECTED"
-      ],
-      "apply": [
-        "NOT_APPLIED",
-        "APPLIED"
-      ]
-    }
-  },
-  "return_registry_observations": [
-    {
-      "slot": "CLAUDE-BITUNIX",
-      "reported_state": "PENDING_OBSERVATION_WINDOW",
-      "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW",
-      "semantic_interpretation": "NONE_REGISTRY_OBSERVATION_ONLY"
-    },
-    {
-      "slot": "CODEX-07",
-      "reported_state": "OUTCOME_PASS",
-      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
-      "semantic_interpretation": "NONE_REGISTRY_OBSERVATION_ONLY"
-    },
-    {
-      "slot": "CODEX-08",
-      "reported_state": "PENDING_EXECUTION",
-      "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN",
-      "semantic_interpretation": "NONE_REGISTRY_OBSERVATION_ONLY"
-    },
-    {
-      "slot": "FABLE-5",
-      "reported_state": "GATED_RESERVED",
-      "work_order": "FABLE5-R57-GATED-ADJUDICATION",
-      "semantic_interpretation": "NONE_REGISTRY_OBSERVATION_ONLY"
-    }
-  ],
-  "returns": [
-    {
-      "return_id": "return-plane-v2-r43-predecessor",
-      "project": "return-plane-v2",
-      "transport_status": "ACKNOWLEDGED",
-      "content_status": "ACCEPTED",
-      "apply_status": "NOT_APPLIED",
-      "evidence": "R43 CODEX-07 predecessor closure",
-      "note": "Historical verified predecessor only; no live broker cutover authority"
-    },
-    {
-      "return_id": "hanri-pr29-review-only",
-      "project": "hanri",
-      "transport_status": "ACKNOWLEDGED",
-      "content_status": "UNREVIEWED",
-      "apply_status": "NOT_APPLIED",
-      "evidence": "GitHub PR #29",
-      "note": "Review-only product delta; accepted/live R35 remains untouched"
-    },
-    {
-      "return_id": "hanri-d4-p0-consolidated",
-      "project": "p0-security",
-      "transport_status": "ACKNOWLEDGED",
-      "content_status": "ACCEPTED",
-      "apply_status": "NOT_APPLIED",
-      "evidence": "GitHub issue #25 consolidated closure comment 5256118141",
-      "note": "P0-1 CLOSED; P0-2 RE-CLOSED; P0-3 CLOSED. Closure does not expand trading/capital/deploy/external-message authority"
-    }
-  ],
-  "decisions": [
-    {
-      "id": "CC-DASH-ARCH",
-      "state": "ACCEPTED",
-      "owner": "ROBERT",
-      "decision": "Use one primary Control Center / Work Cockpit operator surface; HANRI remains a technical subview with cross-links",
-      "effect_state": "IN_PROGRESS",
-      "next_readback": "Cockpit consumes generated provider snapshot rather than manual seed"
-    },
-    {
-      "id": "SPRINT-SELF",
-      "state": "ACCEPTED",
-      "owner": "ROBERT",
-      "decision": "Run 7-Day Operator Decision Sprint on our own operation first; do not count it toward external 3/5 MVP",
-      "effect_state": "IN_PROGRESS",
-      "next_readback": "Daily briefs and Day 7 retrospective"
-    },
-    {
-      "id": "CC-ROLE",
-      "state": "ACCEPTED",
-      "owner": "ROBERT",
-      "decision": "Control Center routes agents/work, adjudicates returns and improves the command system; it is not merely a dashboard",
-      "effect_state": "IN_PROGRESS",
-      "next_readback": "Provider-backed R64 control-plane projection"
-    }
-  ],
-  "commercial": {
-    "active_sellable_lines": [
-      {
-        "id": "agent-authority-audit",
-        "price_usd": 4900,
-        "state": "READY_INTERNAL_PREP_SEND_GATED"
-      },
-      {
-        "id": "operator-decision-sprint",
-        "price_usd": 199,
-        "state": "ACTIVE_VALIDATION"
-      }
-    ],
-    "operator_sprint": {
-      "self_pilot_counts_toward_mvp": false,
-      "self_pilot_state": "DAY_0_STARTED",
-      "external_mvp_rule": "3 of 5 named pilots pay $199 or renew",
-      "external_proof": {
-        "roman": "NO_REPLY_NO_PAYMENT",
-        "other_named_pilots": 0,
-        "payments": 0
-      }
-    }
-  },
-  "provider_lanes": {
-    "control_center": {
-      "repo": "bitmaster162/control-center",
-      "pr": 30,
-      "state": "open",
-      "draft": true,
-      "merged": false,
-      "head_sha": "af31f39280b9f32b30266ab47b52ba154acaa7dd"
-    },
-    "hanri": {
-      "repo": "bitmaster162/control-center",
-      "pr": 29,
-      "state": "open",
-      "draft": true,
-      "merged": false,
-      "head_sha": "2cb2fb515b8ec310aaea40c0daf8ef37202f3181",
-      "accepted_live_r35_sha": "4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50",
-      "accepted_live_untouched": true
-    },
-    "bitevo_public": {
-      "repo": "bitmaster162/bitevo-agent-site",
-      "pr": 3,
-      "state": "closed",
-      "merged": true,
-      "head_sha": "245e10974d885642d61de26aa5863078eb6fb160",
-      "main_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
-      "merge_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
-      "vercel_deployment_id": "dpl_Vog78eigj9xUDHetbek5Cfs9fdir",
-      "vercel_state": "READY",
-      "vercel_target": "production",
-      "vercel_github_commit_sha": "52c74f98fc9dbcc60db0fe5a29d85e67a50085f3",
-      "external_outreach_authorized": false
-    }
-  },
-  "current_truth_deltas": [
-    "BITEVO_PUBLIC_PRODUCTION_PROOF_SATISFIED",
-    "AGENT_AUTHORITY_AUDIT_DEPENDENCY_CLEARED_INTERNAL_PREP_ONLY",
-    "P0_D4_ALL_THREE_CLOSED",
-    "CLAUDE_BITUNIX_SLOT_PRESENT_PENDING_OBSERVATION_WINDOW"
-  ],
-  "human_gates": [
-    {
-      "id": "SEND",
-      "scope": "Every external message separately"
-    },
-    {
-      "id": "MERGE_CONTROL_CENTER",
-      "scope": "No Control Center merge unless explicitly approved after review"
-    },
-    {
-      "id": "APPROVE_BITEVO_PRIVATE_GITHUB_CUSTODY",
-      "scope": "BitEvo Core only after runtime/source binding"
-    }
-  ],
-  "invariants": [
-    "CURRENT_CANONICAL_GENERATION == R64",
-    "R63 != CURRENT",
-    "RETURNED != ACCEPTED",
-    "DELIVERED != APPLIED",
-    "BROKER_TRANSPORT != SEMANTIC_AUTHORITY",
-    "DASHBOARD != TRUTH_OWNER",
-    "ONE_PERSISTENT_WRITER_PER_PROJECT",
-    "NO_AUTO_SUCCESSOR_WORK_ORDERS",
-    "NO_SELF_APPROVAL",
-    "NO_SELF_MERGE",
-    "NO_SELF_DEPLOY"
-  ]
+  "commercial":{"active_sellable_lines":[{"id":"agent-authority-audit","price_usd":4900,"state":"READY_INTERNAL_PREP_SEND_GATED"},{"id":"operator-decision-sprint","price_usd":199,"state":"ACTIVE_VALIDATION"}],"operator_sprint":{"self_pilot_counts_toward_mvp":false,"self_pilot_state":"DAY_0_STARTED","external_mvp_rule":"3 of 5 named pilots pay $199 or renew","external_proof":{"roman":"NO_REPLY_NO_PAYMENT","other_named_pilots":0,"payments":0}}},
+  "provider_lanes":{"control_center":{"repo":"bitmaster162/control-center","pr":30,"state":"open","draft":true,"merged":false,"head_sha":"af31f39280b9f32b30266ab47b52ba154acaa7dd"},"hanri":{"repo":"bitmaster162/control-center","pr":29,"state":"open","draft":true,"merged":false,"head_sha":"2cb2fb515b8ec310aaea40c0daf8ef37202f3181","accepted_live_r35_sha":"4e8c5bd68f5159c55ff604e8b4a9dbcbf4031b50","accepted_live_untouched":true},"bitevo_public":{"repo":"bitmaster162/bitevo-agent-site","pr":3,"state":"closed","merged":true,"head_sha":"245e10974d885642d61de26aa5863078eb6fb160","main_sha":"52c74f98fc9dbcc60db0fe5a29d85e67a50085f3","merge_sha":"52c74f98fc9dbcc60db0fe5a29d85e67a50085f3","vercel_deployment_id":"dpl_Vog78eigj9xUDHetbek5Cfs9fdir","vercel_state":"READY","vercel_target":"production","vercel_github_commit_sha":"52c74f98fc9dbcc60db0fe5a29d85e67a50085f3","external_outreach_authorized":false}},
+  "current_truth_deltas":["BITEVO_PUBLIC_PRODUCTION_PROOF_SATISFIED","AGENT_AUTHORITY_AUDIT_DEPENDENCY_CLEARED_INTERNAL_PREP_ONLY","P0_D4_ALL_THREE_CLOSED","CLAUDE_BITUNIX_SLOT_PRESENT_PENDING_OBSERVATION_WINDOW","RETURN_BROKER_R59_INSTALLED_AND_WATCHING_CANONICAL_ROOT"],
+  "human_gates":[{"id":"SEND","scope":"Every external message separately"},{"id":"MERGE_CONTROL_CENTER","scope":"No Control Center merge unless explicitly approved after review"},{"id":"APPROVE_BITEVO_PRIVATE_GITHUB_CUSTODY","scope":"BitEvo Core only after runtime/source binding"}],
+  "invariants":["CURRENT_CANONICAL_GENERATION == R64","R63 != CURRENT","RETURNED != ACCEPTED","DELIVERED != APPLIED","BROKER_TRANSPORT != SEMANTIC_AUTHORITY","HISTORICAL_REGISTRY_NEXT != CURRENT_RUNTIME_GATE","DASHBOARD != TRUTH_OWNER","ONE_PERSISTENT_WRITER_PER_PROJECT","NO_AUTO_SUCCESSOR_WORK_ORDERS","NO_SELF_APPROVAL","NO_SELF_MERGE","NO_SELF_DEPLOY"]
 }
