@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA = "control_center.effect_readback_plane.v1"
-EXPECTED_POINTER_SHA = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
+EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 
 
 def load(path: Path) -> dict[str, Any]:
