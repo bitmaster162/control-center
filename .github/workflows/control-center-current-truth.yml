@@ -40,6 +40,8 @@ jobs:
         run: python control_center/scripts/test_provider_snapshot_freshness.py
       - name: Adversarial Provider Freshness Refresh Controller V1 tests
         run: python control_center/scripts/test_provider_freshness_refresh_controller.py
+      - name: Validate Provider Lease Expiry Operator Projection V1
+        run: node control_center/ui/test_provider_lease.js
       - name: Validate Agent Control Plane generated projection
         run: python control_center/scripts/validate_agent_control_plane.py
       - name: Adversarial Agent Control Plane self-tests
@@ -95,6 +97,7 @@ jobs:
       - name: Validate operator cockpit JavaScript
         run: |
           node --check control_center/ui/app.js
+          node --check control_center/ui/provider_lease.js
           node --check control_center/ui/lifecycle.js
           node --check control_center/ui/decision_ledger.js
           node --check control_center/ui/effect_readback.js
