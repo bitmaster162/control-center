@@ -5,8 +5,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors
+
 SCHEMA = "control_center.effect_readback_plane.v1"
-EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -19,10 +20,7 @@ def build(decisions: dict[str, Any], receipts: dict[str, Any]) -> dict[str, Any]
     policy = decisions.get("policy", {})
     if decisions.get("schema") != "control_center.decision_effect_ledger.v1":
         errors.append("decision_ledger_schema_mismatch")
-    if anchor.get("generation") != "R64" or anchor.get("status") != "ACTIVE":
-        errors.append("r64_anchor_mismatch")
-    if anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA or anchor.get("provider_readback") != "all_exact":
-        errors.append("pointer_binding_mismatch")
+    append_anchor_errors("decision_ledger", anchor, errors)
     if policy.get("auto_apply") is not False or policy.get("self_approval") is not False:
         errors.append("decision_policy_must_fail_closed")
     if receipts.get("schema") != "control_center.effect_receipts_source.v1":
