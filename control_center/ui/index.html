@@ -18,6 +18,7 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#execution-scope">EXECUTION SCOPE</a>
     <a href="#human-gate-packets">HUMAN GATE</a>
     <a href="#command-queue">COMMAND QUEUE</a>
     <a href="#agents">AGENTS</a>
@@ -42,6 +43,14 @@
       <div id="now-cards" class="grid cards"></div>
     </section>
 
+    <section id="execution-scope" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">SOURCE-BOUND EFFECT READINESS</p><h2>Execution Scope Binder</h2></div>
+        <span class="pill">scope ≠ authority ≠ execution</span>
+      </div>
+      <div id="execution-scope-list"></div>
+    </section>
+
     <section id="human-gate-packets" class="panel">
       <div class="section-head">
         <div><p class="eyebrow">HUMAN AUTHORITY BOUNDARY</p><h2>Human Gate Packet</h2></div>
@@ -58,86 +67,23 @@
       <div id="command-queue-list"></div>
     </section>
 
-    <section id="agents" class="panel">
-      <div class="section-head"><div><p class="eyebrow">FLEET OWNERSHIP</p><h2>Agents & Owners</h2></div></div>
-      <div id="agents-list" class="table-wrap"></div>
-    </section>
-
-    <section id="agent-control" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">DISPATCH CONTROL</p><h2>Agent Control Plane</h2></div>
-        <span class="pill">observe ≠ dispatch</span>
-      </div>
-      <div id="agent-control-list"></div>
-    </section>
-
-    <section id="work-lifecycle" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">END-TO-END CONTROL</p><h2>Work Order Lifecycle</h2></div>
-        <span class="pill">return ≠ accept ≠ apply</span>
-      </div>
-      <div id="work-lifecycle-list"></div>
-    </section>
-
-    <section id="decision-gates" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">AUTHORITY COMPRESSION</p><h2>Decision / Effect Gate Ledger</h2></div>
-        <span class="pill">accept ≠ authorize ≠ execute</span>
-      </div>
-      <div id="decision-gates-list"></div>
-    </section>
-
-    <section id="effect-readback" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">EFFECT EVIDENCE</p><h2>Effect Execution / Readback</h2></div>
-        <span class="pill">authorize ≠ execute ≠ close</span>
-      </div>
-      <div id="effect-readback-list"></div>
-    </section>
-
-    <section id="projects" class="panel">
-      <div class="section-head"><div><p class="eyebrow">PORTFOLIO</p><h2>Projects</h2></div></div>
-      <div id="projects-list" class="grid cards"></div>
-    </section>
-
-    <section id="work" class="panel">
-      <div class="section-head"><div><p class="eyebrow">DISPATCH</p><h2>Work</h2></div></div>
-      <div id="work-list" class="table-wrap"></div>
-    </section>
-
-    <section id="returns" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">RETURN PLANE</p><h2>Returns</h2></div>
-        <span class="pill">transport ≠ acceptance ≠ apply</span>
-      </div>
-      <div id="returns-list" class="table-wrap"></div>
-    </section>
-
-    <section id="decisions" class="panel">
-      <div class="section-head"><div><p class="eyebrow">ACCEPTED CONTROL DECISIONS</p><h2>Governance</h2></div></div>
-      <div id="decisions-list" class="grid cards"></div>
-    </section>
-
-    <section id="commercial" class="panel">
-      <div class="section-head"><div><p class="eyebrow">REVENUE</p><h2>Commercial</h2></div></div>
-      <div id="commercial-list" class="grid cards"></div>
-    </section>
-
+    <section id="agents" class="panel"><div class="section-head"><div><p class="eyebrow">FLEET OWNERSHIP</p><h2>Agents & Owners</h2></div></div><div id="agents-list" class="table-wrap"></div></section>
+    <section id="agent-control" class="panel"><div class="section-head"><div><p class="eyebrow">DISPATCH CONTROL</p><h2>Agent Control Plane</h2></div><span class="pill">observe ≠ dispatch</span></div><div id="agent-control-list"></div></section>
+    <section id="work-lifecycle" class="panel"><div class="section-head"><div><p class="eyebrow">END-TO-END CONTROL</p><h2>Work Order Lifecycle</h2></div><span class="pill">return ≠ accept ≠ apply</span></div><div id="work-lifecycle-list"></div></section>
+    <section id="decision-gates" class="panel"><div class="section-head"><div><p class="eyebrow">AUTHORITY COMPRESSION</p><h2>Decision / Effect Gate Ledger</h2></div><span class="pill">accept ≠ authorize ≠ execute</span></div><div id="decision-gates-list"></div></section>
+    <section id="effect-readback" class="panel"><div class="section-head"><div><p class="eyebrow">EFFECT EVIDENCE</p><h2>Effect Execution / Readback</h2></div><span class="pill">authorize ≠ execute ≠ close</span></div><div id="effect-readback-list"></div></section>
+    <section id="projects" class="panel"><div class="section-head"><div><p class="eyebrow">PORTFOLIO</p><h2>Projects</h2></div></div><div id="projects-list" class="grid cards"></div></section>
+    <section id="work" class="panel"><div class="section-head"><div><p class="eyebrow">DISPATCH</p><h2>Work</h2></div></div><div id="work-list" class="table-wrap"></div></section>
+    <section id="returns" class="panel"><div class="section-head"><div><p class="eyebrow">RETURN PLANE</p><h2>Returns</h2></div><span class="pill">transport ≠ acceptance ≠ apply</span></div><div id="returns-list" class="table-wrap"></div></section>
+    <section id="decisions" class="panel"><div class="section-head"><div><p class="eyebrow">ACCEPTED CONTROL DECISIONS</p><h2>Governance</h2></div></div><div id="decisions-list" class="grid cards"></div></section>
+    <section id="commercial" class="panel"><div class="section-head"><div><p class="eyebrow">REVENUE</p><h2>Commercial</h2></div></div><div id="commercial-list" class="grid cards"></div></section>
     <section id="hanri" class="panel">
       <div class="section-head"><div><p class="eyebrow">TECHNICAL SUBVIEW</p><h2>HANRI</h2></div></div>
-      <div class="callout">
-        <strong>Boundary:</strong> HANRI observes, proposes, tests and returns evidence. Control Center adjudicates current truth and effects.
-        <div class="links">
-          <a href="https://github.com/bitmaster162/control-center/pull/29">HANRI Pilot 02 PR #29</a>
-          <a href="https://github.com/bitmaster162/control-center/pull/30">Control Center PR #30</a>
-        </div>
-      </div>
+      <div class="callout"><strong>Boundary:</strong> HANRI observes, proposes, tests and returns evidence. Control Center adjudicates current truth and effects.<div class="links"><a href="https://github.com/bitmaster162/control-center/pull/29">HANRI Pilot 02 PR #29</a><a href="https://github.com/bitmaster162/control-center/pull/30">Control Center PR #30</a></div></div>
     </section>
   </main>
 
-  <footer>
-    <span>Dashboard is projection only. It never becomes the authority writer.</span>
-  </footer>
+  <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
 
   <script src="./app.js" defer></script>
   <script src="./lifecycle.js" defer></script>
@@ -145,5 +91,6 @@
   <script src="./effect_readback.js" defer></script>
   <script src="./command_queue.js" defer></script>
   <script src="./human_gate_packets.js" defer></script>
+  <script src="./execution_scope.js" defer></script>
 </body>
 </html>
