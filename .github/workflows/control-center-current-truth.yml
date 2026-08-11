@@ -38,6 +38,10 @@ jobs:
         run: python control_center/scripts/validate_agent_control_plane.py
       - name: Adversarial Agent Control Plane self-tests
         run: python control_center/scripts/test_agent_control_plane.py
+      - name: Validate work-order lifecycle projection
+        run: python control_center/scripts/validate_work_order_lifecycle.py
+      - name: Adversarial work-order lifecycle self-tests
+        run: python control_center/scripts/test_work_order_lifecycle.py
       - name: Reduce bounded source-envelope fixture
         run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
       - name: Adversarial reducer self-tests
@@ -45,4 +49,6 @@ jobs:
       - name: Validate exact Return Registry V4 adapter
         run: python control_center/scripts/test_return_registry_adapter.py
       - name: Validate operator cockpit JavaScript
-        run: node --check control_center/ui/app.js
+        run: |
+          node --check control_center/ui/app.js
+          node --check control_center/ui/lifecycle.js
