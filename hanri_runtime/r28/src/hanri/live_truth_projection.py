@@ -8,6 +8,8 @@ from typing import Any, Mapping, MutableMapping
 
 STRONG_EVIDENCE = {"RECEIPTED", "HASH_VERIFIED"}
 CURRENT_STATE_SECTIONS = ("kpis", "current_actions", "systems", "agents", "decisions")
+FRESHNESS_FIELD_SECTIONS = {"kpis", "systems", "agents"}
+VALID_FRESHNESS = {"CURRENT", "STALE", "UNKNOWN", "NOT_APPLICABLE"}
 
 
 def canonical_sha256(value: Any) -> str:
@@ -43,6 +45,12 @@ def _source_is_usable(source: Mapping[str, Any]) -> bool:
     return str(source.get("evidence_state", "")) in STRONG_EVIDENCE
 
 
+def _set_row_freshness(section: str, row: MutableMapping[str, Any], value: str) -> None:
+    """Set freshness only where the v1 snapshot contract supports that field."""
+    if section in FRESHNESS_FIELD_SECTIONS or "freshness" in row:
+        row["freshness"] = value
+
+
 def reconcile_truth_projection(
     snapshot: Mapping[str, Any],
     *,
@@ -63,12 +71,23 @@ def reconcile_truth_projection(
         raise ValueError("snapshot.sources must be a list")
 
     source_by_id: dict[str, MutableMapping[str, Any]] = {}
+    legacy_freshness_normalization: dict[str, dict[str, str]] = {}
     for row in sources:
         if not isinstance(row, MutableMapping):
             raise ValueError("snapshot.sources rows must be objects")
         source_id = str(row.get("source_id", "")).strip()
         if not source_id or source_id in source_by_id:
             raise ValueError("source_id must be unique and non-empty")
+
+        freshness = str(row.get("freshness", "UNKNOWN"))
+        if freshness not in VALID_FRESHNESS:
+            normalized = "STALE" if freshness == "SUPERSEDED" else "UNKNOWN"
+            row["freshness"] = normalized
+            prior_notes = str(row.get("notes", "")).strip()
+            marker = f"LEGACY_FRESHNESS_NORMALIZED:{freshness}->{normalized}"
+            row["notes"] = f"{prior_notes} | {marker}".strip(" |")
+            legacy_freshness_normalization[source_id] = {"from": freshness, "to": normalized}
+
         source_by_id[source_id] = row
 
     superseded_by = {str(k): str(v) for k, v in dict(policy.get("superseded_by", {})).items()}
@@ -89,7 +108,8 @@ def reconcile_truth_projection(
         source["freshness"] = "STALE"
         prior_notes = str(source.get("notes", "")).strip()
         marker = f"SUPERSEDED_BY:{final_successor}"
-        source["notes"] = f"{prior_notes} | {marker}".strip(" |")
+        if marker not in prior_notes:
+            source["notes"] = f"{prior_notes} | {marker}".strip(" |")
         applied_supersession[source_id] = final_successor
 
     for source_id, ttl_seconds in ttl_by_source.items():
@@ -162,16 +182,17 @@ def reconcile_truth_projection(
                 if ref in source_by_id
             ]
             if not freshnesses:
-                row["freshness"] = "UNKNOWN"
+                resolved_freshness = "UNKNOWN"
                 degraded_items.append({"section": section, "index": index, "reason": "NO_RESOLVED_EVIDENCE"})
             elif any(value == "CURRENT" for value in freshnesses):
-                row["freshness"] = "CURRENT"
+                resolved_freshness = "CURRENT"
             elif any(value == "STALE" for value in freshnesses):
-                row["freshness"] = "STALE"
+                resolved_freshness = "STALE"
                 degraded_items.append({"section": section, "index": index, "reason": "STALE_EVIDENCE"})
             else:
-                row["freshness"] = "UNKNOWN"
+                resolved_freshness = "UNKNOWN"
                 degraded_items.append({"section": section, "index": index, "reason": "UNKNOWN_EVIDENCE"})
+            _set_row_freshness(section, row, resolved_freshness)
 
     counts = {name: 0 for name in ("CURRENT", "STALE", "UNKNOWN", "NOT_APPLICABLE")}
     for source in source_by_id.values():
@@ -179,13 +200,14 @@ def reconcile_truth_projection(
         counts[freshness if freshness in counts else "UNKNOWN"] += 1
 
     projection_health = "CURRENT" if not degraded_items else "DEGRADED"
+    meta_freshness_state = "CURRENT" if projection_health == "CURRENT" else "STALE"
     meta = result.setdefault("meta", {})
     if isinstance(meta, MutableMapping):
         meta["generated_at"] = generated_at
         freshness_meta = meta.setdefault("freshness", {})
         if isinstance(freshness_meta, MutableMapping):
             freshness_meta["mode"] = "LIVE"
-            freshness_meta["state"] = projection_health
+            freshness_meta["state"] = meta_freshness_state
             freshness_meta["as_of"] = generated_at
             freshness_meta["reason"] = (
                 "R38 supersession/freshness resolver applied to current-state surfaces; "
@@ -197,7 +219,9 @@ def reconcile_truth_projection(
         "policy_version": str(policy.get("policy_version", "UNVERSIONED")),
         "generated_at": generated_at,
         "projection_health": projection_health,
+        "snapshot_freshness_state": meta_freshness_state,
         "source_counts": counts,
+        "legacy_freshness_normalization": legacy_freshness_normalization,
         "applied_supersession": applied_supersession,
         "ttl_audit": ttl_audit,
         "rewritten_current_state_refs": rewritten_refs,

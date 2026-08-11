@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "38.0.1-live-truth-projection-v1",
+  "policy_version": "38.0.2-live-truth-projection-v1",
   "current_state_sections": [
     "kpis",
     "current_actions",
