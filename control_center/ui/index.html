@@ -18,6 +18,7 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#system-attention">SYSTEM ATTENTION</a>
     <a href="#provider-lease">PROVIDER LEASE</a>
     <a href="#execution-scope">EXECUTION SCOPE</a>
     <a href="#human-gate-packets">HUMAN GATE</a>
@@ -42,6 +43,14 @@
         <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
+    </section>
+
+    <section id="system-attention" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">SYSTEM HOLD ATTENTION</p><h2>System Attention</h2></div>
+        <span class="pill">attention ≠ HUMAN_NOW ≠ effect gate</span>
+      </div>
+      <div id="system-attention-list"><div class="empty">Loading system attention…</div></div>
     </section>
 
     <section id="provider-lease" class="panel">
@@ -95,6 +104,7 @@
   <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
 
   <script src="./app.js" defer></script>
+  <script src="./system_attention.js" defer></script>
   <script src="./provider_lease.js" defer></script>
   <script src="./lifecycle.js" defer></script>
   <script src="./decision_ledger.js" defer></script>
