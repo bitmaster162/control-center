@@ -24,6 +24,7 @@ TRUTH_DELTAS = {
     "AGENT_AUTHORITY_AUDIT_DEPENDENCY_CLEARED_INTERNAL_PREP_ONLY",
     "P0_D4_ALL_THREE_CLOSED",
     "CLAUDE_BITUNIX_SLOT_PRESENT_PENDING_OBSERVATION_WINDOW",
+    "RETURN_BROKER_R59_INSTALLED_AND_WATCHING_CANONICAL_ROOT",
 }
 
 
@@ -41,6 +42,23 @@ def validate_snapshot(s: dict[str, Any]) -> list[str]:
     for key, expected in R64.items():
         if roots.get(key) != expected:
             errors.append(f"canonical_root_mismatch:{key}")
+
+    broker = s.get("canonical_broker", {})
+    if not (
+        broker.get("source") == "R64_CURRENT_STATE_AND_ROLE_VIEWS_EXACT_READBACK"
+        and broker.get("current_state_drive_file_id") == roots.get("current_state_drive_file_id")
+        and broker.get("current_state_sha256") == roots.get("current_state_sha256")
+        and broker.get("role_views_drive_file_id") == roots.get("role_views_drive_file_id")
+        and broker.get("role_views_sha256") == roots.get("role_views_sha256")
+        and broker.get("status") == "INSTALLED_AND_WATCHING"
+        and broker.get("watcher_generation") == "R59"
+        and broker.get("codex07_lane") == "Return Plane / broker hardening"
+        and str(broker.get("codex07_state", "")).startswith("R59_")
+        and broker.get("fresh_runtime_liveness") == "UNVERIFIED_PROVIDER_READBACK_REQUIRED"
+        and broker.get("historical_r43_gate_is_current") is False
+    ):
+        errors.append("canonical_broker_snapshot_mismatch")
+
     rr = s.get("return_registry", {})
     if rr.get("schema") != "CONTROL_RETURN_REGISTRY_V4":
         errors.append("return_registry_schema_mismatch")
@@ -83,10 +101,27 @@ def validate_projection(s: dict[str, Any], p: dict[str, Any]) -> list[str]:
         "agent-authority-audit": "READY_INTERNAL_PREP_SEND_GATED",
         "p0-security": "D4_CLOSED_ALL_THREE",
         "hanri": "ACTIVE_PARALLEL_P0_CLOSED",
+        "return-plane-v2": "CANONICAL_R59_INSTALLED_AND_WATCHING",
     }
     for pid, state in expected_projects.items():
         if projects.get(pid, {}).get("state") != state:
             errors.append(f"project_state_mismatch:{pid}")
+
+    agents = by_id(p.get("agents", []))
+    if agents.get("RETURN_BROKER_OWNER", {}).get("state") != "CANONICAL_R59_INSTALLED_AND_WATCHING":
+        errors.append("return_broker_owner_state_mismatch")
+
+    broker = s["canonical_broker"]
+    rp = p.get("return_plane", {})
+    runtime = rp.get("canonical_runtime", {})
+    if not (
+        rp.get("current_mode") == "CANONICAL_R59_INSTALLED_AND_WATCHING"
+        and runtime.get("status") == broker.get("status")
+        and runtime.get("watcher_generation") == broker.get("watcher_generation")
+        and runtime.get("fresh_runtime_liveness") == broker.get("fresh_runtime_liveness")
+        and runtime.get("historical_r43_gate_is_current") is False
+    ):
+        errors.append("return_plane_canonical_runtime_mismatch")
 
     work = by_id(p.get("work_items", []))
     if work.get("AUDIT-WAVE1", {}).get("state") != "READY_INTERNAL_PREP" or work.get("AUDIT-WAVE1", {}).get("human_gate") != "EXACT_SEND_PER_MESSAGE":
