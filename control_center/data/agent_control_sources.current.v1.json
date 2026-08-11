@@ -1,0 +1,67 @@
+{
+  "schema": "control_center.agent_control_sources.v1",
+  "snapshot_kind": "NON_AUTHORITY_PROVIDER_READBACK",
+  "observed_at": "2026-08-12T00:43:00+07:00",
+  "pointer": {
+    "provider": "GOOGLE_DRIVE",
+    "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "provider_modified_time": "2026-08-07T20:36:18.030Z",
+    "raw_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+    "provider_readback_all_exact": true,
+    "effect_ceiling": {
+      "NO_FURTHER_AGENT_WORK": true,
+      "auto_accept": false,
+      "auto_dispatch": false,
+      "can_trade": false,
+      "capital_permission": "DENY",
+      "deploy": "DENY",
+      "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_HUMAN_AUTHORIZATION",
+      "push": "DENY_WITHOUT_EXPLICIT_BOUNDED_AUTHORITY",
+      "self_application": false
+    }
+  },
+  "return_registry": {
+    "provider": "GOOGLE_DRIVE",
+    "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "provider_modified_time": "2026-07-29T16:30:55.472Z",
+    "raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+    "schema": "CONTROL_RETURN_REGISTRY_V4",
+    "registry_id": "CONTROL_CANTER_RETURN_REGISTRY",
+    "generation_label": "R50_AUDIT",
+    "updated_at_utc": "2026-07-29T12:20:00Z",
+    "last_updated_utc": "2026-07-29T16:30:55.468744+00:00",
+    "rules": {
+      "read_registry_before_drive_search": true,
+      "rerun_completed_work": false,
+      "merge_updates_by_slot": true,
+      "source_mutation": false,
+      "can_trade": false,
+      "capital_permission": "DENY"
+    },
+    "slots": {
+      "CODEX-01": {"state": "OUTCOME_PASS", "work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE", "next": "ROBERT_ADOPTION_REVIEW", "proof": "186/186 clone A; 186/186 clone B; 12/12 portable"},
+      "CODEX-02": {"state": "OUTCOME_PASS", "work_order": "CODEX02-R43-TRADINGOS-CONTRACT-CLOSURE", "next": "ROBERT_EVIDENCE_EPOCH_DECISION", "proof": "50 targeted; Python 3.11 1206; Python 3.14 1206; source_purity=true; Active drift=0"},
+      "CODEX-03": {"state": "RLS_TEST_FAIL", "project": "MAWorld", "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21", "next": "CAPTURE_INITDB_STDOUT_STDERR_AND_FIX_ONE_ROOT_CAUSE", "harness_error_code": "INITDB_FAILED", "teardown": "CLEAN", "source_mutation": false, "no_further_agent_work": true},
+      "CODEX-04": {"state": "HUMAN_GATE_READY", "project": "Arena", "next": "TRUSTED_EXTERNAL_ED25519_SIGNATURE"},
+      "CODEX-05": {"state": "OUTCOME_PASS", "work_order": "CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT", "next": "NONE_AGENT_SIDE", "proof": "11/11 focused; 41/41 full; two no-effect cycles"},
+      "CODEX-06": {"state": "OUTCOME_PASS", "work_order": "CODEX06-R43-VISIONASSIST-MARKET-EVIDENCE-GATE", "next": "HUMAN_FORWARD_LOCKED_CASE_CAPTURE", "proof": "10/10 focused; 82/82 clone1; 82/82 clone2; 75 frozen preserved"},
+      "CODEX-07": {"state": "OUTCOME_PASS", "work_order": "CODEX07-R43-RETURN-PLANE-V2", "next": "ROBERT_MIGRATION_DECISION", "proof": "19/19 tests; 20 cycles; zero growth after cycle 1"},
+      "ANTIGRAVITY_WO039": {"state": "CLOSEOUT_PASS", "next": "NONE", "proof": "new_findings=0; pending=0; legacy IDs absent"},
+      "ANTIGRAVITY_WO040": {"state": "MAWORLD_TARGET_QUALIFICATION_READY", "work_order": "ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION", "next": "ROBERT_APPROVAL_FOR_ONE_DISPOSABLE_RLS_21_OF_21", "proof": "3/3 artifacts; Windows x64; CPython 3.11.9; VC/UCRT PASS; ambient PostgreSQL clean; no execution"},
+      "ANTIGRAVITY_WO041": {"state": "ACCEPTANCE_VERIFIED_FAIL_INITDB", "project": "MAWorld", "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE", "next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR", "no_further_agent_work": true},
+      "CODEX-08": {"state": "PENDING_EXECUTION", "work_order": "CODEX08-R57-PARASITE-KILLER-FRESH-READ-ONLY-SCAN"},
+      "CLAUDE-BITUNIX": {"state": "PENDING_OBSERVATION_WINDOW", "work_order": "CLAUDE-BITUNIX-R57-WO107-OBSERVATION-WINDOW"},
+      "FABLE-5": {"state": "GATED_RESERVED", "work_order": "FABLE5-R57-GATED-ADJUDICATION"}
+    }
+  },
+  "boundaries": {
+    "registry_is_transport_observation_only": true,
+    "registry_cannot_accept_or_apply": true,
+    "tradingos_do_not_touch": true,
+    "max_operator_attention": 3
+  }
+}
