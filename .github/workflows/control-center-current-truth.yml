@@ -82,6 +82,10 @@ jobs:
         run: python control_center/scripts/operator_priority_reconciliation.py --check
       - name: Adversarial Operator Priority Reconciliation V1 tests
         run: python control_center/scripts/operator_priority_reconciliation.py --self-test
+      - name: Validate ContinuityOS R52 Existing-Return Binding Reconciliation V1
+        run: python control_center/scripts/validate_continuityos_r52_binding_reconciliation.py
+      - name: Adversarial ContinuityOS R52 Existing-Return Binding Reconciliation V1 tests
+        run: python control_center/scripts/validate_continuityos_r52_binding_reconciliation.py --self-test
       - name: Validate Human Gate Packet V1
         run: python control_center/scripts/validate_human_gate_packets.py
       - name: Adversarial Human Gate Packet tests
