@@ -22,30 +22,14 @@
   },
   "summary": {
     "decision_objects_total": 14,
-    "effect_candidates_total": 1,
+    "effect_candidates_total": 0,
     "effects_authorized": 0,
     "executions_authorized": 0,
     "execution_receipts": 0,
     "readback_receipts": 0,
     "closed_after_readback": 0
   },
-  "effect_candidates": [
-    {
-      "decision_id": "DEC::CODEX07-R43-RETURN-PLANE-V2",
-      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
-      "slot": "CODEX-07",
-      "project": "Return Plane",
-      "gate": "ROBERT_MIGRATION_DECISION",
-      "decision_state": "OPEN",
-      "decision_outcome": null,
-      "effect_authorized": false,
-      "execution_authorized": false,
-      "apply_status": "NOT_APPLIED",
-      "execution_receipt_id": null,
-      "readback_receipt_id": null,
-      "stage": "AWAITING_HUMAN_EFFECT_AUTHORIZATION"
-    }
-  ],
+  "effect_candidates": [],
   "execution_receipts": [],
   "readback_receipts": [],
   "invariants": {
