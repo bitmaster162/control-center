@@ -6,11 +6,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors, canonical_roots
+
 SCHEMA = "control_center.broker_health_readback.v1"
-EXPECTED_POINTER_SHA = "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
 EXPECTED_HEAD = "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785"
 EXPECTED_TREE = "4762b2cdad463823e34da29e09b22ec580c6e778"
 EXPECTED_STABLE_REGISTRY_SHA = "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f"
+RESOLVED_DIVERGENCE_STATUS = "RESOLVED_BY_CANONICAL_REPAIR_AND_RESEAL"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -23,11 +25,16 @@ def parse_ts(value: str) -> datetime:
 
 def build(source: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
+    roots = canonical_roots()
     if source.get("schema") != "control_center.broker_health_sources.v1":
         errors.append("source_schema_mismatch")
     anchor = source.get("authority_anchor", {})
-    if anchor.get("generation") != "R64" or anchor.get("pointer_sha256") != EXPECTED_POINTER_SHA:
-        errors.append("r64_anchor_mismatch")
+    append_anchor_errors("broker_health_source", anchor, errors)
+    if anchor.get("current_state_sha256") != roots["current_state_sha256"]:
+        errors.append("broker_health_source_root_mismatch:current_state_sha256")
+    if anchor.get("role_views_sha256") != roots["role_views_sha256"]:
+        errors.append("broker_health_source_root_mismatch:role_views_sha256")
+
     runtime = source.get("runtime", {})
     if runtime.get("generation") != "R59" or runtime.get("repository") != "bitmaster162/control-return-broker" or runtime.get("default_branch") != "gpt/github-ready-r1":
         errors.append("runtime_identity_mismatch")
@@ -69,8 +76,14 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
         errors.append("unexpected_later_artifact_flag")
 
     divergence = source.get("contract_divergence", {})
-    if divergence.get("status") != "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE":
-        errors.append("contract_divergence_missing")
+    if divergence.get("status") != RESOLVED_DIVERGENCE_STATUS:
+        errors.append("canonical_contract_resolution_missing")
+    if divergence.get("previous_status") != "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE":
+        errors.append("historical_divergence_lineage_missing")
+    root_sentence = str(divergence.get("canonical_root_sentence", ""))
+    if "generation-scoped" not in root_sentence or "does not directly mutate CURRENT_RETURN_REGISTRY.json" not in root_sentence:
+        errors.append("resolved_canonical_contract_text_mismatch")
+
     safety = source.get("safety", {})
     if safety.get("read_only") is not True or safety.get("authority_granted") is not False or safety.get("execution_authorized") is not False or safety.get("auto_execute") is not False or safety.get("can_trade") is not False or safety.get("capital_permission") != "DENY" or safety.get("deploy_permission") != "DENY" or safety.get("self_application") is not False:
         errors.append("safety_boundary_mismatch")
@@ -85,7 +98,7 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
         "projection_kind": "NON_AUTHORITY_READ_ONLY_HEALTH_PROJECTION",
         "observed_at": source["observed_at"],
         "authority_anchor": anchor,
-        "verdict": "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE",
+        "verdict": "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE_RESEALED_ROOTS_ALIGNED",
         "runtime": {
             "generation": "R59",
             "repository": runtime["repository"],
@@ -133,9 +146,9 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
             "liveness_evidence_class": "INDIRECT_ACTIVITY",
             "process_liveness_observable": False,
         },
-        "contract_divergence": divergence,
-        "next_action": "NO_RUNTIME_ACTION_REQUIRED; OBSERVE_OR_SEPARATELY_GATE_CANONICAL_CONTRACT_REPAIR",
-        "human_gate_required_for_root_repair": "SEPARATE_EXPLICIT_CANONICAL_SEMANTIC_REPAIR_GATE",
+        "contract_resolution": divergence,
+        "next_action": "NO_RUNTIME_ACTION_REQUIRED; CONTINUE_READ_ONLY_HEALTH_OBSERVATION",
+        "human_gate_required_for_root_repair": "NONE_REPAIR_ALREADY_APPLIED_AND_RESEALED",
         "policy": {
             "health_projection_grants_authority": False,
             "process_restart_authorized": False,
@@ -146,6 +159,11 @@ def build(source: dict[str, Any]) -> dict[str, Any]:
             "capital_permission": "DENY",
             "deploy_permission": "DENY",
             "self_application": False,
+        },
+        "invariants": {
+            "cross_layer_anchor_equality_required": True,
+            "canonical_contract_divergence_resolved": True,
+            "historical_divergence_preserved_as_evidence": True,
         },
     }
 
