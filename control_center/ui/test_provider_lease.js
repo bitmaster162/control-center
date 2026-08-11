@@ -9,6 +9,12 @@ const evidence = {
   max_age_seconds: 21600
 };
 
+const statusBase = {
+  schema: "control_center.provider_refresh_controller_status.v1",
+  projection_kind: "NON_AUTHORITY_PROVIDER_REFRESH_DIAGNOSTIC",
+  safety: { diagnostic_grants_authority: false }
+};
+
 const observed = Date.parse(evidence.observed_at);
 const expires = observed + 21600 * 1000;
 
@@ -19,20 +25,60 @@ assert.equal(lease.classifyProviderLease(evidence, null, expires - 1).state, "EX
 assert.equal(lease.classifyProviderLease(evidence, null, expires).state, "EXPIRED");
 assert.equal(lease.classifyProviderLease(evidence, null, expires + 60 * 1000).state, "EXPIRED");
 
-const expiredHold = { verdict: "HOLD_FRESHNESS_EXPIRED_RECAPTURE_REQUIRED" };
+const neutral = {
+  ...statusBase,
+  verdict: "NO_HOLD_DIAGNOSTIC_RECORDED",
+  operator_state: "NO_HOLD_DIAGNOSTIC_RECORDED",
+  hold_active: false,
+  mismatches: []
+};
+assert.equal(lease.classifyProviderLease(evidence, neutral, observed + 60 * 1000).state, "FRESH");
+
+const expiredHold = {
+  ...statusBase,
+  verdict: "HOLD_FRESHNESS_EXPIRED_RECAPTURE_REQUIRED",
+  operator_state: "EXPIRED",
+  hold_active: true,
+  mismatches: []
+};
 assert.equal(lease.classifyProviderLease(evidence, expiredHold, observed + 60 * 1000).state, "EXPIRED");
 
-for (const verdict of [
-  "HOLD_PROVIDER_DRIFT_DETECTED",
-  "HOLD_INVALID_OR_INCOMPLETE_CAPTURE"
-]) {
-  const result = lease.classifyProviderLease(evidence, { verdict }, observed + 60 * 1000);
-  assert.equal(result.state, "DRIFT_HOLD");
-  assert.equal(result.reason, verdict);
-}
+const driftHold = {
+  ...statusBase,
+  verdict: "HOLD_PROVIDER_DRIFT_DETECTED",
+  operator_state: "DRIFT_HOLD",
+  hold_active: true,
+  controller_errors: ["provider_drift:CURRENT_STATE.json:sha256"],
+  mismatches: [{
+    root: "CURRENT_STATE.json",
+    field: "sha256",
+    expected: "expected-sha",
+    observed: "observed-sha"
+  }]
+};
+const driftResult = lease.classifyProviderLease(evidence, driftHold, observed + 60 * 1000);
+assert.equal(driftResult.state, "DRIFT_HOLD");
+assert.equal(driftResult.reason, "HOLD_PROVIDER_DRIFT_DETECTED");
+
+assert.throws(
+  () => lease.classifyProviderLease(evidence, { ...statusBase, verdict: "HOLD_INVALID_OR_INCOMPLETE_CAPTURE", operator_state: "INVALID_CAPTURE_HOLD", hold_active: true }, observed + 60 * 1000),
+  /unsupported provider hold diagnostic/
+);
+assert.throws(
+  () => lease.classifyProviderLease(evidence, { ...driftHold, mismatches: [] }, observed + 60 * 1000),
+  /mismatch evidence missing/
+);
+assert.throws(
+  () => lease.classifyProviderLease(evidence, { ...driftHold, safety: { diagnostic_grants_authority: true } }, observed + 60 * 1000),
+  /authority boundary invalid/
+);
+assert.throws(
+  () => lease.classifyProviderLease(evidence, { ...neutral, schema: "wrong" }, observed + 60 * 1000),
+  /diagnostic schema mismatch/
+);
 
 assert.equal(
-  lease.classifyProviderLease(evidence, { verdict: "REFRESH_EVIDENCE_ONLY_ALLOWED" }, observed + 60 * 1000).state,
+  lease.classifyProviderLease(evidence, { ...statusBase, verdict: "REFRESH_EVIDENCE_ONLY_ALLOWED", operator_state: "NO_HOLD", hold_active: false, mismatches: [] }, observed + 60 * 1000).state,
   "FRESH"
 );
 
