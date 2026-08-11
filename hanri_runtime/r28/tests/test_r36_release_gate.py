@@ -51,11 +51,14 @@ class R36ReleaseGateTests(unittest.TestCase):
         for required in (
             "function Quiesce-HanriLock",
             "Get-CimInstance Win32_Process",
+            '-ErrorAction Stop',
             "orphaned-r36-cutover-",
             "Move-Item -LiteralPath $LockPath",
             "R35_ORPHAN_LOCK_QUARANTINED",
             "r35_orphan_lock_quarantined",
             "refusing quarantine",
+            "$rollbackLockSafeToStart = $false",
+            "R35 task re-enabled but not force-started",
         ):
             self.assertIn(required, install)
         self.assertNotIn("Remove-Item -LiteralPath $R35LockPath", install)
