@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "actions": [
+    {
+      "action_id": "CC-R37-READ-001",
+      "actor": "GPT_RUNTIME_CURRENT",
+      "operation": "read_current_truth",
+      "target": "Control canter/00_CONTROL_CURRENT/R64_CURRENT_TRUTH_DIGEST_20260812T0131_BKK",
+      "effect_class": "READ_ONLY",
+      "args": {},
+      "scope": {"mode": "read_only"}
+    },
+    {
+      "action_id": "CC-R37-WRITE-001",
+      "actor": "GPT_RUNTIME_CURRENT",
+      "operation": "update_dashboard_projection",
+      "target": "Control canter/00_DASHBOARD_CURRENT/HANRI_R64_DASHBOARD_CURRENT_R36_FULL_VERIFIED.html",
+      "effect_class": "WRITE_REVERSIBLE",
+      "args": {"snapshot": "R64-P3"},
+      "scope": {"stable_roots_modified": false}
+    },
+    {
+      "action_id": "CC-R37-EXTERNAL-001",
+      "actor": "Work",
+      "operation": "send_message",
+      "target": "ROMAN",
+      "effect_class": "WRITE_EXTERNAL",
+      "args": {"channel": "operator_outreach", "message_ref": "D5-followup"},
+      "scope": {"external": true}
+    },
+    {
+      "action_id": "CC-R37-AUTHORITY-001",
+      "actor": "GPT_RUNTIME_CURRENT",
+      "operation": "write_authority_state",
+      "target": "Control canter/00_CONTROL_CURRENT/CURRENT_STATE.json",
+      "effect_class": "AUTHORITY_CHANGE",
+      "args": {"candidate": "R65"},
+      "scope": {"authority_generation": true}
+    },
+    {
+      "action_id": "CC-R37-CAPITAL-001",
+      "actor": "HANRI",
+      "operation": "place_trade_order",
+      "target": "TradingOS/BTCUSDT",
+      "effect_class": "CAPITAL",
+      "args": {"side": "BUY", "notional": 100},
+      "scope": {"capital": true}
+    }
+  ]
+}

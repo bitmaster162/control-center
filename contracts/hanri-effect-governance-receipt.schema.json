@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/hanri-effect-governance-receipt.schema.json",
+  "title": "HANRI Effect Governance Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "policy_version",
+    "generated_at",
+    "enforcement_mode",
+    "decision_count",
+    "verdict_counts",
+    "decisions",
+    "execution_effects_performed",
+    "receipt_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy_version": {"const": "37.0.0-effect-governance-v1"},
+    "generated_at": {"type": "string"},
+    "enforcement_mode": {"const": "SHADOW_ONLY"},
+    "decision_count": {"type": "integer", "minimum": 0},
+    "verdict_counts": {
+      "type": "object",
+      "required": ["ALLOW", "DENY", "HUMAN_APPROVAL"],
+      "properties": {
+        "ALLOW": {"type": "integer", "minimum": 0},
+        "DENY": {"type": "integer", "minimum": 0},
+        "HUMAN_APPROVAL": {"type": "integer", "minimum": 0}
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "policy_version",
+          "enforcement_mode",
+          "action_hash",
+          "action",
+          "risk",
+          "policy_verdict",
+          "execution_authorized",
+          "reason",
+          "invariants"
+        ],
+        "properties": {
+          "policy_version": {"const": "37.0.0-effect-governance-v1"},
+          "enforcement_mode": {"const": "SHADOW_ONLY"},
+          "action_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "policy_verdict": {"enum": ["ALLOW", "DENY", "HUMAN_APPROVAL"]},
+          "execution_authorized": {"const": false},
+          "risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+          "action": {"type": "object"},
+          "approval": {"type": ["object", "null"]},
+          "reason": {"type": "string"},
+          "invariants": {
+            "type": "object",
+            "required": ["shadow_only", "self_application", "can_trade", "capital_permission"],
+            "properties": {
+              "shadow_only": {"const": true},
+              "self_application": {"const": false},
+              "can_trade": {"const": false},
+              "capital_permission": {"const": "DENY"}
+            }
+          }
+        }
+      }
+    },
+    "execution_effects_performed": {"const": 0},
+    "receipt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
