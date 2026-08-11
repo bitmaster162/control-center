@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.1.0-attention-fabric-v1",
+  "mode": "REAL_ENVELOPE_INGESTION",
+  "accepted_source_types": [
+    "HANRI_SELF_TRACE",
+    "AGENT_RETURN",
+    "SYSTEM_HEALTH",
+    "OPERATOR_EVENT",
+    "RECOMMENDATION_OUTCOME",
+    "OBSERVATION"
+  ],
+  "dedupe": {
+    "key": "envelope_id",
+    "same_id_same_hash": "DEDUP",
+    "same_id_different_hash": "FAIL_CLOSED"
+  },
+  "priority": {
+    "basis": ["severity", "repeated_count", "proposal_kind", "evidence_count"],
+    "deterministic": true
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
