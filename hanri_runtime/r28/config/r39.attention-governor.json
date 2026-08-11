@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.0.0-attention-over-attention-v1",
+  "mission": "audit HANRI, agents, systems and operator behavior; produce evidence-bound improvement candidates; audit whether HANRI itself is paying attention to the right things",
+  "domains": ["SELF", "AGENT", "SYSTEM", "OPERATOR"],
+  "attention_policy": {
+    "min_observations_per_domain": 1,
+    "max_single_domain_share": 0.6,
+    "missing_domain_is_blind_spot": true,
+    "negative_recommendation_outcome_requires_self_review": true
+  },
+  "agent_skill_factory": {
+    "repeated_count_threshold": 2,
+    "isolated_eval_required": true,
+    "install_requires_human_acceptance": true
+  },
+  "system_improvement": {
+    "isolate_or_shadow_first": true,
+    "independent_readback_required": true,
+    "rollback_required": true
+  },
+  "operator_advice": {
+    "advisory_only": true,
+    "auto_message": false,
+    "auto_schedule": false
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
