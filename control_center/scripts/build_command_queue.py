@@ -6,8 +6,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from current_authority_anchor import append_anchor_errors
+
 SCHEMA = "control_center.command_queue.v1"
-EXPECTED_POINTER_SHA = "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
 MAX_HUMAN_NOW = 3
 
 
@@ -22,11 +23,7 @@ def anchor(source: dict[str, Any]) -> dict[str, Any]:
 def validate_source(name: str, source: dict[str, Any], schema: str, errors: list[str]) -> None:
     if source.get("schema") != schema:
         errors.append(f"{name}_schema_mismatch")
-    a = anchor(source)
-    if a.get("generation") != "R64" or a.get("status") != "ACTIVE":
-        errors.append(f"{name}_r64_anchor_mismatch")
-    if a.get("pointer_sha256") != EXPECTED_POINTER_SHA or a.get("provider_readback") != "all_exact":
-        errors.append(f"{name}_pointer_binding_mismatch")
+    append_anchor_errors(name, anchor(source), errors)
 
 
 def build(agent: dict[str, Any], lifecycle: dict[str, Any], ledger: dict[str, Any], effect: dict[str, Any]) -> dict[str, Any]:
