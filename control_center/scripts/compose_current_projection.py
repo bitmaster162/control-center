@@ -10,10 +10,10 @@ PROJECTION_SCHEMA = "control_center.current_control_plane_projection.v1"
 R64 = {
     "generation": "R64",
     "status": "ACTIVE",
-    "decision": "ACCEPT_R64_POINTER_PROMOTION",
-    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
-    "manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
-    "current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "current_state_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
     "role_index_sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
     "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
     "provider_readback": "all_exact",
@@ -25,6 +25,7 @@ TRUTH_DELTAS = {
     "P0_D4_ALL_THREE_CLOSED",
     "CLAUDE_BITUNIX_SLOT_PRESENT_PENDING_OBSERVATION_WINDOW",
     "RETURN_BROKER_R59_INSTALLED_AND_WATCHING_CANONICAL_ROOT",
+    "R64_CANONICAL_RESEAL_ALL_EXACT",
 }
 
 
