@@ -1,0 +1,92 @@
+{
+  "schema": "control_center.canonical_reseal_execution_receipt.v1",
+  "projection_kind": "EVIDENCE_RECEIPT_NON_AUTHORITY",
+  "executed_at_local": "2026-08-12T03:44:54+07:00",
+  "generation": "R64",
+  "human_gate": {
+    "actor": "ROBERT",
+    "binding": "EXACT",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "accepted_manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+  },
+  "preconditions": {
+    "all_exact": true,
+    "CURRENT_STATE.json": {"bytes": 6506, "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"},
+    "ROLE_INDEX.json": {"bytes": 2043, "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"},
+    "ROLE_VIEWS.json": {"bytes": 3945, "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"},
+    "MANIFEST.json": {"bytes": 751, "sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"},
+    "CURRENT_POINTER.json": {"bytes": 4430, "sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"}
+  },
+  "writes": [
+    {
+      "order": 1,
+      "file": "MANIFEST.json",
+      "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+      "before": {"bytes": 751, "sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"},
+      "after": {"bytes": 1328, "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"},
+      "provider_modified_time": "2026-08-11T20:44:42.512Z",
+      "success": true
+    },
+    {
+      "order": 2,
+      "file": "CURRENT_POINTER.json",
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "before": {"bytes": 4430, "sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"},
+      "after": {"bytes": 5493, "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"},
+      "provider_modified_time": "2026-08-11T20:44:54.497Z",
+      "success": true,
+      "last_stable_root_write": true
+    }
+  ],
+  "post_write_provider_readback": {
+    "required": true,
+    "all_exact": true,
+    "files": {
+      "CURRENT_STATE.json": {"bytes": 6506, "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68", "exact_match": true},
+      "ROLE_INDEX.json": {"bytes": 2043, "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567", "exact_match": true},
+      "ROLE_VIEWS.json": {"bytes": 3945, "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148", "exact_match": true},
+      "MANIFEST.json": {"bytes": 1328, "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d", "exact_match": true},
+      "CURRENT_POINTER.json": {"bytes": 5493, "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3", "exact_match": true}
+    }
+  },
+  "canonical_result": {
+    "status": "R64_RESEALED_ALL_EXACT",
+    "current_all_exact": true,
+    "current_state_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "original_promotion_evidence_status": "HISTORICAL_PRE_REPAIR_ONLY"
+  },
+  "ready_marker": {
+    "written_in_reseal": false,
+    "reason": "NOT_IN_AUTHORIZED_RESEAL_WRITE_SCOPE; RESEAL_CLOSURE_CONDITION_WAS_EXACT_FIVE_FILE_PROVIDER_READBACK"
+  },
+  "scope_boundary": {
+    "CURRENT_STATE_written": false,
+    "ROLE_INDEX_written": false,
+    "ROLE_VIEWS_written": false,
+    "CURRENT_RETURN_REGISTRY_written": false,
+    "historical_promotion_receipt_written": false,
+    "historical_provider_readback_written": false,
+    "runtime_mutation": false,
+    "routing_mutation": false,
+    "agent_dispatch": false,
+    "external_message": false,
+    "merge": false,
+    "deploy": false,
+    "trading": false,
+    "capital_effect": false,
+    "self_application": false
+  },
+  "effect_ceiling": {
+    "NO_FURTHER_AGENT_WORK": true,
+    "auto_accept": false,
+    "auto_dispatch": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy": "DENY",
+    "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_HUMAN_AUTHORIZATION",
+    "push": "DENY_WITHOUT_EXPLICIT_BOUNDED_AUTHORITY",
+    "self_application": false
+  }
+}
