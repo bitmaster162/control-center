@@ -20,10 +20,15 @@ def main() -> int:
         errors.append("generated_lifecycle_semantic_mismatch")
 
     rows = {r.get("work_order"): r for r in actual.get("work_orders", [])}
-    if actual.get("summary", {}).get("work_orders_total") != 14:
+    summary = actual.get("summary", {})
+    if summary.get("work_orders_total") != 14:
         errors.append("work_order_total_mismatch")
-    if actual.get("summary", {}).get("applied") != 0:
+    if summary.get("applied") != 0:
         errors.append("unexpected_applied_work_order")
+    if summary.get("historical_predecessor") != 1:
+        errors.append("historical_predecessor_count_mismatch")
+    if summary.get("stage_counts", {}).get("EFFECT_GATE_WAIT", 0) != 0:
+        errors.append("stale_effect_gate_still_present")
     if any(r.get("dispatch_authorized") is not False or r.get("effect_authorized") is not False for r in rows.values()):
         errors.append("unauthorized_transition_detected")
 
@@ -32,10 +37,13 @@ def main() -> int:
         return_plane.get("transport_status") == "ACKNOWLEDGED"
         and return_plane.get("semantic_status") == "ACCEPTED"
         and return_plane.get("apply_status") == "NOT_APPLIED"
-        and return_plane.get("effect_gate") == "ROBERT_MIGRATION_DECISION"
+        and return_plane.get("historical_predecessor") is True
+        and return_plane.get("lifecycle_stage") == "HISTORICAL_EVIDENCE_ONLY"
+        and return_plane.get("effect_gate") == "NONE_STALE_PREDECESSOR_R59_ACTIVE"
         and return_plane.get("effect_authorized") is False
+        and return_plane.get("canonical_runtime", {}).get("watcher_generation") == "R59"
     ):
-        errors.append("return_plane_lifecycle_boundary_mismatch")
+        errors.append("return_plane_historical_boundary_mismatch")
 
     trading = [r for r in rows.values() if r.get("slot") == "CODEX-02"]
     if len(trading) != 2 or any(not r.get("do_not_touch") or r.get("effect_gate") != "OWNER_ONLY_DO_NOT_TOUCH" for r in trading):
