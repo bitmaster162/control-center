@@ -1,0 +1,347 @@
+{
+  "authorized_future_write_scope": {
+    "deploy_authority_change": false,
+    "drive_writes_exactly": [
+      {
+        "candidate_bytes": 1328,
+        "candidate_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+        "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+        "file": "MANIFEST.json",
+        "order": 1
+      },
+      {
+        "candidate_bytes": 5493,
+        "candidate_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+        "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+        "file": "CURRENT_POINTER.json",
+        "must_be_last_stable_root_write": true,
+        "order": 2
+      }
+    ],
+    "effect_authority_change": false,
+    "execution_authority_change": false,
+    "must_not_write": [
+      "CURRENT_STATE.json",
+      "ROLE_INDEX.json",
+      "ROLE_VIEWS.json",
+      "CURRENT_RETURN_REGISTRY.json",
+      "R64_POINTER_PROMOTION_RECEIPT.json",
+      "R64_STABLE_ROOT_PROVIDER_READBACK_20260808.json"
+    ],
+    "routing_mutation": false,
+    "runtime_mutation": false,
+    "trading_authority_change": false
+  },
+  "candidates": {
+    "manifest": {
+      "bytes": 1328,
+      "content_object": {
+        "apply_status": "RESEAL_CANDIDATE_NOT_APPLIED",
+        "base_generation": "R64",
+        "files": [
+          {
+            "bytes": 6506,
+            "path": "CURRENT_STATE.json",
+            "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+          },
+          {
+            "bytes": 2043,
+            "path": "ROLE_INDEX.json",
+            "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+          },
+          {
+            "bytes": 3945,
+            "path": "ROLE_VIEWS.json",
+            "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+          }
+        ],
+        "generated_at_utc": "2026-08-11T20:31:00Z",
+        "generation": "R64",
+        "original_manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+        "r15_acceptance_sha256": "b779211a4ee14abb97ebc9306bbb119d16eb1c079bc0d858e71e10a329977b24",
+        "repair": {
+          "authorization_phrase": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+          "authorized_scope": "/broker_plane/registry_mutation_rule",
+          "current_state_after": {
+            "bytes": 6506,
+            "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+          },
+          "current_state_before": {
+            "bytes": 6277,
+            "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd"
+          },
+          "semantic_only": true
+        },
+        "schema": "CONTROL_CANTER_R64_RESEAL_MANIFEST_V1"
+      },
+      "repo_path": "control_center/data/canonical_reseal_manifest.candidate.v1.json",
+      "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+      "target_drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+      "target_path": "MANIFEST.json",
+      "write_mode": "IN_PLACE_REPLACE_PRESERVE_DRIVE_FILE_ID"
+    },
+    "pointer": {
+      "bytes": 5493,
+      "content_object": {
+        "authored_by": "GPT_RUNTIME_CURRENT R64 reseal pointer after exact Robert reseal-manifest acceptance and post-write provider readback",
+        "canonical_activation": {
+          "accepted_manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+          "candidate_state_marker_interpretation": "Original pre-repair CURRENT_STATE bytes were hash-bound by the original accepted manifest until Robert explicitly authorized the one-field repair via APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1. This original activation record is historical after reseal.",
+          "decision": "ACCEPT_R64_POINTER_PROMOTION",
+          "generation": "R64",
+          "human_approval_observed_at_local": "2026-08-08T03:24+07:00",
+          "human_sovereign": "ROBERT",
+          "promotion_receipt": {
+            "drive_file_id": "1tIkffUmIN43-PXnOyZ-p2eDDhaQdGM3m",
+            "path": "CONTROL_CANTER_R64_PROMOTION_RECEIPT_20260808/R64_POINTER_PROMOTION_RECEIPT.json",
+            "sha256": "1ab0bf96b0aab338e96b41ca813ebbcbf5a42d3bd3ea36f598e379b09df5bebe"
+          },
+          "stable_root_provider_readback": {
+            "all_exact_at_original_promotion": true,
+            "current_status": "HISTORICAL_PRE_REPAIR_ONLY",
+            "drive_file_id": "16O5Uu3UaPM89OfNpvrK0PONg8IhL4FXL",
+            "path": "CONTROL_CANTER_R64_PROMOTION_RECEIPT_20260808/R64_STABLE_ROOT_PROVIDER_READBACK_20260808.json"
+          },
+          "status": "HISTORICAL_PRE_REPAIR_ACTIVATION"
+        },
+        "canonical_reseal": {
+          "accepted_reseal_manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+          "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+          "generation": "R64",
+          "human_sovereign": "ROBERT",
+          "original_manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+          "post_write_provider_readback_required": true,
+          "reason": "AUTHORIZED_ONE_FIELD_CURRENT_STATE_REPAIR_REQUIRES_HASH_BINDING_RESEAL",
+          "repaired_current_state": {
+            "bytes": 6506,
+            "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+          },
+          "status": "ACTIVE_RESEALED_AFTER_EXACT_PROVIDER_READBACK"
+        },
+        "current_return_registry": {
+          "reason": "R63 is a control repair, not a return; registry mutations are broker-owned.",
+          "updated_by_r63": false
+        },
+        "current_state": {
+          "bytes": 6506,
+          "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+          "path": "CURRENT_STATE.json",
+          "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+        },
+        "drive_id_policy": "PROVIDER_READBACK_BOUND",
+        "effect_ceiling": {
+          "NO_FURTHER_AGENT_WORK": true,
+          "auto_accept": false,
+          "auto_dispatch": false,
+          "can_trade": false,
+          "capital_permission": "DENY",
+          "deploy": "DENY",
+          "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_HUMAN_AUTHORIZATION",
+          "push": "DENY_WITHOUT_EXPLICIT_BOUNDED_AUTHORITY",
+          "self_application": false
+        },
+        "generation": "R64",
+        "generation_ledger": {
+          "drive_file_id": null,
+          "path": "CONTROL_CANTER_R63_CONSOLIDATION_20260730/R63_GENERATION_LEDGER.json",
+          "sha256": "685cb66042b11d907ad163916fece9f6e20af0ddf440aa85e9e03c2cdcdadf84",
+          "size_bytes": 4394
+        },
+        "manifest": {
+          "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+          "path": "MANIFEST.json",
+          "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+          "size_bytes": 1328
+        },
+        "packet_folder": {
+          "drive_folder_id": "1Mslz0BhVvXck-iAQtEdjrBsiHPZcMEob",
+          "path": "00_CONTROL_CURRENT/CONTROL_CANTER_R64_RECONCILIATION/"
+        },
+        "packet_kind": "POST_R63_ATOMIC_CONTROL_PLANE_RECONCILIATION_CANDIDATE",
+        "packet_manifest": {
+          "drive_file_id": null,
+          "path": "CONTROL_CANTER_R63_CONSOLIDATION_20260730/MANIFEST.json",
+          "sha256": "1c9259acb5a433d67be248c6df544c3d113be5851a3c436d5e78ed5df92e7e21",
+          "size_bytes": 1868
+        },
+        "predecessor": {
+          "generation": "R63",
+          "immutable": true,
+          "pointer_sha256": "8816aaa82161efe5254cf981eb3cfddbcd38a7f74d4a56464d346e63de5884b5",
+          "superseded_scope": "STABLE_POINTER_AND_ROOT_FILES_ONLY_AFTER_EXPLICIT_ACCEPTANCE"
+        },
+        "published_at_utc": "2026-08-11T20:31:00Z",
+        "r15_controller_acceptance": {
+          "head": "cdefad22bce3884bcb89437d4eec3163534a344b",
+          "sha256": "b779211a4ee14abb97ebc9306bbb119d16eb1c079bc0d858e71e10a329977b24",
+          "tree": "01f38976686b4995b055f0d42a5e6b77b30fcc26"
+        },
+        "ready_protocol": {
+          "human_approval_manifest_binding_required": true,
+          "marker": "READY.json",
+          "must_be_uploaded_last": true,
+          "raw_provider_readback_required": true,
+          "root_pointer_must_be_written_last_among_stable_root_files": true
+        },
+        "role_index": {
+          "bytes": 2043,
+          "drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+          "path": "ROLE_INDEX.json",
+          "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+        },
+        "role_views": {
+          "bytes": 3945,
+          "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+          "path": "ROLE_VIEWS.json",
+          "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+        },
+        "rule": "R64 is canonical ACTIVE after the authorized one-field CURRENT_STATE repair only when Robert accepts the exact R64 reseal manifest and post-write provider readback verifies CURRENT_STATE, ROLE_INDEX, ROLE_VIEWS, MANIFEST, and CURRENT_POINTER exact bytes. Original promotion evidence remains historical. No deployment/trading/memory/R16 authority is implied.",
+        "schema": "CONTROL_CURRENT_POINTER_R64"
+      },
+      "repo_path": "control_center/data/current_pointer.reseal_candidate.v1.json",
+      "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+      "target_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "target_path": "CURRENT_POINTER.json",
+      "write_mode": "IN_PLACE_REPLACE_WRITE_LAST"
+    }
+  },
+  "current_integrity": {
+    "current_all_exact": false,
+    "current_manifest": {
+      "bytes": 751,
+      "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+      "sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"
+    },
+    "current_pointer": {
+      "bytes": 4430,
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
+    },
+    "current_state": {
+      "bytes": 6506,
+      "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+      "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+    },
+    "generation": "R64",
+    "role_index": {
+      "bytes": 2043,
+      "drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+      "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+    },
+    "role_views": {
+      "bytes": 3945,
+      "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+      "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+    },
+    "status": "AUTHORIZED_ROOT_REPAIR_APPLIED_RESEAL_REQUIRED"
+  },
+  "future_gate": {
+    "auto_apply": false,
+    "exact_authorization_phrase": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "generic_go_is_authorization": false,
+    "proposal_applied": false,
+    "required_gate_class": "SEPARATE_EXPLICIT_CANONICAL_RESEAL_GATE",
+    "self_application": false
+  },
+  "historical_binding": {
+    "historical_receipts_mutated": false,
+    "original_manifest_sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d",
+    "original_promotion_decision": "ACCEPT_R64_POINTER_PROMOTION",
+    "original_promotion_receipt_sha256": "1ab0bf96b0aab338e96b41ca813ebbcbf5a42d3bd3ea36f598e379b09df5bebe",
+    "original_provider_readback_all_exact": true,
+    "original_provider_readback_drive_file_id": "16O5Uu3UaPM89OfNpvrK0PONg8IhL4FXL",
+    "original_provider_readback_status": "HISTORICAL_PRE_REPAIR_ONLY"
+  },
+  "history_preservation": {
+    "historical_receipts_remain_unchanged": true,
+    "manifest_existing_revision_id": "0B75ipnUhcll9c3p2VERZU2UydEorSyswK3l3ZE55Y2VxbW9zPQ",
+    "manifest_existing_revision_observed": true,
+    "manifest_existing_revision_size": 751,
+    "note": "In-place manifest/pointer replacement preserves Drive file IDs; original promotion evidence remains historical by exact hashes and revision history, and is not rewritten.",
+    "pointer_current_revision_id": "0B75ipnUhcll9bnduVmpodmlldHlRNDc1bERRejlIMDM0a0hNPQ",
+    "pointer_existing_revision_observed": true
+  },
+  "observed_at": "2026-08-12T03:31:00+07:00",
+  "post_write_readback": {
+    "all_exact_rule": "TRUE_ONLY_IF_ALL_FIVE_PROVIDER_READBACKS_MATCH_EXACT_BYTES_AND_SHA",
+    "expected": {
+      "CURRENT_POINTER.json": {
+        "bytes": 5493,
+        "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
+      },
+      "CURRENT_STATE.json": {
+        "bytes": 6506,
+        "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+      },
+      "MANIFEST.json": {
+        "bytes": 1328,
+        "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+      },
+      "ROLE_INDEX.json": {
+        "bytes": 2043,
+        "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+      },
+      "ROLE_VIEWS.json": {
+        "bytes": 3945,
+        "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+      }
+    },
+    "files": [
+      "CURRENT_STATE.json",
+      "ROLE_INDEX.json",
+      "ROLE_VIEWS.json",
+      "MANIFEST.json",
+      "CURRENT_POINTER.json"
+    ],
+    "on_failure": "DO_NOT_CLAIM_RESEALED_OR_ALL_EXACT; STOP_FOR_HUMAN_REPAIR",
+    "required": true
+  },
+  "preconditions": {
+    "current_manifest_must_match": {
+      "bytes": 751,
+      "sha256": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d"
+    },
+    "current_pointer_must_match": {
+      "bytes": 4430,
+      "sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef"
+    },
+    "current_state_must_match": {
+      "bytes": 6506,
+      "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+    },
+    "on_any_mismatch": "ABORT_NO_WRITE",
+    "role_index_must_match": {
+      "bytes": 2043,
+      "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+    },
+    "role_views_must_match": {
+      "bytes": 3945,
+      "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+    }
+  },
+  "projection_kind": "NON_AUTHORITY_REVIEW_ONLY_PROPOSAL",
+  "repair_binding": {
+    "after": {
+      "bytes": 6506,
+      "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+    },
+    "before": {
+      "bytes": 6277,
+      "sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd"
+    },
+    "executed_gate": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+    "scope": "/broker_plane/registry_mutation_rule",
+    "semantic_repair_complete": true
+  },
+  "safety": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "no_agent_dispatch": true,
+    "no_drive_write_in_this_proposal": true,
+    "no_external_message": true,
+    "no_return_registry_mutation": true,
+    "no_runtime_mutation": true
+  },
+  "schema": "control_center.canonical_reseal_proposal.v1"
+}
