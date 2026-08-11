@@ -88,9 +88,9 @@ p { line-height: 1.55; }
   text-transform: uppercase;
   color: var(--muted);
 }
-.status-active, .status-accepted, .status-running, .status-acknowledged, .status-in-progress { color: var(--ok); border-color: #345942; }
-.status-wait-dependency, .status-waiting-dependency, .status-hold, .status-effect-pending, .status-planned-parallel, .status-shadow-verified-predecessor { color: var(--warn); border-color: #5e5531; }
-.status-rejected, .status-quarantined { color: var(--danger); border-color: #613636; }
+.status-active, .status-accepted, .status-running, .status-acknowledged, .status-in-progress, .status-fresh { color: var(--ok); border-color: #345942; }
+.status-wait-dependency, .status-waiting-dependency, .status-hold, .status-effect-pending, .status-planned-parallel, .status-shadow-verified-predecessor, .status-expiring { color: var(--warn); border-color: #5e5531; }
+.status-rejected, .status-quarantined, .status-expired, .status-drift-hold { color: var(--danger); border-color: #613636; }
 
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; min-width: 760px; }
