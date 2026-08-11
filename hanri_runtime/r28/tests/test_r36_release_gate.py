@@ -46,6 +46,29 @@ class R36ReleaseGateTests(unittest.TestCase):
         for required in ("ControlCenter-HANRI-R35", "ControlCenter-HANRI-R36", "HANRI_R35_ROLLBACK_PASS"):
             self.assertIn(required, restore)
 
+    def test_r35_lock_is_quiesced_before_benchmark_without_blind_delete(self) -> None:
+        install = (APP_ROOT / "scripts" / "Install-R36ReleaseCandidate-PS51.ps1").read_text(encoding="ascii")
+        for required in (
+            "function Quiesce-HanriLock",
+            "Get-CimInstance Win32_Process",
+            '-ErrorAction Stop',
+            "orphaned-r36-cutover-",
+            "Move-Item -LiteralPath $LockPath",
+            "R35_ORPHAN_LOCK_QUARANTINED",
+            "r35_orphan_lock_quarantined",
+            "refusing quarantine",
+            "$rollbackLockSafeToStart = $false",
+            "R35 task re-enabled but not force-started",
+        ):
+            self.assertIn(required, install)
+        self.assertNotIn("Remove-Item -LiteralPath $R35LockPath", install)
+        stopped = install.find("Wait-TaskStopped $R35TaskName 60")
+        quiesce = install.find("Quiesce-HanriLock $R35LockPath 15")
+        benchmark = install.find("Collect-FastSamples $R35App $R35Config $R35State")
+        self.assertGreater(stopped, 0)
+        self.assertGreater(quiesce, stopped)
+        self.assertGreater(benchmark, quiesce)
+
     def test_r35_wrapper_remains_r35(self) -> None:
         text = (APP_ROOT / "src" / "hanri" / "sqlite_cli.py").read_text(encoding="utf-8")
         self.assertIn('PROGRAM_VERSION = "35.0.0"', text)
