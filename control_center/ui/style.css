@@ -1,0 +1,111 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0d10;
+  --panel: #12161b;
+  --panel-2: #171c22;
+  --line: #28313a;
+  --text: #eef3f7;
+  --muted: #98a6b3;
+  --accent: #7dd3fc;
+  --ok: #86efac;
+  --warn: #fde68a;
+  --danger: #fca5a5;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 32px clamp(18px, 4vw, 56px) 20px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+  z-index: 10;
+}
+.topbar h1 { margin: 4px 0 8px; font-size: clamp(30px, 5vw, 54px); letter-spacing: -0.04em; }
+.eyebrow { margin: 0; color: var(--accent); font-size: 11px; letter-spacing: .14em; font-weight: 800; }
+.muted { color: var(--muted); }
+.safety { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px clamp(18px, 4vw, 56px);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+.tabs a {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  padding: 8px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.tabs a:hover { color: var(--text); background: var(--panel); text-decoration: none; }
+
+main { padding: 20px clamp(18px, 4vw, 56px) 56px; display: grid; gap: 18px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+.hero-panel { border-color: #315263; }
+.section-head { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 14px; }
+h2 { margin: 2px 0 0; font-size: 22px; }
+h3 { margin: 12px 0 8px; font-size: 16px; line-height: 1.35; }
+p { line-height: 1.55; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-width: 0; }
+.card.emphasis { border-color: #315263; }
+.card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.card p { margin: 7px 0; font-size: 13px; }
+
+.pill, .status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.status-active, .status-accepted, .status-running, .status-acknowledged, .status-in-progress { color: var(--ok); border-color: #345942; }
+.status-wait-dependency, .status-waiting-dependency, .status-hold, .status-effect-pending, .status-planned-parallel, .status-shadow-verified-predecessor { color: var(--warn); border-color: #5e5531; }
+.status-rejected, .status-quarantined { color: var(--danger); border-color: #613636; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 760px; }
+th, td { text-align: left; vertical-align: top; padding: 10px; border-bottom: 1px solid var(--line); font-size: 12px; }
+th { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 10px; }
+
+.callout { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; line-height: 1.55; }
+.links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+.empty, .error { padding: 18px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); }
+.error { color: var(--danger); }
+footer { color: var(--muted); padding: 0 clamp(18px, 4vw, 56px) 40px; font-size: 12px; }
+
+@media (max-width: 720px) {
+  .topbar { position: static; flex-direction: column; }
+  .safety { justify-content: flex-start; }
+  .panel { padding: 14px; }
+  main { padding-top: 14px; }
+}
