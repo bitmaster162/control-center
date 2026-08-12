@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://control-canter.local/contracts/hanri-dashboard-snapshot.schema.json",
   "title": "HANRI Control Center Dashboard Snapshot",
-  "description": "Deterministic read-only projection contract. The schema is not an authority source.",
+  "description": "Deterministic read-only projection contract. The schema is not an authority source and does not select an authority generation.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -230,7 +230,9 @@
           "minLength": 1
         },
         "authority_generation": {
-          "const": "R63"
+          "type": "string",
+          "pattern": "^R[0-9]+$",
+          "description": "Copied from the accepted canonical authority source. The snapshot contract does not select or advance authority generations."
         },
         "authority_status": {
           "enum": [

@@ -1,6 +1,6 @@
-# HANRI Control Center Snapshot Data Contract v1.0.0
+# HANRI Control Center Snapshot Data Contract v1.0.1
 
-**Classification:** R64 implementation contract. It does not create or supersede an authority generation. Authority remains R63.
+**Classification:** R64 implementation contract. It does not create or supersede an authority generation. `meta.authority_generation` is copied from the accepted canonical Control Center authority source; this contract never selects or advances that generation.
 
 ## Purpose
 
@@ -22,7 +22,7 @@ A live adapter may update the projection, but it must never mutate Control Cente
 ## Versioning
 
 - `contract.version` follows semantic versioning.
-- Patch: clarifications or optional fields only.
+- Patch: clarifications and corrective alignment that preserve existing valid payloads.
 - Minor: backward-compatible fields or enum values.
 - Major: removals, renamed required fields or changed semantics.
 - The UI must declare compatible contract versions.
@@ -77,7 +77,7 @@ Additional rules:
 The contract requires:
 
 ```text
-authority_generation = R63
+authority_generation = generation reported by the accepted canonical Control Center authority source
 authority_status = ACCEPTED
 control_generation_created = false
 can_trade = false
@@ -86,7 +86,9 @@ deploy_permission = DENY
 self_application = false
 ```
 
-Any violating payload fails validation.
+The schema validates the generation syntax (`R<number>`) but does not choose a generation. Repository fixtures may bind to the currently accepted generation for regression testing. Any effect-ceiling violation fails validation.
+
+For the R38.1 contract fixture, the accepted canonical authority is `R64`; this is a projection binding, not creation of a new authority generation.
 
 ## Determinism
 
@@ -96,14 +98,14 @@ Given identical normalized source inputs and an explicit `generated_at`, the sna
 
 The `audit` object is required and contains:
 
-- R63 authority acceptance;
+- canonical authority acceptance and pointer state;
 - HANRI decision-loop state;
-- P0 closure receipts and missing tests;
+- P0 closure receipts and any missing tests;
 - defect ledger;
 - artifact acceptance ledger;
 - global invariants.
 
-The R63 operator dashboard is merged here; it is not maintained as an independent competing truth surface.
+Historical authority events remain append-only evidence. They are not rewritten into current authority. The canonical operator dashboard is merged here; it is not maintained as an independent competing truth surface.
 
 ## Standalone and live modes
 

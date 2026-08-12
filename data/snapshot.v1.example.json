@@ -1,30 +1,30 @@
 {
   "contract": {
     "name": "hanri.control_center.snapshot",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "schema_uri": "contracts/hanri-dashboard-snapshot.schema.json",
     "compatible_ui": [
       "R64",
       "R64-P1"
     ],
-    "breaking_change_policy": "Major version changes require a new UI compatibility declaration; minor additions must remain backward-compatible."
+    "breaking_change_policy": "Major version changes require a new UI compatibility declaration; contract-alignment patches must preserve existing valid payloads."
   },
   "meta": {
-    "snapshot_id": "R64-P1-RUNTIME-CONTRACT-SNAPSHOT-20260730",
-    "authority_generation": "R63",
+    "snapshot_id": "R64-R38.1-CONTRACT-ALIGNMENT-FIXTURE-20260812",
+    "authority_generation": "R64",
     "authority_status": "ACCEPTED",
-    "implementation_layer": "R64-P1",
+    "implementation_layer": "R64-R38.1",
     "control_generation_created": false,
-    "generated_at": "2026-07-30T05:20:00+07:00",
+    "generated_at": "2026-08-12T12:22:00Z",
     "generated_by": {
-      "actor_id": "GPT-CONTROLLER",
-      "role": "controller_architect"
+      "actor_id": "HANRI-R38.1",
+      "role": "contract_alignment_fixture"
     },
     "freshness": {
       "mode": "SNAPSHOT",
       "state": "CURRENT",
-      "as_of": "2026-07-30T05:05:00+07:00",
-      "reason": "FABLE runtime handoff accepted; live adapters remain pending CODEX-01."
+      "as_of": "2026-08-12T12:22:00Z",
+      "reason": "Contract fixture aligned to accepted R64 authority and receipted D4 P0 closure; not a live dashboard projection."
     },
     "global_mode": "READ_ONLY",
     "can_trade": false,
@@ -45,269 +45,63 @@
   },
   "sources": [
     {
-      "source_id": "r63-roots",
+      "source_id": "r64-pointer-current",
       "kind": "CONTROL_ROOT",
-      "locator": "Control canter/00_CONTROL_CURRENT/{CURRENT_POINTER,CURRENT_STATE,ROLE_INDEX,ROLE_VIEWS}.json",
+      "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json",
       "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-07-29T22:05:00Z",
-      "required": true,
-      "notes": "R63 accepted by FABLE provider readback and independent Antigravity replay; exact per-file hashes remain in R63 receipts."
-    },
-    {
-      "source_id": "fable-handoff-r64",
-      "kind": "RECEIPT",
-      "locator": "HANDOFF_TO_GPT_R64_RUNTIME_REPORT_20260730.md",
-      "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "SOURCE_BACKED",
-      "freshness": "CURRENT",
-      "as_of": "2026-07-29T22:05:00Z",
-      "required": true,
-      "notes": "Runtime report; claims are rendered according to receipt state."
-    },
-    {
-      "source_id": "r64-package",
-      "kind": "RECEIPT",
-      "locator": "Control canter/00_DASHBOARD_CURRENT/HANRI_CONTROL_CENTER_R64_FULL_20260730.zip",
-      "sha256": "b3e4f98e1a569aa9e6fcf28f2b703c91801bc9327c81ee0a82c55637eca01100",
-      "drive_file_id": null,
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
       "evidence_state": "HASH_VERIFIED",
       "freshness": "CURRENT",
-      "as_of": "2026-07-29T22:05:00Z",
+      "as_of": "2026-08-07T20:34:00Z",
       "required": true,
-      "notes": "Manifest 28/28, validate 5/5, pytest 3/3 according to FABLE runtime replay."
+      "notes": "R64 canonical activation ACTIVE; provider readback all_exact."
     },
     {
-      "source_id": "hanri-state",
-      "kind": "RUNTIME_STATE",
-      "locator": "%LOCALAPPDATA%/ControlCenterHANRIR28/state",
-      "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-07-29T21:38:57Z",
-      "required": true,
-      "notes": "Runtime state is authoritative over lagging Drive mirror for HANRI R28."
-    },
-    {
-      "source_id": "return-registry",
-      "kind": "RETURN_REGISTRY",
-      "locator": "Control canter/00_RETURN_DROP/CURRENT_RETURN_REGISTRY.json",
-      "sha256": null,
-      "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
-      "evidence_state": "RECEIPTED",
-      "freshness": "CURRENT",
-      "as_of": "2026-07-29T22:05:00Z",
-      "required": true,
-      "notes": "Permanent slot registry; D1 adds CLAUDE-BITUNIX, FABLE-5 and CODEX-08."
-    },
-    {
-      "source_id": "p0-templates",
+      "source_id": "r64-d4-closure",
       "kind": "RECEIPT",
-      "locator": "Control canter/00_CONTROL_CURRENT/CONTROL_CANTER_R63_CONSOLIDATION_20260730/DECISIONS_R63/P0_RECEIPTS",
+      "locator": "Control canter/00_CONTROL_CURRENT/R64_D4_P0_CURRENT_STATE_DELTA_20260811.json",
       "sha256": null,
-      "drive_file_id": null,
-      "evidence_state": "CLAIMED",
+      "drive_file_id": "1tlKhRbIj8E9njfwV5tC6SY_Y4hDgDGlM",
+      "evidence_state": "RECEIPTED",
       "freshness": "CURRENT",
-      "as_of": "2026-07-29T22:05:00Z",
+      "as_of": "2026-08-11T16:53:27Z",
       "required": true,
-      "notes": "Closure templates exist, but required negative-test receipts are not complete."
+      "notes": "D4 operational COMPLETE and administrative COMPLETE; P0-1 CLOSED, P0-2 RE-CLOSED, P0-3 CLOSED; stable roots not mutated."
     }
   ],
   "kpis": [
     {
       "label": "Authority generation",
-      "value": "R63 ACCEPTED",
+      "value": "R64 ACTIVE",
       "tone": "ok",
-      "evidence_state": "RECEIPTED",
+      "evidence_state": "HASH_VERIFIED",
       "evidence_refs": [
-        "r63-roots"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "label": "HANRI pending decisions",
-      "value": 0,
-      "tone": "ok",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state"
+        "r64-pointer-current"
       ],
       "freshness": "CURRENT"
     },
     {
       "label": "P0 security closure",
-      "value": "0/3 receipted",
-      "tone": "danger",
-      "evidence_state": "CLAIMED",
+      "value": "3/3 CLOSED",
+      "tone": "ok",
+      "evidence_state": "RECEIPTED",
       "evidence_refs": [
-        "p0-templates"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "label": "Dashboard mode",
-      "value": "SNAPSHOT",
-      "tone": "info",
-      "evidence_state": "HASH_VERIFIED",
-      "evidence_refs": [
-        "r64-package"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "label": "External pilots/payments",
-      "value": "0 / 0",
-      "tone": "warn",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
+        "r64-d4-closure"
       ],
       "freshness": "CURRENT"
     }
   ],
-  "current_actions": [
-    {
-      "id": "A1",
-      "title": "Dashboard contract",
-      "text": "Publish snapshot schema v1.0.0 and merge Audit tab into the canonical R64 UI.",
-      "status": "READY",
-      "evidence_state": "HASH_VERIFIED",
-      "evidence_refs": [
-        "r64-package"
-      ]
-    },
-    {
-      "id": "A2",
-      "title": "CODEX-01 live adapters",
-      "text": "Bind read-only sources to the same contract; UNKNOWN/DEGRADED on missing or stale data.",
-      "status": "DISPATCH_READY",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "A3",
-      "title": "P0 receipts",
-      "text": "Keep D4 open until all three closure receipts contain required negative tests and timestamps.",
-      "status": "GATED",
-      "evidence_state": "CLAIMED",
-      "evidence_refs": [
-        "p0-templates"
-      ]
-    },
-    {
-      "id": "A4",
-      "title": "HANRI governor",
-      "text": "Implement in shadow with install gate and no self-application; R28 remains the live runtime.",
-      "status": "DISPATCH_READY",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "A5",
-      "title": "Roman outreach",
-      "text": "Approved text remains staged until Robert supplies an authenticated channel and explicit SEND ROMAN instruction.",
-      "status": "PENDING_CHANNEL",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    }
-  ],
-  "blockers": [
-    {
-      "id": "B-P0",
-      "title": "P0 closure not receipted",
-      "text": "Antigravity claims secured state, but required negative tests and rotation timestamps are absent.",
-      "severity": "P0",
-      "evidence_state": "CLAIMED",
-      "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "B-LIVE",
-      "title": "Live dashboard adapters pending",
-      "text": "Canonical UI exists; live source adapters and deterministic projection are not yet accepted.",
-      "severity": "P1",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "r64-package",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "B-BROKER",
-      "title": "Duplicate broker deliveries",
-      "text": "DF6 duplicate ×2/×3 delivery groups require deduplication by (slot, work_order_id, sha256).",
-      "severity": "P1",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "B-REVENUE",
-      "title": "No external proof",
-      "text": "No sent pilot, payment or renewal receipt exists yet.",
-      "severity": "P1",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    }
-  ],
+  "current_actions": [],
+  "blockers": [],
   "events": [
     {
-      "event_id": "EV-R63-ACCEPT",
-      "time": "2026-07-29T22:05:00Z",
-      "title": "R63 accepted",
-      "text": "FABLE provider readback and independent Antigravity replay converged; controller status moved to ACCEPTED.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "event_id": "EV-D2-CLOSE",
-      "time": "2026-07-29T21:38:57Z",
-      "title": "HANRI decision loop closed",
-      "text": "Two flat verdict envelopes were consumed; pending_human_decisions=0 and recurrence check passed.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "event_id": "EV-R64-PASS",
-      "time": "2026-07-29T22:05:00Z",
-      "title": "R64 implementation package verified",
-      "text": "ZIP hash matched, manifest 28/28, validator 5/5 and pytest 3/3; standalone dashboard published.",
+      "event_id": "EV-R64-ACTIVE",
+      "time": "2026-08-07T20:34:00Z",
+      "title": "R64 canonical pointer active",
+      "text": "R64 is the accepted canonical authority. R38.1 aligns the projection contract to this already-existing authority; it does not create a new generation.",
       "evidence_state": "HASH_VERIFIED",
       "evidence_refs": [
-        "r64-package",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "event_id": "EV-FREEZE",
-      "time": "2026-07-29T22:05:00Z",
-      "title": "CONTROL_FREEZE active",
-      "text": "No new authority generation this week except P0, broken pointer, authority corruption or transport failure.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots",
-        "fable-handoff-r64"
+        "r64-pointer-current"
       ]
     }
   ],
@@ -318,546 +112,118 @@
       "operational": "OPERATIONAL",
       "truth": "VERIFIED",
       "execution": "READ_ONLY",
-      "owner": "GPT + FABLE + Antigravity + Robert",
-      "next": "Live adapters and one dashboard projection",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots",
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "id": "hanri",
-      "name": "HANRI R28",
-      "operational": "OPERATIONAL",
-      "truth": "VERIFIED",
-      "execution": "APPROVAL_REQUIRED",
-      "owner": "Robert",
-      "next": "5-minute cadence receipt + R64 governor shadow",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state",
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "id": "continuity-os",
-      "name": "ContinuityOS",
-      "operational": "DEGRADED",
-      "truth": "EVIDENCED",
-      "execution": "READ_ONLY",
-      "owner": "CODEX-01",
-      "next": "Read-only common-memory/dashboard adapters",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "UNKNOWN"
-    },
-    {
-      "id": "archive-os",
-      "name": "ArchiveOS",
-      "operational": "MAINTENANCE",
-      "truth": "EVIDENCED",
-      "execution": "READ_ONLY",
-      "owner": "Archive line",
-      "next": "Source vault and semantic coverage",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "UNKNOWN"
-    },
-    {
-      "id": "return-broker",
-      "name": "Return Broker",
-      "operational": "DEGRADED",
-      "truth": "EVIDENCED",
-      "execution": "READ_ONLY",
-      "owner": "CODEX-07",
-      "next": "Deduplicate by slot/work-order/hash and expose deterministic index",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "return-registry",
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "id": "dashboard",
-      "name": "HANRI Control Center Dashboard",
-      "operational": "OPERATIONAL",
-      "truth": "VERIFIED",
-      "execution": "READ_ONLY",
-      "owner": "FABLE runtime + CODEX-01 adapters",
-      "next": "Contract-bound live adapters; snapshot fallback retained",
+      "owner": "Robert / Control Center",
+      "next": "Use contract-aligned snapshot inputs; dashboard deployment remains separately approval-gated.",
       "evidence_state": "HASH_VERIFIED",
       "evidence_refs": [
-        "r64-package",
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "id": "trading-os",
-      "name": "TradingOS",
-      "operational": "DEGRADED",
-      "truth": "CONTRADICTED",
-      "execution": "READ_ONLY",
-      "owner": "CODEX-05",
-      "next": "Dispatch R57 measurement repair and collect receipt",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "STALE"
-    },
-    {
-      "id": "p0-security",
-      "name": "P0 Security",
-      "operational": "DEGRADED",
-      "truth": "CLAIMED",
-      "execution": "APPROVAL_REQUIRED",
-      "owner": "Antigravity + Robert",
-      "next": "Three closure receipts with negative tests",
-      "evidence_state": "CLAIMED",
-      "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
+        "r64-pointer-current"
       ],
       "freshness": "CURRENT"
     }
   ],
-  "agents": [
-    {
-      "slot": "GPT",
-      "role": "controller / architect",
-      "status": "ACTIVE",
-      "channel": "chat + artifacts",
-      "memory": "Control snapshot",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "slot": "FABLE-5",
-      "role": "runtime / independent auditor",
-      "status": "ACTIVE",
-      "channel": "host bridge + Drive",
-      "memory": "R63 roots + receipts",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "slot": "Antigravity",
-      "role": "host executor / verifier",
-      "status": "P0_RECEIPTS_REQUIRED",
-      "channel": "work order → broker/Drive",
-      "memory": "host state",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "slot": "CODEX-01",
-      "role": "dashboard live adapters",
-      "status": "DISPATCH_READY",
-      "channel": "Return Broker",
-      "memory": "verified Git worktree",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "r64-package"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "slot": "CODEX-05",
-      "role": "TradingOS implementation",
-      "status": "DISPATCH_RECEIPT_MISSING",
-      "channel": "Return Broker",
-      "memory": "TradingOS evidence",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "STALE"
-    },
-    {
-      "slot": "CODEX-07",
-      "role": "broker / event bus",
-      "status": "DEDUP_REPAIR_SCOPE",
-      "channel": "Return Broker",
-      "memory": "registry + event journal",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "return-registry",
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    },
-    {
-      "slot": "Work",
-      "role": "pilot conversion",
-      "status": "ROMAN_STAGED",
-      "channel": "CRM + operator channel",
-      "memory": "operator CRM",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ],
-      "freshness": "CURRENT"
-    }
-  ],
-  "decisions": [
-    {
-      "id": "D1",
-      "verdict": "ACCEPT",
-      "action": "Permanent slots CLAUDE-BITUNIX, FABLE-5, CODEX-08",
-      "implementation_status": "DONE",
-      "detail": "Next harvest must discover Gen-003.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "return-registry",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "D2",
-      "verdict": "ACCEPT",
-      "action": "HANRI decision-intake closure",
-      "implementation_status": "CLOSED",
-      "detail": "pending_human_decisions=0; dedup 2→1; no code change.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "D3",
-      "verdict": "ACCEPT",
-      "action": "CONTROL_FREEZE",
-      "implementation_status": "ACTIVE",
-      "detail": "Authority generation budget consumed for the week.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "D4",
-      "verdict": "ACCEPT",
-      "action": "P0 security closure",
-      "implementation_status": "CLAIMED_NOT_RECEIPTED",
-      "detail": "Claims exist; closure receipts with negative tests are still required.",
-      "evidence_state": "CLAIMED",
-      "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "id": "D5",
-      "verdict": "ACCEPT",
-      "action": "Roman pilot outreach",
-      "implementation_status": "PENDING_CHANNEL",
-      "detail": "Approved text; not sent. Requires explicit SEND ROMAN and authenticated channel.",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    }
-  ],
-  "memory_layers": [
-    {
-      "name": "Hot / Current",
-      "status": "COMPLETE",
-      "description": "R63 current roots and active gates.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots"
-      ]
-    },
-    {
-      "name": "Warm / Episodic",
-      "status": "PARTIAL",
-      "description": "HANRI checkpoints, proof ledger, decision ledger and returns.",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state",
-        "return-registry"
-      ]
-    },
-    {
-      "name": "Cold / Source",
-      "status": "PARTIAL",
-      "description": "ArchiveOS source vault and immutable archives.",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "name": "Semantic / Claims",
-      "status": "PARTIAL",
-      "description": "Entities, claims, evidence pointers, conflicts and supersession.",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "name": "Procedural",
-      "status": "PARTIAL",
-      "description": "Work orders, P0 runbooks, rollback and verification recipes.",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "p0-templates",
-        "r64-package"
-      ]
-    }
-  ],
+  "agents": [],
+  "decisions": [],
+  "memory_layers": [],
   "memory_contract": {
-    "required_before_work": [
-      "CURRENT_POINTER",
-      "CURRENT_STATE",
-      "ROLE_INDEX",
-      "CURRENT_RETURN_REGISTRY",
-      "slot work order"
-    ],
-    "shared_state": [
-      "Plan",
-      "Tasks",
-      "Findings",
-      "EvidencePointers",
-      "Contradictions",
-      "Budget",
-      "RunStatus"
-    ],
-    "append_only": [
-      "events",
-      "decisions",
-      "proofs",
-      "returns",
-      "checkpoints"
-    ],
     "truth_rule": "No claim becomes current truth without source, freshness, verification and scope.",
-    "missing_rule": "Missing discovery never authorizes rerun.",
-    "archiveos_role": "Long-term source memory: vault, immutable archives and source closures.",
-    "continuityos_role": "Long-term operational state: checkpoints, replay, recovery and policy state."
+    "authority_rule": "Projection contracts consume canonical authority; they do not create authority."
   },
   "communication_flow": [
-    "Operator intent",
-    "Control Center work order",
-    "Agent isolated worktree/session",
-    "Evidence return bundle",
-    "Return Broker / Drive",
-    "Independent verification",
-    "Registry + ContinuityOS checkpoint",
-    "Dashboard projection"
+    "Canonical Control Center authority/evidence",
+    "Read-only dashboard snapshot projection"
   ],
-  "messages": [
-    {
-      "message_id": "MSG-FABLE-R64-HANDOFF",
-      "from": "FABLE-5",
-      "to": "GPT",
-      "type": "RUNTIME_HANDOFF",
-      "status": "ACCEPTED",
-      "ref": "HANDOFF_TO_GPT_R64_RUNTIME_REPORT_20260730.md",
-      "evidence_state": "SOURCE_BACKED",
-      "evidence_refs": [
-        "fable-handoff-r64"
-      ]
-    },
-    {
-      "message_id": "MSG-ROBERT-D1-D5",
-      "from": "Robert",
-      "to": "Control Center",
-      "type": "HUMAN_DECISIONS",
-      "status": "RECORDED",
-      "ref": "D1-D5",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots"
-      ]
-    },
-    {
-      "message_id": "MSG-HANRI-D2",
-      "from": "HANRI R28",
-      "to": "Control Center",
-      "type": "DECISION_LEDGER_UPDATE",
-      "status": "CLOSED",
-      "ref": "20260729T213857Z_14cd5439",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state"
-      ]
-    }
-  ],
+  "messages": [],
   "security": [
     {
       "id": "P0-1",
-      "title": "Arena PostgreSQL exposure",
-      "status": "CLAIMED_NOT_RECEIPTED",
-      "action": "Require external connection REFUSED, loopback-only listener, old login DENIED and app continuity PASS.",
-      "evidence_state": "CLAIMED",
+      "title": "Arena PostgreSQL public exposure",
+      "status": "RECEIPTED_CLOSED",
+      "action": "Closed. Reopen only on contradictory evidence/regression.",
+      "evidence_state": "RECEIPTED",
       "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
+        "r64-d4-closure"
       ]
     },
     {
       "id": "P0-2",
-      "title": "Bearer token in panel artifact",
-      "status": "CLAIMED_NOT_RECEIPTED",
-      "action": "Require old token DENIED, new consumer PASS, zero-literal grep receipt and exact rotation timestamps.",
-      "evidence_state": "CLAIMED",
+      "title": "Bearer credential in static HTML",
+      "status": "RECEIPTED_CLOSED",
+      "action": "Re-closed with corrected closure receipt. Reopen only on contradictory evidence/regression.",
+      "evidence_state": "RECEIPTED",
       "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
+        "r64-d4-closure"
       ]
     },
     {
       "id": "P0-3",
-      "title": "Remote Administrator credential",
-      "status": "CLAIMED_NOT_RECEIPTED",
-      "action": "Require new access PASS, old credential DENIED, break-glass verified and exact rotation timestamps.",
-      "evidence_state": "CLAIMED",
+      "title": "Remote-admin credential rotation",
+      "status": "RECEIPTED_CLOSED",
+      "action": "Closed. Reopen only on contradictory evidence/regression.",
+      "evidence_state": "RECEIPTED",
       "evidence_refs": [
-        "p0-templates",
-        "fable-handoff-r64"
+        "r64-d4-closure"
       ]
     }
   ],
   "audit": {
     "authority": {
-      "generation": "R63",
-      "status": "ACCEPTED",
-      "independent_checks": 2,
-      "pointer_written_last": true,
-      "r56_status": "VOID",
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "r63-roots",
-        "fable-handoff-r64"
-      ]
+      "canonical_generation": "R64",
+      "pointer_status": "ACTIVE",
+      "contract_selects_generation": false
     },
     "hanri_decision_loop": {
-      "status": "CLOSED",
-      "pending_human_decisions": 0,
-      "run_id": "20260729T213857Z_14cd5439",
-      "dedup": "2→1",
-      "code_changed": false,
-      "evidence_state": "RECEIPTED",
-      "evidence_refs": [
-        "hanri-state",
-        "fable-handoff-r64"
-      ]
+      "mode": "READ_ONLY_CONTRACT_FIXTURE",
+      "self_application": false
     },
     "p0_receipts": [
       {
         "id": "P0-1",
-        "status": "MISSING_REQUIRED_NEGATIVE_TESTS",
-        "required": [
-          "external_connect_refused",
-          "loopback_only",
-          "old_login_denied",
-          "application_continuity_pass",
-          "rotation_timestamps"
-        ]
+        "status": "RECEIPTED_CLOSED"
       },
       {
         "id": "P0-2",
-        "status": "MISSING_REQUIRED_NEGATIVE_TESTS",
-        "required": [
-          "old_token_denied",
-          "new_consumer_pass",
-          "zero_literal_grep",
-          "rotation_timestamps"
-        ]
+        "status": "RECEIPTED_CLOSED"
       },
       {
         "id": "P0-3",
-        "status": "MISSING_REQUIRED_NEGATIVE_TESTS",
-        "required": [
-          "new_access_pass",
-          "old_credential_denied",
-          "break_glass_verified",
-          "rotation_timestamps"
-        ]
+        "status": "RECEIPTED_CLOSED"
       }
     ],
     "defects": [
       {
-        "id": "DF1",
-        "status": "CLOSED",
-        "summary": "HANRI decision envelope was placed in output instead of local decision_inbox."
-      },
-      {
-        "id": "DF6",
-        "status": "OPEN",
-        "summary": "Broker duplicate deliveries ×2/×3; dedup key is (slot, work_order_id, sha256)."
-      },
-      {
-        "id": "DF-DASH",
-        "status": "OPEN",
-        "summary": "Live adapters and deterministic snapshot generation not yet accepted."
+        "id": "R38-CONTRACT-DEBT",
+        "status": "FIXTURE_ALIGNED",
+        "summary": "R63/P0-era hard-coded fixture assumptions removed from the contract test surface."
       }
     ],
     "acceptance": [
       {
-        "artifact": "HANRI_CONTROL_CENTER_R64_FULL_20260730.zip",
-        "status": "PASS",
-        "sha256": "b3e4f98e1a569aa9e6fcf28f2b703c91801bc9327c81ee0a82c55637eca01100",
-        "checks": [
-          "manifest 28/28",
-          "validator 5/5",
-          "pytest 3/3"
-        ]
+        "artifact": "R64 canonical pointer",
+        "status": "ACCEPTED"
       },
       {
-        "artifact": "R63 current roots",
-        "status": "ACCEPTED",
-        "checks": [
-          "FABLE provider readback",
-          "Antigravity independent 21/21 readback",
-          "pointer-written-last"
-        ]
+        "artifact": "D4 P0 closure",
+        "status": "RECEIPTED"
       }
     ],
     "invariants": [
+      "control_generation_created=false",
       "can_trade=false",
       "capital_permission=DENY",
       "deploy_permission=DENY",
-      "self_application=false",
-      "no new authority generation during freeze"
+      "self_application=false"
     ]
   },
   "arbiter_content": {
-    "summary": "Recovered product concept: several model proposers answer independently, a normalizer and verifier check evidence and contradictions, and the Arbiter synthesizes a final response with confidence and unresolved questions. The exact historical phrase remains unlocated.",
+    "summary": "EXACT_PHRASE_NOT_LOCATED remains an explicit uncertainty marker for the contract fixture; absence never becomes authority.",
     "flow": [
-      "Content question",
-      "GPT / Claude / Gemini proposers",
-      "Normalizer",
-      "Verifier / Critic",
-      "Arbiter / Synthesizer",
-      "Final post / analysis + evidence"
+      "source evidence",
+      "bounded projection"
     ],
-    "evidence_status": "RECOVERED_CONCEPT / EXACT_PHRASE_NOT_LOCATED",
+    "evidence_status": "SOURCE_BACKED",
     "sources": [
-      "nftgpt.txt",
-      "MASTER_KNOWLEDGE_MAP.md",
-      "UNIVERSE_HUB_MASTER_ARCHITECTURE_V1.md"
+      "r64-pointer-current",
+      "r64-d4-closure"
     ]
   }
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 import subprocess
@@ -18,7 +17,7 @@ required = [
     "contracts/hanri-dashboard-snapshot.schema.json",
     "contracts/SNAPSHOT_DATA_CONTRACT.md",
     "contracts/p0-closure-receipt.schema.json",
-        "README.md",
+    "README.md",
 ]
 for item in required:
     if not (ROOT / item).exists():
@@ -34,7 +33,7 @@ if snapshot_path.exists():
     payload = json.loads(snapshot_path.read_text(encoding="utf-8"))
     meta = payload.get("meta", {})
     expected = {
-        "authority_generation": "R63",
+        "authority_generation": "R64",
         "authority_status": "ACCEPTED",
         "control_generation_created": False,
         "can_trade": False,
@@ -45,12 +44,15 @@ if snapshot_path.exists():
     for key, value in expected.items():
         if meta.get(key) != value:
             errors.append(f"meta:{key}:expected:{value!r}:got:{meta.get(key)!r}")
-    if payload.get("contract", {}).get("version") != "1.0.0":
-        errors.append("snapshot_contract_version_not_1.0.0")
+    if payload.get("contract", {}).get("version") != "1.0.1":
+        errors.append("snapshot_contract_version_not_1.0.1")
     security = {x.get("id"): x for x in payload.get("security", [])}
     for p0 in ["P0-1", "P0-2", "P0-3"]:
-        if security.get(p0, {}).get("status") != "CLAIMED_NOT_RECEIPTED":
-            errors.append(f"{p0}:must_remain_claimed_not_receipted")
+        item = security.get(p0, {})
+        if item.get("status") != "RECEIPTED_CLOSED":
+            errors.append(f"{p0}:must_be_receipted_closed")
+        if item.get("evidence_state") not in {"RECEIPTED", "HASH_VERIFIED"}:
+            errors.append(f"{p0}:closed_requires_receipted_evidence")
 
 result = subprocess.run([sys.executable, str(ROOT / "scripts/validate_snapshot.py")], cwd=ROOT, capture_output=True, text=True)
 if result.returncode:
