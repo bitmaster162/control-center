@@ -2,51 +2,50 @@
 
 ## Status
 
-Engineering/governance candidate only. The collaboration gateway is now provider-verified and bootstrapped; collaborator identity is still pending. This document does not authorize canonical merge, dashboard deployment, runtime changes, self-application, TradingOS changes, trading, or capital effects.
+Engineering/governance candidate only. The separate collaboration gateway is provider-verified, sanitized baseline is merged there, and gateway state is `READY_WAITING_COLLABORATOR`. Collaborator identity is still pending. This document does not authorize canonical merge, dashboard deployment, runtime changes, self-application, TradingOS changes, trading, or capital effects.
 
 ## Verified gateway state
-
-Provider-verified collaboration repository:
 
 - repository: `bitmaster162/control-center-collab`
 - repository ID: `1332081436`
 - visibility: `private`
-- plan dependency: GitHub Free compatible
-- main HEAD after bootstrap: `3a22ea5422e61d2ddba6e5469b75f1507302e8a7`
+- final main HEAD: `25c59fb1a564d313c93028d9795592bcabdbc976`
+- final main tree: `5cd156dbb5a6233f6855319f2286b895227e142d`
+- final main signature: `UNSIGNED` (provider-verified identity; not authority)
 - safe baseline branch: `upstream/r64-safe-baseline`
 - safe baseline HEAD: `2811e3aaa80c8f86e175653d45144d6b1d76b8d7`
+- baseline review PR: `control-center-collab#1`
+- baseline review merge: `ad3d33994f5608c5d77505e77a8136abafbd5436`
+- additive ready receipt: `GATEWAY_READY_RECEIPT.json`
 - collaborator: pending / not yet bound
-- state: `BOOTSTRAPPED_WAITING_COLLABORATOR`
+- collaboration_live: false
+- state: `READY_WAITING_COLLABORATOR`
 
-The safe baseline is not a full canonical mirror. It contains collaboration policy/provenance and a sanitized Build Network starter. Live projection data, provider IDs, stable roots, runtime state and TradingOS material are intentionally excluded.
-
-## Problem
-
-The canonical repository `bitmaster162/control-center` is private and owned by a personal GitHub account. On the current GitHub Free setup, R40 does not rely on paid private-repository branch protection/rulesets. Instead, collaborator write authority is physically isolated in a second private repository.
+The collab repository is intentionally not a full mirror. Live snapshot/provider data, stable Control Center roots, runtime state, private operator material and TradingOS content are excluded.
 
 ## Free isolation architecture
 
-Use two private repositories:
+Two private repositories are used because the current GitHub Free setup does not rely on paid private-repository branch protection/rulesets.
 
 1. **Canonical / sovereign:** `bitmaster162/control-center`
    - accepted/runtime branches remain here;
-   - collaborator access is not required;
-   - promotion into canonical remains independently reviewed and approval-gated.
+   - collaborator write access is not required;
+   - all import/promotion remains separately reviewed and exact-gated.
 
 2. **Collaboration gateway:** `bitmaster162/control-center-collab`
-   - external collaborator receives access only here once identity is supplied;
-   - working branches use `collab/<github-user>/<lane>`;
-   - collaboration commits/PRs are proposal/evidence artifacts only.
+   - external collaborator will receive access only here;
+   - work branches use `collab/<github-user>/<lane>`;
+   - collab commits/PRs are proposal/evidence artifacts only.
 
-This repository split is the enforcement boundary: collaborator write authority does not extend into canonical.
+The repository split is the enforcement boundary: collaborator write authority does not extend into canonical.
 
 ## Export boundary
 
-Only allowlist-controlled material may cross from canonical into the collaboration gateway. A full history mirror is denied by default.
+Only allowlist-controlled material may cross from canonical into collab. Full history mirroring is denied by default.
 
 Allowed classes:
-- source code required for the assigned lane;
-- non-secret tests and fixtures;
+- source required for the assigned lane;
+- non-secret tests/fixtures;
 - minimal interface/data contracts;
 - sanitized onboarding/build documentation;
 - synthetic/example projection data;
@@ -55,7 +54,7 @@ Allowed classes:
 Denied classes:
 - `.env`, credentials, tokens, keys, cookies, provider secrets;
 - live provider IDs unless explicitly required and separately approved;
-- private Google Drive corpus or stable Control Center roots;
+- private Drive corpus or stable Control Center roots;
 - host-local runtime state/receipts containing private machine data;
 - private operator communications/contact data;
 - production deployment credentials;
@@ -91,22 +90,22 @@ accepted canonical state
 
 ## Non-equivalence rule
 
-A commit or PR merged in `control-center-collab` is **not** accepted canonical state. It is proposal/evidence only. Canonical acceptance requires a new isolated import/review step plus the existing sovereign merge/effect gates.
+A commit or PR merged in `control-center-collab` is **not** accepted canonical state. The merged baseline is `COLLAB_REVIEW_ACCEPTED` only. Canonical acceptance still requires an isolated import/review step plus sovereign merge/effect gates.
 
 ## Dashboard Build Network projection
 
 The Build Network view may show:
 - canonical accepted HEAD/tree;
-- verified collaboration repository and safe-baseline HEAD;
+- collab repository HEAD/tree and ready receipt;
+- safe-baseline branch/HEAD;
 - collaborator identity after explicit binding;
-- active `collab/*` lanes;
-- PR/CI/review state;
+- active `collab/*` lanes and PR/CI/review state;
 - return-import state;
-- direct GitHub resource links accessible to the viewer.
+- direct GitHub links accessible to the viewer.
 
 The dashboard remains read-only. It must not contain GitHub tokens/provider credentials or perform merges, pushes, approvals, deployments, or provider effects from browser JavaScript.
 
-Current display state must be `BOOTSTRAPPED_WAITING_COLLABORATOR`, not `SETUP_REQUIRED` and not `LIVE_COLLABORATION`, until a real collaborator identity is provider-verified.
+Until a real collaborator identity is provider-verified, the correct state is `READY_WAITING_COLLABORATOR`, not `LIVE_COLLABORATION`.
 
 ## Canonical anchor
 
@@ -118,7 +117,7 @@ Current display state must be `BOOTSTRAPPED_WAITING_COLLABORATOR`, not `SETUP_RE
 
 ## Invariants
 
-- no new authority generation is created by R40;
+- no new authority generation created by R40;
 - recommendation/proposal != approval;
 - collab merge != canonical acceptance;
 - direct collaborator-to-canonical write = false;
