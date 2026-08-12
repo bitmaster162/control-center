@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.5.0-improvement-learning-v1",
+  "mode": "EVIDENCE_WEIGHTED_IMPROVEMENT_RANKING",
+  "min_evaluated_for_pattern": 2,
+  "supported_evidence_min": 4,
+  "reinforcement_min_verified_improved": 2,
+  "evidence_observation_cap": 12,
+  "outcome_debt_weight": 30.0,
+  "pattern_history_tail": 10,
+  "max_history_tail": 20,
+  "receipt_top_n": 5,
+  "priority_weights": {
+    "regressed": 100.0,
+    "verified_no_effect": 60.0,
+    "verified_improved": 10.0,
+    "evidence_observation": 0.25,
+    "recurring_negative_cycle": 4.0,
+    "transition_instability_penalty": 1.0
+  },
+  "semantic_rules": {
+    "source_must_be_verified_r39_4_0_1_state": true,
+    "negative_outcomes_outrank_reinforcement": true,
+    "zero_evaluated_outcomes_never_receive_improvement_score": true,
+    "small_samples_never_claim_high_confidence": true,
+    "status_transition_instability_reduces_priority_score": true,
+    "recurring_negative_semantic_cycles_increase_review_priority": true,
+    "reinforcement_requires_repeated_verified_improvement_and_zero_negative_outcomes": true,
+    "outcome_debt_routes_to_evidence_collection": true,
+    "correlation_is_not_causation": true,
+    "generalization_requires_human_review": true,
+    "ranking_is_review_priority_not_execution_authority": true
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "local_state_write_only": true,
+    "provider_calls": false,
+    "scheduler_install": false,
+    "scheduler_modify": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
