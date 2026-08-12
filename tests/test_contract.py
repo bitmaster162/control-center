@@ -29,13 +29,20 @@ def test_json_schema_passes():
 
 def test_authority_and_effect_ceiling():
     meta = load_snapshot()["meta"]
-    assert meta["authority_generation"] == "R63"
+    assert meta["authority_generation"] == "R64"
     assert meta["authority_status"] == "ACCEPTED"
     assert meta["control_generation_created"] is False
     assert meta["can_trade"] is False
     assert meta["capital_permission"] == "DENY"
     assert meta["deploy_permission"] == "DENY"
     assert meta["self_application"] is False
+
+
+def test_schema_does_not_select_authority_generation():
+    schema = json.loads((ROOT / "contracts/hanri-dashboard-snapshot.schema.json").read_text(encoding="utf-8"))
+    generation = schema["properties"]["meta"]["properties"]["authority_generation"]
+    assert "const" not in generation
+    assert generation["pattern"] == "^R[0-9]+$"
 
 
 def test_every_material_projection_has_valid_evidence_refs():
@@ -47,10 +54,11 @@ def test_every_material_projection_has_valid_evidence_refs():
             assert set(item["evidence_refs"]) <= source_ids
 
 
-def test_claimed_p0_never_renders_closed():
-    for item in load_snapshot()["security"]:
-        assert item["evidence_state"] == "CLAIMED"
-        assert item["status"] == "CLAIMED_NOT_RECEIPTED"
+def test_receipted_p0_renders_closed():
+    security = {item["id"]: item for item in load_snapshot()["security"]}
+    for p0 in ["P0-1", "P0-2", "P0-3"]:
+        assert security[p0]["evidence_state"] == "RECEIPTED"
+        assert security[p0]["status"] == "RECEIPTED_CLOSED"
 
 
 def test_dashboard_has_audit_tab_and_nine_views():

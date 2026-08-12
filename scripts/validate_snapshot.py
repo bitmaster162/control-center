@@ -3,10 +3,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+AUTHORITY_GENERATION_RE = re.compile(r"^R[0-9]+$")
 
 
 def main() -> int:
@@ -37,8 +39,14 @@ def main() -> int:
         errors.append("deploy_permission_must_be_DENY")
     if meta.get("self_application") is not False:
         errors.append("self_application_must_be_false")
-    if meta.get("authority_generation") != "R63" or meta.get("authority_status") != "ACCEPTED":
-        errors.append("authority_binding_invalid")
+
+    authority_generation = meta.get("authority_generation")
+    if not isinstance(authority_generation, str) or not AUTHORITY_GENERATION_RE.fullmatch(authority_generation):
+        errors.append("authority_generation_syntax_invalid")
+    if meta.get("authority_status") != "ACCEPTED":
+        errors.append("authority_status_must_be_ACCEPTED")
+    if meta.get("control_generation_created") is not False:
+        errors.append("control_generation_created_must_be_false")
 
     source_ids = {s.get("source_id") for s in payload.get("sources", [])}
     for collection in ["kpis", "current_actions", "blockers", "events", "systems", "agents", "decisions", "memory_layers", "messages", "security"]:
@@ -58,7 +66,7 @@ def main() -> int:
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, ensure_ascii=False, indent=2))
         return 1
-    print(json.dumps({"status": "PASS", "contract_version": payload["contract"]["version"], "sources": len(source_ids)}, ensure_ascii=False, indent=2))
+    print(json.dumps({"status": "PASS", "contract_version": payload["contract"]["version"], "authority_generation": authority_generation, "sources": len(source_ids)}, ensure_ascii=False, indent=2))
     return 0
 
 
