@@ -2,6 +2,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
+SRC = ROOT / "src" / "hanri"
 
 WRAPPER = (SCRIPTS / "Invoke-R39.6.1AttentionHeartbeat-Wrapper-PS51.ps1").read_text(encoding="utf-8")
 RUNNER = (SCRIPTS / "Run-R39.6.1BoundedRecommendationsLive-PS51.ps1").read_text(encoding="utf-8")
@@ -44,6 +45,12 @@ def test_runner_binds_exact_learning_receipt_state_and_cycle():
     assert "upstream learning receipt SHA mismatch" in RUNNER
     assert "recommendation source learning state SHA mismatch" in RUNNER
     assert "recommendation source learning digest mismatch" in RUNNER
+
+
+def test_runner_invokes_existing_r39_6_cli_module():
+    assert (SRC / "improvement_recommendations_cli.py").is_file()
+    assert "python -m hanri.improvement_recommendations_cli" in RUNNER
+    assert "hanri.bounded_recommendations_cli" not in RUNNER
 
 
 def test_runner_requires_human_review_and_no_execution_authority():
