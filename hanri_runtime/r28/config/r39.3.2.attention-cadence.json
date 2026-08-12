@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.3.2-attention-cadence-v1",
+  "mode": "ADAPTIVE_FULL_SCAN_OVER_FIXED_HEARTBEAT_NO_SCHEDULER_INSTALL",
+  "heartbeat_minutes": 5,
+  "urgent_minutes": 5,
+  "proposal_minutes": 10,
+  "normal_minutes": 15,
+  "quiet_minutes": 30,
+  "deep_quiet_minutes": 60,
+  "quiet_streak": 3,
+  "deep_quiet_streak": 6,
+  "lease_minutes": 10,
+  "scheduler_contract": {
+    "planned_task_name": "ControlCenter-HANRI-R39-Attention",
+    "fixed_heartbeat_minutes": 5,
+    "multiple_instances": "IgnoreNew",
+    "start_when_available": true,
+    "execution_time_limit_minutes": 10,
+    "dynamic_task_reconfiguration": false,
+    "install_authorized": false
+  },
+  "effect_boundary": {
+    "advisory_only": true,
+    "local_state_write_only": true,
+    "scheduler_install": false,
+    "scheduler_modify": false,
+    "provider_calls": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
