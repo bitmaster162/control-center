@@ -33,9 +33,12 @@ def test_raw4ik_has_no_direct_canonical_write():
     assert lane["direct_canonical_write"] is False
 
 
-def test_tradingos_builder_lane_is_non_effecting():
+def test_tradingos_wp001_is_assigned_without_effect_authority():
     lane = load_network()["tradingos_builder_lane"]
-    assert lane["status"] == "ACTIVE_READY_FOR_WORK_PACKAGE"
+    assert lane["status"] == "ACTIVE_WORK_PACKAGE_ASSIGNED"
+    assert lane["first_work_package"] == "WP001_TRADINGOS_DECISION_BRIEF_EVIDENCE"
+    assert lane["builder_head_after_wp001_assignment"] == "6e971aa4ec6ad8af888792426a2634ad191a2e0d"
+    assert lane["acceptance_test_initial_state"] == "EXPECTED_FAIL_UNTIL_RAW4IK_IMPLEMENTATION"
     assert lane["runtime_registration"] is False
     assert lane["deployment"] is False
     assert lane["signals"] is False
