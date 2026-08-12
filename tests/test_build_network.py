@@ -38,6 +38,7 @@ def test_tradingos_wp001_is_assigned_without_effect_authority():
     assert lane["status"] == "ACTIVE_WORK_PACKAGE_ASSIGNED"
     assert lane["first_work_package"] == "WP001_TRADINGOS_DECISION_BRIEF_EVIDENCE"
     assert lane["builder_head_after_wp001_assignment"] == "6e971aa4ec6ad8af888792426a2634ad191a2e0d"
+    assert lane["builder_head_current"] == "ee266f15e4621d89284d6ed66fff2c4916f7550e"
     assert lane["acceptance_test_initial_state"] == "EXPECTED_FAIL_UNTIL_RAW4IK_IMPLEMENTATION"
     assert lane["runtime_registration"] is False
     assert lane["deployment"] is False
