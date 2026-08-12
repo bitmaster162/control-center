@@ -90,7 +90,7 @@ if ([string]$integration.learning_receipt_sha256 -ne $learningReceiptSha) {
 }
 
 $generatedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
-python -m hanri.bounded_recommendations_cli `
+python -m hanri.improvement_recommendations_cli `
   --learning-state $learningState `
   --policy $policy `
   --state $state `
