@@ -25,18 +25,44 @@ foreach ($required in @($outcomeState, $outcomeReceipt, $integrationReceipt, $po
 }
 New-Item -ItemType Directory -Force -Path $LearningRoot | Out-Null
 
+function Assert-SafeEffectBoundary {
+  param(
+    [Parameter(Mandatory=$true)]$Boundary,
+    [Parameter(Mandatory=$true)][string]$Context
+  )
+
+  if ($null -eq $Boundary) { throw "R39.5.1 $Context effect boundary missing" }
+  if (-not [bool]$Boundary.proposal_only) { throw "R39.5.1 $Context proposal_only=false" }
+  if (-not [bool]$Boundary.local_state_write_only) { throw "R39.5.1 $Context local_state_write_only=false" }
+  foreach ($name in @('provider_calls','scheduler_install','scheduler_modify','human_decision_execution','self_apply','skill_install','system_write','operator_message','auto_dispatch','external_messages','can_trade')) {
+    if ([bool]$Boundary.$name) { throw "R39.5.1 $Context unsafe effect boundary: $name=true" }
+  }
+  if ($Boundary.capital_permission -ne 'DENY') { throw "R39.5.1 $Context capital_permission must remain DENY" }
+}
+
 $integration = Get-Content -Raw -Encoding UTF8 $integrationReceipt | ConvertFrom-Json
 if ($integration.policy_version -ne '39.4.1-live-heartbeat-integration-v1') { throw 'R39.5.1 upstream integration policy mismatch' }
 if ($integration.status -ne 'PASS') { throw 'R39.5.1 upstream integration is not PASS' }
 if ([bool]$integration.outcome_pending) { throw 'R39.5.1 upstream outcome is pending' }
 if ([int]$integration.execution_effects_performed -ne 0) { throw 'R39.5.1 upstream integration effects nonzero' }
+Assert-SafeEffectBoundary -Boundary $integration.effect_boundary -Context 'upstream integration'
 
 $outcome = Get-Content -Raw -Encoding UTF8 $outcomeReceipt | ConvertFrom-Json
 $outcomeStateObj = Get-Content -Raw -Encoding UTF8 $outcomeState | ConvertFrom-Json
 if ($outcome.policy_version -ne '39.4.0.1-outcome-intelligence-metric-semantics-v1') { throw 'R39.5.1 outcome receipt policy mismatch' }
 if ($outcomeStateObj.policy_version -ne '39.4.0.1-outcome-intelligence-metric-semantics-v1') { throw 'R39.5.1 outcome state policy mismatch' }
 if ([int]$outcome.execution_effects_performed -ne 0) { throw 'R39.5.1 outcome receipt effects nonzero' }
-if ([int]$outcomeStateObj.execution_effects_performed -ne 0) { throw 'R39.5.1 outcome state effects nonzero' }
+Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt'
+Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'
+
+# R39.4.0.1 outcome state safety is contractually represented by effect_boundary.
+# A top-level execution_effects_performed counter is optional on state. If present,
+# it must still be zero; if absent, StrictMode must not reject an otherwise valid state.
+$outcomeStateEffectProperty = $outcomeStateObj.PSObject.Properties['execution_effects_performed']
+if ($null -ne $outcomeStateEffectProperty -and [int]$outcomeStateEffectProperty.Value -ne 0) {
+  throw 'R39.5.1 outcome state optional effects counter nonzero'
+}
+
 if ([int]$integration.source_semantic_cycle -ne [int]$outcome.source_semantic_cycle) { throw 'R39.5.1 integration/outcome semantic cycle mismatch' }
 if ([int]$outcome.source_semantic_cycle -ne [int]$outcomeStateObj.source_semantic_cycle) { throw 'R39.5.1 outcome receipt/state semantic cycle mismatch' }
 
@@ -64,12 +90,7 @@ if ([int]$r.execution_effects_performed -ne 0) { throw 'R39.5.1 learning receipt
 if ([int]$s.execution_effects_performed -ne 0) { throw 'R39.5.1 learning state effects nonzero' }
 
 foreach ($boundary in @($r.effect_boundary, $s.effect_boundary)) {
-  if (-not [bool]$boundary.proposal_only) { throw 'R39.5.1 proposal_only=false' }
-  if (-not [bool]$boundary.local_state_write_only) { throw 'R39.5.1 local_state_write_only=false' }
-  foreach ($name in @('provider_calls','scheduler_install','scheduler_modify','human_decision_execution','self_apply','skill_install','system_write','operator_message','auto_dispatch','external_messages','can_trade')) {
-    if ([bool]$boundary.$name) { throw "R39.5.1 unsafe effect boundary: $name=true" }
-  }
-  if ($boundary.capital_permission -ne 'DENY') { throw 'R39.5.1 capital_permission must remain DENY' }
+  Assert-SafeEffectBoundary -Boundary $boundary -Context 'learning output'
 }
 
 $summary = $r.learning_summary

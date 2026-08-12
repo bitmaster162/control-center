@@ -44,6 +44,14 @@ def test_live_learning_runner_requires_exact_complete_r39_4_1_upstream():
     assert "upstream outcome receipt SHA mismatch" in text
 
 
+def test_live_learning_runner_accepts_r39_4_state_without_optional_effect_counter():
+    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
+    assert "Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'" in text
+    assert "$outcomeStateObj.PSObject.Properties['execution_effects_performed']" in text
+    assert "outcome state optional effects counter nonzero" in text
+    assert "$outcomeStateObj.execution_effects_performed" not in text
+
+
 def test_live_learning_runner_uses_existing_r39_5_engine_and_checks_effects():
     text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
     assert "hanri.improvement_learning_cli" in text
@@ -56,6 +64,28 @@ def test_live_learning_runner_uses_existing_r39_5_engine_and_checks_effects():
     assert "learning state effects nonzero" in text
     assert "CAN_TRADE false" in text
     assert "CAPITAL_PERMISSION DENY" in text
+
+
+def test_live_learning_runner_validates_effect_boundary_for_all_upstream_artifacts():
+    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
+    assert "Assert-SafeEffectBoundary -Boundary $integration.effect_boundary -Context 'upstream integration'" in text
+    assert "Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt'" in text
+    assert "Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'" in text
+    assert "capital_permission must remain DENY" in text
+    for key in (
+        "provider_calls",
+        "scheduler_install",
+        "scheduler_modify",
+        "human_decision_execution",
+        "self_apply",
+        "skill_install",
+        "system_write",
+        "operator_message",
+        "auto_dispatch",
+        "external_messages",
+        "can_trade",
+    ):
+        assert key in text
 
 
 def test_wrapper_layers_r39_5_after_r39_4_1():
