@@ -38,6 +38,18 @@ def test_installer_defaults_to_plan_and_requires_exact_hash_approval():
     assert "preflight" in s.lower()
 
 
+def test_installer_git_wrapper_is_ps51_safe_and_never_uses_automatic_args_variable():
+    s = text("Install-R39.3.3AttentionTask-PS51.ps1")
+    assert "[string[]]$GitArgs" in s
+    assert "@GitArgs" in s
+    assert "git_args_empty" in s
+    assert "function Invoke-Git([string[]]$Args)" not in s
+    assert "@Args 2>&1" not in s
+    assert "Invoke-Git -GitArgs @('status','--porcelain')" in s
+    assert "Invoke-Git -GitArgs @('rev-parse','HEAD')" in s
+    assert "Invoke-Git -GitArgs @('show','-s','--format=%T','HEAD')" in s
+
+
 def test_heartbeat_commits_cadence_only_after_successful_full_loop():
     s = text("Invoke-R39.3.3AttentionHeartbeat-PS51.ps1")
     loop_call = s.index("-File $loopRunner")
