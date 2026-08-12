@@ -52,6 +52,23 @@ def test_heartbeat_commits_cadence_only_after_successful_full_loop():
     assert "capital_permission = 'DENY'" in s
 
 
+def test_scheduled_full_loop_has_no_regression_or_git_hot_path():
+    heartbeat = text("Invoke-R39.3.3AttentionHeartbeat-PS51.ps1")
+    production = text("Run-R39.3.3ProductionAttentionLoop-PS51.ps1")
+    assert "Run-R39.3.3ProductionAttentionLoop-PS51.ps1" in heartbeat
+    assert "Run-R39.3.1SemanticContinuousAttentionLoop-PS51.ps1" not in heartbeat
+    assert "pytest" not in production
+    assert "git " not in production.lower()
+    assert "producer_adapters_operator_receipts_cli" in production
+    assert "attention_fabric_semantic_cli" in production
+    assert "continuous_attention_loop_semantic_cli" in production
+    assert "SEMANTIC_ENVELOPE_V2" in production
+    assert "attention_coverage_not_complete" in production
+    assert "provider_calls=true" in production
+    assert "can_trade=true" in production
+    assert "capital_permission_not_DENY" in production
+
+
 def test_install_is_reversible_and_has_post_write_readback():
     s = text("Install-R39.3.3AttentionTask-PS51.ps1")
     assert "Export-ScheduledTask" in s
