@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.6.0-bounded-improvement-recommendations-v1",
+  "mode": "BOUNDED_HUMAN_REVIEW_RECOMMENDATION_PACKETS",
+  "max_recommendations": 12,
+  "receipt_top_n": 5,
+  "max_history_tail": 20,
+  "decision_options": [
+    "ACCEPT",
+    "REJECT",
+    "REVISE",
+    "HOLD"
+  ],
+  "emit_priority_classes": [
+    "CRITICAL_CORRECTIVE_REVIEW",
+    "HIGH_CORRECTIVE_REVIEW",
+    "EVIDENCE_COLLECTION",
+    "BOUNDED_REINFORCEMENT_REVIEW"
+  ],
+  "allowed_review_actions": [
+    "ATTENTION_RULE_REVIEW",
+    "SKILL_CANDIDATE_REVIEW",
+    "SYSTEM_IMPROVEMENT_REVIEW",
+    "OPERATOR_ADVICE_REVIEW",
+    "HANRI_RECOMMENDATION_RULE_REVIEW",
+    "REINFORCEMENT_REVIEW",
+    "OUTCOME_EVIDENCE_COLLECTION"
+  ],
+  "human_review_required": true,
+  "shadow_test_required_before_adoption": true,
+  "execution_authority_forbidden": true,
+  "semantic_rules": {
+    "source_must_be_verified_r39_5_state": true,
+    "zero_ranked_items_emit_zero_recommendations": true,
+    "negative_outcomes_produce_review_not_execution": true,
+    "monitor_more_evidence_does_not_emit_change_advice": true,
+    "reinforcement_never_auto_generalizes": true,
+    "recommendation_ids_are_stable_by_domain_kind_action": true,
+    "same_learning_digest_is_no_delta": true,
+    "human_decision_required_for_every_packet": true
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "local_state_write_only": true,
+    "provider_calls": false,
+    "scheduler_install": false,
+    "scheduler_modify": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
