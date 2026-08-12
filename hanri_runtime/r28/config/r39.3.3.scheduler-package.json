@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.3.3-host-scheduler-package-v1",
+  "task": {
+    "name": "ControlCenter-HANRI-R39-Attention",
+    "heartbeat_minutes": 5,
+    "multiple_instances": "IgnoreNew",
+    "start_when_available": true,
+    "execution_time_limit_minutes": 10,
+    "run_at_logon": true,
+    "runner": "scripts/Run-R39.3.3AttentionHeartbeat-PS51.ps1"
+  },
+  "runtime": {
+    "isolated_install": true,
+    "git_worktree_dependency": false,
+    "human_decision_receipt_snapshot": "receipts/D1_D5_DECISION_RECEIPT.json",
+    "human_decision_schema": "control_canter.human_decision_receipt.v1",
+    "human_decision_generation": "R64",
+    "semantic_hash_algorithm": "SEMANTIC_ENVELOPE_V2",
+    "continuous_policy_version": "39.3.1-continuous-attention-loop-v2",
+    "cadence_policy_version": "39.3.2-attention-cadence-v1"
+  },
+  "rollback": {
+    "export_existing_r39_task": true,
+    "backup_install_root": true,
+    "backup_live_state": true,
+    "restore_on_install_failure": true,
+    "r36_task_is_rollback_target": false
+  },
+  "effect_boundary": {
+    "r36_task_modify": false,
+    "stable_roots_modified": false,
+    "provider_calls": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
