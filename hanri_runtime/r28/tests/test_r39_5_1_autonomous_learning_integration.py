@@ -52,7 +52,8 @@ def test_live_learning_runner_uses_existing_r39_5_engine_and_checks_effects():
     assert "R39_5_IMPROVEMENT_LEARNING_RECEIPT.json" in text
     assert "proposal_only=false" in text
     assert "local_state_write_only=false" in text
-    assert "execution effects nonzero" in text
+    assert "learning receipt effects nonzero" in text
+    assert "learning state effects nonzero" in text
     assert "CAN_TRADE false" in text
     assert "CAPITAL_PERMISSION DENY" in text
 
