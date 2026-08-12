@@ -12,9 +12,13 @@
   },
   "collaboration_gateway": {
     "repository": "bitmaster162/control-center-collab",
+    "repository_id": "1332081436",
     "visibility": "private",
-    "status": "SETUP_REQUIRED",
-    "repository_verified": false,
+    "status": "BOOTSTRAPPED_WAITING_COLLABORATOR",
+    "repository_verified": true,
+    "main_head": "3a22ea5422e61d2ddba6e5469b75f1507302e8a7",
+    "safe_baseline_branch": "upstream/r64-safe-baseline",
+    "safe_baseline_head": "2811e3aaa80c8f86e175653d45144d6b1d76b8d7",
     "collaborator": null,
     "namespace": "collab/<github-user>/<lane>"
   },
@@ -31,6 +35,8 @@
   "share_boundary": {
     "full_canonical_mirror_allowed": false,
     "allowlist_export_required": true,
+    "live_snapshot_exported": false,
+    "provider_ids_exported": false,
     "secrets_allowed": false,
     "stable_control_roots_allowed": false,
     "private_operator_messages_allowed": false,
