@@ -44,33 +44,41 @@ def test_live_learning_runner_requires_exact_complete_r39_4_1_upstream():
     assert "upstream outcome receipt SHA mismatch" in text
 
 
-def test_live_learning_runner_accepts_r39_4_state_without_optional_effect_counter():
-    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
-    assert "Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'" in text
-    assert "$outcomeStateObj.PSObject.Properties['execution_effects_performed']" in text
-    assert "outcome state optional effects counter nonzero" in text
-    assert "$outcomeStateObj.execution_effects_performed" not in text
+def test_r39_4_1_integration_boundary_is_zero_effect_not_proposal_state():
+    upstream = read("scripts/Invoke-R39.4.1AttentionHeartbeat-Wrapper-PS51.ps1")
+    assert "effect_boundary = [ordered]@{" in upstream
+    assert "proposal_only" not in upstream
+    assert "local_state_write_only" not in upstream
+    for key in (
+        "provider_calls",
+        "scheduler_install",
+        "scheduler_modify",
+        "human_decision_execution",
+        "self_apply",
+        "skill_install",
+        "system_write",
+        "operator_message",
+        "auto_dispatch",
+        "external_messages",
+        "can_trade",
+        "capital_permission",
+    ):
+        assert key in upstream
 
 
-def test_live_learning_runner_uses_existing_r39_5_engine_and_checks_effects():
+def test_live_learning_runner_uses_boundary_profiles_without_weakening_effect_gates():
     text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
-    assert "hanri.improvement_learning_cli" in text
-    assert "39.5.0-improvement-learning-v1" in text
-    assert "R39_5_IMPROVEMENT_LEARNING_STATE.json" in text
-    assert "R39_5_IMPROVEMENT_LEARNING_RECEIPT.json" in text
+    assert "function Get-RequiredBoundaryProperty" in text
+    assert "$Boundary.PSObject.Properties[$Name]" in text
+    assert "effect boundary missing key" in text
+    assert "[switch]$RequireProposalState" in text
+    assert "Assert-SafeEffectBoundary -Boundary $integration.effect_boundary -Context 'upstream integration'" in text
+    assert "Assert-SafeEffectBoundary -Boundary $integration.effect_boundary -Context 'upstream integration' -RequireProposalState" not in text
+    assert "Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt' -RequireProposalState" in text
+    assert "Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state' -RequireProposalState" in text
+    assert "Assert-SafeEffectBoundary -Boundary $boundary -Context 'learning output' -RequireProposalState" in text
     assert "proposal_only=false" in text
     assert "local_state_write_only=false" in text
-    assert "learning receipt effects nonzero" in text
-    assert "learning state effects nonzero" in text
-    assert "CAN_TRADE false" in text
-    assert "CAPITAL_PERMISSION DENY" in text
-
-
-def test_live_learning_runner_validates_effect_boundary_for_all_upstream_artifacts():
-    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
-    assert "Assert-SafeEffectBoundary -Boundary $integration.effect_boundary -Context 'upstream integration'" in text
-    assert "Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt'" in text
-    assert "Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'" in text
     assert "capital_permission must remain DENY" in text
     for key in (
         "provider_calls",
@@ -86,6 +94,25 @@ def test_live_learning_runner_validates_effect_boundary_for_all_upstream_artifac
         "can_trade",
     ):
         assert key in text
+
+
+def test_live_learning_runner_accepts_r39_4_state_without_optional_effect_counter():
+    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
+    assert "$outcomeStateObj.PSObject.Properties['execution_effects_performed']" in text
+    assert "outcome state optional effects counter nonzero" in text
+    assert "$outcomeStateObj.execution_effects_performed" not in text
+
+
+def test_live_learning_runner_uses_existing_r39_5_engine_and_checks_effects():
+    text = read("scripts/Run-R39.5.1ImprovementLearningLive-PS51.ps1")
+    assert "hanri.improvement_learning_cli" in text
+    assert "39.5.0-improvement-learning-v1" in text
+    assert "R39_5_IMPROVEMENT_LEARNING_STATE.json" in text
+    assert "R39_5_IMPROVEMENT_LEARNING_RECEIPT.json" in text
+    assert "learning receipt effects nonzero" in text
+    assert "learning state effects nonzero" in text
+    assert "CAN_TRADE false" in text
+    assert "CAPITAL_PERMISSION DENY" in text
 
 
 def test_wrapper_layers_r39_5_after_r39_4_1():

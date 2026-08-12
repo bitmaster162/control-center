@@ -25,19 +25,43 @@ foreach ($required in @($outcomeState, $outcomeReceipt, $integrationReceipt, $po
 }
 New-Item -ItemType Directory -Force -Path $LearningRoot | Out-Null
 
-function Assert-SafeEffectBoundary {
+function Get-RequiredBoundaryProperty {
   param(
     [Parameter(Mandatory=$true)]$Boundary,
+    [Parameter(Mandatory=$true)][string]$Name,
     [Parameter(Mandatory=$true)][string]$Context
   )
 
   if ($null -eq $Boundary) { throw "R39.5.1 $Context effect boundary missing" }
-  if (-not [bool]$Boundary.proposal_only) { throw "R39.5.1 $Context proposal_only=false" }
-  if (-not [bool]$Boundary.local_state_write_only) { throw "R39.5.1 $Context local_state_write_only=false" }
-  foreach ($name in @('provider_calls','scheduler_install','scheduler_modify','human_decision_execution','self_apply','skill_install','system_write','operator_message','auto_dispatch','external_messages','can_trade')) {
-    if ([bool]$Boundary.$name) { throw "R39.5.1 $Context unsafe effect boundary: $name=true" }
+  $property = $Boundary.PSObject.Properties[$Name]
+  if ($null -eq $property) { throw "R39.5.1 $Context effect boundary missing key: $Name" }
+  return $property.Value
+}
+
+function Assert-SafeEffectBoundary {
+  param(
+    [Parameter(Mandatory=$true)]$Boundary,
+    [Parameter(Mandatory=$true)][string]$Context,
+    [switch]$RequireProposalState
+  )
+
+  if ($null -eq $Boundary) { throw "R39.5.1 $Context effect boundary missing" }
+
+  if ($RequireProposalState) {
+    $proposalOnly = Get-RequiredBoundaryProperty -Boundary $Boundary -Name 'proposal_only' -Context $Context
+    if (-not [bool]$proposalOnly) { throw "R39.5.1 $Context proposal_only=false" }
+
+    $localStateWriteOnly = Get-RequiredBoundaryProperty -Boundary $Boundary -Name 'local_state_write_only' -Context $Context
+    if (-not [bool]$localStateWriteOnly) { throw "R39.5.1 $Context local_state_write_only=false" }
   }
-  if ($Boundary.capital_permission -ne 'DENY') { throw "R39.5.1 $Context capital_permission must remain DENY" }
+
+  foreach ($name in @('provider_calls','scheduler_install','scheduler_modify','human_decision_execution','self_apply','skill_install','system_write','operator_message','auto_dispatch','external_messages','can_trade')) {
+    $value = Get-RequiredBoundaryProperty -Boundary $Boundary -Name $name -Context $Context
+    if ([bool]$value) { throw "R39.5.1 $Context unsafe effect boundary: $name=true" }
+  }
+
+  $capitalPermission = Get-RequiredBoundaryProperty -Boundary $Boundary -Name 'capital_permission' -Context $Context
+  if ([string]$capitalPermission -ne 'DENY') { throw "R39.5.1 $Context capital_permission must remain DENY" }
 }
 
 $integration = Get-Content -Raw -Encoding UTF8 $integrationReceipt | ConvertFrom-Json
@@ -52,8 +76,8 @@ $outcomeStateObj = Get-Content -Raw -Encoding UTF8 $outcomeState | ConvertFrom-J
 if ($outcome.policy_version -ne '39.4.0.1-outcome-intelligence-metric-semantics-v1') { throw 'R39.5.1 outcome receipt policy mismatch' }
 if ($outcomeStateObj.policy_version -ne '39.4.0.1-outcome-intelligence-metric-semantics-v1') { throw 'R39.5.1 outcome state policy mismatch' }
 if ([int]$outcome.execution_effects_performed -ne 0) { throw 'R39.5.1 outcome receipt effects nonzero' }
-Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt'
-Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state'
+Assert-SafeEffectBoundary -Boundary $outcome.effect_boundary -Context 'outcome receipt' -RequireProposalState
+Assert-SafeEffectBoundary -Boundary $outcomeStateObj.effect_boundary -Context 'outcome state' -RequireProposalState
 
 # R39.4.0.1 outcome state safety is contractually represented by effect_boundary.
 # A top-level execution_effects_performed counter is optional on state. If present,
@@ -90,7 +114,7 @@ if ([int]$r.execution_effects_performed -ne 0) { throw 'R39.5.1 learning receipt
 if ([int]$s.execution_effects_performed -ne 0) { throw 'R39.5.1 learning state effects nonzero' }
 
 foreach ($boundary in @($r.effect_boundary, $s.effect_boundary)) {
-  Assert-SafeEffectBoundary -Boundary $boundary -Context 'learning output'
+  Assert-SafeEffectBoundary -Boundary $boundary -Context 'learning output' -RequireProposalState
 }
 
 $summary = $r.learning_summary
