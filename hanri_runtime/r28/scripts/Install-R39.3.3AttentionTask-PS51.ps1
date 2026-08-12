@@ -28,16 +28,21 @@ if ($policy.policy_version -ne '39.3.3-host-scheduler-package-v1') { throw 'sche
 if ([int]$policy.heartbeat_minutes -ne 5) { throw 'scheduler heartbeat must be 5 minutes' }
 if ($policy.effect_boundary.install_authorized) { throw 'policy install_authorized must remain false' }
 
-function Invoke-Git([string[]]$Args) {
+function Invoke-Git {
+  param(
+    [Parameter(Mandatory=$true)]
+    [string[]]$GitArgs
+  )
+
   $old = $ErrorActionPreference
   try {
     $ErrorActionPreference = 'Continue'
-    $out = & git -C $repoRoot @Args 2>&1
+    $out = & git -C $repoRoot @GitArgs 2>&1
     $code = $LASTEXITCODE
   }
   finally { $ErrorActionPreference = $old }
   $text = (($out | ForEach-Object { $_.ToString() }) -join "`n").Trim()
-  if ($code -ne 0) { throw "git_failed exit=$code args=$($Args -join ' ') $text" }
+  if ($code -ne 0) { throw "git_failed exit=$code args=$($GitArgs -join ' ') $text" }
   return $text
 }
 
@@ -75,10 +80,10 @@ function Get-SourceManifest {
   return [ordered]@{ file_count = $lines.Count; manifest_sha256 = Get-TextSha $text }
 }
 
-$status = Invoke-Git @('status','--porcelain')
+$status = Invoke-Git -GitArgs @('status','--porcelain')
 if ($status) { throw 'source worktree must be clean' }
-$head = Invoke-Git @('rev-parse','HEAD')
-$tree = Invoke-Git @('show','-s','--format=%T','HEAD')
+$head = Invoke-Git -GitArgs @('rev-parse','HEAD')
+$tree = Invoke-Git -GitArgs @('show','-s','--format=%T','HEAD')
 $manifest = Get-SourceManifest
 $principal = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 $before = Get-TaskSnapshot $TaskName
@@ -138,8 +143,8 @@ if ($ApprovalCommand -ne $approvalExpected) { throw 'exact scheduler approval co
 # Fresh pre-effect checks: task snapshot + git/source manifest must still equal the approved plan.
 $freshBefore = Get-TaskSnapshot $TaskName
 if ([bool]$freshBefore.exists -ne [bool]$before.exists -or $freshBefore.xml_sha256 -ne $before.xml_sha256) { throw 'task precondition changed after approval plan' }
-if ((Invoke-Git @('rev-parse','HEAD')) -ne $head) { throw 'source HEAD changed after approval plan' }
-if ((Invoke-Git @('show','-s','--format=%T','HEAD')) -ne $tree) { throw 'source tree changed after approval plan' }
+if ((Invoke-Git -GitArgs @('rev-parse','HEAD')) -ne $head) { throw 'source HEAD changed after approval plan' }
+if ((Invoke-Git -GitArgs @('show','-s','--format=%T','HEAD')) -ne $tree) { throw 'source tree changed after approval plan' }
 $freshManifest = Get-SourceManifest
 if ($freshManifest.manifest_sha256 -ne $manifest.manifest_sha256) { throw 'source manifest changed after approval plan' }
 
