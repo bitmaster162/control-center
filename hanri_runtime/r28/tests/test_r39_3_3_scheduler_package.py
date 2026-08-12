@@ -49,8 +49,17 @@ def test_production_heartbeat_has_no_test_or_git_hot_path() -> None:
 def test_installer_is_apply_gated_and_side_by_side_with_r36() -> None:
     text = INSTALLER.read_text(encoding="utf-8")
     dry = text.index("if (-not $Apply)")
-    register = text.index("Register-ScheduledTask -TaskName $TaskName")
-    assert dry < register
+    exact_gate = text.index("if ([string]::IsNullOrWhiteSpace($ExpectedCommit)")
+    production_register = text.index("Register-ScheduledTask -TaskName $TaskName -Action $action")
+    restore_helper = text.index("function Restore-Prior")
+    restore_register = text.index("Register-ScheduledTask -TaskName $TaskName -Xml")
+    restore_call = text.index("Restore-Prior -BackupRoot")
+
+    # Restoring a predecessor is defined before the gate, but cannot execute until
+    # the post-Apply transaction catch path. The new task registration itself must
+    # be after both the dry-run exit and exact commit/tree authorization gate.
+    assert restore_helper < restore_register < dry
+    assert dry < exact_gate < production_register < restore_call
     assert "-ExpectedCommit and -ExpectedTree are required with -Apply" in text
     assert "RepetitionInterval (New-TimeSpan -Minutes 5)" in text
     assert "-MultipleInstances IgnoreNew" in text
