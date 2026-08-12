@@ -10,7 +10,7 @@ $repoRoot = Split-Path -Parent (Split-Path -Parent $runtime)
 $env:HANRI_REPO_ROOT = $repoRoot
 $env:PYTHONPATH = Join-Path $runtime 'src'
 
-$loopRunner = Join-Path $runtime 'scripts\Run-R39.3.1SemanticContinuousAttentionLoop-PS51.ps1'
+$loopRunner = Join-Path $runtime 'scripts\Run-R39.3.3ProductionAttentionLoop-PS51.ps1'
 $cadencePolicy = Join-Path $runtime 'config\r39.3.2.attention-cadence.json'
 $loopOutput = Join-Path $OutputRoot 'loop'
 $loopReceipt = Join-Path $loopOutput 'continuous_receipts_v2\R39_3_1_CONTINUOUS_ATTENTION_LOOP_RECEIPT.json'
