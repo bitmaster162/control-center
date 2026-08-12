@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.4.0-outcome-intelligence-v1",
+  "mode": "EVIDENCE_BOUND_OUTCOME_LEARNING_SIDECAR",
+  "max_history_tail": 20,
+  "reinforcement_min_verified_improved": 2,
+  "outcome_debt_min_tracked": 2,
+  "min_outcome_coverage_rate": 0.5,
+  "semantic_rules": {
+    "explicit_recommendation_outcome_only": true,
+    "proposal_disappearance_is_not_improvement": true,
+    "verified_outcomes_require_explicit_evidence_refs": true,
+    "orphan_outcomes_do_not_count_toward_effectiveness": true,
+    "conflicting_current_outcomes_fail_closed": true,
+    "negative_outcome_requires_self_review": true,
+    "reinforcement_requires_repeated_positive_outcomes_and_zero_negative_outcomes": true,
+    "correlation_is_not_claimed_as_causation": true
+  },
+  "effect_boundary": {
+    "proposal_only": true,
+    "local_state_write_only": true,
+    "provider_calls": false,
+    "scheduler_install": false,
+    "scheduler_modify": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
