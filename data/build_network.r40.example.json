@@ -1,0 +1,47 @@
+{
+  "schema": "hanri.build-network.r40.v1",
+  "mode": "READ_ONLY_PROJECTION",
+  "plan": "GITHUB_FREE",
+  "canonical": {
+    "repository": "bitmaster162/control-center",
+    "visibility": "private",
+    "accepted_branch": "hanri/r37-product-pilot-accepted",
+    "accepted_head": "4dac1a46270ed45bc6c87e2e43448209d3b23f64",
+    "accepted_tree": "78d346ca88b61346380d58e6f4e63c10e4db7ade",
+    "friend_write_access": false
+  },
+  "collaboration_gateway": {
+    "repository": "bitmaster162/control-center-collab",
+    "visibility": "private",
+    "status": "SETUP_REQUIRED",
+    "repository_verified": false,
+    "collaborator": null,
+    "namespace": "collab/<github-user>/<lane>"
+  },
+  "promotion_policy": {
+    "collab_merge_is_canonical_acceptance": false,
+    "independent_diff_required": true,
+    "tests_required": true,
+    "canonical_candidate_branch_required": true,
+    "canonical_pr_required": true,
+    "exact_human_merge_gate_required": true,
+    "auto_merge": false,
+    "auto_deploy": false
+  },
+  "share_boundary": {
+    "full_canonical_mirror_allowed": false,
+    "allowlist_export_required": true,
+    "secrets_allowed": false,
+    "stable_control_roots_allowed": false,
+    "private_operator_messages_allowed": false,
+    "trading_runtime_state_allowed": false
+  },
+  "invariants": {
+    "authority_generation": "R64",
+    "new_authority_generation_created": false,
+    "self_application": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "tradingos": "DO_NOT_TOUCH"
+  }
+}
