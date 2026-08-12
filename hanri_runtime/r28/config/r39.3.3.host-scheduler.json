@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "policy_version": "39.3.3-host-scheduler-package-v1",
+  "task_name": "ControlCenter-HANRI-R39-Attention",
+  "heartbeat_minutes": 5,
+  "execution_time_limit_minutes": 10,
+  "multiple_instances": "IgnoreNew",
+  "start_when_available": true,
+  "principal_logon_type": "Interactive",
+  "principal_run_level": "Limited",
+  "source_pin": "EXACT_GIT_HEAD_TREE_AND_MANIFEST",
+  "approval_prefix": "APPROVE_R39_3_3_SCHEDULER:",
+  "transaction": {
+    "preflight_before_register": true,
+    "commit_cadence_after_full_loop_success": true,
+    "backup_existing_task_xml": true,
+    "backup_existing_install_root": true,
+    "rollback_on_register_or_verify_failure": true,
+    "post_write_readback_required": true
+  },
+  "effect_boundary": {
+    "install_authorized": false,
+    "scheduler_install_requires_exact_approval": true,
+    "dynamic_scheduler_reconfiguration": false,
+    "provider_calls": false,
+    "human_decision_execution": false,
+    "self_apply": false,
+    "skill_install": false,
+    "system_write": false,
+    "operator_message": false,
+    "auto_dispatch": false,
+    "external_messages": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
