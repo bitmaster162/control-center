@@ -1,0 +1,85 @@
+{
+  "schema": "hanri.continuityos.freshness-observation.v1",
+  "observed_at": "2026-08-13T11:05:00Z",
+  "target": {
+    "repository": "bitmaster162/continuityos",
+    "branch": "master",
+    "provider_readback": true,
+    "head": "fa133a03198e4d1a7314e27ee3d7b7d2815501fa",
+    "tree": "0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+    "merge_signature_verified": true,
+    "merge_signature_reason": "valid",
+    "version": "0.10.2"
+  },
+  "review_evidence": {
+    "pull_request": 52,
+    "source_head": "839f8593522c55af6681895b132a2d378592f522",
+    "source_tree": "0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+    "synthetic_merge_head": "0242b1a28c62d903f13e92a21efb065c84c63275",
+    "synthetic_merge_tree": "0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+    "synthetic_merge_signature_verified": true,
+    "workflow_run_id": 31549328483,
+    "workflow_run_number": 547,
+    "workflow_status": "completed",
+    "workflow_conclusion": "success",
+    "ubuntu": {
+      "job_id": 93968375109,
+      "conclusion": "success",
+      "artifact_id": 9123689693,
+      "artifact_sha256": "c2ff391c3f3183289f57faadb3d618f242c276ecee76b97ee9e562f11f141bbd",
+      "node_count": 1004,
+      "nodeids_sha256": "ab57a67f0d5f7ce5154dd21b1410c81a38fd252bfca92acb1b726a6277ef5541",
+      "clean_source_pytest": "998 passed, 6 skipped, 8 subtests passed",
+      "editable_pytest": "998 passed, 6 skipped, 8 subtests passed",
+      "wheel_only_status": "PASS",
+      "release_hardening": "10/10 PASS"
+    },
+    "windows": {
+      "job_id": 93968375165,
+      "conclusion": "success",
+      "artifact_id": 9123843923,
+      "artifact_sha256": "b31d6e8ec7169c197a94084bda04fbeb2d39dbf13ae4466ebdbca4089f3d85c8",
+      "node_count": 1004,
+      "nodeids_sha256": "ab57a67f0d5f7ce5154dd21b1410c81a38fd252bfca92acb1b726a6277ef5541",
+      "clean_source_pytest": "997 passed, 7 skipped, 8 subtests passed",
+      "editable_pytest": "997 passed, 7 skipped, 8 subtests passed",
+      "wheel_only_status": "PASS",
+      "release_hardening": "10/10 PASS"
+    }
+  },
+  "recovery_contract": {
+    "test_path": "tests/test_product_demo.py",
+    "test_blob": "9b4eec8dc75960c9a1ce8b459ff7a4300f418f37",
+    "nodeid": "tests/test_product_demo.py::test_continuity_demo_recovers_in_fresh_process_and_cleans",
+    "nodeid_collected": true,
+    "terminal": "COS_DEMO_CONTINUITY_PASS",
+    "reason": "DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS",
+    "session_boundary": "separate_python_process",
+    "requires_distinct_process_id": true,
+    "requires_doctor_healthy": true,
+    "requires_all_recovery_checks": true,
+    "requires_temporary_cleanup": true,
+    "requires_user_db_untouched": true,
+    "network_effect": false,
+    "external_model_call": false
+  },
+  "claim_ceiling": {
+    "bounded_property": "DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS",
+    "production_runtime_deployment_claim": false,
+    "mandatory_broker_enforcement_claim": false,
+    "behavioral_identity_claim": false,
+    "universal_tool_interception_claim": false,
+    "host_daemon_liveness_claim": false
+  },
+  "effects": {
+    "drive_writes": 0,
+    "repository_writes_at_runtime": 0,
+    "scheduler_changes": 0,
+    "external_messages": 0,
+    "external_model_calls": 0,
+    "trading": false,
+    "capital_permission": "DENY",
+    "can_trade": false,
+    "self_application": false
+  }
+}

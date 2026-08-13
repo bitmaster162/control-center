@@ -1,0 +1,44 @@
+{
+  "schema": "hanri.continuityos.freshness-qualification.v1",
+  "status": "PASS",
+  "errors": [],
+  "target": {
+    "repository": "bitmaster162/continuityos",
+    "branch": "master",
+    "head": "fa133a03198e4d1a7314e27ee3d7b7d2815501fa",
+    "tree": "0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3"
+  },
+  "bounded_property": "DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS",
+  "recovery_evidence": {
+    "workflow_run_id": 31549328483,
+    "workflow_run_number": 547,
+    "exact_tree_bound": true,
+    "ubuntu_success": true,
+    "windows_success": true,
+    "nodeid": "tests/test_product_demo.py::test_continuity_demo_recovers_in_fresh_process_and_cleans",
+    "nodeid_collected": true
+  },
+  "operational_status": "OPERATIONAL",
+  "freshness": "CURRENT",
+  "current_claim_allowed": true,
+  "promotion_eligible": true,
+  "claim_ceiling": {
+    "bounded_property": "DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS",
+    "production_runtime_deployment_claim": false,
+    "mandatory_broker_enforcement_claim": false,
+    "behavioral_identity_claim": false,
+    "universal_tool_interception_claim": false,
+    "host_daemon_liveness_claim": false
+  },
+  "effects": {
+    "drive_writes": 0,
+    "repository_writes_at_runtime": 0,
+    "scheduler_changes": 0,
+    "external_messages": 0,
+    "external_model_calls": 0,
+    "trading": false,
+    "capital_permission": "DENY",
+    "can_trade": false,
+    "self_application": false
+  }
+}

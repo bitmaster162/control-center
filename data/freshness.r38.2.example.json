@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-08-13T10:54:23Z",
+  "generated_at": "2026-08-13T11:05:00Z",
   "policy": {
     "source_readback_is_not_operational_freshness": true,
     "current_requires_target_state_proof": true,
@@ -13,23 +13,31 @@
       "name": "ContinuityOS",
       "owner": "CODEX-01",
       "source_available": true,
-      "operational_status": "UNKNOWN",
-      "freshness": "STALE",
-      "last_verified_at": "2026-07-29T22:05:00Z",
-      "fresh_readback_at": "2026-08-12T15:13:00Z",
-      "current_proof": false,
-      "proof_refs": [],
+      "operational_status": "OPERATIONAL",
+      "freshness": "CURRENT",
+      "last_verified_at": "2026-08-13T11:05:00Z",
+      "fresh_readback_at": "2026-08-13T11:05:00Z",
+      "current_proof": true,
+      "proof_refs": [
+        "data/continuityos.r38.4.qualification.json",
+        "github:bitmaster162/continuityos@master#head=fa133a03198e4d1a7314e27ee3d7b7d2815501fa#tree=0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+        "github-actions:run=31549328483#synthetic_merge=0242b1a28c62d903f13e92a21efb065c84c63275#tree=0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+        "artifact:review-receipts-ubuntu-py311-31549328483#sha256=c2ff391c3f3183289f57faadb3d618f242c276ecee76b97ee9e562f11f141bbd",
+        "artifact:review-receipts-windows-py311-31549328483#sha256=b31d6e8ec7169c197a94084bda04fbeb2d39dbf13ae4466ebdbca4089f3d85c8",
+        "github:tests/test_product_demo.py#blob=9b4eec8dc75960c9a1ce8b459ff7a4300f418f37#nodeid=test_continuity_demo_recovers_in_fresh_process_and_cleans"
+      ],
       "observations": [
-        "Drive contains ContinuityOS strategy/research corpus, including ContinuityOS_Master_Strategy_v1.8.docx.",
-        "A provider search restricted to post-2026-08-11 modifications found only shared aggregate surfaces such as the master dossier and HANRI dashboard, not an independent ContinuityOS runtime receipt.",
-        "Fresh source discovery therefore does not justify an OPERATIONAL/CURRENT claim."
+        "Fresh GitHub provider readback binds ContinuityOS master to HEAD fa133a03198e4d1a7314e27ee3d7b7d2815501fa and tree 0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3; the merge commit has a valid GitHub signature.",
+        "PR #52 source head 839f8593522c55af6681895b132a2d378592f522, Actions synthetic merge 0242b1a28c62d903f13e92a21efb065c84c63275 and current master all resolve to the exact same tree 0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3.",
+        "Review-gates run 31549328483 / #547 succeeded on Ubuntu and Windows. Uploaded exact receipts bind a 1004-node pytest collection containing test_continuity_demo_recovers_in_fresh_process_and_cleans; clean-source, wheel-only, editable, compile and 10/10 release-hardening checks passed.",
+        "The recovery test requires COS_DEMO_CONTINUITY_PASS, DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS, a separate Python process, distinct PID, healthy doctor, all recovery checks true, temporary cleanup, user-memory preservation and zero network/external-model effects.",
+        "CURRENT is intentionally bounded to the durable-state fresh-process recovery property. It does not claim production runtime deployment, mandatory broker enforcement, universal tool interception, host-daemon liveness or behavioral identity across models."
       ],
       "missing_proof": [
-        "fresh checkpoint/replay/recovery receipt from the active ContinuityOS operational surface",
-        "independent provider or host readback binding that receipt to the current target state"
+        "No proof is missing for the exact bounded recovery property on tree 0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3; any master-tree drift or widening beyond this claim requires fail-closed requalification."
       ],
-      "promotion_allowed": false,
-      "promotion_rule": "Promote only after a fresh operational checkpoint/replay receipt and independent target-state readback; corpus existence alone is insufficient."
+      "promotion_allowed": true,
+      "promotion_rule": "CURRENT applies only to DURABLE_STATE_RECOVERED_ACROSS_FRESH_PROCESS on the exact bound tree and review artifacts. It does not authorize deployment, mandatory enforcement, agent dispatch or effects; any tree/evidence drift returns to requalification."
     },
     {
       "id": "archive-os",
@@ -43,16 +51,14 @@
       "current_proof": false,
       "proof_refs": [],
       "observations": [
-        "Drive contains ArchiveOS/archive-tooling corpus such as ARCHIVE_TOOLING_BLUEPRINT.md and related plans.",
-        "A provider search restricted to post-2026-08-11 modifications found only aggregate dossier/dashboard surfaces, not a fresh immutable-vault or archive-integrity operational receipt.",
-        "Fresh source discovery therefore does not justify an OPERATIONAL/CURRENT claim."
+        "Drive exposes ArchiveOS/archive-tooling corpus, but the last reconciliation did not recover a fresh immutable-vault or archive-integrity operational receipt."
       ],
       "missing_proof": [
         "fresh vault/archive integrity receipt over the current immutable source set",
-        "independent readback proving the receipt corresponds to the currently active ArchiveOS surface"
+        "independent readback binding that receipt to the currently active ArchiveOS surface"
       ],
       "promotion_allowed": false,
-      "promotion_rule": "Promote only after a fresh archive-integrity/source-closure receipt plus independent readback; historical blueprint files are not operational proof."
+      "promotion_rule": "Promote only after fresh archive-integrity/source-closure proof plus independent readback; corpus existence alone is insufficient."
     },
     {
       "id": "decision-governor",
@@ -75,16 +81,14 @@
         "drive:1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk:R64_CURRENT_TRUTH_DIGEST_20260812T0131_BKK"
       ],
       "observations": [
-        "Fresh raw provider readback recovered CURRENT_POINTER, CURRENT_STATE, ROLE_INDEX and ROLE_VIEWS. CURRENT_POINTER reports ACTIVE_RESEALED_AFTER_EXACT_PROVIDER_READBACK and binds the exact observed STATE/INDEX/VIEWS SHA-256 values.",
-        "Immutable stable-root markers that still describe pre-closure D1/D4 state are explicitly superseded operationally by provider-read additive R64 closure/current-state evidence rather than silently ignored.",
-        "The deterministic R38.3 qualification returns PASS with decision_count=0: D1 and D4 are suppressed as ALREADY_CLOSED; D5 is suppressed as WAITING_REPLY_NO_REPEAT_OUTREACH.",
-        "Qualification effects are zero: no Drive write, scheduler change, external message, provider/model call, dispatch, execution, self-application, trading or capital authority."
+        "R38.3 deterministic qualification is canonical and binds exact current R64 roots plus additive D1/D4/D5 evidence.",
+        "D1 and D4 are suppressed as ALREADY_CLOSED; D5 is suppressed as WAITING_REPLY_NO_REPEAT_OUTREACH; decision_count=0 and execution/effect counters remain zero."
       ],
       "missing_proof": [
-        "No proof is missing at this exact readback; requalification is required if any bound root hash, pointer reseal status, additive decision evidence, D5 operator status or effect ceiling changes."
+        "No proof is missing at the exact R38.3 binding; any root/evidence/effect-ceiling drift requires fail-closed requalification."
       ],
       "promotion_allowed": true,
-      "promotion_rule": "CURRENT is valid only for the exact bound root/evidence set recorded by R38.3; any drift returns to fail-closed requalification. Promotion/refresh remains human-gated."
+      "promotion_rule": "CURRENT remains valid only for the exact R38.3 root/evidence binding and remains human-gated on refresh."
     },
     {
       "id": "fable-5",
@@ -98,16 +102,14 @@
       "current_proof": false,
       "proof_refs": [],
       "observations": [
-        "Drive still exposes the FABLE-5 folder and FABLE5_MEMORY_INSTALL_GATE_AUDIT_SEALED_20260730.md.",
-        "The newest dedicated FABLE-5 evidence discovered is dated 2026-07-30, outside the current freshness window.",
-        "The return-registry search resolves to historical registry/R57-R61 material rather than a fresh FABLE-5 host-bridge heartbeat or execution receipt."
+        "The newest dedicated FABLE-5 slot/host evidence remains historical rather than a current slot/runtime receipt."
       ],
       "missing_proof": [
         "fresh FABLE-5 slot identity and host-bridge status receipt",
         "current role/runtime readback with no inferred execution authority"
       ],
       "promotion_allowed": false,
-      "promotion_rule": "Promote only after a fresh slot/runtime receipt and independent host/Drive readback; historical audit files do not establish current runtime status."
+      "promotion_rule": "Promote only after a fresh slot/runtime receipt and independent host/Drive readback."
     },
     {
       "id": "codex-01",
@@ -121,16 +123,14 @@
       "current_proof": false,
       "proof_refs": [],
       "observations": [
-        "CODEX-01 remains named as ContinuityOS/dashboard-live-adapter owner in the current projection.",
-        "A fresh GitHub issue search did not discover a current CODEX-01 slot receipt.",
-        "Recent Drive matches are aggregate HANRI/dashboard/dossier surfaces, not a dedicated CODEX-01 Return Broker or worktree status receipt."
+        "ContinuityOS source is now provider-current, but that does not prove CODEX-01 slot/worktree freshness or active executor state."
       ],
       "missing_proof": [
         "fresh Return Broker receipt or Git worktree receipt binding CODEX-01 to its current role and artifact state",
         "independent readback of that exact receipt"
       ],
       "promotion_allowed": false,
-      "promotion_rule": "Promote only after a fresh CODEX-01 slot/worktree receipt and independent readback; ownership metadata is not operational proof."
+      "promotion_rule": "ContinuityOS product freshness must not be conflated with CODEX-01 agent-slot freshness."
     },
     {
       "id": "codex-05",
@@ -144,16 +144,14 @@
       "current_proof": false,
       "proof_refs": [],
       "observations": [
-        "GitHub provider readback confirms private source-custody repository bitmaster162/tradingos exists; repository id 1328753689 and default branch codex02/m2b-forward-edge-evidence.",
-        "The current HANRI projection keeps CODEX-05 in DO_NOT_TOUCH and TradingOS execution READ_ONLY.",
-        "Current source-custody availability does not prove CODEX-05 runtime/slot freshness and does not authorize TradingOS modification or execution."
+        "TradingOS source custody is provider-visible, but CODEX-05 remains DO_NOT_TOUCH and lacks a fresh slot/runtime receipt."
       ],
       "missing_proof": [
         "fresh CODEX-05 slot/runtime receipt that preserves DO_NOT_TOUCH unless separately superseded",
         "independent readback binding the slot receipt to the current TradingOS source/runtime target"
       ],
       "promotion_allowed": false,
-      "promotion_rule": "Source-custody readback may mark source availability only. Operational CURRENT requires a separate fresh slot/runtime receipt; DO_NOT_TOUCH remains binding until exact supersession."
+      "promotion_rule": "Source-custody visibility is not runtime freshness; DO_NOT_TOUCH remains binding until exact supersession."
     }
   ],
   "invariants": {
