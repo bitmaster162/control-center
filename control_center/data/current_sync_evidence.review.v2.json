@@ -1,16 +1,16 @@
 {
   "schema": "control-center.sync-evidence.review.v2",
   "status": "REVIEW_ONLY_CURRENT_EVIDENCE_FIXTURE",
-  "observed_at": "2026-08-14T01:30:00+07:00",
+  "observed_at": "2026-08-14T02:00:11+07:00",
   "claim_ceiling": "READ_ONLY_PROJECTION_AND_REVIEW_BRANCH_ENGINEERING_ONLY",
   "observations": [
     {
       "semantic_surface": "r64.authority",
       "claim_dimension": "authority",
       "source_class": "stable_authority_root",
-      "source_id": "CURRENT_POINTER_R64_PROVIDER_READ",
+      "source_id": "R64_STABLE_ROOTS_5_OF_5_PROVIDER_READ_20260814T020011+0700",
       "source_scope": "R64_STABLE_AUTHORITY",
-      "observed_at": "2026-08-14T01:20:00+07:00",
+      "observed_at": "2026-08-14T02:00:11+07:00",
       "identity": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
       "freshness": "CURRENT",
       "claim_ceiling": "BOUND_AUTHORITY_FACT_ONLY",
@@ -19,16 +19,39 @@
         "generation": "R64",
         "status": "ACTIVE_RESEALED",
         "human_sovereign": "ROBERT",
-        "source_id": "CURRENT_POINTER_R64_PROVIDER_READ",
+        "source_id": "R64_STABLE_ROOTS_5_OF_5_PROVIDER_READ_20260814T020011+0700",
         "identity": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
         "freshness": "CURRENT",
-        "observed_at": "2026-08-14T01:20:00+07:00",
+        "observed_at": "2026-08-14T02:00:11+07:00",
         "effect_ceiling": {
           "auto_accept": false,
           "auto_dispatch": false,
           "can_trade": false,
           "capital_permission": "DENY",
           "self_application": false
+        },
+        "provider_readback": "5_OF_5_EXACT",
+        "roots": {
+          "CURRENT_POINTER.json": {
+            "bytes": 5493,
+            "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
+          },
+          "CURRENT_STATE.json": {
+            "bytes": 6506,
+            "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+          },
+          "ROLE_INDEX.json": {
+            "bytes": 2043,
+            "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+          },
+          "ROLE_VIEWS.json": {
+            "bytes": 3945,
+            "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+          },
+          "MANIFEST.json": {
+            "bytes": 1328,
+            "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+          }
         }
       }
     },
