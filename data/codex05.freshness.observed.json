@@ -1,0 +1,77 @@
+{
+  "schema": "hanri.codex05-freshness.observed/v1",
+  "surface": "codex-05",
+  "observed_at": "2026-08-13T16:28:00Z",
+  "freshness_cutoff": "2026-08-09T00:00:00Z",
+  "source_precedence": {
+    "current_return_registry": "drive:1wkKssEYfCE6l9Iz8j4LEzuih7q0Ahuin9uNw_MMK4Kw",
+    "historical_r57_work_order": "drive:1ktjWwxnKmwn2njIjuXlpXkMnHQTOOLBa",
+    "latest_dedicated_codex05_folder": "drive:16877LBL6ejH_khb8kGoMWHKfqwqb0RiS",
+    "dashboard_role": "PROJECTION_REFERENCE_ONLY_NOT_SLOT_RUNTIME_PROOF",
+    "tradingos_source_visibility_role": "SOURCE_CUSTODY_REFERENCE_NOT_CODEX05_RUNTIME_PROOF"
+  },
+  "provider_readbacks": {
+    "dedicated_codex05_r_results_after_cutoff": 0,
+    "recent_codex05_hits_class": "DASHBOARD_OR_DOSSIER_REFERENCES_ONLY",
+    "latest_dedicated_codex05_folder": {
+      "id": "16877LBL6ejH_khb8kGoMWHKfqwqb0RiS",
+      "modified_at": "2026-07-29T16:30:54.357Z",
+      "current_for_cutoff": false
+    },
+    "historical_return_registry": {
+      "slot": "CODEX-05",
+      "work_order_id": "CODEX05-R43-HANRI-STALE-GROUP-CLOSEOUT",
+      "terminal_state": "OUTCOME_PASS",
+      "verification": "INDEPENDENTLY_REOPENED_PASS",
+      "zip_sha256": "2cfc29779c301aa5ff6423cf26d90eb6d0ce38f50bdbf914f6ef3d4638ef82b8",
+      "installed_runtime_mutated": false,
+      "no_further_agent_work": true,
+      "next_gate": "NONE_AGENT_SIDE",
+      "current_for_cutoff": false
+    },
+    "historical_r57_work_order": {
+      "task_class": "IMPLEMENTATION_AND_FORWARD_OBSERVATION",
+      "decision_ceiling_allows_trading_or_promotion": false,
+      "requires_git_baseline": true,
+      "requires_no_effect_receipt": true,
+      "current_completion_receipt_found_after_cutoff": false
+    },
+    "tradingos_source_custody": {
+      "repository": "bitmaster162/tradingos",
+      "default_branch": "codex02/m2b-forward-edge-evidence",
+      "head": "74cfece71f7432d521c646ef6bbe46a0c908884e",
+      "source_visible": true,
+      "proves_codex05_runtime_freshness": false
+    }
+  },
+  "current_slot_runtime_receipt": {
+    "present": false,
+    "provider_readback_present": false,
+    "slot_id": null,
+    "observed_at": null,
+    "receipt_sha256": null,
+    "role_binding_present": false,
+    "tradingos_target_binding_present": false,
+    "do_not_touch_preserved": true,
+    "exact_supersession_authorized": false,
+    "no_inferred_execution_authority": true,
+    "independent_readback_present": false,
+    "independent_receipt_sha256": null
+  },
+  "effects": {
+    "writes_to_codex05": 0,
+    "writes_to_tradingos": 0,
+    "runtime_mutations": 0,
+    "provider_mutations": 0,
+    "external_messages": 0,
+    "trading_effects": 0
+  },
+  "invariants": {
+    "do_not_touch": true,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
