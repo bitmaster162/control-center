@@ -1,0 +1,46 @@
+name: Control Center Authority Capture Refresh V2
+
+on:
+  push:
+    branches:
+      - control-center/current-truth-r1
+    paths:
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - 'control_center/data/authority_refresh_capture.readonly.v2.json'
+      - 'control_center/scripts/authority_capture_refresh_v2.py'
+      - 'control_center/scripts/test_authority_capture_refresh_v2.py'
+      - '.github/workflows/control-center-authority-capture-refresh-v2.yml'
+  pull_request:
+    paths:
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - 'control_center/data/authority_refresh_capture.readonly.v2.json'
+      - 'control_center/scripts/authority_capture_refresh_v2.py'
+      - 'control_center/scripts/test_authority_capture_refresh_v2.py'
+      - '.github/workflows/control-center-authority-capture-refresh-v2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  authority-capture-refresh-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Classify read-only R64 authority capture
+        run: >-
+          python control_center/scripts/authority_capture_refresh_v2.py
+          control_center/data/current_sync_evidence.review.v2.json
+          control_center/data/authority_refresh_capture.readonly.v2.json
+      - name: Adversarial Authority Capture Refresh V2 tests
+        run: python control_center/scripts/test_authority_capture_refresh_v2.py
+      - name: Revalidate current Authority Freshness V2
+        run: python control_center/scripts/validate_authority_freshness_v2.py control_center/data/current_sync_evidence.review.v2.json
+      - name: Revalidate V1 to V2 parity
+        run: >-
+          python control_center/scripts/migrate_provider_snapshot_v1_to_v2.py
+          control_center/data/provider_snapshot.current.v1.json
+          control_center/data/current_sync_evidence.review.v2.json
+          control_center/data/provider_snapshot_v1_migration_map.review.v2.json
