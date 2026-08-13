@@ -1,0 +1,38 @@
+{
+  "schema": "hanri.freshness-delta.codex05/v1",
+  "generated_at": "2026-08-13T16:28:00Z",
+  "global_position": "post-R40.2",
+  "lane": "Freshness",
+  "classification": "ADDITIVE_EVIDENCE_ONLY_DO_NOT_TOUCH_PRESERVED",
+  "surface_update": {
+    "id": "codex-05",
+    "operational_status": "DO_NOT_TOUCH",
+    "freshness": "STALE",
+    "current_proof": false,
+    "current_claim_allowed": false,
+    "promotion_allowed": false,
+    "promotion_eligible": false,
+    "missing_proof": [
+      "fresh provider-read CODEX-05 slot/runtime receipt after the cutoff",
+      "exact CODEX-05 role and current TradingOS target binding",
+      "explicit preservation of DO_NOT_TOUCH with no inferred execution authority",
+      "independent readback reproducing the exact receipt SHA-256"
+    ],
+    "promotion_rule": "A freshness PASS may bind only current slot/runtime identity while DO_NOT_TOUCH remains operationally binding. Operational promotion requires a separate exact human supersession; source custody, historical returns, work orders, and dashboard references cannot supersede it."
+  },
+  "preserved_surfaces": {
+    "continuity-os": {"freshness": "CURRENT"},
+    "decision-governor": {"freshness": "CURRENT"},
+    "archive-os": {"freshness": "STALE", "operational_status": "BLOCKED_REVERIFY"},
+    "fable-5": {"freshness": "STALE", "operational_status": "BLOCKED_REVERIFY"},
+    "codex-01": {"freshness": "STALE", "operational_status": "BLOCKED_REVERIFY"}
+  },
+  "invariants": {
+    "do_not_touch": true,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
