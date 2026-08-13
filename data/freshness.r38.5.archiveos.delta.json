@@ -1,0 +1,41 @@
+{
+  "schema": "hanri.freshness-surface-delta/v1",
+  "base_ledger": "data/freshness.r38.2.example.json",
+  "surface_id": "archive-os",
+  "observed_at": "2026-08-13T11:33:00Z",
+  "classification": "ADDITIVE_EVIDENCE_ONLY_NO_CURRENT_PROMOTION",
+  "operational_status": "BLOCKED_REVERIFY",
+  "freshness": "STALE",
+  "current_proof": false,
+  "promotion_allowed": false,
+  "proof_refs": [
+    "data/archiveos.r38.5.observed.json",
+    "data/archiveos.r38.5.qualification.json",
+    "drive:1L8vLsx3ON2iqxF6siIMVLuFEkvEAy7_d#mirror_no_children_modified_after=2026-08-09T00:00:00Z",
+    "drive:1bvbNu_5IQsDUpB602OcgyEmSR4F5l-z_#mirror_no_children_modified_after=2026-08-09T00:00:00Z",
+    "drive:1lSOBSHW4sJEoseRxUoAp4IwLMNzjsVuVd6y_OOhBock#integrity=CACHED_STAT_GUARD#full_sha=false#bytes_hashed=0",
+    "library:file_00000000ccb8822fae734a6c1f6ca006#zip_sha256=af9f06b74fa380a1b3e9c6bf69b871d17228abd70ae6c13f77ca8984836e0856",
+    "library:file_00000000706881fb8657adc26a1895fb#status=BLOCKED"
+  ],
+  "observations": [
+    "Canonical scope rules keep C:\\PROJECTS\\archiveos_api authoritative; Drive is mirror evidence only and Archive Tooling is an artifact compiler, not a second archive engine.",
+    "Both accessible Drive archiveos_api mirror folders returned zero direct children modified after 2026-08-09T00:00:00Z.",
+    "The Archive Tooling handoff checksum exists, but the current handoff bytes do not constitute an authoritative ArchiveOS Core integrity receipt.",
+    "The Archive Tooling recovery record states that the reported 2484/2938 checkpoint, exact repository bytes, source-ID map and validator state were not reproduced.",
+    "The R36 live receipt proves only CACHED_STAT_GUARD on the sampled heartbeat; full_sha_performed=false and bytes_hashed=0."
+  ],
+  "missing_proof": [
+    "fresh read-only provider/host readback of canonical root C:\\PROJECTS\\archiveos_api",
+    "fresh full SHA-256 integrity receipt over the current authoritative immutable source set with file_count>0 and bytes_hashed>0",
+    "independent second readback reproducing the same manifest SHA-256 and file count",
+    "source-precedence confirmation that the receipt belongs to ArchiveOS Core rather than the Drive mirror or Archive Tooling"
+  ],
+  "promotion_rule": "Remain STALE until all four missing-proof conditions are satisfied on the authoritative ArchiveOS Core root. Mirror corpus existence, an Archive Tooling checksum, or a cached stat guard cannot authorize CURRENT.",
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
