@@ -25,7 +25,7 @@ def test_committed_qualification_receipt_equals_deterministic_engine_output():
     assert load(RECEIPT) == qualify(load(OBSERVED))
 
 
-def test_freshness_ledger_promotes_only_decision_governor_to_current():
+def test_freshness_ledger_preserves_decision_governor_current_after_r38_4():
     ledger = load(FRESHNESS)
     surfaces = {item["id"]: item for item in ledger["surfaces"]}
     governor = surfaces["decision-governor"]
@@ -35,7 +35,10 @@ def test_freshness_ledger_promotes_only_decision_governor_to_current():
     assert governor["promotion_allowed"] is True
     assert "data/decision_governor.r38.3.qualification.json" in governor["proof_refs"]
 
-    for surface_id in ("continuity-os", "archive-os", "fable-5", "codex-01", "codex-05"):
+    current = {surface_id for surface_id, surface in surfaces.items() if surface["freshness"] == "CURRENT"}
+    assert current == {"continuity-os", "decision-governor"}
+
+    for surface_id in ("archive-os", "fable-5", "codex-01", "codex-05"):
         surface = surfaces[surface_id]
         assert surface["freshness"] == "STALE"
         assert surface["current_proof"] is False
