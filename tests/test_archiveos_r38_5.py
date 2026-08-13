@@ -9,6 +9,7 @@ from scripts.archiveos_freshness_qual import qualify
 ROOT = Path(__file__).resolve().parents[1]
 OBSERVED = ROOT / "data/archiveos.r38.5.observed.json"
 QUALIFICATION = ROOT / "data/archiveos.r38.5.qualification.json"
+DELTA = ROOT / "data/freshness.r38.5.archiveos.delta.json"
 LEDGER = ROOT / "data/freshness.r38.2.example.json"
 
 
@@ -104,16 +105,22 @@ def test_source_precedence_cannot_be_widened():
     assert "Archive Tooling boundary is missing or widened" in result["proof_gap"]
 
 
-def test_freshness_ledger_blocks_only_archiveos_and_preserves_current_predecessors():
+def test_blocked_delta_is_additive_and_predecessor_ledger_stays_fail_closed():
+    delta = load(DELTA)
+    assert delta["surface_id"] == "archive-os"
+    assert delta["classification"] == "ADDITIVE_EVIDENCE_ONLY_NO_CURRENT_PROMOTION"
+    assert delta["operational_status"] == "BLOCKED_REVERIFY"
+    assert delta["freshness"] == "STALE"
+    assert delta["current_proof"] is False
+    assert delta["promotion_allowed"] is False
+    assert "data/archiveos.r38.5.qualification.json" in delta["proof_refs"]
+
     ledger = load(LEDGER)
     surfaces = {row["id"]: row for row in ledger["surfaces"]}
-
     archive = surfaces["archive-os"]
-    assert archive["operational_status"] == "BLOCKED_REVERIFY"
     assert archive["freshness"] == "STALE"
     assert archive["current_proof"] is False
     assert archive["promotion_allowed"] is False
-    assert "data/archiveos.r38.5.qualification.json" in archive["proof_refs"]
 
     assert surfaces["continuity-os"]["freshness"] == "CURRENT"
     assert surfaces["decision-governor"]["freshness"] == "CURRENT"
