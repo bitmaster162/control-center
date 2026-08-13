@@ -1,0 +1,39 @@
+{
+  "schema": "hanri.decision-governor.requalification.v1",
+  "status": "PASS",
+  "root_bundle_complete": true,
+  "root_errors": [],
+  "root_binding_errors": [],
+  "decision_evidence_errors": [],
+  "safety_errors": [],
+  "decision_count": 0,
+  "decisions": [],
+  "suppressions": [
+    {
+      "id": "D1",
+      "reason": "ALREADY_CLOSED"
+    },
+    {
+      "id": "D4",
+      "reason": "ALREADY_CLOSED"
+    },
+    {
+      "id": "D5",
+      "reason": "WAITING_REPLY_NO_REPEAT_OUTREACH"
+    }
+  ],
+  "promotion_eligible": true,
+  "current_claim_allowed": true,
+  "effects": {
+    "drive_writes": 0,
+    "scheduler_changes": 0,
+    "external_messages": 0,
+    "external_model_api_calls": 0,
+    "source_repository_writes_at_runtime": false,
+    "auto_dispatch": false,
+    "auto_execution": false,
+    "self_application": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
