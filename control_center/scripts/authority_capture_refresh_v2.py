@@ -78,6 +78,7 @@ def candidate_observation(c:Mapping[str,Any])->dict[str,Any]:
         "status":"ACTIVE_RESEALED",
         "human_sovereign":"ROBERT",
         "provider_readback":"5_OF_5_EXACT",
+        "freshness":"CURRENT",
         "observed_at":c["observed_at"],
         "roots":deepcopy(c["stable_roots"]),
         "effect_ceiling":{
@@ -119,7 +120,13 @@ def apply_candidate(sync:Mapping[str,Any], candidate:Mapping[str,Any])->dict[str
     replaced=0
     for r in out.get("observations",[]):
         if isinstance(r,dict) and r.get("semantic_surface")==SURFACE and r.get("freshness")=="CURRENT":
-            old=deepcopy(r); old["freshness"]="HISTORICAL"; rows.append(old); replaced+=1
+            old=deepcopy(r)
+            old["freshness"]="HISTORICAL"
+            old_payload=old.get("payload")
+            if isinstance(old_payload,dict) and "freshness" in old_payload:
+                old_payload["freshness"]="HISTORICAL"
+            rows.append(old)
+            replaced+=1
         else: rows.append(r)
     if replaced!=1: raise ValueError("apply_current_authority_row_count:"+str(replaced))
     rows.append(deepcopy(candidate))
