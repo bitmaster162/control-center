@@ -9,7 +9,7 @@ def sync(when="2026-08-14T02:00:11+07:00"):
  return {"schema":"control-center.sync-evidence.review.v2","observed_at":when,"observations":[{
   "semantic_surface":"r64.authority","claim_dimension":"authority","source_class":"stable_authority_root","source_id":"old",
   "source_scope":"R64_STABLE_AUTHORITY","observed_at":when,"identity":m.EXPECTED["CURRENT_POINTER.json"]["sha256"],
-  "freshness":"CURRENT","claim_ceiling":"BOUND_AUTHORITY_FACT_ONLY","effect_authority":"NONE","payload":{"generation":"R64"}
+  "freshness":"CURRENT","claim_ceiling":"BOUND_AUTHORITY_FACT_ONLY","effect_authority":"NONE","payload":{"generation":"R64","freshness":"CURRENT"}
  }]}
 NOW=m.parse_time("2026-08-14T02:45:20+07:00")
 class T(unittest.TestCase):
@@ -37,6 +37,8 @@ class T(unittest.TestCase):
  def test_apply_marks_old_historical(self):
   x=m.classify(sync(),CAP,now=NOW);out=m.apply_candidate(sync(),x["candidate_observation"]);rows=[r for r in out["observations"] if r["semantic_surface"]=="r64.authority"]
   self.assertEqual(len(rows),2);self.assertEqual(sum(r["freshness"]=="CURRENT" for r in rows),1);self.assertEqual(sum(r["freshness"]=="HISTORICAL" for r in rows),1)
+  historical=next(r for r in rows if r["freshness"]=="HISTORICAL")
+  self.assertEqual(historical.get("payload",{}).get("freshness"),"HISTORICAL")
  def test_candidate_preserves_effect_ceiling(self):
   x=m.classify(sync(),CAP,now=NOW);e=x["candidate_observation"]["payload"]["effect_ceiling"];self.assertFalse(e["can_trade"]);self.assertEqual(e["capital_permission"],"DENY");self.assertFalse(e["self_application"])
 if __name__=="__main__":unittest.main()
