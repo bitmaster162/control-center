@@ -1,0 +1,35 @@
+name: Control Center Sync V2
+
+on:
+  push:
+    branches:
+      - control-center/current-truth-r1
+    paths:
+      - 'control_center/contracts/CONTROL_CENTER_SYNC_CONTRACT_V2.md'
+      - 'control_center/scripts/control_center_sync_gate_v2.py'
+      - 'control_center/scripts/test_control_center_sync_gate_v2.py'
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - '.github/workflows/control-center-sync-v2.yml'
+  pull_request:
+    paths:
+      - 'control_center/contracts/CONTROL_CENTER_SYNC_CONTRACT_V2.md'
+      - 'control_center/scripts/control_center_sync_gate_v2.py'
+      - 'control_center/scripts/test_control_center_sync_gate_v2.py'
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - '.github/workflows/control-center-sync-v2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  sync-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate normalized current-sync evidence
+        run: python control_center/scripts/control_center_sync_gate_v2.py --validate control_center/data/current_sync_evidence.review.v2.json
+      - name: Adversarial Control Center Sync V2 tests
+        run: python control_center/scripts/test_control_center_sync_gate_v2.py
