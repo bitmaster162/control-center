@@ -1,0 +1,69 @@
+{
+  "schema": "hanri.fable5-freshness.observed/v1",
+  "surface": "fable-5",
+  "observed_at": "2026-08-13T14:54:00Z",
+  "freshness_cutoff": "2026-08-09T00:00:00Z",
+  "source_precedence": {
+    "dedicated_fable5_root": "drive:1RzhZPmHhybJOVdpowvfWCwL4PAYeoqVG",
+    "historical_runtime_report": "drive:1QlaawHxBymVARKy9sJwfJhEV-UFo92l4",
+    "historical_sealed_audit": "drive:1SSXu3JE-jUzDRiYHgcRRwLiSw2bd75sq",
+    "dashboard_role": "PROJECTION_REFERENCE_ONLY_NOT_SLOT_RUNTIME_PROOF"
+  },
+  "provider_readbacks": {
+    "dedicated_root_children_modified_after_cutoff": 0,
+    "dedicated_fable5_search_results_modified_after_cutoff": 0,
+    "broad_fable_recent_results": [
+      {
+        "id": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
+        "title": "HANRI_R64_DASHBOARD_CURRENT_R36_FULL_VERIFIED.html",
+        "classification": "DASHBOARD_PROJECTION_NOT_DEDICATED_SLOT_RECEIPT"
+      },
+      {
+        "id": "1BhxiTJxerPlUBbUcQ_euNkqEY1eB4qNH",
+        "title": "HANRI_R64_DASHBOARD_CURRENT_R35_FULL_VERIFIED__PRE_20260812T0131_BKK.html",
+        "classification": "DASHBOARD_PROJECTION_NOT_DEDICATED_SLOT_RECEIPT"
+      }
+    ],
+    "historical_runtime_report": {
+      "id": "1QlaawHxBymVARKy9sJwfJhEV-UFo92l4",
+      "reported_at": "2026-07-29T22:05:00Z",
+      "role": "EXTERNAL_RUNTIME_AND_AUDITOR",
+      "host_bridge_claimed": true,
+      "current_for_cutoff": false
+    },
+    "historical_sealed_audit": {
+      "id": "1SSXu3JE-jUzDRiYHgcRRwLiSw2bd75sq",
+      "audited_at": "2026-07-30T18:20:00Z",
+      "class": "INDEPENDENT_AUDIT_ONLY",
+      "verdict": "INSTALL_GATE_READY",
+      "scope": "SHADOW_INSTALL_ONLY",
+      "current_for_cutoff": false
+    }
+  },
+  "current_slot_runtime_receipt": {
+    "present": false,
+    "provider_readback_present": false,
+    "slot_id": null,
+    "observed_at": null,
+    "receipt_sha256": null,
+    "host_bridge_status_present": false,
+    "current_role_runtime_readback_present": false,
+    "no_inferred_execution_authority": true,
+    "independent_readback_present": false,
+    "independent_receipt_sha256": null
+  },
+  "effects": {
+    "writes": 0,
+    "runtime_mutations": 0,
+    "provider_mutations": 0,
+    "external_messages": 0,
+    "trading_effects": 0
+  },
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
