@@ -1,0 +1,66 @@
+{
+  "schema": "control-center.provider-snapshot-v1-retirement-matrix.v1",
+  "status": "BLOCKED_RETIREMENT",
+  "legacy_source": "control_center/data/provider_snapshot.current.v1.json",
+  "parity_gate": "V1_TO_PER_SURFACE_V2_PARITY_PASS",
+  "consumers": [
+    {
+      "consumer": "compose_current_projection.py",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "Sync V2 normalized snapshot/projection",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "validate_provider_snapshot_freshness.py",
+      "status": "REPLACEMENT_CANDIDATE_READY",
+      "replacement": "validate_authority_freshness_v2.py",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "provider_freshness_refresh_controller.py",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "PER_SURFACE_CAPTURE_REFRESH_V2_REQUIRED",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "build_provider_refresh_controller_status.py",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "PER_SURFACE_DRIFT_STATUS_V2_REQUIRED",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "provider_drift_resolution_transition.py",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "PER_SURFACE_DRIFT_RESOLUTION_V2_REQUIRED",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "build_provider_drift_operator_attention.py",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "PER_SURFACE_ATTENTION_V2_REQUIRED",
+      "retirement_blocker": true
+    },
+    {
+      "consumer": "provider lease / system attention UI",
+      "status": "LEGACY_ACTIVE",
+      "replacement": "PER_SURFACE_UI_FRESHNESS_V2_REQUIRED",
+      "retirement_blocker": true
+    }
+  ],
+  "retirement_requirements": [
+    "all consumers replacement-verified",
+    "V1/V2 semantic parity remains PASS",
+    "authority freshness V2 PASS",
+    "no static self-pinned Control Center HEAD current claim",
+    "legacy V1 projection marked read-only historical",
+    "old workflow no longer gates current V2 truth",
+    "no authority/effect expansion"
+  ],
+  "effects": {
+    "retire_now": false,
+    "merge": false,
+    "deploy": false,
+    "runtime_mutation": false,
+    "registry_mutation": false
+  }
+}
