@@ -118,6 +118,10 @@ jobs:
         run: python control_center/scripts/test_source_reducer.py
       - name: Validate exact Return Registry V4 adapter
         run: python control_center/scripts/test_return_registry_adapter.py
+      - name: Validate Control Center Sync Gate V2
+        run: python control_center/scripts/control_center_sync_gate_v2.py --validate control_center/data/current_sync_evidence.review.v2.json
+      - name: Adversarial Control Center Sync Gate V2 tests
+        run: python control_center/scripts/test_control_center_sync_gate_v2.py
       - name: Validate operator cockpit JavaScript
         run: |
           node --check control_center/ui/app.js
