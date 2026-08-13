@@ -1,0 +1,63 @@
+{
+  "schema": "hanri.codex01-freshness.observed/v1",
+  "surface": "codex-01",
+  "observed_at": "2026-08-13T15:18:00Z",
+  "freshness_cutoff": "2026-08-09T00:00:00Z",
+  "source_precedence": {
+    "continuityos_role": "PRODUCT_PROOF_NOT_AGENT_SLOT_PROOF",
+    "dashboard_role": "PROJECTION_REFERENCE_ONLY_NOT_SLOT_PROOF",
+    "historical_work_orders_role": "HISTORICAL_TASK_DEFINITION_NOT_CURRENT_COMPLETION_RECEIPT"
+  },
+  "provider_readbacks": {
+    "codex01_dash_or_dossier_hits_after_cutoff": 3,
+    "dedicated_codex01_r_hits_after_cutoff": 0,
+    "latest_observed_codex01_folder": {
+      "id": "1Hripl8JeQectxw8csfoY2KMDjtJ1vZJG",
+      "title": "CODEX-01",
+      "modified_at": "2026-07-29T16:30:54.351Z",
+      "current_for_cutoff": false
+    },
+    "historical_r57_preflight": {
+      "id": "1QjP_tSSomIwKvGE-jj1osxMrt_eBj6ow",
+      "title": "CODEX01_R57_CONTINUITYOS_RUNTIME_ADOPTION_PREFLIGHT.md",
+      "modified_at": "2026-07-29T16:14:10.461Z",
+      "task_class": "REVERSIBLE_RUNTIME_PREFLIGHT",
+      "explicit_live_activation_allowed": false,
+      "current_for_cutoff": false
+    },
+    "historical_r52_adoption": {
+      "id": "1tf5lneE49kbKIWxzWOEpbl1KjtqQduIc",
+      "title": "CODEX01_R52_CONTINUITYOS_CANONICAL_ADOPTION.md",
+      "modified_at": "2026-07-29T13:14:43.192Z",
+      "current_for_cutoff": false
+    }
+  },
+  "current_slot_artifact_receipt": {
+    "present": false,
+    "provider_readback_present": false,
+    "slot_id": null,
+    "observed_at": null,
+    "receipt_sha256": null,
+    "role_binding_present": false,
+    "current_artifact_state_bound": false,
+    "binding_kind": null,
+    "clean_baseline_or_strict_return_bound": false,
+    "no_inferred_execution_authority": true,
+    "independent_readback_present": false,
+    "independent_receipt_sha256": null
+  },
+  "effects": {
+    "writes": 0,
+    "runtime_mutations": 0,
+    "provider_mutations": 0,
+    "external_messages": 0,
+    "trading_effects": 0
+  },
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
