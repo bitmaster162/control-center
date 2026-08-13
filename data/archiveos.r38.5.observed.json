@@ -1,0 +1,82 @@
+{
+  "schema": "hanri.archiveos-freshness.observed/v1",
+  "observed_at": "2026-08-13T11:33:00Z",
+  "surface": "archive-os",
+  "source_precedence": {
+    "canonical_root": "C:\\PROJECTS\\archiveos_api",
+    "canonical_owner": "Control/Archive line",
+    "drive_role": "MIRROR_EVIDENCE_ONLY",
+    "archive_tooling_role": "ARTIFACT_COMPILER_NOT_ARCHIVE_ENGINE",
+    "boundary_refs": [
+      "library:R58_CANONICAL_PROJECT_REGISTRY",
+      "library:R58_ALIAS_AND_SCOPE_BOUNDARIES",
+      "library:PROJECT_GATE_REGISTRY_V2"
+    ]
+  },
+  "provider_readbacks": {
+    "drive_mirrors": [
+      {
+        "folder_id": "1L8vLsx3ON2iqxF6siIMVLuFEkvEAy7_d",
+        "title": "archiveos_api",
+        "children_modified_after": "2026-08-09T00:00:00Z",
+        "matching_children": 0
+      },
+      {
+        "folder_id": "1bvbNu_5IQsDUpB602OcgyEmSR4F5l-z_",
+        "title": "archiveos_api",
+        "children_modified_after": "2026-08-09T00:00:00Z",
+        "matching_children": 0
+      }
+    ],
+    "archive_tooling_handoff": {
+      "checksum_library_file_id": "file_00000000ccb8822fae734a6c1f6ca006",
+      "archive_name": "ARCHIVE_TOOLING_SEMANTIC_AUDIT_R2_COMPLETE_HANDOFF_20260809.zip",
+      "archive_sha256": "af9f06b74fa380a1b3e9c6bf69b871d17228abd70ae6c13f77ca8984836e0856",
+      "archive_bytes_available_for_current_reverification": false,
+      "authoritative_archiveos_core_receipt": false
+    },
+    "archive_tooling_recovery": {
+      "library_file_id": "file_00000000706881fb8657adc26a1895fb",
+      "status": "BLOCKED",
+      "reported_checkpoint": "2484/2938",
+      "checkpoint_reproduced": false,
+      "exact_repo_bytes_recovered": false,
+      "source_id_map_recovered": false,
+      "validator_state_recovered": false
+    },
+    "hanri_r36_integrity": {
+      "drive_file_id": "1lSOBSHW4sJEoseRxUoAp4IwLMNzjsVuVd6y_OOhBock",
+      "integrity_mode": "CACHED_STAT_GUARD",
+      "fast_path_integrity_verified": true,
+      "full_sha_performed": false,
+      "bytes_hashed": 0,
+      "qualifies_as_archiveos_full_integrity_proof": false
+    }
+  },
+  "authoritative_root_readback": {
+    "provider_readback_available": false,
+    "root_exists_verified": false,
+    "full_integrity_receipt_present": false,
+    "full_sha_performed": false,
+    "bytes_hashed": 0,
+    "file_count": 0,
+    "manifest_sha256": null,
+    "independent_readback_present": false,
+    "independent_manifest_sha256": null,
+    "independent_file_count": null
+  },
+  "effects": {
+    "writes": 0,
+    "runtime_mutations": 0,
+    "provider_mutations": 0,
+    "external_messages": 0,
+    "trading_effects": 0
+  },
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
