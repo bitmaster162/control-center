@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-08-12T15:13:00Z",
+  "generated_at": "2026-08-13T10:54:23Z",
   "policy": {
     "source_readback_is_not_operational_freshness": true,
     "current_requires_target_state_proof": true,
@@ -59,23 +59,32 @@
       "name": "Decision Governor",
       "owner": "ROBERT",
       "source_available": true,
-      "operational_status": "UNKNOWN",
-      "freshness": "STALE",
-      "last_verified_at": "2026-08-10T12:26:23Z",
-      "fresh_readback_at": "2026-08-12T15:13:00Z",
-      "current_proof": false,
-      "proof_refs": [],
+      "operational_status": "OPERATIONAL",
+      "freshness": "CURRENT",
+      "last_verified_at": "2026-08-13T10:54:23Z",
+      "fresh_readback_at": "2026-08-13T10:54:23Z",
+      "current_proof": true,
+      "proof_refs": [
+        "data/decision_governor.r38.3.qualification.json",
+        "drive:10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5#sha256=3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+        "drive:10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_#sha256=701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+        "drive:1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa#sha256=e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+        "drive:19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT#sha256=9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+        "drive:1o1jKEprC70z08jEwIcPXchTvydCpn5LxTiTVfLMyNNo:R64_D1_CLAUDE_BITUNIX_OPERATIONAL_CLOSURE_RECEIPT_20260812",
+        "drive:1tlKhRbIj8E9njfwV5tC6SY_Y4hDgDGlM#sha256=67d5035c4b6248165af7a1a91fc36b7cccf742dc9112e8ef02fd9300fc807b8c",
+        "drive:1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk:R64_CURRENT_TRUTH_DIGEST_20260812T0131_BKK"
+      ],
       "observations": [
-        "GitHub issue #23 is provider-readable and records Decision Governor Pilot 01 as completed on 2026-08-10.",
-        "The qualification receipt records 167 tests passed, exactly three decision cards D4/D1/D5, and zero runtime/provider effects.",
-        "No post-pilot qualification against the current roots was discovered during this sweep."
+        "Fresh raw provider readback recovered CURRENT_POINTER, CURRENT_STATE, ROLE_INDEX and ROLE_VIEWS. CURRENT_POINTER reports ACTIVE_RESEALED_AFTER_EXACT_PROVIDER_READBACK and binds the exact observed STATE/INDEX/VIEWS SHA-256 values.",
+        "Immutable stable-root markers that still describe pre-closure D1/D4 state are explicitly superseded operationally by provider-read additive R64 closure/current-state evidence rather than silently ignored.",
+        "The deterministic R38.3 qualification returns PASS with decision_count=0: D1 and D4 are suppressed as ALREADY_CLOSED; D5 is suppressed as WAITING_REPLY_NO_REPEAT_OUTREACH.",
+        "Qualification effects are zero: no Drive write, scheduler change, external message, provider/model call, dispatch, execution, self-application, trading or capital authority."
       ],
       "missing_proof": [
-        "new deterministic Decision Governor qualification against current Control Center roots",
-        "fresh output receipt proving decision set, reconciliation rules and zero effects"
+        "No proof is missing at this exact readback; requalification is required if any bound root hash, pointer reseal status, additive decision evidence, D5 operator status or effect ceiling changes."
       ],
-      "promotion_allowed": false,
-      "promotion_rule": "Promote only after a new read-only qualification against current roots with deterministic output and zero-effect receipt."
+      "promotion_allowed": true,
+      "promotion_rule": "CURRENT is valid only for the exact bound root/evidence set recorded by R38.3; any drift returns to fail-closed requalification. Promotion/refresh remains human-gated."
     },
     {
       "id": "fable-5",
