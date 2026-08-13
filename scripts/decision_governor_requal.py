@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 REQUIRED_ROOTS = ("current_pointer", "current_state", "role_index", "role_views")
+POINTER_BOUND_ROOTS = ("current_state", "role_index", "role_views")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -27,6 +28,30 @@ def _root_errors(bundle: Mapping[str, Any]) -> list[str]:
             errors.append(f"{name}:SHA256_MISSING_OR_INVALID")
         if not str(item.get("evidence_ref") or "").strip():
             errors.append(f"{name}:EVIDENCE_REF_MISSING")
+    return errors
+
+
+def _root_binding_errors(bundle: Mapping[str, Any]) -> list[str]:
+    errors: list[str] = []
+    roots = bundle.get("roots") if isinstance(bundle.get("roots"), Mapping) else {}
+    bindings = bundle.get("pointer_bindings") if isinstance(bundle.get("pointer_bindings"), Mapping) else {}
+    authority = bundle.get("authority") if isinstance(bundle.get("authority"), Mapping) else {}
+
+    if authority.get("generation") != "R64":
+        errors.append("authority.generation:MUST_BE_R64")
+    if authority.get("pointer_reseal_status") != "ACTIVE_RESEALED_AFTER_EXACT_PROVIDER_READBACK":
+        errors.append("authority.pointer_reseal_status:NOT_ACTIVE_RESEALED")
+
+    for name in POINTER_BOUND_ROOTS:
+        actual = ""
+        item = roots.get(name)
+        if isinstance(item, Mapping):
+            actual = str(item.get("sha256") or "")
+        expected = str(bindings.get(name) or "")
+        if not SHA256_RE.fullmatch(expected):
+            errors.append(f"pointer_bindings.{name}:MISSING_OR_INVALID")
+        elif actual != expected:
+            errors.append(f"pointer_bindings.{name}:HASH_MISMATCH")
     return errors
 
 
@@ -58,10 +83,54 @@ def _decision_index(bundle: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
     return result
 
 
+def _decision_evidence_errors(bundle: Mapping[str, Any], decisions: Mapping[str, Mapping[str, Any]]) -> list[str]:
+    errors: list[str] = []
+    evidence = bundle.get("decision_evidence") if isinstance(bundle.get("decision_evidence"), Mapping) else {}
+
+    for decision_id in ("D1", "D4"):
+        decision = decisions.get(decision_id)
+        if decision is None or decision.get("implementation_status") != "CLOSED":
+            continue
+        item = evidence.get(decision_id) if isinstance(evidence.get(decision_id), Mapping) else None
+        if item is None:
+            errors.append(f"{decision_id}:CLOSED_WITHOUT_SUPERSESSION_EVIDENCE")
+            continue
+        if item.get("provider_readback") is not True:
+            errors.append(f"{decision_id}:NO_PROVIDER_READBACK")
+        if item.get("evidence_state") not in {"RECEIPTED", "HASH_VERIFIED"}:
+            errors.append(f"{decision_id}:EVIDENCE_NOT_DURABLE")
+        if item.get("outcome") != "CLOSED":
+            errors.append(f"{decision_id}:EVIDENCE_OUTCOME_NOT_CLOSED")
+        if item.get("supersession") not in {"ADDITIVE_OPERATIONAL_CLOSURE", "ADDITIVE_CURRENT_STATE_DELTA"}:
+            errors.append(f"{decision_id}:SUPERSESSION_KIND_INVALID")
+        if not str(item.get("evidence_ref") or "").strip():
+            errors.append(f"{decision_id}:EVIDENCE_REF_MISSING")
+
+    d5 = decisions.get("D5")
+    if d5 is not None and d5.get("implementation_status") == "PENDING" and "WAITING_REPLY" in str(d5.get("detail", "")):
+        item = evidence.get("D5") if isinstance(evidence.get("D5"), Mapping) else None
+        if item is None:
+            errors.append("D5:WAITING_REPLY_WITHOUT_CURRENT_EVIDENCE")
+        else:
+            if item.get("provider_readback") is not True:
+                errors.append("D5:NO_PROVIDER_PROJECTION_READBACK")
+            if item.get("evidence_state") not in {"SOURCE_BACKED", "RECEIPTED", "HASH_VERIFIED"}:
+                errors.append("D5:EVIDENCE_STATE_INVALID")
+            if item.get("outcome") != "WAITING_REPLY":
+                errors.append("D5:EVIDENCE_OUTCOME_NOT_WAITING_REPLY")
+            if item.get("repeat_outreach_authorized") is not False:
+                errors.append("D5:REPEAT_OUTREACH_MUST_BE_FALSE")
+            if not str(item.get("evidence_ref") or "").strip():
+                errors.append("D5:EVIDENCE_REF_MISSING")
+    return errors
+
+
 def qualify(bundle: Mapping[str, Any]) -> dict[str, Any]:
     root_errors = _root_errors(bundle)
+    root_binding_errors = _root_binding_errors(bundle)
     safety_errors = _safety_errors(bundle)
     decisions = _decision_index(bundle)
+    decision_evidence_errors = _decision_evidence_errors(bundle, decisions)
 
     suppressions: list[dict[str, str]] = []
     cards: list[dict[str, Any]] = []
@@ -109,6 +178,10 @@ def qualify(bundle: Mapping[str, Any]) -> dict[str, Any]:
         status = "FAIL_SAFETY_CEILING"
     elif root_errors:
         status = "BLOCKED_MISSING_CURRENT_ROOTS"
+    elif root_binding_errors:
+        status = "BLOCKED_ROOT_BINDING_MISMATCH"
+    elif decision_evidence_errors:
+        status = "BLOCKED_MISSING_CURRENT_EVIDENCE"
     else:
         status = "PASS"
 
@@ -118,6 +191,8 @@ def qualify(bundle: Mapping[str, Any]) -> dict[str, Any]:
         "status": status,
         "root_bundle_complete": not root_errors,
         "root_errors": root_errors,
+        "root_binding_errors": root_binding_errors,
+        "decision_evidence_errors": decision_evidence_errors,
         "safety_errors": safety_errors,
         "decision_count": len(cards),
         "decisions": cards,
@@ -148,7 +223,7 @@ def main() -> int:
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     if result["status"] == "PASS":
         return 0
-    if result["status"] == "BLOCKED_MISSING_CURRENT_ROOTS":
+    if result["status"].startswith("BLOCKED_"):
         return 3
     return 2
 
