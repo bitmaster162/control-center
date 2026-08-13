@@ -1,0 +1,78 @@
+{
+  "schema": "hanri.decision-governor.input-bundle.v1",
+  "observed_at": "2026-08-13T10:38:00Z",
+  "basis": {
+    "accepted_control_center_head": "b462ddc6417d56770b9cf882fad52fc7698dac02",
+    "accepted_control_center_tree": "2a1d12e1a4b0959490e514d4159e957a7e46b158",
+    "live_dashboard_drive_id": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
+    "live_dashboard_sha256": "e17e7ab3fd791b58fd536b8d7d580986286425a3b8155264c5b926a60cc048b4",
+    "current_truth_digest_drive_id": "1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk"
+  },
+  "roots": {
+    "current_pointer": {
+      "provider_readback": true,
+      "freshness": "CURRENT",
+      "sha256": null,
+      "evidence_ref": "r64-pointer-current",
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "note": "Current projection records HASH_VERIFIED/CURRENT, but this sweep did not recover a fresh raw root SHA from provider bytes."
+    },
+    "current_state": {
+      "provider_readback": false,
+      "freshness": "STALE",
+      "sha256": null,
+      "evidence_ref": "r63-roots",
+      "expected_drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+      "expected_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+      "note": "Exact provider search/readback did not recover the referenced CURRENT_STATE object; expected identity is retained only as an expectation, not current proof."
+    },
+    "role_index": {
+      "provider_readback": false,
+      "freshness": "STALE",
+      "sha256": null,
+      "evidence_ref": "r63-roots",
+      "note": "No fresh raw ROLE_INDEX root readback was recovered in this sweep."
+    },
+    "role_views": {
+      "provider_readback": false,
+      "freshness": "STALE",
+      "sha256": null,
+      "evidence_ref": "r63-roots",
+      "note": "No fresh raw ROLE_VIEWS root readback was recovered in this sweep."
+    }
+  },
+  "decisions": [
+    {
+      "id": "D1",
+      "verdict": "ACCEPT",
+      "implementation_status": "CLOSED",
+      "detail": "Broker-owned registration completed for GEN003 exact identity; exactly one registry row; no direct current registry edit.",
+      "evidence_state": "RECEIPTED",
+      "freshness": "CURRENT"
+    },
+    {
+      "id": "D4",
+      "verdict": "ACCEPT",
+      "implementation_status": "CLOSED",
+      "detail": "Operational and administrative completion recorded. P0-1 CLOSED, P0-2 RE-CLOSED, P0-3 CLOSED.",
+      "evidence_state": "RECEIPTED",
+      "freshness": "CURRENT"
+    },
+    {
+      "id": "D5",
+      "verdict": "ACCEPT",
+      "implementation_status": "PENDING",
+      "detail": "WAITING_REPLY. Operator reports Roman has been contacted. No further external message is authorized by this projection.",
+      "evidence_state": "SOURCE_BACKED",
+      "freshness": "CURRENT"
+    }
+  ],
+  "effect_ceiling": {
+    "auto_dispatch": false,
+    "auto_execution": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_HUMAN_AUTHORIZATION"
+  }
+}
