@@ -1,45 +1,66 @@
 {
   "schema": "hanri.decision-governor.input-bundle.v1",
-  "observed_at": "2026-08-13T10:38:00Z",
+  "observed_at": "2026-08-13T10:50:00Z",
   "basis": {
     "accepted_control_center_head": "b462ddc6417d56770b9cf882fad52fc7698dac02",
     "accepted_control_center_tree": "2a1d12e1a4b0959490e514d4159e957a7e46b158",
     "live_dashboard_drive_id": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
     "live_dashboard_sha256": "e17e7ab3fd791b58fd536b8d7d580986286425a3b8155264c5b926a60cc048b4",
-    "current_truth_digest_drive_id": "1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk"
+    "current_truth_digest_drive_id": "1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk",
+    "control_current_folder_id": "10j-GkAKpNn0MqiJ20kTo-hhR3NV1mBym"
+  },
+  "authority": {
+    "generation": "R64",
+    "pointer_reseal_status": "ACTIVE_RESEALED_AFTER_EXACT_PROVIDER_READBACK",
+    "new_authority_generation_created": false
   },
   "roots": {
     "current_pointer": {
       "provider_readback": true,
       "freshness": "CURRENT",
-      "sha256": null,
-      "evidence_ref": "r64-pointer-current",
+      "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+      "evidence_ref": "drive:10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5@2026-08-13-raw-readback",
       "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
-      "note": "Current projection records HASH_VERIFIED/CURRENT, but this sweep did not recover a fresh raw root SHA from provider bytes."
+      "bytes": 5493,
+      "provider_modified_time": "2026-08-11T20:44:54.497Z"
     },
     "current_state": {
-      "provider_readback": false,
-      "freshness": "STALE",
-      "sha256": null,
-      "evidence_ref": "r63-roots",
-      "expected_drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
-      "expected_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
-      "note": "Exact provider search/readback did not recover the referenced CURRENT_STATE object; expected identity is retained only as an expectation, not current proof."
+      "provider_readback": true,
+      "freshness": "CURRENT",
+      "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+      "evidence_ref": "drive:10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_@2026-08-13-raw-readback",
+      "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+      "bytes": 6506,
+      "provider_modified_time": "2026-08-11T20:24:59.622Z"
     },
     "role_index": {
-      "provider_readback": false,
-      "freshness": "STALE",
-      "sha256": null,
-      "evidence_ref": "r63-roots",
-      "note": "No fresh raw ROLE_INDEX root readback was recovered in this sweep."
+      "provider_readback": true,
+      "freshness": "CURRENT",
+      "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+      "evidence_ref": "drive:1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa@2026-08-13-raw-readback",
+      "drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+      "bytes": 2043,
+      "provider_modified_time": "2026-08-07T20:30:12.186Z"
     },
     "role_views": {
-      "provider_readback": false,
-      "freshness": "STALE",
-      "sha256": null,
-      "evidence_ref": "r63-roots",
-      "note": "No fresh raw ROLE_VIEWS root readback was recovered in this sweep."
+      "provider_readback": true,
+      "freshness": "CURRENT",
+      "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+      "evidence_ref": "drive:19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT@2026-08-13-raw-readback",
+      "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+      "bytes": 3945,
+      "provider_modified_time": "2026-08-07T20:29:49.791Z"
     }
+  },
+  "pointer_bindings": {
+    "current_state": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "role_index": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+    "role_views": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+  },
+  "stable_root_markers_requiring_additive_reconciliation": {
+    "D1": "ROLE_VIEWS still contains GEN003_UNREGISTERED_PENDING_D1 as immutable historical/root state",
+    "D4": "CURRENT_STATE still contains 3_ITEMS_OPEN_NO_CLOSURE_RECEIPTS as immutable historical/root state",
+    "canonicality": "CURRENT_STATE still contains CANDIDATE_NOT_ACTIVE_PENDING_ROBERT while CURRENT_POINTER reseal is ACTIVE"
   },
   "decisions": [
     {
@@ -67,6 +88,32 @@
       "freshness": "CURRENT"
     }
   ],
+  "decision_evidence": {
+    "D1": {
+      "provider_readback": true,
+      "evidence_state": "RECEIPTED",
+      "outcome": "CLOSED",
+      "supersession": "ADDITIVE_OPERATIONAL_CLOSURE",
+      "evidence_ref": "drive:1o1jKEprC70z08jEwIcPXchTvydCpn5LxTiTVfLMyNNo:R64_D1_CLAUDE_BITUNIX_OPERATIONAL_CLOSURE_RECEIPT_20260812",
+      "provider_fact": "operational status CLOSED; exact registry identity rows after=1; direct current registry edit=false"
+    },
+    "D4": {
+      "provider_readback": true,
+      "evidence_state": "HASH_VERIFIED",
+      "outcome": "CLOSED",
+      "supersession": "ADDITIVE_CURRENT_STATE_DELTA",
+      "evidence_ref": "drive:1tlKhRbIj8E9njfwV5tC6SY_Y4hDgDGlM#sha256=67d5035c4b6248165af7a1a91fc36b7cccf742dc9112e8ef02fd9300fc807b8c",
+      "provider_fact": "P0-1 CLOSED; P0-2 RE-CLOSED; P0-3 CLOSED"
+    },
+    "D5": {
+      "provider_readback": true,
+      "evidence_state": "SOURCE_BACKED",
+      "outcome": "WAITING_REPLY",
+      "repeat_outreach_authorized": false,
+      "evidence_ref": "drive:1L3SJ9i4wi9m2VhQoNGYJWY_W7E28OrwPjriKn1QVvnk:R64_CURRENT_TRUTH_DIGEST_20260812T0131_BKK",
+      "provider_fact": "digest records operator-reported outreach initiated / waiting reply; no further message authorized; this does not claim independent provider proof of the contact itself"
+    }
+  },
   "effect_ceiling": {
     "auto_dispatch": false,
     "auto_execution": false,
