@@ -20,25 +20,16 @@ def observed() -> dict:
     return json.loads(OBSERVED.read_text(encoding="utf-8"))
 
 
-def complete_bundle() -> dict:
-    payload = observed()
-    for index, name in enumerate(("current_pointer", "current_state", "role_index", "role_views"), start=1):
-        payload["roots"][name] = {
-            "provider_readback": True,
-            "freshness": "CURRENT",
-            "sha256": f"{index:x}" * 64,
-            "evidence_ref": f"provider-root-{name}",
-        }
-    return payload
-
-
-def test_observed_bundle_is_blocked_not_fake_current():
+def test_observed_provider_bundle_qualifies_current_with_zero_pending_cards():
     result = qualify(observed())
-    assert result["status"] == "BLOCKED_MISSING_CURRENT_ROOTS"
-    assert result["root_bundle_complete"] is False
-    assert result["promotion_eligible"] is False
-    assert result["current_claim_allowed"] is False
+    assert result["status"] == "PASS"
+    assert result["root_bundle_complete"] is True
+    assert result["root_errors"] == []
+    assert result["root_binding_errors"] == []
+    assert result["decision_evidence_errors"] == []
     assert result["decision_count"] == 0
+    assert result["promotion_eligible"] is True
+    assert result["current_claim_allowed"] is True
 
 
 def test_closed_d1_closed_d4_and_waiting_d5_are_suppressed():
@@ -52,18 +43,68 @@ def test_closed_d1_closed_d4_and_waiting_d5_are_suppressed():
     assert result["effects"]["external_messages"] == 0
 
 
-def test_complete_current_root_bundle_can_qualify_with_zero_pending_cards():
-    result = qualify(complete_bundle())
-    assert result["status"] == "PASS"
-    assert result["root_bundle_complete"] is True
-    assert result["root_errors"] == []
-    assert result["decision_count"] == 0
-    assert result["promotion_eligible"] is True
-    assert result["current_claim_allowed"] is True
+def test_missing_provider_root_readback_blocks_current_claim():
+    payload = copy.deepcopy(observed())
+    payload["roots"]["role_views"]["provider_readback"] = False
+    payload["roots"]["role_views"]["freshness"] = "STALE"
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_MISSING_CURRENT_ROOTS"
+    assert result["promotion_eligible"] is False
+    assert result["current_claim_allowed"] is False
+
+
+def test_pointer_bound_root_hash_mismatch_blocks_current_claim():
+    payload = copy.deepcopy(observed())
+    payload["pointer_bindings"]["role_index"] = "f" * 64
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_ROOT_BINDING_MISMATCH"
+    assert "pointer_bindings.role_index:HASH_MISMATCH" in result["root_binding_errors"]
+    assert result["current_claim_allowed"] is False
+
+
+def test_inactive_reseal_marker_blocks_current_claim():
+    payload = copy.deepcopy(observed())
+    payload["authority"]["pointer_reseal_status"] = "HISTORICAL_PRE_REPAIR_ONLY"
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_ROOT_BINDING_MISMATCH"
+    assert "authority.pointer_reseal_status:NOT_ACTIVE_RESEALED" in result["root_binding_errors"]
+
+
+def test_closed_d1_requires_additive_supersession_evidence():
+    payload = copy.deepcopy(observed())
+    del payload["decision_evidence"]["D1"]
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_MISSING_CURRENT_EVIDENCE"
+    assert "D1:CLOSED_WITHOUT_SUPERSESSION_EVIDENCE" in result["decision_evidence_errors"]
+
+
+def test_closed_d4_requires_provider_readback_and_closed_outcome():
+    payload = copy.deepcopy(observed())
+    payload["decision_evidence"]["D4"]["provider_readback"] = False
+    payload["decision_evidence"]["D4"]["outcome"] = "OPEN"
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_MISSING_CURRENT_EVIDENCE"
+    assert "D4:NO_PROVIDER_READBACK" in result["decision_evidence_errors"]
+    assert "D4:EVIDENCE_OUTCOME_NOT_CLOSED" in result["decision_evidence_errors"]
+
+
+def test_waiting_reply_never_turns_into_repeat_send():
+    result = qualify(observed())
+    assert all(card["decision_id"] != "D5" for card in result["decisions"])
+    assert {"id": "D5", "reason": "WAITING_REPLY_NO_REPEAT_OUTREACH"} in result["suppressions"]
+    assert result["effects"]["external_messages"] == 0
+
+
+def test_waiting_reply_requires_explicit_no_repeat_evidence():
+    payload = copy.deepcopy(observed())
+    payload["decision_evidence"]["D5"]["repeat_outreach_authorized"] = True
+    result = qualify(payload)
+    assert result["status"] == "BLOCKED_MISSING_CURRENT_EVIDENCE"
+    assert "D5:REPEAT_OUTREACH_MUST_BE_FALSE" in result["decision_evidence_errors"]
 
 
 def test_reopened_d4_creates_human_only_card():
-    payload = complete_bundle()
+    payload = copy.deepcopy(observed())
     d4 = next(item for item in payload["decisions"] if item["id"] == "D4")
     d4["implementation_status"] = "OPEN"
     d4["detail"] = "Contradictory provider evidence reopened P0 closure."
@@ -76,16 +117,8 @@ def test_reopened_d4_creates_human_only_card():
     assert "AUTO_EXECUTION" in card["blocked_effects"]
 
 
-def test_waiting_reply_never_turns_into_repeat_send():
-    payload = complete_bundle()
-    result = qualify(payload)
-    assert all(card["decision_id"] != "D5" for card in result["decisions"])
-    assert {"id": "D5", "reason": "WAITING_REPLY_NO_REPEAT_OUTREACH"} in result["suppressions"]
-    assert result["effects"]["external_messages"] == 0
-
-
 def test_safety_ceiling_mismatch_fails_closed():
-    payload = complete_bundle()
+    payload = copy.deepcopy(observed())
     payload["effect_ceiling"]["can_trade"] = True
     result = qualify(payload)
     assert result["status"] == "FAIL_SAFETY_CEILING"
@@ -95,7 +128,7 @@ def test_safety_ceiling_mismatch_fails_closed():
 
 
 def test_external_messages_cannot_be_unconditionally_allowed():
-    payload = complete_bundle()
+    payload = copy.deepcopy(observed())
     payload["effect_ceiling"]["external_messages"] = "ALLOW"
     result = qualify(payload)
     assert result["status"] == "FAIL_SAFETY_CEILING"
@@ -103,7 +136,7 @@ def test_external_messages_cannot_be_unconditionally_allowed():
 
 
 def test_each_current_root_requires_durable_sha_and_evidence_ref():
-    payload = complete_bundle()
+    payload = copy.deepcopy(observed())
     payload["roots"]["role_views"]["sha256"] = None
     payload["roots"]["role_views"]["evidence_ref"] = ""
     result = qualify(payload)
@@ -113,7 +146,7 @@ def test_each_current_root_requires_durable_sha_and_evidence_ref():
 
 
 def test_zero_effects_are_constant_even_when_a_card_exists():
-    payload = complete_bundle()
+    payload = copy.deepcopy(observed())
     d1 = next(item for item in payload["decisions"] if item["id"] == "D1")
     d1["implementation_status"] = "OPEN"
     result = qualify(payload)
