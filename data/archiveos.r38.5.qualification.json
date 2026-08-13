@@ -1,0 +1,44 @@
+{
+  "claim_ceiling": {
+    "archive_tooling_is_archive_engine": false,
+    "cached_stat_guard_is_full_integrity": false,
+    "drive_mirror_is_authority": false,
+    "property": "ARCHIVEOS_CURRENT_IMMUTABLE_SOURCE_SET_INTEGRITY",
+    "runtime_deployment_claim": false,
+    "universal_archive_completeness_claim": false
+  },
+  "current_claim_allowed": false,
+  "effects": {
+    "external_messages": 0,
+    "provider_mutations": 0,
+    "runtime_mutations": 0,
+    "trading_effects": 0,
+    "writes": 0
+  },
+  "freshness": "STALE",
+  "invariants": {
+    "auto_dispatch": false,
+    "auto_promotion": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  },
+  "observed_at": "2026-08-13T11:33:00Z",
+  "operational_status": "BLOCKED_REVERIFY",
+  "promotion_eligible": false,
+  "proof_gap": [
+    "authoritative root provider readback is missing",
+    "authoritative root existence is not independently verified",
+    "fresh full archive-integrity receipt is missing",
+    "full SHA over the authoritative immutable source set was not performed",
+    "authoritative full-integrity bytes_hashed must be > 0",
+    "authoritative full-integrity file_count must be > 0",
+    "authoritative manifest_sha256 is missing or invalid",
+    "independent post-integrity readback is missing",
+    "independent manifest SHA-256 is missing or invalid",
+    "independent file_count must be > 0"
+  ],
+  "schema": "hanri.archiveos-freshness.qualification/v1",
+  "status": "BLOCKED_REVERIFY",
+  "surface": "archive-os"
+}
