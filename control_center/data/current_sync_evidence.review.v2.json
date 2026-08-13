@@ -1,0 +1,181 @@
+{
+  "schema": "control-center.sync-evidence.review.v2",
+  "status": "REVIEW_ONLY_CURRENT_EVIDENCE_FIXTURE",
+  "observed_at": "2026-08-14T01:30:00+07:00",
+  "claim_ceiling": "READ_ONLY_PROJECTION_AND_REVIEW_BRANCH_ENGINEERING_ONLY",
+  "observations": [
+    {
+      "semantic_surface": "r64.authority",
+      "claim_dimension": "authority",
+      "source_class": "stable_authority_root",
+      "source_id": "CURRENT_POINTER_R64_PROVIDER_READ",
+      "source_scope": "R64_STABLE_AUTHORITY",
+      "observed_at": "2026-08-14T01:20:00+07:00",
+      "identity": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+      "freshness": "CURRENT",
+      "claim_ceiling": "BOUND_AUTHORITY_FACT_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "generation": "R64",
+        "status": "ACTIVE_RESEALED",
+        "human_sovereign": "ROBERT",
+        "source_id": "CURRENT_POINTER_R64_PROVIDER_READ",
+        "identity": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+        "freshness": "CURRENT",
+        "observed_at": "2026-08-14T01:20:00+07:00",
+        "effect_ceiling": {
+          "auto_accept": false,
+          "auto_dispatch": false,
+          "can_trade": false,
+          "capital_permission": "DENY",
+          "self_application": false
+        }
+      }
+    },
+    {
+      "semantic_surface": "hanri.runtime",
+      "claim_dimension": "runtime",
+      "source_class": "operator_terminal_receipt",
+      "source_id": "R64_HANRI_R39_6_1_1_OPERATIONAL_CLOSURE",
+      "source_scope": "HANRI_LIVE_RUNTIME",
+      "observed_at": "2026-08-12T23:00:00+07:00",
+      "identity": "af45a0553f320c905e8f407d17b97151135a2203120a87ab3d8a3a09d493afe8",
+      "freshness": "CURRENT",
+      "claim_ceiling": "LIVE_RUNTIME_IDENTITY_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "status": "ACCEPTED_LIVE",
+        "label": "R39.6.1.1 ACCEPTED_LIVE",
+        "source_class": "operator_terminal_receipt",
+        "source_id": "R64_HANRI_R39_6_1_1_OPERATIONAL_CLOSURE",
+        "identity": "af45a0553f320c905e8f407d17b97151135a2203120a87ab3d8a3a09d493afe8",
+        "runtime_manifest_sha256": "af45a0553f320c905e8f407d17b97151135a2203120a87ab3d8a3a09d493afe8",
+        "execution_authority": "NONE",
+        "freshness": "CURRENT",
+        "observed_at": "2026-08-12T23:00:00+07:00"
+      }
+    },
+    {
+      "semantic_surface": "hanri.repository",
+      "claim_dimension": "repository",
+      "source_class": "github_provider",
+      "source_id": "GITHUB_HANRI_ACCEPTED_BRANCH_20260814T0120",
+      "source_scope": "HANRI_REPOSITORY_IDENTITY",
+      "observed_at": "2026-08-14T01:20:00+07:00",
+      "identity": "ef5c504179de8ae8c16bd70c168b14b79bd2f466:7d28bf7451e8dc03ffdd7e2bac9b9d675ba7cc08",
+      "freshness": "CURRENT",
+      "claim_ceiling": "REPOSITORY_IDENTITY_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "status": "REPO_ACCEPTED",
+        "branch": "hanri/r37-product-pilot-accepted",
+        "head": "ef5c504179de8ae8c16bd70c168b14b79bd2f466",
+        "tree": "7d28bf7451e8dc03ffdd7e2bac9b9d675ba7cc08",
+        "source_id": "GITHUB_HANRI_ACCEPTED_BRANCH_20260814T0120",
+        "observed_at": "2026-08-14T01:20:00+07:00"
+      }
+    },
+    {
+      "semantic_surface": "hanri.projection",
+      "claim_dimension": "projection",
+      "source_class": "provider_read",
+      "source_id": "DRIVE_HANRI_DASHBOARD_READ",
+      "source_scope": "HANRI_DASHBOARD_PROJECTION_IDENTITY",
+      "observed_at": "2026-08-14T00:10:00+07:00",
+      "identity": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
+      "freshness": "STALE",
+      "claim_ceiling": "READ_ONLY_PROJECTION_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "status": "STALE",
+        "snapshot_id": "HANRI_DRIVE_DASHBOARD_CURRENT",
+        "bound_repo_head": "d6ac547541e4bab5740ab4a7cc48c43c33e58f0a",
+        "observed_at": "2026-08-14T00:10:00+07:00"
+      }
+    },
+    {
+      "semantic_surface": "collaboration.raw4ik",
+      "claim_dimension": "control_truth",
+      "source_class": "provider_read",
+      "source_id": "GITHUB_COLLAB_RAW4IK_STATE_20260814T0120",
+      "source_scope": "RAW4IK_COLLABORATION_PROVIDER_STATE",
+      "observed_at": "2026-08-14T01:20:00+07:00",
+      "identity": "raw4ik:write:live",
+      "freshness": "CURRENT",
+      "claim_ceiling": "BOUND_CONTROL_TRUTH_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "collaboration_live": true,
+        "permission": "write",
+        "canonical_anchor_head": "4dac1a46270ed45bc6c87e2e43448209d3b23f64"
+      }
+    },
+    {
+      "semantic_surface": "continuityos.repository",
+      "claim_dimension": "repository",
+      "source_class": "github_provider",
+      "source_id": "GITHUB_CONTINUITYOS_MASTER",
+      "source_scope": "CONTINUITYOS_PUBLIC_SOURCE",
+      "observed_at": "2026-08-14T01:20:00+07:00",
+      "identity": "fa133a03198e4d1a7314e27ee3d7b7d2815501fa:0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3",
+      "freshness": "CURRENT",
+      "claim_ceiling": "REPOSITORY_IDENTITY_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "repository": "bitmaster162/continuityos",
+        "branch": "master",
+        "head": "fa133a03198e4d1a7314e27ee3d7b7d2815501fa",
+        "tree": "0bf97ccf37cee9402f4d58c4e24d6e9f95ff8bc3"
+      }
+    },
+    {
+      "semantic_surface": "visionassist.custody",
+      "claim_dimension": "repository",
+      "source_class": "verified_bundle",
+      "source_id": "VISIONASSIST_SANITIZED_BUNDLE_VERIFIED",
+      "source_scope": "VISIONASSIST_PUBLICATION_BASELINE",
+      "observed_at": "2026-08-14T00:35:00+07:00",
+      "identity": "ff18be3e58355ae7edbf76e48bf1685c4155099e:239138f435eb687a23b0df6a24cb3831a26e5ea4",
+      "freshness": "CURRENT",
+      "claim_ceiling": "REPOSITORY_IDENTITY_ONLY",
+      "effect_authority": "NONE",
+      "payload": {
+        "status": "GITHUB_OWNER_TRANSFER_SENT_CUSTODY_PENDING",
+        "next_gate": "VISIONASSIST_PRIVATE_GITHUB_CUSTODY",
+        "sanitized_head": "ff18be3e58355ae7edbf76e48bf1685c4155099e",
+        "sanitized_tree": "239138f435eb687a23b0df6a24cb3831a26e5ea4",
+        "bundle_sha256": "74ff1607c39532a9ab9428a82376d2563b9cc26228d39afe50397ea6cdd6e176"
+      }
+    }
+  ],
+  "agent_slots": {
+    "CODEX-05": {
+      "freshness": "STALE",
+      "operational_status": "DO_NOT_TOUCH",
+      "promotion_eligible": false,
+      "execution_authority": "NONE"
+    }
+  },
+  "continuityos_r52": {
+    "work_order_id": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+    "terminal": "LOCAL_CANONICAL_ADOPTION_PASS",
+    "zip_sha256": "6d9a3bb3b31c91cefac0515d3dda1e52d079b0932e747da8b257b9e382851b30",
+    "head": "b5436f373dcb19873a3b0908b26f8d0e22cb8125",
+    "tree": "75224c68a7eb041bb34d1d87e6c429a98db57593",
+    "runtime_activation": false,
+    "production_adoption": false
+  },
+  "continuityos_r57": {
+    "work_order_id": "CODEX01-R57-CONTINUITYOS-RUNTIME-ADOPTION-PREFLIGHT",
+    "terminal": "REVISE",
+    "zip_sha256": "187b0723de9290159da96fc45357a58acf7d177aea7d65eaecc094ef4a17521e",
+    "live_activation": false
+  },
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false
+  }
+}
