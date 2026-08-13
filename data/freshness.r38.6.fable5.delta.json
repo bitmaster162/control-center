@@ -1,0 +1,42 @@
+{
+  "schema": "hanri.freshness-delta.r38.6.fable5/v1",
+  "generated_at": "2026-08-13T14:54:00Z",
+  "classification": "ADDITIVE_EVIDENCE_ONLY_NO_CURRENT_PROMOTION",
+  "base_ledger": "data/freshness.r38.2.example.json",
+  "surface_update": {
+    "id": "fable-5",
+    "operational_status": "BLOCKED_REVERIFY",
+    "freshness": "STALE",
+    "current_proof": false,
+    "current_claim_allowed": false,
+    "promotion_allowed": false,
+    "promotion_eligible": false,
+    "proof_refs": [
+      "data/fable5.r38.6.observed.json",
+      "drive:1RzhZPmHhybJOVdpowvfWCwL4PAYeoqVG",
+      "drive:1QlaawHxBymVARKy9sJwfJhEV-UFo92l4",
+      "drive:1SSXu3JE-jUzDRiYHgcRRwLiSw2bd75sq"
+    ],
+    "missing_proof": [
+      "fresh provider-read FABLE-5 slot receipt after the cutoff",
+      "exact slot identity FABLE-5 bound in that receipt",
+      "fresh host-bridge status plus current role readback with no inferred authority",
+      "independent readback reproducing the exact receipt SHA-256"
+    ],
+    "promotion_rule": "Promote only after a fresh dedicated FABLE-5 slot receipt and independent readback. Dashboard metadata and historical audits cannot green the slot."
+  },
+  "preserved_surfaces": {
+    "continuity-os": {"freshness": "CURRENT"},
+    "decision-governor": {"freshness": "CURRENT"},
+    "archive-os": {"freshness": "STALE", "operational_status": "BLOCKED_REVERIFY"},
+    "codex-01": {"freshness": "STALE"},
+    "codex-05": {"freshness": "STALE", "operational_status": "DO_NOT_TOUCH"}
+  },
+  "invariants": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false,
+    "auto_dispatch": false,
+    "auto_promotion": false
+  }
+}
