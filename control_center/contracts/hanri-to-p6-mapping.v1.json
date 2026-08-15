@@ -1,0 +1,69 @@
+{
+  "schema": "control_plane.p10.hanri_mapping.v1",
+  "attention_source_type_mapping": {
+    "HANRI_SELF_TRACE": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "SYSTEM_HEALTH": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "OBSERVATION": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "AUDIT_COVERAGE": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "RECOMMENDATION_OUTCOME": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "OPERATOR_EVENT": {
+      "source_class": "AUDIT",
+      "authority_class": "FACTUAL_OBSERVATION"
+    },
+    "AGENT_RETURN_UNBOUND": {
+      "source_class": "TRANSPORT_OBSERVATION",
+      "authority_class": "TRANSPORT_ONLY"
+    },
+    "AGENT_RETURN_RETURN_PLANE_BOUND": {
+      "source_class": "VERIFIED_RETURN",
+      "authority_class": "TRANSPORT_ONLY"
+    }
+  },
+  "freshness_mapping": {
+    "CURRENT_WITH_PROOF": "FRESH",
+    "CURRENT_WITHOUT_PROOF": "UNKNOWN",
+    "STALE": "STALE"
+  },
+  "effect_governance_mapping": {
+    "DENY": {
+      "claim_status": "REVISE",
+      "human_gate_required": false,
+      "execution_authority": false
+    },
+    "HUMAN_APPROVAL": {
+      "claim_status": "HOLD",
+      "human_gate_required": true,
+      "execution_authority": false
+    },
+    "ALLOW": {
+      "claim_status": "PASS",
+      "human_gate_required": false,
+      "execution_authority": false
+    }
+  },
+  "forbidden_promotions": [
+    "HANRI OPERATOR_EVENT -> HUMAN_DECISION",
+    "HANRI recommendation -> CONTROLLER_ADJUDICATION",
+    "HANRI approval queue -> effect_authorized=true",
+    "HANRI ALLOW -> execution_authorized=true",
+    "AGENT_RETURN without Return Plane binding -> VERIFIED_RETURN",
+    "source readback without target-state proof -> freshness FRESH"
+  ],
+  "can_trade": false,
+  "capital_permission": "DENY"
+}

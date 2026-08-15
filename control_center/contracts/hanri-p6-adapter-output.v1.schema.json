@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:control-plane:hanri-p6-adapter-output:v1",
+  "title": "HANRI to P6 adapter output v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "terminal",
+    "source_cut_id",
+    "hanri_source_ref",
+    "records",
+    "effect_gate_candidates",
+    "invariants"
+  ],
+  "properties": {
+    "schema": {
+      "const": "control_plane.hanri_p6_adapter_output.v1"
+    },
+    "terminal": {
+      "enum": [
+        "ADAPTER_PASS",
+        "ADAPTER_REVISE_SUBJECT_UNBOUND",
+        "ADAPTER_REVISE_EVIDENCE_UNBOUND",
+        "ADAPTER_HOLD_IDENTITY_CONFLICT",
+        "ADAPTER_HOLD_UNSUPPORTED_STATUS",
+        "ADAPTER_HOLD_AUTHORITY_ESCALATION",
+        "ADAPTER_HOLD_INVALID_ACTION_HASH"
+      ]
+    },
+    "source_cut_id": {
+      "type": "string",
+      "pattern": "^cut-[0-9a-f]{64}$"
+    },
+    "hanri_source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "records": {
+      "type": "array"
+    },
+    "effect_gate_candidates": {
+      "type": "array"
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hanri_semantic_authority",
+        "hanri_current_truth_authority",
+        "hanri_apply_authority",
+        "hanri_execution_authority",
+        "can_trade",
+        "capital_permission"
+      ],
+      "properties": {
+        "hanri_semantic_authority": {
+          "const": false
+        },
+        "hanri_current_truth_authority": {
+          "const": false
+        },
+        "hanri_apply_authority": {
+          "const": false
+        },
+        "hanri_execution_authority": {
+          "const": false
+        },
+        "can_trade": {
+          "const": false
+        },
+        "capital_permission": {
+          "const": "DENY"
+        }
+      }
+    }
+  }
+}

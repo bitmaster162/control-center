@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:control-center:operator-projection:v2",
+  "title": "Control Center Operator Projection v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "projection_id",
+    "projection_kind",
+    "terminal",
+    "generated_at",
+    "source_cut",
+    "authority_anchor",
+    "return_plane_cursor",
+    "freshness_summary",
+    "views",
+    "diagnostics",
+    "safety",
+    "invariants"
+  ],
+  "properties": {
+    "schema": {
+      "const": "control_center.operator_projection.v2"
+    },
+    "projection_id": {
+      "type": "string",
+      "pattern": "^ccp-[0-9a-f]{64}$"
+    },
+    "projection_kind": {
+      "const": "NON_AUTHORITY_PROJECTION"
+    },
+    "terminal": {
+      "enum": [
+        "PROJECTION_READY",
+        "PROJECTION_DEGRADED",
+        "PROJECTION_HOLD",
+        "PROJECTION_UNAVAILABLE"
+      ]
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_cut": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_cut_id",
+            "source_manifest_sha256",
+            "source_count",
+            "all_views_same_cut"
+          ],
+          "properties": {
+            "source_cut_id": {
+              "type": "string",
+              "pattern": "^cut-[0-9a-f]{64}$"
+            },
+            "source_manifest_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "source_count": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "all_views_same_cut": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "authority_anchor": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "generation",
+            "pointer_sha256",
+            "accepted_manifest_sha256",
+            "current_state_sha256",
+            "role_index_sha256",
+            "role_views_sha256",
+            "provider_readback"
+          ],
+          "properties": {
+            "available": {
+              "const": true
+            },
+            "generation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pointer_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "accepted_manifest_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "current_state_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "role_index_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "role_views_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "provider_readback": {
+              "const": "all_exact"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "reason"
+          ],
+          "properties": {
+            "available": {
+              "const": false
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "return_plane_cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "available",
+        "semantic_authority"
+      ],
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "generation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cursor_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "semantic_authority": {
+          "const": false
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "freshness_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fresh",
+        "stale",
+        "unknown",
+        "unavailable",
+        "identity_conflict"
+      ],
+      "properties": {
+        "fresh": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unknown": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unavailable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "identity_conflict": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "views": {
+      "type": "object"
+    },
+    "diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_codes",
+        "mixed_result_cuts",
+        "human_gate_suppressed"
+      ],
+      "properties": {
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mixed_result_cuts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "human_gate_suppressed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "can_trade",
+        "capital_permission",
+        "deploy_permission",
+        "auto_dispatch",
+        "auto_apply",
+        "auto_execute",
+        "self_application"
+      ],
+      "properties": {
+        "can_trade": {
+          "const": false
+        },
+        "capital_permission": {
+          "const": "DENY"
+        },
+        "deploy_permission": {
+          "const": "DENY"
+        },
+        "auto_dispatch": {
+          "const": false
+        },
+        "auto_apply": {
+          "const": false
+        },
+        "auto_execute": {
+          "const": false
+        },
+        "self_application": {
+          "const": false
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

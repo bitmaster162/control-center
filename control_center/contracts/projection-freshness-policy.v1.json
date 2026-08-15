@@ -1,0 +1,18 @@
+{
+  "schema": "control_plane.p5.freshness_policy.v1",
+  "principles": [
+    "freshness is per source, not per page",
+    "authority exactness and observational freshness are separate dimensions",
+    "stale data can remain visible only as last-known",
+    "action ripeness requires fresh evidence for every action-relevant dependency"
+  ],
+  "defaults": {
+    "canonical_authority": "NO_TTL; exact read required for every projection compile",
+    "return_plane_cursor": "exact read required for every projection compile",
+    "github_pr_state": "fresh per compile; if fetch fails do not reuse as current",
+    "deployment_status": "fresh per compile when used for an action/readiness claim",
+    "runtime_liveness": "fresh per compile when used for action/readiness claim"
+  },
+  "clock_rule": "record source observed_at and local fetched_at; do not infer freshness from file mtime alone",
+  "stale_current_value": "UNKNOWN_STALE_OBSERVATION"
+}

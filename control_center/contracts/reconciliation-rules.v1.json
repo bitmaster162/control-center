@@ -1,0 +1,52 @@
+{
+  "schema": "control_plane.reconciliation_rules.v1",
+  "truth_axis": [
+    "CURRENT",
+    "CURRENT_WITH_CONDITIONS",
+    "STALE",
+    "SUPERSEDED",
+    "CONFLICT",
+    "UNKNOWN"
+  ],
+  "semantic_axis": [
+    "UNREVIEWED",
+    "ACCEPTED",
+    "HOLD",
+    "REVISE",
+    "REJECTED",
+    "SUPERSEDED"
+  ],
+  "routing_axis": [
+    "NO_ACTION",
+    "CONTROL_CENTER",
+    "HUMAN_GATE",
+    "OWNER_ONLY",
+    "BLOCKED"
+  ],
+  "authority_semantic_rank": {
+    "HUMAN_DECISION": 60,
+    "CONTROLLER_ADJUDICATION": 50,
+    "PROJECT_OWNER_DECISION": 45,
+    "AUDIT": 30,
+    "PROVIDER_READBACK": 30,
+    "VERIFIED_RETURN": 20,
+    "TRANSPORT_OBSERVATION": 10,
+    "TEMPLATE": 0,
+    "DASHBOARD_PROJECTION": 0,
+    "LAST_KNOWN_CACHE": 0
+  },
+  "canonical_active_state_is_separate_baseline": true,
+  "fresh_fact_can_block_without_acquiring_semantic_authority": true,
+  "explicit_supersession_required": true,
+  "logical_version_alone_never_supersedes": true,
+  "priority_evaluated_after_route": true,
+  "human_gate_requires_all_action_dependencies_fresh": true,
+  "do_not_touch_overrides_generic_control_center_route": true,
+  "transport_never_implies_semantic_acceptance": true,
+  "semantic_acceptance_never_implies_apply": true,
+  "apply_never_implies_external_effect": true,
+  "authorization_never_implies_execution": true,
+  "execution_never_closes_without_readback": true,
+  "can_trade": false,
+  "capital_permission": "DENY"
+}
