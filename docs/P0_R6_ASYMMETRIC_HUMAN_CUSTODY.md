@@ -2,9 +2,7 @@
 
 Status: DRAFT CANDIDATE / SHADOW ONLY / NO EFFECT
 
-R6 removes the R5 shared-secret verifier-key property from the preferred custody path. It does not claim that Control Center itself performs WebAuthn or public-key signature mathematics.
-
-R6 consumes an externally verified asymmetric authenticator assertion and independently verifies semantic, temporal, key-epoch and replay bindings around that assertion.
+R6 removes the R5 shared-secret verifier-key property from the preferred custody path. It consumes an externally verified asymmetric authenticator assertion and independently verifies semantic, temporal, key-epoch and replay bindings around that assertion.
 
 Exact cryptographic claim: `EXTERNAL_ASYMMETRIC_SIGNATURE_VERIFIER_ASSERTION`.
 Exact non-claim: `local_signature_math_verified=false`.
@@ -17,6 +15,6 @@ Successful verification emits `control_center.shadow_asymmetric_human_approval_v
 
 Evidence ceiling: R6 does not prove local mathematical signature verification, biometric/legal identity, physical human presence, durable global nonce enforcement, durable credential-registry mutation, current truth or execution permission. The external asymmetric verifier remains part of the trusted computing base.
 
-Observed R6 code/workflow head `9696f7983f17d12613c262b71488dddae5592dff` produced run `32301098137`; later documentation-only head `7edaec04287fe91e1fbc18f26d5fb8c818eb0d7e` produced run `32301233711`. Both exposed `steps=null` and no job logs. Classification: `CI_BLOCKED_PRE_JOB / NOT_A_CODE_TEST_FAILURE`. Later documentation commits do not change R6 code semantics. No R6 CI PASS is claimed and no manual rerun was requested.
+Observed R6 code/workflow head `9696f7983f17d12613c262b71488dddae5592dff` produced run `32301098137`; later documentation-only head `7edaec04287fe91e1fbc18f26d5fb8c818eb0d7e` produced run `32301233711`. Both exposed `steps=null` and no job logs. Classification: `CI_BLOCKED_PRE_JOB / NOT_A_CODE_TEST_FAILURE`. Later documentation-only commits preserve the same R6 code semantics. No R6 CI PASS is claimed and no manual rerun was requested.
 
 Fixed ceiling: `merge=false`, `deploy=false`, `runtime_activation=false`, `human_gate_write=false`, `credential_registry_write=false`, `nonce_registry_write=false`, `current_truth_apply=false`, `executor_dispatch=false`, `signal=false`, `order=false`, `can_trade=false`, `capital_permission=DENY`.
