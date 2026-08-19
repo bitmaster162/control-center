@@ -8,13 +8,9 @@ R6 removes the R5 shared-secret verifier-key property from the preferred custody
 
 R6 consumes an externally verified asymmetric authenticator assertion and independently verifies all semantic, temporal, key-epoch and replay bindings around that assertion.
 
-Exact cryptographic claim:
+Exact cryptographic claim: `EXTERNAL_ASYMMETRIC_SIGNATURE_VERIFIER_ASSERTION`.
 
-`EXTERNAL_ASYMMETRIC_SIGNATURE_VERIFIER_ASSERTION`
-
-Exact non-claim:
-
-`local_signature_math_verified=false`
+Exact non-claim: `local_signature_math_verified=false`.
 
 The external asymmetric verifier remains inside the trusted computing base until a production WebAuthn/public-key verifier is implemented and independently validated.
 
@@ -42,6 +38,6 @@ R6 proves, relative to independently retained registry/approval digests: exact c
 
 R6 does not prove local mathematical signature verification, biometric/legal identity, physical human presence, durable global nonce enforcement, durable credential-registry mutation, current truth or execution permission.
 
-Fresh R6 code/workflow head `9696f7983f17d12613c262b71488dddae5592dff` produced P0 Unified Shadow Projection run `32301098137`, which completed before executable steps were exposed (`steps=null`, no job logs). Classification: `CI_BLOCKED_PRE_JOB / NOT_A_CODE_TEST_FAILURE`. No R6 CI PASS is claimed and no manual rerun was requested.
+Fresh R6 code/workflow head `9696f7983f17d12613c262b71488dddae5592dff` produced P0 Unified Shadow Projection run `32301098137`, and later documentation-only head `7edaec04287fe91e1fbc18f26d5fb8c818eb0d7e` produced run `32301233711`; both ended before executable steps were exposed (`steps=null`, no job logs). Classification: `CI_BLOCKED_PRE_JOB / NOT_A_CODE_TEST_FAILURE`. No R6 CI PASS is claimed and no manual rerun was requested.
 
 Fixed ceiling: `merge=false`, `deploy=false`, `runtime_activation=false`, `human_gate_write=false`, `credential_registry_write=false`, `nonce_registry_write=false`, `current_truth_apply=false`, `executor_dispatch=false`, `signal=false`, `order=false`, `can_trade=false`, `capital_permission=DENY`.
