@@ -59,7 +59,7 @@ R8 models three crash points:
    - recovery is dedup/ack only;
    - a second commit is forbidden.
 
-The receipt index is also a no-write snapshot. Partial identity (commit id without matching idempotency key or vice versa) is rejected.
+The receipt index is also a no-write snapshot. Partial identity (commit id without an idempotency key or vice versa) is rejected.
 
 ## TradingOS binding
 
@@ -87,7 +87,12 @@ R8 verifies lease/fencing/recovery semantics and exact candidate receipts. It do
 - current truth;
 - execution permission.
 
-Therefore:
+R8 v1 also leaves two explicit hardening gaps for the next pass:
+
+1. the receipt index stores commit ids and idempotency keys as parallel sequences rather than one first-class paired receipt-entry object; membership is checked, but exact pair identity is not yet independently bound;
+2. lease and receipt-index snapshots are independently hash-bound, but their authority root is not yet promoted into the cross-plane TradingOS closure as a separate retained trust anchor.
+
+Therefore R8 v1 is `PASS WITH CONDITIONS`, not a production-qualified durability boundary.
 
 ```text
 fencing protocol verified
