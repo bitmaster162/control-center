@@ -1,0 +1,135 @@
+name: Control Center Current Truth Projection
+
+on:
+  push:
+    branches:
+      - control-center/current-truth-r1
+    paths:
+      - 'control_center/**'
+      - '.github/workflows/control-center-current-truth.yml'
+  pull_request:
+    paths:
+      - 'control_center/**'
+      - '.github/workflows/control-center-current-truth.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-control-plane:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate seed projection contract
+        run: python control_center/scripts/validate_control_plane_projection.py control_center/data/current_control_plane.seed.v1.json
+      - name: Check provider snapshot -> generated projection
+        run: python control_center/scripts/compose_current_projection.py control_center/data/provider_snapshot.current.v1.json --check control_center/data/current_control_plane.generated.v1.json
+      - name: Validate generated current projection
+        run: python control_center/scripts/validate_generated_projection.py control_center/data/current_control_plane.generated.v1.json
+      - name: Test current projection composer
+        run: python control_center/scripts/test_current_projection_composer.py
+      - name: Validate Provider Snapshot Freshness Gate V1
+        run: python control_center/scripts/validate_provider_snapshot_freshness.py
+      - name: Adversarial Provider Snapshot Freshness Gate tests
+        run: python control_center/scripts/test_provider_snapshot_freshness.py
+      - name: Adversarial Provider Freshness Refresh Controller V1 tests
+        run: python control_center/scripts/test_provider_freshness_refresh_controller.py
+      - name: Validate Provider Drift Hold Diagnostic Projection V1
+        run: python control_center/scripts/validate_provider_refresh_controller_status.py
+      - name: Adversarial Provider Drift Hold Diagnostic Projection V1 tests
+        run: python control_center/scripts/test_provider_refresh_controller_status.py
+      - name: Validate Provider Drift Resolution Transition V1
+        run: python control_center/scripts/provider_drift_resolution_transition.py --check
+      - name: Adversarial Provider Drift Resolution Transition V1 tests
+        run: python control_center/scripts/provider_drift_resolution_transition.py --self-test
+      - name: Check Provider Drift Operator Attention deterministic projection
+        run: python control_center/scripts/build_provider_drift_operator_attention.py --check
+      - name: Validate Provider Drift Operator Attention Bridge V1
+        run: python control_center/scripts/validate_provider_drift_operator_attention.py
+      - name: Adversarial Provider Drift Operator Attention Bridge V1 tests
+        run: python control_center/scripts/test_provider_drift_operator_attention.py
+      - name: Validate Provider System Attention UI boundary
+        run: node control_center/ui/test_system_attention.js
+      - name: Validate Provider Lease Expiry Operator Projection V1
+        run: node control_center/ui/test_provider_lease.js
+      - name: Validate Agent Control Plane generated projection
+        run: python control_center/scripts/validate_agent_control_plane.py
+      - name: Adversarial Agent Control Plane self-tests
+        run: python control_center/scripts/test_agent_control_plane.py
+      - name: Validate work-order lifecycle projection
+        run: python control_center/scripts/validate_work_order_lifecycle.py
+      - name: Adversarial work-order lifecycle self-tests
+        run: python control_center/scripts/test_work_order_lifecycle.py
+      - name: Validate decision / effect gate ledger
+        run: python control_center/scripts/validate_decision_effect_ledger.py
+      - name: Adversarial decision / effect gate tests
+        run: python control_center/scripts/test_decision_effect_ledger.py
+      - name: Validate effect execution / readback plane
+        run: python control_center/scripts/validate_effect_readback_plane.py
+      - name: Adversarial effect / readback receipt tests
+        run: python control_center/scripts/test_effect_readback_plane.py
+      - name: Validate Command Queue V1
+        run: python control_center/scripts/validate_command_queue.py
+      - name: Adversarial Command Queue tests
+        run: python control_center/scripts/test_command_queue.py
+      - name: Validate Operator Priority Reconciliation V1
+        run: python control_center/scripts/operator_priority_reconciliation.py --check
+      - name: Adversarial Operator Priority Reconciliation V1 tests
+        run: python control_center/scripts/operator_priority_reconciliation.py --self-test
+      - name: Validate ContinuityOS R52 Existing-Return Binding Reconciliation V1
+        run: python control_center/scripts/validate_continuityos_r52_binding_reconciliation.py
+      - name: Adversarial ContinuityOS R52 Existing-Return Binding Reconciliation V1 tests
+        run: python control_center/scripts/validate_continuityos_r52_binding_reconciliation.py --self-test
+      - name: Validate Human Gate Packet V1
+        run: python control_center/scripts/validate_human_gate_packets.py
+      - name: Adversarial Human Gate Packet tests
+        run: python control_center/scripts/test_human_gate_packets.py
+      - name: Validate Execution Scope Binder V1
+        run: python control_center/scripts/validate_execution_scope_binder.py
+      - name: Adversarial Execution Scope Binder tests
+        run: python control_center/scripts/test_execution_scope_binder.py
+      - name: Validate Broker Health Readback V1
+        run: python control_center/scripts/validate_broker_health_readback.py
+      - name: Adversarial Broker Health Readback tests
+        run: python control_center/scripts/test_broker_health_readback.py
+      - name: Validate Post-Reseal Consistency Guard V1
+        run: python control_center/scripts/validate_post_reseal_consistency.py
+      - name: Adversarial Post-Reseal Consistency Guard tests
+        run: python control_center/scripts/test_post_reseal_consistency.py
+      - name: Validate Canonical Contract Repair Proposal V1
+        run: python control_center/scripts/validate_canonical_contract_repair_proposal.py
+      - name: Validate applied Canonical Contract Repair receipt
+        run: python control_center/scripts/validate_canonical_contract_repair_execution_receipt.py
+      - name: Validate Canonical R64 Reseal Proposal V1
+        run: python control_center/scripts/validate_canonical_reseal_proposal.py
+      - name: Adversarial Canonical R64 Reseal Proposal tests
+        run: python control_center/scripts/test_canonical_reseal_proposal.py
+      - name: Validate applied Canonical R64 reseal receipt
+        run: python control_center/scripts/validate_canonical_reseal_execution_receipt.py
+      - name: Reduce bounded source-envelope fixture
+        run: python control_center/scripts/reduce_source_envelopes.py control_center/data/source_envelopes.example.v1.json
+      - name: Adversarial reducer self-tests
+        run: python control_center/scripts/test_source_reducer.py
+      - name: Validate exact Return Registry V4 adapter
+        run: python control_center/scripts/test_return_registry_adapter.py
+      - name: Validate Control Center Sync Gate V2
+        run: python control_center/scripts/control_center_sync_gate_v2.py --validate control_center/data/current_sync_evidence.review.v2.json
+      - name: Adversarial Control Center Sync Gate V2 tests
+        run: python control_center/scripts/test_control_center_sync_gate_v2.py
+      - name: Validate operator cockpit JavaScript
+        run: |
+          node --check control_center/ui/app.js
+          node --check control_center/ui/system_attention.js
+          node --check control_center/ui/provider_lease.js
+          node --check control_center/ui/lifecycle.js
+          node --check control_center/ui/decision_ledger.js
+          node --check control_center/ui/effect_readback.js
+          node --check control_center/ui/command_queue.js
+          node --check control_center/ui/human_gate_packets.js
+          node --check control_center/ui/execution_scope.js

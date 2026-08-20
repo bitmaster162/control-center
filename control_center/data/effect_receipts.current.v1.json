@@ -1,0 +1,14 @@
+{
+  "schema": "control_center.effect_receipts_source.v1",
+  "source_kind": "NON_AUTHORITY_RECEIPT_OBSERVATION",
+  "observed_at": "2026-08-12T01:39:00+07:00",
+  "authority_note": "This file records observed execution/readback receipts only. It cannot authorize, execute, apply, or close an effect.",
+  "execution_receipts": [],
+  "readback_receipts": [],
+  "invariants": {
+    "receipt_never_grants_authority": true,
+    "execution_requires_prior_explicit_authorization": true,
+    "readback_required_after_execution": true,
+    "no_effect_observed": true
+  }
+}

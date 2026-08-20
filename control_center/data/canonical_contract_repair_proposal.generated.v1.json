@@ -1,0 +1,86 @@
+{
+  "schema": "control_center.canonical_contract_repair_proposal.v1",
+  "projection_kind": "NON_AUTHORITY_REVIEW_ONLY_PROPOSAL",
+  "observed_at": "2026-08-12T03:16:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "pointer_sha256": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef",
+    "current_state_drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "current_state_sha256": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd"
+  },
+  "target": {
+    "file": "CURRENT_STATE.json",
+    "json_pointer": "/broker_plane/registry_mutation_rule",
+    "field_scope_count": 1,
+    "current_value": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
+  },
+  "repair": {
+    "proposed_value": "Only the broker mutates generation-scoped return-broker state for the active watcher generation (for R59: MASTER_RETURN_REGISTRY_R59.jsonl, MASTER_RETURN_REGISTRY_R59.json, and LIVE_INDEX_R59.json); agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration. The installed R59/DF6 broker does not directly mutate CURRENT_RETURN_REGISTRY.json.",
+    "json_patch": [
+      {
+        "op": "test",
+        "path": "/broker_plane/registry_mutation_rule",
+        "value": "Only the broker mutates CURRENT_RETURN_REGISTRY.json; agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration."
+      },
+      {
+        "op": "replace",
+        "path": "/broker_plane/registry_mutation_rule",
+        "value": "Only the broker mutates generation-scoped return-broker state for the active watcher generation (for R59: MASTER_RETURN_REGISTRY_R59.jsonl, MASTER_RETURN_REGISTRY_R59.json, and LIVE_INDEX_R59.json); agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration. The installed R59/DF6 broker does not directly mutate CURRENT_RETURN_REGISTRY.json."
+      }
+    ],
+    "semantic_intent": "Repair canonical wording to match verified installed R59/DF6 mutation semantics while preserving controller gating and all authority ceilings.",
+    "changes_runtime_state": false,
+    "changes_routing": false,
+    "changes_effect_authority": false,
+    "changes_execution_authority": false,
+    "changes_trading_authority": false
+  },
+  "evidence": {
+    "df6_runtime_receipt": {
+      "drive_file_id": "1bkSWEPeNXdSHT09XMLJBk6MFHFwS46gD",
+      "terminal": "DF6_RUNTIME_DEPLOY_PASS",
+      "generation": "R59",
+      "accepted_head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "accepted_tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+      "generation_registry_jsonl": "R59/MASTER_RETURN_REGISTRY_R59.jsonl",
+      "generation_registry_projection": "R59/MASTER_RETURN_REGISTRY_R59.json",
+      "generation_live_index": "R59/LIVE_INDEX_R59.json",
+      "stable_root_mutation": false
+    },
+    "d1_registration_receipt": {
+      "drive_file_id": "1KKHKVw_KK8dYe7bk8hW9UUFe1ww5ytEL",
+      "operation": "BROKER_OWNED_SLOT_REGISTRATION",
+      "physical_status": "DELIVERY_VERIFIED",
+      "broker_head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "broker_tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+      "direct_current_return_registry_edit": false,
+      "semantic_acceptance_claimed": false
+    },
+    "stable_return_registry": {
+      "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+      "observed_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+      "generation_label": "R50_AUDIT",
+      "unchanged_by_r59_df6_observation": true
+    }
+  },
+  "gate": {
+    "proposal_applied": false,
+    "root_bytes_mutated": false,
+    "required_gate_class": "SEPARATE_EXPLICIT_CANONICAL_SEMANTIC_REPAIR_GATE",
+    "exact_authorization_phrase": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+    "generic_go_is_authorization": false,
+    "auto_apply": false,
+    "self_application": false
+  },
+  "safety": {
+    "no_live_root_write": true,
+    "no_return_registry_mutation": true,
+    "no_runtime_mutation": true,
+    "no_agent_dispatch": true,
+    "no_external_message": true,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY"
+  }
+}

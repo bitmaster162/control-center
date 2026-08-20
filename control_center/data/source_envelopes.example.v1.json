@@ -1,0 +1,72 @@
+{
+  "schema": "control_center.source_bundle.v1",
+  "sources": [
+    {
+      "schema": "control_center.source_envelope.v1",
+      "source_id": "r64-current-roots",
+      "source_kind": "CONTROL_ROOTS",
+      "observed_at": "2026-08-11T23:32:00+07:00",
+      "freshness": "CURRENT",
+      "precedence": 100,
+      "claims": [
+        {"claim_key": "canonical.generation", "claim_class": "CANONICAL_AUTHORITY", "value": "R64", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.pointer_status", "claim_class": "CANONICAL_AUTHORITY", "value": "ACTIVE", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.pointer_sha256", "claim_class": "CANONICAL_AUTHORITY", "value": "3f23e20c26df665dabe1ac5203ac510c263f45d24aab1e545fb900eff6f3f2ef", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.manifest_sha256", "claim_class": "CANONICAL_AUTHORITY", "value": "41479390257d29957896796629d92e76bb93c27db98c5df92308b0a456d71b6d", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.current_state_sha256", "claim_class": "CANONICAL_AUTHORITY", "value": "0efd620477c4895d7fd0d5751cf062096fcd9c54abc647bb3bd4b788893288dd", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.role_index_sha256", "claim_class": "CANONICAL_AUTHORITY", "value": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.role_views_sha256", "claim_class": "CANONICAL_AUTHORITY", "value": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.provider_readback", "claim_class": "CANONICAL_AUTHORITY", "value": "all_exact", "evidence_state": "HASH_VERIFIED"},
+        {"claim_key": "canonical.r63_is_current", "claim_class": "CANONICAL_AUTHORITY", "value": false, "evidence_state": "HASH_VERIFIED"}
+      ]
+    },
+    {
+      "schema": "control_center.source_envelope.v1",
+      "source_id": "hanri-owner-current",
+      "source_kind": "HANRI",
+      "observed_at": "2026-08-11T23:20:00+07:00",
+      "freshness": "CURRENT",
+      "precedence": 80,
+      "claims": [
+        {"claim_key": "project.hanri.state", "claim_class": "PROJECT_STATE", "value": "ACTIVE_PARALLEL", "evidence_state": "RECEIPTED"},
+        {"claim_key": "project.p0-security.state", "claim_class": "PROJECT_STATE", "value": "P0_1_CLOSED_P0_2_CLOSED_P0_3_OPEN", "evidence_state": "RECEIPTED"},
+        {"claim_key": "hanri.pr29.state", "claim_class": "PROPOSAL_EVIDENCE", "value": "REVIEW_ONLY_UNMERGED", "evidence_state": "SOURCE_BACKED"}
+      ]
+    },
+    {
+      "schema": "control_center.source_envelope.v1",
+      "source_id": "return-broker-shadow",
+      "source_kind": "RETURN_BROKER",
+      "observed_at": "2026-08-11T23:15:00+07:00",
+      "freshness": "CURRENT",
+      "precedence": 90,
+      "claims": [
+        {"claim_key": "return.hanri-pr29.transport_status", "claim_class": "RETURN_TRANSPORT", "value": "ACKNOWLEDGED", "evidence_state": "RECEIPTED"}
+      ]
+    },
+    {
+      "schema": "control_center.source_envelope.v1",
+      "source_id": "control-center-adjudication",
+      "source_kind": "CONTROL_CENTER",
+      "observed_at": "2026-08-11T23:25:00+07:00",
+      "freshness": "CURRENT",
+      "precedence": 100,
+      "claims": [
+        {"claim_key": "return.hanri-pr29.content_status", "claim_class": "SEMANTIC_ACCEPTANCE", "value": "UNREVIEWED", "evidence_state": "VERIFIED"},
+        {"claim_key": "return.hanri-pr29.apply_status", "claim_class": "APPLY_STATE", "value": "NOT_APPLIED", "evidence_state": "VERIFIED"},
+        {"claim_key": "portfolio.operator-sprint.self_pilot", "claim_class": "COMMERCIAL_STATE", "value": "DAY_0_STARTED", "evidence_state": "VERIFIED"}
+      ]
+    },
+    {
+      "schema": "control_center.source_envelope.v1",
+      "source_id": "old-dashboard-r64-p2",
+      "source_kind": "HANRI",
+      "observed_at": "2026-08-10T19:48:00+07:00",
+      "freshness": "STALE",
+      "precedence": 70,
+      "claims": [
+        {"claim_key": "project.p0-security.state", "claim_class": "PROJECT_STATE", "value": "P0_1_OPEN_P0_2_OPEN_P0_3_OPEN", "evidence_state": "SOURCE_BACKED"}
+      ]
+    }
+  ]
+}

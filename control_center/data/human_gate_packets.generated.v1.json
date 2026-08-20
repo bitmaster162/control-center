@@ -1,0 +1,46 @@
+{
+  "schema": "control_center.human_gate_packets.v1",
+  "projection_kind": "NON_AUTHORITY_PROJECTION",
+  "observed_at": "2026-08-12T01:39:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "provider_readback": "all_exact"
+  },
+  "policy": {
+    "packet_grants_authority": false,
+    "generic_continuation_is_authorization": false,
+    "effect_authorization_executes_effect": false,
+    "executor_binding_grants_execution_authority": false,
+    "receipt_grants_authority": false,
+    "auto_apply": false,
+    "auto_execute": false,
+    "self_approval": false,
+    "self_application": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "external_messages": "DENY_WITHOUT_EXACT_SEPARATE_SEND"
+  },
+  "summary": {
+    "human_now_commands": 0,
+    "packets_total": 0,
+    "open_packets": 0,
+    "execution_ready_packets": 0,
+    "effects_authorized": 0,
+    "executions_authorized": 0,
+    "execution_receipts": 0,
+    "readback_receipts": 0
+  },
+  "packets": [],
+  "invariants": {
+    "one_packet_per_human_now_command": true,
+    "packet_never_grants_authority": true,
+    "executor_never_invented": true,
+    "execution_requires_separate_authority": true,
+    "closure_requires_verified_readback": true
+  }
+}

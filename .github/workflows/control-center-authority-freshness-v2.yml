@@ -1,0 +1,41 @@
+name: Control Center Authority Freshness V2
+
+on:
+  push:
+    branches:
+      - control-center/current-truth-r1
+    paths:
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - 'control_center/scripts/validate_authority_freshness_v2.py'
+      - 'control_center/scripts/test_authority_freshness_v2.py'
+      - 'control_center/data/provider_snapshot_v1_retirement_matrix.review.v1.json'
+      - '.github/workflows/control-center-authority-freshness-v2.yml'
+  pull_request:
+    paths:
+      - 'control_center/data/current_sync_evidence.review.v2.json'
+      - 'control_center/scripts/validate_authority_freshness_v2.py'
+      - 'control_center/scripts/test_authority_freshness_v2.py'
+      - 'control_center/data/provider_snapshot_v1_retirement_matrix.review.v1.json'
+      - '.github/workflows/control-center-authority-freshness-v2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  authority-freshness-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate R64 authority freshness from per-surface V2 evidence
+        run: python control_center/scripts/validate_authority_freshness_v2.py control_center/data/current_sync_evidence.review.v2.json
+      - name: Adversarial Authority Freshness V2 tests
+        run: python control_center/scripts/test_authority_freshness_v2.py
+      - name: Revalidate V1 to V2 semantic parity
+        run: >-
+          python control_center/scripts/migrate_provider_snapshot_v1_to_v2.py
+          control_center/data/provider_snapshot.current.v1.json
+          control_center/data/current_sync_evidence.review.v2.json
+          control_center/data/provider_snapshot_v1_migration_map.review.v2.json

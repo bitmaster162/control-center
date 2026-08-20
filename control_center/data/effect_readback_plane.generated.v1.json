@@ -1,0 +1,41 @@
+{
+  "schema": "control_center.effect_readback_plane.v1",
+  "projection_kind": "NON_AUTHORITY_PROJECTION",
+  "observed_at": "2026-08-12T01:39:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "provider_readback": "all_exact"
+  },
+  "policy": {
+    "receipt_never_grants_authority": true,
+    "effect_authorization_does_not_execute": true,
+    "execution_requires_explicit_authorization": true,
+    "execution_requires_receipt": true,
+    "readback_required_after_execution": true,
+    "closure_requires_readback": true,
+    "auto_apply": false,
+    "self_application": false
+  },
+  "summary": {
+    "decision_objects_total": 14,
+    "effect_candidates_total": 0,
+    "effects_authorized": 0,
+    "executions_authorized": 0,
+    "execution_receipts": 0,
+    "readback_receipts": 0,
+    "closed_after_readback": 0
+  },
+  "effect_candidates": [],
+  "execution_receipts": [],
+  "readback_receipts": [],
+  "invariants": {
+    "no_receipt_can_authorize_effect": true,
+    "no_execution_without_prior_authority": true,
+    "no_closure_without_readback": true,
+    "tradingos_not_effect_candidate_without_owner_authority": true
+  }
+}

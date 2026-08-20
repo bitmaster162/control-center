@@ -1,0 +1,83 @@
+{
+  "schema": "control_center.operator_priority_external_evidence.v1",
+  "snapshot_kind": "NON_AUTHORITY_READ_ONLY_SOURCE_RECONCILIATION",
+  "observed_at": "2026-08-12T05:56:00+07:00",
+  "source_precedence": {
+    "source": "R61_CURRENT_TRUTH_SYNTHESIS",
+    "drive_file_id": "1qgeu-vKpfuRoE0h0DidDOP1yXXfb0-m0",
+    "rules": [
+      "CURRENT_CHAT_OPERATOR_REPORTS_PLUS_VERIFIED_CURRENT_GENERATION_STRICT_RETURNS",
+      "R56_AUTHORITATIVE_STATE_DELTA_AND_PHYSICALLY_VERIFIED_R55_CONTROLLER_BUNDLE",
+      "STABLE_CURRENT_RETURN_REGISTRY_FOR_EXACT_OLDER_IDENTITIES",
+      "R58_PROJECT_REGISTRY_FOR_PROJECT_BOUNDARIES_AND_R57_DISPATCH_STATE",
+      "R47_AND_LINEAGE_HISTORICAL_EVIDENCE_ONLY"
+    ],
+    "user_reported_completion_is_not_physical_acceptance": true
+  },
+  "sources": {
+    "r55_return_acceptance_matrix": {
+      "drive_file_id": "1IXm1vqllJ5WcWsKH2mjluEoVZJ5c3r4q",
+      "terminal_state": "HARVEST_COMPLETE_WITH_MISSING_RETURNS",
+      "controller_bundle_integrity": "PHYSICALLY_VERIFIED_BY_R61_PRECEDENCE"
+    },
+    "maworld_forensics_work_order": {
+      "drive_file_id": "1mcBoji_0kYBD9kU40_8uFVP4ecUC-drM",
+      "work_order": "ANTIGRAVITY-WO042-R52-RETURN-HARVEST-AND-MAWORLD-INITDB-FORENSICS"
+    },
+    "maworld_repair_work_order": {
+      "drive_file_id": "1O8kGl5EkaydMJNo0AiV4jipigZjp0RfP",
+      "work_order": "CODEX03-R52-MAWORLD-INITDB-REPAIR",
+      "required_missing_evidence_behavior": "BLOCKED_MISSING_INITDB_EVIDENCE_WITHOUT_GUESSING"
+    },
+    "continuityos_r52_work_order": {
+      "drive_file_id": "1tf5lneE49kbKIWxzWOEpbl1KjtqQduIc",
+      "work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION"
+    }
+  },
+  "top3_external_evidence": [
+    {
+      "project": "ContinuityOS",
+      "work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+      "status": "VERIFIED_PASS",
+      "return_artifact": "CODEX01_R52_CONTINUITYOS_CANONICAL_ADOPTION_20260729T141948364Z.zip",
+      "sha256_prefix": "6d9a3bb3b3",
+      "reason": "Clean R52 canonical adoption return",
+      "source": "R55_RETURN_ACCEPTANCE_MATRIX"
+    },
+    {
+      "project": "MAWorld",
+      "work_order": "ANTIGRAVITY-WO042-R52-RETURN-HARVEST-AND-MAWORLD-INITDB-FORENSICS",
+      "status": "VERIFIED_PASS",
+      "return_artifact": "ANTIGRAVITY_WO042_MAWORLD_INITDB_FORENSICS_R52.zip",
+      "sha256_prefix": "80344e9894",
+      "reason": "Full physical forensics and teardown PASS",
+      "source": "R55_RETURN_ACCEPTANCE_MATRIX"
+    },
+    {
+      "project": "MAWorld",
+      "work_order": "CODEX03-R52-MAWORLD-INITDB-REPAIR",
+      "status": "USER_REPORTED_DONE_RETURN_MISSING",
+      "return_artifact": null,
+      "sha256_prefix": null,
+      "reason": "Operator reported done, no bytes on disk",
+      "source": "R55_RETURN_ACCEPTANCE_MATRIX"
+    },
+    {
+      "project": "Sovereign Arena",
+      "work_order": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
+      "status": "VERIFIED_PASS",
+      "return_artifact": "CODEX04_R51_SOVEREIGN_ARENA_TRUTH_REPAIR_RETURN.zip",
+      "sha256_prefix": "998fdec799",
+      "reason": "Independently accepted R51 (9/9 PASS)",
+      "source": "R55_RETURN_ACCEPTANCE_MATRIX"
+    }
+  ],
+  "boundaries": {
+    "evidence_does_not_mutate_current_truth": true,
+    "verified_transport_or_bundle_does_not_imply_semantic_acceptance": true,
+    "missing_return_never_authorizes_rerun_or_reconstruction": true,
+    "no_dispatch": true,
+    "no_effect": true,
+    "tradingos_do_not_touch": true
+  }
+}

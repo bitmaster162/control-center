@@ -1,0 +1,114 @@
+{
+  "schema": "control_center.audit_wave1.internal.v1",
+  "observed_at": "2026-08-12T00:28:00+07:00",
+  "state": "INTERNAL_PREP_SEND_GATED",
+  "authority": {
+    "external_messages_require_exact_send": true,
+    "auto_send": false,
+    "auto_dispatch": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY"
+  },
+  "offer": {
+    "id": "agent-authority-evidence-audit",
+    "price_usd": 4900,
+    "duration": "5 working days",
+    "scope": "staging/test authority mapping, up to 3 integrations, 10-20 scenarios, evidence pack and retest"
+  },
+  "research_limitations": {
+    "public_web_status": "UNAVAILABLE_503_DURING_THIS_PASS",
+    "basis": "current connected Gmail evidence plus existing Control Center commercial truth",
+    "rule": "Do not infer unverified current product/security claims beyond the cited mailbox evidence; refresh public web before SEND."
+  },
+  "targets": [
+    {
+      "id": "AUD-W1-T1",
+      "organization": "The Operator Stack / VentureVerse",
+      "rank": 1,
+      "fit_score_100": 94,
+      "access_score_100": 82,
+      "status": "STAGED_NOT_SENT",
+      "evidence": [
+        "2026-08-05 mailbox evidence: VentureVerse reports 25+ live AI apps for operators and a product aimed at doing operator work.",
+        "Earlier mailbox evidence identifies named VentureVerse/OG Club community leadership and Brinc acquisition/transition context.",
+        "Publication email explicitly invites replies about what the reader is building."
+      ],
+      "pain_hypothesis": "A multi-app operator stack creates permission, tool-action, evidence, failure-boundary and human-gate sprawl across many AI surfaces.",
+      "contact_path": "Reply to The Operator Stack / VentureVerse publication; route to product/operator leadership. No personal email address stored in this queue.",
+      "hook": "You are selling a stack of AI apps to operators; we can map what each app/agent is actually allowed to do, where human gates exist, and what evidence proves safe execution before those workflows scale.",
+      "next": "Refresh public product/security surface, then prepare one concise founder/product-team outreach draft."
+    },
+    {
+      "id": "AUD-W1-T2",
+      "organization": "GYG Agency",
+      "rank": 2,
+      "fit_score_100": 90,
+      "access_score_100": 94,
+      "status": "STAGED_NOT_SENT",
+      "evidence": [
+        "Mailbox history shows repeated GYG Agency AI/Web3 events including The 90-Day AI Playbook.",
+        "GYG promoted OneAgent Night Bangkok with live AI trading and participant community access.",
+        "Organizer messages explicitly permit reply-to-organizer contact; an official Telegram participant/community path exists."
+      ],
+      "pain_hypothesis": "Client-facing AI/Web3 delivery plus live-agent/financial-adjacent demonstrations create a strong need to separate marketing claims from verified agent permissions, approvals, logs and effect boundaries.",
+      "contact_path": "Reply to GYG organizer event email or use the existing official GYG Telegram community path; exact destination must be re-read before SEND.",
+      "hook": "You already teach and showcase AI implementation. The audit gives you a concrete trust artifact: what an agent can do, which actions require approval, what was actually logged, and where claims outrun evidence.",
+      "next": "Select one current GYG/OneAgent workflow or client-facing automation as the audit wedge; draft message only after public refresh."
+    },
+    {
+      "id": "AUD-W1-T3",
+      "organization": "cyber•Fund",
+      "rank": 3,
+      "fit_score_100": 88,
+      "access_score_100": 88,
+      "status": "STAGED_NOT_SENT",
+      "evidence": [
+        "2026-07 mailbox evidence shows cyber•Fund running the recurring Building AI-Native Startups series with named founders/builders.",
+        "Event email explicitly permits replying to the organizer."
+      ],
+      "pain_hypothesis": "An AI-native startup portfolio needs a repeatable diligence layer for agent authority, tool access, approval gates and evidence quality before portfolio companies move from demo to pilot/production.",
+      "contact_path": "Reply to the cyber•Fund event organizer and position the audit as a one-company portfolio pilot, not a broad consulting retainer.",
+      "hook": "For AI-native startups, the hidden diligence gap is not model quality but effect authority: what the agent can touch, what requires a human, and whether the logs actually prove the claimed controls.",
+      "next": "Refresh current portfolio/program context; pick one portfolio-company pilot framing and prepare a short partner-facing draft."
+    },
+    {
+      "id": "AUD-W1-T4",
+      "organization": "Make",
+      "rank": 4,
+      "fit_score_100": 97,
+      "access_score_100": 42,
+      "status": "RESEARCH_MORE_NOT_SENT",
+      "evidence": [
+        "2026-08-10 Make email announces AI Sub-Agents: one orchestrator delegates work to specialized sub-agents, explicitly framed as easier to debug and trust.",
+        "The same email describes AI expense review with issue flagging and approval routing."
+      ],
+      "pain_hypothesis": "Orchestrator/sub-agent delegation and approval-routing are exact authority-boundary surfaces: delegation scope, tool permissions, approval bypass, evidence completeness and replayability.",
+      "contact_path": "Current mailbox path is marketing/event/Care, not a qualified buyer contact. Proper product/security/partnership contact must be found before SEND.",
+      "hook": "Your own Sub-Agent framing already centers trust and debugging. We would test the next layer: whether delegated actions, approval requirements and evidence are actually enforceable and reconstructable across integrations.",
+      "next": "Find a legitimate product/security/partnership contact; do not pitch through Care/support."
+    }
+  ],
+  "reserves": [
+    {
+      "id": "AUD-W1-R1",
+      "organization": "Manus",
+      "fit_score_100": 100,
+      "access_score_100": 20,
+      "status": "EVIDENCE_RICH_RESERVE_NO_SUPPORT_PITCH",
+      "evidence": "Prior first-party mailbox incident documents a Manus task malfunction while interacting with Google Drive, deleted/moved a working folder, broke the workflow, and left the user asking for an action log/explanation.",
+      "rule": "Do not repurpose the old support thread or support staff as a sales channel. Only use a proper current product/security/partnership contact if independently found."
+    },
+    {
+      "id": "AUD-W1-R2",
+      "organization": "Zapier",
+      "fit_score_100": 94,
+      "access_score_100": 45,
+      "status": "RESEARCH_MORE_NOT_SENT",
+      "evidence": "2026-08 mailbox evidence says Zapier is positioning itself as an AI orchestration platform and exposes Zapier MCP to an ecosystem of 9,000+ integrations; a demo-team path exists.",
+      "rule": "Do not misuse an inbound demo booking flow as a sales pitch. Find the correct product/security/partnership route first."
+    }
+  ],
+  "selection_rule": "Prioritize evidence-backed fit plus a legitimate reply/organizer path. Do not send to support, no-reply, or unrelated demo funnels. Refresh public current facts before any outreach.",
+  "send_gate": "EXACT_SEND_PER_MESSAGE"
+}

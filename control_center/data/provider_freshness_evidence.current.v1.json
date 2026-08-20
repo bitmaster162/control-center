@@ -1,0 +1,77 @@
+{
+  "schema": "control_center.provider_freshness_evidence.v1",
+  "projection_kind": "NON_AUTHORITY_PROVIDER_READBACK_EVIDENCE",
+  "observed_at": "2026-08-12T04:59:00+07:00",
+  "freshness_scope": "AUTHORITY_CRITICAL_R64_STABLE_ROOTS",
+  "freshness_status": "FRESH_AT_CAPTURE",
+  "continuous_freshness": false,
+  "max_age_seconds": 21600,
+  "future_clock_skew_tolerance_seconds": 300,
+  "provider": "GOOGLE_DRIVE_DIRECT_READBACK",
+  "source_snapshot": {
+    "path": "control_center/data/provider_snapshot.current.v1.json",
+    "snapshot_schema": "control_center.provider_snapshot.v1",
+    "snapshot_observed_at": "2026-08-12T03:45:00+07:00",
+    "github_blob_sha": "3f8d1e7e67bcf9ece66ad8495f3ef567860579d2"
+  },
+  "stable_roots": {
+    "CURRENT_STATE.json": {
+      "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+      "modified_time": "2026-08-11T20:24:59.622Z",
+      "bytes": 6506,
+      "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+    },
+    "ROLE_INDEX.json": {
+      "drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+      "modified_time": "2026-08-07T20:30:12.186Z",
+      "bytes": 2043,
+      "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+    },
+    "ROLE_VIEWS.json": {
+      "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+      "modified_time": "2026-08-07T20:29:49.791Z",
+      "bytes": 3945,
+      "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+    },
+    "MANIFEST.json": {
+      "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+      "modified_time": "2026-08-11T20:44:42.512Z",
+      "bytes": 1328,
+      "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+    },
+    "CURRENT_POINTER.json": {
+      "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+      "modified_time": "2026-08-11T20:44:54.497Z",
+      "bytes": 5493,
+      "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
+    }
+  },
+  "readback_result": {
+    "all_five_exact_at_capture": true,
+    "pointer_last_by_provider_modified_time": true,
+    "authority_critical_snapshot_match": true
+  },
+  "informational_self_referential": {
+    "control_center_github_lane": {
+      "snapshot_head_sha": "8969c264d505a6d5cb8590eb5a1b74b461f0b19c",
+      "pre_capture_live_pr_head_sha": "8e80d54949d1abb09f6a8fd8038250c0957a8d60",
+      "snapshot_head_was_stale_at_capture": true,
+      "authority_relevant": false,
+      "self_reference_exempt": true,
+      "note": "A committed provider snapshot cannot bind its own eventual commit SHA. Live Control Center head is verified separately before every GitHub write."
+    }
+  },
+  "safety": {
+    "evidence_grants_authority": false,
+    "dispatch_authorized": false,
+    "apply_authorized": false,
+    "execution_authorized": false,
+    "root_write_authorized": false,
+    "registry_write_authorized": false,
+    "deploy_authorized": false,
+    "external_message_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

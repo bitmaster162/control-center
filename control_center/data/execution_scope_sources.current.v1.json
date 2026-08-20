@@ -1,0 +1,141 @@
+{
+  "schema": "control_center.execution_scope_sources.v1",
+  "snapshot_kind": "NON_AUTHORITY_PROVIDER_AND_HISTORICAL_EVIDENCE",
+  "observed_at": "2026-08-12T04:27:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "provider_readback": "all_exact"
+  },
+  "canonical_current_state": {
+    "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+    "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "broker_status": "INSTALLED_AND_WATCHING",
+    "watcher_generation": "R59",
+    "registry_mutation_rule": "Only the broker mutates generation-scoped return-broker state for the active watcher generation (for R59: MASTER_RETURN_REGISTRY_R59.jsonl, MASTER_RETURN_REGISTRY_R59.json, and LIVE_INDEX_R59.json); agents publish via Publish-Agent-Return.ps1; controller decisions gate slot registration. The installed R59/DF6 broker does not directly mutate CURRENT_RETURN_REGISTRY.json."
+  },
+  "canonical_role_views": {
+    "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+    "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148",
+    "codex07_lane": "Return Plane / broker hardening",
+    "codex07_state": "R59_TASK_DISPATCHED; add DF6 dedup to existing scope, no redesign"
+  },
+  "current_projection_bindings": {
+    "human_now_count": 0,
+    "effect_candidates_count": 0,
+    "historical_work_order": "CODEX07-R43-RETURN-PLANE-V2",
+    "historical_lifecycle_stage": "HISTORICAL_EVIDENCE_ONLY",
+    "historical_effect_gate": "NONE_STALE_PREDECESSOR_R59_ACTIVE"
+  },
+  "provider_readback": {
+    "runtime_receipt": {
+      "drive_file_id": "1bkSWEPeNXdSHT09XMLJBk6MFHFwS46gD",
+      "file_name": "DF6_RUNTIME_DEPLOY_RECEIPT_R64.json",
+      "recorded_at_utc": "2026-08-11T17:46:09.7514927Z",
+      "terminal": "DF6_RUNTIME_DEPLOY_PASS",
+      "target": "C:\\PROJECTS\\control_return_broker",
+      "return_root": "C:\\Users\\coins\\My Drive\\Control canter\\00_RETURN_DROP",
+      "generation": "R59",
+      "accepted_head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "accepted_tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+      "live_watcher_pids_at_receipt": [23940, 26660],
+      "interval_seconds": 15,
+      "baseline_tests": "PASS",
+      "df6_tests": "PASS",
+      "accepted_entries": 8,
+      "pending_incoming": 0,
+      "rejected_incoming": 0,
+      "control_center_stable_root_mutation": false,
+      "content_acceptance_claimed": false
+    },
+    "post_deploy_broker_activity": {
+      "drive_file_id": "1KKHKVw_KK8dYe7bk8hW9UUFe1ww5ytEL",
+      "file_name": "D1_CLAUDE_BITUNIX_REGISTRATION_RECEIPT_R64.json",
+      "recorded_at_utc": "2026-08-11T18:07:21.0078103Z",
+      "terminal": "D1_CLAUDE_BITUNIX_REGISTERED",
+      "broker_head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "broker_tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+      "physical_status": "DELIVERY_VERIFIED",
+      "accepted_entries": 9,
+      "pending_incoming": 0,
+      "rejected_incoming": 0,
+      "direct_current_return_registry_edit": false,
+      "semantic_acceptance_claimed": false
+    },
+    "github_live": {
+      "repository": "bitmaster162/control-return-broker",
+      "default_branch": "gpt/github-ready-r1",
+      "head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+      "pr": 1,
+      "pr_state": "closed",
+      "pr_merged": true,
+      "merge_verified": true
+    },
+    "current_dashboard_snapshot": {
+      "drive_file_id": "15GG9ElRV6Ed0gzGkB2b02JumHS58jU2r",
+      "snapshot_id": "R64-P3-R36-RUNTIME-CUTOVER-PASS-20260812T0242BKK",
+      "as_of": "2026-08-12T02:42:12+07:00",
+      "return_broker_status": "DF6_CLOSED_MONITOR",
+      "note": "Current dashboard carries the DF6 closure receipt; it is not a direct PID/process probe."
+    },
+    "installed_implementation_semantics": {
+      "repository_ref": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+      "registry_jsonl": "R59/MASTER_RETURN_REGISTRY_R59.jsonl",
+      "registry_projection": "R59/MASTER_RETURN_REGISTRY_R59.json",
+      "live_index": "R59/LIVE_INDEX_R59.json",
+      "current_return_registry_reference_in_core": false,
+      "publish_receipt_central_registry_mutated": false,
+      "direct_current_return_registry_edit_observed": false
+    }
+  },
+  "historical_evidence": [
+    {
+      "id": "R43_RETURN_PLANE_V2",
+      "work_order": "CODEX07-R43-RETURN-PLANE-V2",
+      "evidence_quality": "REGISTRY_AND_CONTROL_PROJECTION_HISTORICAL",
+      "claim": "R43 return passed and was semantically accepted, but is not current runtime routing."
+    },
+    {
+      "id": "R57_SHADOW",
+      "drive_file_id": "12k3M9zZmsQ-vqrFRwk_kNbJ4nh6wgE39",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Shadow implementation only; do not switch live pointer or migrate current state; 20-cycle deterministic no-growth evidence."
+    },
+    {
+      "id": "R59_HARDENING",
+      "drive_file_id": "1OCXFZlQjwQkfLsHHwNDxTE8oQPaOUH1s",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Historical hardening already stated that CURRENT_RETURN_REGISTRY.json is never written by broker."
+    },
+    {
+      "id": "R59_INSTALL_WO045",
+      "drive_file_id": "1rZg8v3WajhKyhaEj3pWvyZb0fERlrnPe",
+      "evidence_quality": "PROVIDER_FETCHED_NOT_HASH_BOUND",
+      "claim": "Initial R59 install target was C:\\PROJECTS\\control_return_broker; DF6 later updated that installed runtime to the verified merged head/tree."
+    }
+  ],
+  "known_divergences": [
+    {
+      "id": "BROKER_REGISTRY_MUTATION_CONTRACT_DIVERGENCE_RESOLVED_BY_R64_REPAIR_RESEAL",
+      "previous_status": "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE",
+      "status": "RESOLVED_CANONICAL_TEXT_MATCHES_VERIFIED_IMPLEMENTATION",
+      "canonical_claim": "R64 CURRENT_STATE now states generation-scoped broker mutation and no direct CURRENT_RETURN_REGISTRY.json mutation by installed R59/DF6.",
+      "installed_implementation_claim": "Verified R59/DF6 broker writes generation-scoped MASTER_RETURN_REGISTRY_R59.jsonl/.json and LIVE_INDEX_R59.json; core has no CURRENT_RETURN_REGISTRY.json reference; D1 receipt records direct_current_return_registry_edit=false.",
+      "repair_gate": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+      "reseal_gate": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+      "routing_rule": "USE_RESEALED_R64_CANONICAL_RULE; PRESERVE_PRE_REPAIR_DIVERGENCE_AS_HISTORICAL_EVIDENCE_ONLY"
+    }
+  ],
+  "safety": {
+    "execution_authorized": false,
+    "auto_execute": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false
+  }
+}

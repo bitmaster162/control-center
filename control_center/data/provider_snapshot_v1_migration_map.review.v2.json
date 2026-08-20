@@ -1,0 +1,72 @@
+{
+  "schema": "control-center.provider-snapshot-v1-migration-map.v1",
+  "status": "REVIEW_ONLY_NO_APPLY",
+  "legacy_schema": "control_center.provider_snapshot.v1",
+  "v2_schema": "control-center.sync-evidence.review.v2",
+  "allowed_dispositions": [
+    "MIGRATED_CURRENT",
+    "SUPERSEDED_BY_CURRENT_V2",
+    "RETAIN_HISTORICAL",
+    "REVERIFY_REQUIRED",
+    "DEPRECATED_STRUCTURE"
+  ],
+  "entries": [
+    {
+      "legacy_path": "observed_at",
+      "disposition": "DEPRECATED_STRUCTURE",
+      "reason": "one global timestamp must not refresh unrelated evidence surfaces",
+      "v2_surfaces": []
+    },
+    {
+      "legacy_path": "canonical_roots",
+      "disposition": "MIGRATED_CURRENT",
+      "reason": "R64 stable authority is independently represented by a per-surface provider observation",
+      "v2_surfaces": ["r64.authority"],
+      "parity": "R64_ROOT_HASHES_EXACT"
+    },
+    {
+      "legacy_path": "canonical_broker",
+      "disposition": "REVERIFY_REQUIRED",
+      "reason": "legacy record explicitly says fresh runtime liveness is unverified; do not promote static broker state to current runtime",
+      "v2_surfaces": []
+    },
+    {
+      "legacy_path": "return_registry",
+      "disposition": "RETAIN_HISTORICAL",
+      "reason": "stable registry bytes and slots are historical transport evidence until independently re-read; registry is not authority",
+      "v2_surfaces": []
+    },
+    {
+      "legacy_path": "github_lanes.control_center",
+      "disposition": "REVERIFY_REQUIRED",
+      "reason": "static self-pinned repository HEAD is self-invalidating on the commit that updates it; Control Center repo identity must be provider-read at operator time",
+      "v2_surfaces": []
+    },
+    {
+      "legacy_path": "github_lanes.hanri",
+      "disposition": "SUPERSEDED_BY_CURRENT_V2",
+      "reason": "old PR29/R35 lane is historical; current repo, runtime and projection are separated",
+      "v2_surfaces": ["hanri.repository", "hanri.runtime", "hanri.projection"]
+    },
+    {
+      "legacy_path": "github_lanes.bitevo_public",
+      "disposition": "RETAIN_HISTORICAL",
+      "reason": "V1 production proof remains historical evidence; no fresh BitEvo provider read was performed for this migration",
+      "v2_surfaces": []
+    },
+    {
+      "legacy_path": "hanri_evidence",
+      "disposition": "RETAIN_HISTORICAL",
+      "reason": "D4/P0 closure remains accepted historical evidence; it does not define current HANRI runtime or authority",
+      "v2_surfaces": []
+    }
+  ],
+  "invariants": {
+    "no_silent_drop": true,
+    "no_global_timestamp_refresh": true,
+    "dashboard_never_authority": true,
+    "registry_never_authority": true,
+    "repo_merge_never_live_runtime": true,
+    "static_control_center_head_forbidden_as_current": true
+  }
+}

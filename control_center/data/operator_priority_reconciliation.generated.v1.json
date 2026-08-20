@@ -1,0 +1,124 @@
+{
+  "schema": "control_center.operator_priority_reconciliation.v1",
+  "projection_kind": "NON_AUTHORITY_OPERATOR_PRIORITY_RECONCILIATION",
+  "observed_at": "2026-08-12T05:56:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "provider_readback": "all_exact"
+  },
+  "source_precedence": {
+    "source": "R61_CURRENT_TRUTH_SYNTHESIS",
+    "drive_file_id": "1qgeu-vKpfuRoE0h0DidDOP1yXXfb0-m0",
+    "rules": [
+      "CURRENT_CHAT_OPERATOR_REPORTS_PLUS_VERIFIED_CURRENT_GENERATION_STRICT_RETURNS",
+      "R56_AUTHORITATIVE_STATE_DELTA_AND_PHYSICALLY_VERIFIED_R55_CONTROLLER_BUNDLE",
+      "STABLE_CURRENT_RETURN_REGISTRY_FOR_EXACT_OLDER_IDENTITIES",
+      "R58_PROJECT_REGISTRY_FOR_PROJECT_BOUNDARIES_AND_R57_DISPATCH_STATE",
+      "R47_AND_LINEAGE_HISTORICAL_EVIDENCE_ONLY"
+    ],
+    "user_reported_completion_is_not_physical_acceptance": true
+  },
+  "summary": {
+    "candidate_count": 3,
+    "human_now_before": 0,
+    "human_now_after": 0,
+    "effect_candidates_before": 0,
+    "effect_candidates_after": 0,
+    "selected_project": "ContinuityOS",
+    "selected_action": "CONTINUITYOS_R52_EXISTING_RETURN_BINDING_RECONCILIATION"
+  },
+  "priority_candidates": [
+    {
+      "rank": 1,
+      "project": "ContinuityOS",
+      "gap_class": "VERIFIED_NEWER_RETURN_NOT_BOUND_IN_CURRENT_TOP3_CHAIN",
+      "current_queue_rank": 3,
+      "current_work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE",
+      "newer_evidence_work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+      "newer_evidence_status": "VERIFIED_PASS",
+      "selected_action": "CONTINUITYOS_R52_EXISTING_RETURN_BINDING_RECONCILIATION",
+      "bounded_scope": [
+        "LOCATE_EXISTING_R52_STRICT_RETURN_BYTES_OR_EXACT_CONTROLLER_COPY",
+        "VERIFY_IDENTITY_SHA_READY_AND_NO_EFFECT_RECEIPTS_WITHOUT_RERUN",
+        "COMPARE_R52_ADOPTION_RESULT_AGAINST_CURRENT_R43_BINDING",
+        "PROPOSE_SUPERSESSION_OR_EXACT_MISSING_BYTES_HOLD_WITHOUT_APPLY"
+      ],
+      "stop_condition": "STOP_AFTER_BINDING_PROPOSAL_OR_EXACT_MISSING_BYTES_HOLD",
+      "reason": "R61 precedence places the physically verified R55 controller bundle above the stable older registry, while current R64 top-3 still references the R43 ContinuityOS closure."
+    },
+    {
+      "rank": 2,
+      "project": "MAWorld",
+      "gap_class": "NEWER_FORENSICS_VERIFIED_REPAIR_RETURN_MISSING",
+      "current_queue_rank": 1,
+      "current_work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
+      "newer_forensics_work_order": "ANTIGRAVITY-WO042-R52-RETURN-HARVEST-AND-MAWORLD-INITDB-FORENSICS",
+      "newer_forensics_status": "VERIFIED_PASS",
+      "repair_work_order": "CODEX03-R52-MAWORLD-INITDB-REPAIR",
+      "repair_status": "USER_REPORTED_DONE_RETURN_MISSING",
+      "selected_action": "MAWORLD_R52_EXISTING_REPAIR_RETURN_DISCOVERY_NO_RERUN",
+      "stop_condition": "STOP_AT_FOUND_STRICT_BYTES_OR_CONFIRMED_MISSING_RETURN",
+      "reason": "Physical initdb forensics passed, but the later repair was only user-reported done and its strict return bytes were missing; rerun or root-cause guessing is not authorized."
+    },
+    {
+      "rank": 3,
+      "project": "Sovereign Arena",
+      "gap_class": "SLOT_GATE_VS_LEDGER_RIPENESS_DIVERGENCE",
+      "current_queue_rank": 2,
+      "current_work_order": "CODEX04-R51-SOVEREIGN-ARENA-TRUTH-REPAIR",
+      "external_status": "VERIFIED_PASS",
+      "ledger_human_ripe": false,
+      "selected_action": "ARENA_GATE_COMPRESSION_RECONCILIATION_NO_HUMAN_PROMOTION",
+      "stop_condition": "STOP_AFTER_EXPLAINING_SLOT_VS_LEDGER_GATE_STATE",
+      "reason": "The slot reports HUMAN_GATE_READY while the Decision/Effect Ledger keeps the same R51 case human_ripe=false; no human promotion is allowed until that compression is reconciled."
+    }
+  ],
+  "selected_next_action": {
+    "rank": 1,
+    "project": "ContinuityOS",
+    "gap_class": "VERIFIED_NEWER_RETURN_NOT_BOUND_IN_CURRENT_TOP3_CHAIN",
+    "current_queue_rank": 3,
+    "current_work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE",
+    "newer_evidence_work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+    "newer_evidence_status": "VERIFIED_PASS",
+    "selected_action": "CONTINUITYOS_R52_EXISTING_RETURN_BINDING_RECONCILIATION",
+    "bounded_scope": [
+      "LOCATE_EXISTING_R52_STRICT_RETURN_BYTES_OR_EXACT_CONTROLLER_COPY",
+      "VERIFY_IDENTITY_SHA_READY_AND_NO_EFFECT_RECEIPTS_WITHOUT_RERUN",
+      "COMPARE_R52_ADOPTION_RESULT_AGAINST_CURRENT_R43_BINDING",
+      "PROPOSE_SUPERSESSION_OR_EXACT_MISSING_BYTES_HOLD_WITHOUT_APPLY"
+    ],
+    "stop_condition": "STOP_AFTER_BINDING_PROPOSAL_OR_EXACT_MISSING_BYTES_HOLD",
+    "reason": "R61 precedence places the physically verified R55 controller bundle above the stable older registry, while current R64 top-3 still references the R43 ContinuityOS closure."
+  },
+  "invariants": {
+    "current_queue_not_mutated": true,
+    "current_lifecycle_not_mutated": true,
+    "decision_ledger_not_mutated": true,
+    "return_registry_not_mutated": true,
+    "human_now_unchanged": true,
+    "effect_candidates_unchanged": true,
+    "verified_bundle_not_silently_promoted_to_semantic_acceptance": true,
+    "user_reported_completion_not_physical_acceptance": true,
+    "missing_return_never_authorizes_rerun": true,
+    "exactly_one_next_bounded_action_selected": true
+  },
+  "safety": {
+    "current_truth_mutation_authorized": false,
+    "return_registry_mutation_authorized": false,
+    "routing_mutation_authorized": false,
+    "dispatch_authorized": false,
+    "semantic_acceptance_authorized_by_projection": false,
+    "apply_authorized": false,
+    "execution_authorized": false,
+    "deploy_authorized": false,
+    "external_message_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

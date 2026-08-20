@@ -1,0 +1,111 @@
+{
+  "schema": "control_center.continuityos_r52_binding_reconciliation.v1",
+  "projection_kind": "NON_AUTHORITY_SUPERSESSION_PROPOSAL",
+  "proposal_status": "SUPERSESSION_PROPOSAL_READY_NO_APPLY",
+  "current_binding": {
+    "work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE",
+    "queue_rank": 3,
+    "current_next": "ROBERT_ADOPTION_REVIEW"
+  },
+  "r52_exact_return": {
+    "work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+    "slot_folder_drive_id": "1tjgZVhkRp8eKYwg3xcHO-j8BekB7JdFk",
+    "zip_drive_id": "1JWdtHNYQSynsGjsSBIpc9IYNky8_JP2-",
+    "zip_name": "CODEX01_R52_CONTINUITYOS_CANONICAL_ADOPTION_20260729T141948364Z.zip",
+    "zip_bytes": 48065,
+    "zip_sha256": "6d9a3bb3b31c91cefac0515d3dda1e52d079b0932e747da8b257b9e382851b30",
+    "zip_sha256_recomputed_from_provider_bytes": true,
+    "sidecar_drive_id": "1vEDzhFbtq4BXduprzrJomE53LCPmsMcD",
+    "sidecar_file_sha256": "79f07a3138d7b8bcbd6fcee400f96aeee8e439b06902e0016dd25f3a3b64d701",
+    "sidecar_exact_zip_binding": true,
+    "ready_drive_id": "1CQRvd3jXnJPxoINLgRyvtaVo6TG1d6yH",
+    "ready_created_last": true,
+    "entry_count": 55,
+    "zip_crc": "PASS",
+    "duplicate_entries": 0,
+    "unsafe_entries": 0,
+    "terminal_category": "LOCAL_CANONICAL_ADOPTION_PASS",
+    "git": {
+      "branch": "main",
+      "head": "b5436f373dcb19873a3b0908b26f8d0e22cb8125",
+      "tree": "75224c68a7eb041bb34d1d87e6c429a98db57593",
+      "clean": true,
+      "remotes": []
+    },
+    "acceptance_evidence": {
+      "predecessor_verified": true,
+      "unittests": "186/186 and 186/186",
+      "positive_validators": "12/12",
+      "semantic_negative_controls": "2/2",
+      "operator_import_start": "PASS",
+      "rollback_defined": true
+    },
+    "effect_boundary": {
+      "historical_local_code_root_selection_performed": true,
+      "source_payload_modified": false,
+      "runtime_activation": false,
+      "production_adopted": false,
+      "cloud_delivery": false,
+      "direct_runtime_write_by_codex01": false,
+      "concurrent_external_runtime_write_observed": true,
+      "concurrent_external_runtime_write_actor": "cowork_agent",
+      "live_host_state_proven_now": false
+    }
+  },
+  "r55_transport_chain": {
+    "r55_folder_drive_id": "1qjQkz_2PDdTienDdP8hJGd0xFkJSnm9E",
+    "registry_delta_drive_id": "1eY5qWCU9V1jpq-b8ZaY_0wqF7wQDoTiW",
+    "registry_verification_status": "VERIFIED_PASS",
+    "registry_predecessor_or_current": "CURRENT_R52",
+    "controller_bundle_drive_id": "16WrOGGDWkgZwg33DFxstnF4eb88G2XWp",
+    "controller_bundle_sha256": "c737ecd24d4fd1add182bd3c860c722ada274093c8109d26d6b52bdc745bb00e",
+    "controller_bundle_bytes": 8071288,
+    "controller_readback": "PASS",
+    "delivery_ready_drive_id": "1BvzFGAn8UsRhEmk6jd4x8fK75IJPIbqa",
+    "delivery_close": "DELIVERY_CLOSED_PASS",
+    "delivery_ready_created_last": true
+  },
+  "newer_scope_check": {
+    "r57_work_order_drive_id": "1QjP_tSSomIwKvGE-jj1osxMrt_eBj6ow",
+    "r57_work_order": "CODEX01-R57-CONTINUITYOS-RUNTIME-ADOPTION-PREFLIGHT",
+    "r57_work_order_states_local_adoption_already_passed": true,
+    "r57_live_activation_authorized": false,
+    "accessible_drive_search_found_strict_r57_return": false,
+    "global_absence_claimed": false,
+    "later_verified_strict_return_must_supersede_r52": true
+  },
+  "supersession_proposal": {
+    "apply_now": false,
+    "from_work_order": "CODEX01-R43-CONTINUITY-186-CLOSURE",
+    "proposed_from_state": "HISTORICAL_PREDECESSOR_SUPERSEDED_BY_VERIFIED_R52_EVIDENCE",
+    "to_work_order": "CODEX01-R52-CONTINUITYOS-CANONICAL-ADOPTION",
+    "proposed_to_state": "CURRENT_VERIFIED_EVIDENCE_SEMANTIC_REVIEW_REQUIRED",
+    "recommended_semantic_decision": "ACCEPT_AS_CURRENT_EVIDENCE_ONLY_WITH_LIVE_HOST_STATE_UNVERIFIED",
+    "proposed_next_control_center_action": "SEMANTIC_ADJUDICATION_R52_RETURN_NO_EFFECT",
+    "live_host_readback_required_before_current_operational_health_claim": true,
+    "human_gate_created": false,
+    "effect_candidate_created": false
+  },
+  "invariants": {
+    "command_queue_mutated": false,
+    "work_lifecycle_mutated": false,
+    "decision_ledger_mutated": false,
+    "return_registry_mutated": false,
+    "canonical_r64_roots_mutated": false,
+    "semantic_acceptance_applied": false,
+    "host_state_mutated": false,
+    "rerun_performed": false
+  },
+  "safety": {
+    "routing_mutation_authorized": false,
+    "dispatch_authorized": false,
+    "apply_authorized": false,
+    "execution_authorized": false,
+    "deploy_authorized": false,
+    "external_message_authorized": false,
+    "runtime_activation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

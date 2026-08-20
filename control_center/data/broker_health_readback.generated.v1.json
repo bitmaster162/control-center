@@ -1,0 +1,90 @@
+{
+  "schema": "control_center.broker_health_readback.v1",
+  "projection_kind": "NON_AUTHORITY_READ_ONLY_HEALTH_PROJECTION",
+  "observed_at": "2026-08-12T04:27:00+07:00",
+  "authority_anchor": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer_drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+    "pointer_sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+    "provider_readback": "all_exact",
+    "current_state_sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+    "role_views_sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+  },
+  "verdict": "HEALTHY_PROVIDER_EVIDENCE_PROCESS_LIVENESS_NOT_OBSERVABLE_RESEALED_ROOTS_ALIGNED",
+  "runtime": {
+    "generation": "R59",
+    "repository": "bitmaster162/control-return-broker",
+    "default_branch": "gpt/github-ready-r1",
+    "head": "f14ab9a8f4b7ba7b1cca80759f4683916b1dc785",
+    "tree": "4762b2cdad463823e34da29e09b22ec580c6e778",
+    "target": "C:\\PROJECTS\\control_return_broker",
+    "deploy_terminal": "DF6_RUNTIME_DEPLOY_PASS",
+    "process_liveness": "NOT_PROVIDER_OBSERVABLE",
+    "watcher_pids_at_deploy_receipt": [23940, 26660],
+    "receipt_pids_are_current_proof": false
+  },
+  "registry_health": {
+    "master_entries": 9,
+    "live_index_entries": 9,
+    "live_slots": ["ANTIGRAVITY", "CODEX-02", "CLAUDE-BITUNIX"],
+    "latest_slot": "CLAUDE-BITUNIX",
+    "latest_physical_status": "DELIVERY_VERIFIED",
+    "master_live_count_match": true,
+    "unique_exact_identities": 5,
+    "historical_duplicate_groups": 2,
+    "historical_excess_rows": 4,
+    "historical_duplicates_preserved_not_pruned": true,
+    "post_df6_duplicate_regression_observed": false
+  },
+  "controller_health": {
+    "readback_status": "PASS_MATCH",
+    "ready_status": "READY_FOR_CONTROLLER_REVIEW",
+    "ready_created_last": true,
+    "bundle_sha256_match": true,
+    "last_controller_seal_at_utc": "2026-08-11T18:07:08.102885Z",
+    "age_seconds_at_observation": 11991
+  },
+  "stable_registry_health": {
+    "drive_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+    "payload_updated_at_utc": "2026-07-29T12:20:00Z",
+    "unchanged": true,
+    "direct_broker_mutation_observed": false
+  },
+  "activity": {
+    "latest_broker_generated_artifact_at_utc": "2026-08-11T18:07:08.102885Z",
+    "latest_known_registration_receipt_at_utc": "2026-08-11T18:07:21.0078103Z",
+    "later_broker_generated_artifact_observed": false,
+    "liveness_evidence_class": "INDIRECT_ACTIVITY",
+    "process_liveness_observable": false
+  },
+  "contract_resolution": {
+    "status": "RESOLVED_BY_CANONICAL_REPAIR_AND_RESEAL",
+    "previous_status": "CONFIRMED_OPEN_SEMANTIC_CONTRACT_DIVERGENCE",
+    "canonical_root_sentence": "Only the broker mutates generation-scoped return-broker state for the active watcher generation; the installed R59/DF6 broker does not directly mutate CURRENT_RETURN_REGISTRY.json.",
+    "verified_implementation_fact": "Broker mutates generation-scoped R59 master registry/live index; no direct CURRENT_RETURN_REGISTRY.json edit is implemented or observed.",
+    "repair_gate": "APPLY_R64_BROKER_MUTATION_RULE_REPAIR_V1",
+    "reseal_gate": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "authority_rule": "RESEALED_R64_CANONICAL_TEXT_MATCHES_VERIFIED_IMPLEMENTATION; PRE_REPAIR_DIVERGENCE_IS_HISTORICAL_ONLY"
+  },
+  "next_action": "NO_RUNTIME_ACTION_REQUIRED; CONTINUE_READ_ONLY_HEALTH_OBSERVATION",
+  "human_gate_required_for_root_repair": "NONE_REPAIR_ALREADY_APPLIED_AND_RESEALED",
+  "policy": {
+    "health_projection_grants_authority": false,
+    "process_restart_authorized": false,
+    "root_repair_authorized": false,
+    "registry_mutation_authorized": false,
+    "execution_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false
+  },
+  "invariants": {
+    "cross_layer_anchor_equality_required": true,
+    "canonical_contract_divergence_resolved": true,
+    "historical_divergence_preserved_as_evidence": true
+  }
+}

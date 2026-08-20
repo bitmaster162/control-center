@@ -1,0 +1,28 @@
+{
+  "schema": "control_center.provider_refresh_controller_status.v1",
+  "projection_kind": "NON_AUTHORITY_PROVIDER_REFRESH_DIAGNOSTIC",
+  "verdict": "NO_HOLD_DIAGNOSTIC_RECORDED",
+  "operator_state": "NO_HOLD_DIAGNOSTIC_RECORDED",
+  "hold_active": false,
+  "absence_does_not_prove_no_drift": true,
+  "source_capture": null,
+  "controller_errors": [],
+  "mismatches": [],
+  "note": "No current provider-drift HOLD diagnostic is recorded. This does not prove that provider drift is absent; only a fresh read-only capture classified by the Refresh Controller can establish a new diagnostic state.",
+  "safety": {
+    "diagnostic_grants_authority": false,
+    "refresh_authorized": false,
+    "root_write_authorized": false,
+    "registry_write_authorized": false,
+    "runtime_mutation_authorized": false,
+    "routing_mutation_authorized": false,
+    "dispatch_authorized": false,
+    "apply_authorized": false,
+    "execution_authorized": false,
+    "deploy_authorized": false,
+    "external_message_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

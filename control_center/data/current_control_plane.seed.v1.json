@@ -1,0 +1,72 @@
+{
+  "schema": "control_center.current_control_plane_projection.v1",
+  "projection_kind": "NON_AUTHORITY_PROJECTION",
+  "observed_at": "2026-08-12T03:45:00+07:00",
+  "authority_note": "Compact contract fixture bound to the current resealed R64 provider tuple; it is not an authority source.",
+  "canonical_current": {
+    "generation": "R64",
+    "status": "ACTIVE",
+    "canonical_decision": "APPLY_R64_CANONICAL_RESEAL_V1__MANIFEST_383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "accepted_manifest_sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d",
+    "pointer": {
+      "locator": "Control canter/00_CONTROL_CURRENT/CURRENT_POINTER.json",
+      "accepted_artifact": "CURRENT_POINTER_R64_ACTIVE.json",
+      "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3",
+      "provider_readback": "all_exact"
+    },
+    "root_hashes": {
+      "CURRENT_STATE.json": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68",
+      "ROLE_INDEX.json": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567",
+      "ROLE_VIEWS.json": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+    },
+    "predecessor_lineage": {
+      "generation": "R63",
+      "status": "SUPERSEDED_AS_CURRENT_RETAINED_AS_ACCEPTED_LINEAGE",
+      "is_current": false
+    }
+  },
+  "safety": {
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "self_application": false,
+    "external_messages_require_exact_send": true
+  },
+  "owner_map": [
+    {"domain": "Control Center / Global Command", "owner": "CONTROL_CENTER", "authority": "CURRENT_TRUTH_DISPATCH_ACCEPTANCE_ROUTING_GATES"}
+  ],
+  "projects": [
+    {"id": "control-center", "owner": "CONTROL_CENTER", "state": "ACTIVE_R64_RESEALED", "next": "Provider-backed projection refresh", "blocked_by": []}
+  ],
+  "work_items": [],
+  "return_plane": {
+    "authority_boundary": "TRANSPORT_ONLY",
+    "state_machine": {
+      "transport": ["DISCOVERED", "STAGED", "VERIFIED", "DELIVERED", "ACKNOWLEDGED", "QUARANTINED"],
+      "semantic": ["UNREVIEWED", "ACCEPTED", "HOLD", "REJECTED"],
+      "apply": ["NOT_APPLIED", "APPLIED"]
+    }
+  },
+  "returns": [],
+  "decisions": [],
+  "commercial": {
+    "active_sellable_lines": [
+      {"id": "agent-authority-audit", "state": "ACTIVE"},
+      {"id": "operator-decision-sprint", "state": "ACTIVE_VALIDATION"}
+    ],
+    "operator_sprint": {"self_pilot_counts_toward_mvp": false}
+  },
+  "invariants": [
+    "CURRENT_CANONICAL_GENERATION == R64",
+    "R63 != CURRENT",
+    "RETURNED != ACCEPTED",
+    "DELIVERED != APPLIED",
+    "BROKER_TRANSPORT != SEMANTIC_AUTHORITY",
+    "DASHBOARD != TRUTH_OWNER",
+    "ONE_PERSISTENT_WRITER_PER_PROJECT",
+    "NO_AUTO_SUCCESSOR_WORK_ORDERS",
+    "NO_SELF_APPROVAL",
+    "NO_SELF_MERGE",
+    "NO_SELF_DEPLOY"
+  ]
+}
