@@ -1,0 +1,28 @@
+name: P0 HANRI Evidence Sync
+
+on:
+  push:
+    branches:
+      - agent/p0-hanri-evidence-sync-r1
+  pull_request:
+    branches:
+      - hanri/r37-product-pilot-accepted
+
+permissions:
+  contents: read
+
+jobs:
+  offline-hanri-evidence-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile P0 HANRI adapter
+        run: |
+          python -m py_compile scripts/unified_shadow_hanri_sync.py tests/test_unified_shadow_hanri_sync.py
+      - name: Run P0 HANRI tests
+        run: |
+          python -m unittest tests.test_unified_shadow_hanri_sync -v
