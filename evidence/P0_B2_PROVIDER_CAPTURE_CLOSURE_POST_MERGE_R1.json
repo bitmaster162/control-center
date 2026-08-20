@@ -1,0 +1,106 @@
+{
+  "schema": "control_center.p0_b2_provider_capture_closure_post_merge.v1",
+  "scope": "B2_PROVIDER_CAPTURE_EVIDENCE_ONLY_POST_MERGE",
+  "evaluated_at_bkk": "2026-08-20T09:48:15+07:00",
+  "status": "B2_PROVIDER_CAPTURE_CLOSED_FOR_POST_MERGE_EVIDENCE_PACKAGE",
+  "authority_effect": "NONE",
+  "current_source_binding": {
+    "repo": "bitmaster162/control-center",
+    "branch": "gpt/github-ready-r1",
+    "expected_head": "02ec1f3bf7483b0a70017ce73e45ddb5f6d9467a",
+    "fresh_branch_equality": "IDENTICAL"
+  },
+  "retained_superseding_capture": {
+    "library_artifact": "CONTROL_CENTER_B2_SUPERSEDING_PROVIDER_CAPTURE_R1_20260820.json",
+    "captured_at_bkk": "2026-08-20T08:24:00+07:00",
+    "generated_at_bkk": "2026-08-20T08:25:01+07:00",
+    "max_age_seconds": 21600,
+    "capture_age_seconds_at_second_readback": 5055,
+    "freshness_at_second_readback": "PASS",
+    "provider": "GOOGLE_DRIVE_DIRECT_RAW_READBACK"
+  },
+  "independent_second_raw_readback": {
+    "performed": true,
+    "provider": "GOOGLE_DRIVE_DIRECT_RAW_READBACK",
+    "readback_at_bkk": "2026-08-20T09:48:15+07:00",
+    "root_count": 5,
+    "exact_hash_match_count": 5,
+    "exact_size_match_count": 5,
+    "roots": [
+      {
+        "name": "CURRENT_POINTER.json",
+        "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
+        "bytes": 5493,
+        "sha256": "3d28490e97568393c1ed6f33f34bc03406cdc98a4b74d32e2df6c5ed08f4d3d3"
+      },
+      {
+        "name": "CURRENT_STATE.json",
+        "drive_file_id": "10w_2sw2Sl2I5SNe3aY9jqS46u0muvYs_",
+        "bytes": 6506,
+        "sha256": "701db3dfa51877c1662b94688e9c1136ec5b7a3602b4564bea885d72c9740d68"
+      },
+      {
+        "name": "MANIFEST.json",
+        "drive_file_id": "1I757i4MVez3Xr6DiqH5DJ7sBY1POl-5g",
+        "bytes": 1328,
+        "sha256": "383ce835d68d69b9e96a5bba3ecd2051bdd06d5e0a369abf08c78d33c8e0912d"
+      },
+      {
+        "name": "ROLE_INDEX.json",
+        "drive_file_id": "1AxtE4avTtVCu8kLr2T6UPT4kGB45yZfa",
+        "bytes": 2043,
+        "sha256": "e305e9386a7442a0d1f3f160594be643b6f6fc64b437eece86f6284039229567"
+      },
+      {
+        "name": "ROLE_VIEWS.json",
+        "drive_file_id": "19S7z_XwuG-SsKnsxa8vplx4DZxvy49VT",
+        "bytes": 3945,
+        "sha256": "9384cb9afbfa6c86b45794e1eeba5cb1c27253338cb4c66e71f2ac8dadc07148"
+      }
+    ]
+  },
+  "post_merge_package_binding": {
+    "github_topology_snapshot_commit": "f39c6ba7d3bec958d39c4066934aed82fcc9057e",
+    "github_topology_snapshot_sha256": "4714f3cac0b73fb98354370abf8790717f7ac1c24909dbb35f8a2e5dfd2ae93f",
+    "independent_topology_review_commit": "6ea31a114e8604442a0ac4a7f3f3eb7add6309c5",
+    "independent_topology_review_sha256": "3d665fd4e0243f05639d48f7677bf8750280311e92507cd73ab69bb1f720f3e9",
+    "premerge_release_manifest_sha256": "e0159e7c7fbeb36a353a171ca40c764ae3a700439ed2cce7073001cab4578f96",
+    "premerge_release_qualification_sha256": "426c5cf16e3e366e727f855186fd8265300fbc44f3370f4ed1354e3cd5d54c9c",
+    "premerge_independent_final_review_sha256": "a170da23cd2c68eaf1cc6e04ecdcfc25b7adaf10a1b056eb63ebbbd1986adad9"
+  },
+  "closure_checks": {
+    "fresh_provider_capture_bound_to_current_authority_scope": true,
+    "exact_capture_timestamp_and_window_bound": true,
+    "provider_root_ids_sizes_hashes_bound": true,
+    "independent_second_raw_readback_reproduces_all_hashes": true,
+    "post_merge_source_lifecycle_bound": true,
+    "current_truth_or_root_mutation_performed": false
+  },
+  "remaining_blockers": {
+    "B1_CI_PREJOB": "OPEN",
+    "B3_ARCHIVEOS": "OPEN_HOST_BOUND_CURRENTNESS_PROOF_REQUIRED",
+    "B4_WRITER_DURABILITY": "OPEN_LIVE_DURABILITY_NOT_PROVEN",
+    "B5_RUNTIME_DEPLOYMENT": "OPEN_EXACT_P0_RUNTIME_NOT_PROVEN"
+  },
+  "promotion": {
+    "system_current_truth_promoted": false,
+    "current_truth_apply_allowed": false,
+    "production_qualified": false,
+    "deploy_ready": false,
+    "runtime_ready": false,
+    "decision": "HOLD",
+    "action": "WAIT"
+  },
+  "safety": {
+    "execution_authority": "NONE",
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "provider_writes": 0,
+    "drive_writes": 0,
+    "runtime_mutations": 0,
+    "trades": 0
+  },
+  "receipt_hash_basis": "RFC8259_JSON_SORT_KEYS_COMPACT_UTF8_EXCLUDING_RECEIPT_SHA256",
+  "receipt_sha256": "c4140f919dc5c671d4528458a375eddbf181745707c15b1db4a6fd6e99d64152"
+}
