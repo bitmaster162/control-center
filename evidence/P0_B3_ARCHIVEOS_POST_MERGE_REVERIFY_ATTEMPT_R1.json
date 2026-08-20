@@ -1,0 +1,62 @@
+{
+  "schema": "control_center.p0_b3_archiveos_post_merge_reverify_attempt.v1",
+  "evaluated_at_bkk": "2026-08-20T09:53:30+07:00",
+  "scope": "ARCHIVEOS_CURRENTNESS_REVERIFY_READ_ONLY_ATTEMPT",
+  "status": "B3_BLOCKED_HOST_BOUND_NO_CURRENT_PROMOTION",
+  "authority_effect": "NONE",
+  "canonical_root": "C:\\PROJECTS\\archiveos_api",
+  "fresh_discovery": {
+    "chatgpt_container_host_root_mount": "NOT_AVAILABLE",
+    "github_archiveos_repository_discovered": false,
+    "google_drive_fresh_complete_return_triplet_discovered": false,
+    "google_drive_search_result": "AG12_WORK_ORDER_ONLY",
+    "library_fresh_complete_return_triplet_discovered": false
+  },
+  "accepted_prior_state": {
+    "qualification_status": "BLOCKED_REVERIFY",
+    "freshness": "STALE",
+    "current_claim_allowed": false,
+    "promotion_eligible": false
+  },
+  "historical_partial_evidence": {
+    "ag12_zip_sha256": "25ac1e0b72f9cd1acdc2f4920828a24180643b584c76e81c46f7ea102113be38",
+    "zip_crc": "PASS",
+    "internal_sha256sums": "9_OF_9_PASS",
+    "external_sha256_sidecar": "NOT_UPLOADED_IN_REVIEW_INPUT",
+    "external_ready_for_sync": "NOT_UPLOADED_IN_REVIEW_INPUT",
+    "normalized_status": "ARCHIVEOS_CURRENTNESS_PARTIAL",
+    "sufficient_for_current_claim": false
+  },
+  "required_strict_return": {
+    "zip_pattern": "ANTIGRAVITY_ARCHIVEOS_CURRENTNESS_<UTC>.zip",
+    "sha256_sidecar_pattern": "ANTIGRAVITY_ARCHIVEOS_CURRENTNESS_<UTC>.zip.sha256",
+    "ready_pattern": "ANTIGRAVITY_ARCHIVEOS_CURRENTNESS_<UTC>.zip.READY_FOR_SYNC.json"
+  },
+  "remaining_proof_debt": [
+    "fresh read-only host/provider readback of C:\\PROJECTS\\archiveos_api",
+    "fresh full SHA-256 integrity receipt with file_count>0 and bytes_hashed>0",
+    "independent second readback reproducing manifest SHA-256 and file_count",
+    "source-precedence proof that receipt is ArchiveOS Core, not Drive mirror or Archive Tooling"
+  ],
+  "next_safe_gate": "EXECUTION_OWNER_RUNS_AG12_ON_WINDOWS_HOST_AND_RETURNS_STRICT_TRIPLET",
+  "promotion": {
+    "system_current_truth_promoted": false,
+    "archiveos_current_claim_promoted": false,
+    "production_qualified": false,
+    "deploy_ready": false,
+    "runtime_ready": false,
+    "decision": "HOLD",
+    "action": "WAIT"
+  },
+  "safety": {
+    "execution_authority": "NONE",
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "deploy_permission": "DENY",
+    "archiveos_root_mutations": 0,
+    "drive_writes": 0,
+    "runtime_mutations": 0
+  },
+  "receipt_hash_basis": "RFC8259_JSON_SORT_KEYS_COMPACT_UTF8_EXCLUDING_RECEIPT_SHA256",
+  "receipt_sha256": "1b28d8ac07d6b28e7bdb412197ab67cc07f8df8b5e4ba902306aca2ec46f87c7"
+}
