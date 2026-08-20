@@ -1,0 +1,124 @@
+{
+  "action": "WAIT",
+  "authority_claim": "MERGED_TRUNK_IDENTITY_RESEALED_ONLY",
+  "can_trade": false,
+  "capital_permission": "DENY",
+  "captured_at": "2026-08-20T08:54:00+07:00",
+  "current_truth_apply_performed": false,
+  "decision": "HOLD",
+  "deploy_ready": false,
+  "execution_authority": "NONE",
+  "merge_closure": {
+    "status": "P0_GITHUB_MERGE_TOPOLOGY_RESEALED",
+    "surface_count": 9,
+    "surface_count_identical_to_expected_merged_trunk": 9
+  },
+  "production_qualified": false,
+  "release_ready": false,
+  "retained_conditions_not_reverified_in_this_pass": [
+    "CONTROL_CENTER_PROVIDER_CAPTURE_FRESHNESS",
+    "ARCHIVEOS_BLOCKED_REVERIFY_OR_STALE",
+    "LIVE_WRITER_BACKEND",
+    "DURABLE_COMMIT_AND_CRASH_SAFE_PERSISTENCE",
+    "RUNTIME_DEPLOYMENT"
+  ],
+  "retained_evidence": {
+    "continuityos_post_base_drift_delta_review_sha256": "5ca39cfa532a6ed790baf0e14200ec092da9bf35ca51b4039679bf2fdc813c2f",
+    "premerge_final_review_receipt_sha256": "a170da23cd2c68eaf1cc6e04ecdcfc25b7adaf10a1b056eb63ebbbd1986adad9",
+    "premerge_release_manifest_sha256": "e0159e7c7fbeb36a353a171ca40c764ae3a700439ed2cce7073001cab4578f96",
+    "premerge_release_qualification_receipt_sha256": "426c5cf16e3e366e727f855186fd8265300fbc44f3370f4ed1354e3cd5d54c9c"
+  },
+  "runtime_ready": false,
+  "schema": "control_center.p0_post_merge_global_readback.v1",
+  "semantic_ceiling": {
+    "archiveos_current_claim_verified": false,
+    "github_merge_topology_verified": true,
+    "production_release_verified": false,
+    "provider_freshness_verified": false,
+    "runtime_state_verified": false
+  },
+  "snapshot_sha256": "4714f3cac0b73fb98354370abf8790717f7ac1c24909dbb35f8a2e5dfd2ae93f",
+  "scope": "GITHUB_POST_MERGE_TOPOLOGY_ONLY",
+  "surfaces": [
+    {
+      "branch": "gpt/github-ready-r1",
+      "id": "control_center_authority",
+      "merge_pr": 30,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/control-center",
+      "sha": "02ec1f3bf7483b0a70017ce73e45ddb5f6d9467a"
+    },
+    {
+      "branch": "control-center/current-truth-r1",
+      "id": "control_center_p0",
+      "merge_pr": 77,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/control-center",
+      "sha": "2b93f04e6130f43a39e07710e61d047667c427b7"
+    },
+    {
+      "branch": "hanri/r37-product-pilot-accepted",
+      "id": "hanri_p0",
+      "merge_pr": 78,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/control-center",
+      "sha": "50f0b09a66aa48b85a080d647694b444dbd5c931"
+    },
+    {
+      "branch": "codex02/m2b-forward-edge-evidence",
+      "id": "tradingos_p0",
+      "merge_pr": 24,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/tradingos",
+      "sha": "074cc974625be9d12c33831bd3b04ce2a98d52ab"
+    },
+    {
+      "branch": "agent/sct-r13-precase-qualification",
+      "id": "sct_p0",
+      "merge_pr": 91,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/continuityos",
+      "sha": "b3d764aabfebc9419d36e035e36c9f0d732fb092"
+    },
+    {
+      "branch": "master",
+      "delta_review_receipt_sha256": "5ca39cfa532a6ed790baf0e14200ec092da9bf35ca51b4039679bf2fdc813c2f",
+      "id": "continuityos_history_p0",
+      "merge_pr": 94,
+      "merge_tree": "9a0ad3e296805683186a8d4d64e87bf300f05f3b",
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "reconciled_head": "12569a419b270a404a484f83877d3814cf7c1c9c",
+      "repo": "bitmaster162/continuityos",
+      "sha": "c2c3ab8fa4164633bbe10c51e6c7166da028e5e1"
+    },
+    {
+      "branch": "research/decision-closure-ebd-v0.3",
+      "id": "triaxis_p0_and_review_lane",
+      "merge_prs": [
+        8,
+        9,
+        10
+      ],
+      "readback": "IDENTICAL_TO_LATEST_REVIEW_MERGE_COMMIT",
+      "repo": "bitmaster162/TRIAXIS",
+      "sha": "4f0c3738cb5d3402e6059d78e4cdbddca30522e4"
+    },
+    {
+      "branch": "agent/trading-agent-visual-perception-v1",
+      "id": "visionassist_p0",
+      "merge_pr": 2,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/VisionAssist",
+      "sha": "436e7562f960ff8c412c52bd8e9ca68ac3cd0ee6"
+    },
+    {
+      "branch": "gpt/github-ready-r1",
+      "id": "return_broker_p0",
+      "merge_pr": 2,
+      "readback": "IDENTICAL_TO_MERGE_COMMIT",
+      "repo": "bitmaster162/control-return-broker",
+      "sha": "e4851f85fc10098227dbd91cf03b016aeac5f0b4"
+    }
+  ],
+  "system_current_truth_promoted": false
+}
