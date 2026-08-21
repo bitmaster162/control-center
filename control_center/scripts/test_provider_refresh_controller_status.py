@@ -5,16 +5,17 @@ from datetime import timedelta
 
 from build_provider_refresh_controller_status import build_status, neutral_status
 from validate_provider_refresh_controller_status import validate
-from validate_provider_snapshot_freshness import EVIDENCE, RESEAL, SNAPSHOT, git_blob_sha, load, parse_time
+from validate_provider_snapshot_freshness import EVIDENCE, MAX_AGE_SECONDS, RESEAL, SNAPSHOT, git_blob_sha, load, parse_time
 
 
 def exact_capture() -> dict:
     evidence = load(EVIDENCE)
+    current_observed = parse_time(str(evidence["observed_at"]))
     return {
         "schema": "control_center.provider_refresh_capture.v1",
         "capture_kind": "READ_ONLY_PROVIDER_CAPTURE",
         "provider": "GOOGLE_DRIVE_DIRECT_READBACK",
-        "observed_at": "2026-08-12T05:30:00+07:00",
+        "observed_at": (current_observed + timedelta(minutes=1)).isoformat(),
         "stable_roots": copy.deepcopy(evidence["stable_roots"]),
         "informational": {
             "pre_capture_live_pr_head_sha": "test-head"
@@ -26,7 +27,9 @@ def exact_capture() -> dict:
     }
 
 
-def build(capture: dict, now: str = "2026-08-12T05:31:00+07:00") -> dict:
+def build(capture: dict, now: str | None = None) -> dict:
+    if now is None:
+        now = (parse_time(str(capture["observed_at"])) + timedelta(minutes=1)).isoformat()
     return build_status(
         load(SNAPSHOT),
         load(EVIDENCE),
@@ -61,13 +64,15 @@ def main() -> int:
     require(not validate(sha_drift), "sha drift status must validate structurally")
 
     metadata_capture = exact_capture()
-    metadata_capture["stable_roots"]["ROLE_INDEX.json"]["modified_time"] = "2026-08-12T00:00:00Z"
+    role_index_modified = parse_time(str(metadata_capture["stable_roots"]["ROLE_INDEX.json"]["modified_time"]))
+    metadata_capture["stable_roots"]["ROLE_INDEX.json"]["modified_time"] = (role_index_modified - timedelta(minutes=1)).isoformat()
     metadata = build(metadata_capture)
     require(metadata["verdict"] == "HOLD_PROVIDER_DRIFT_DETECTED", "metadata rewrite must HOLD")
     require(any(row["field"] == "modified_time" for row in metadata["mismatches"]), "metadata mismatch missing")
 
     pointer_capture = exact_capture()
-    pointer_capture["stable_roots"]["CURRENT_STATE.json"]["modified_time"] = "2026-08-12T00:01:00Z"
+    pointer_modified = parse_time(str(pointer_capture["stable_roots"]["CURRENT_POINTER.json"]["modified_time"]))
+    pointer_capture["stable_roots"]["CURRENT_STATE.json"]["modified_time"] = (pointer_modified + timedelta(minutes=1)).isoformat()
     pointer = build(pointer_capture)
     require(pointer["verdict"] == "HOLD_PROVIDER_DRIFT_DETECTED", "pointer order drift must HOLD")
     require(any(row["field"] == "pointer_order" for row in pointer["mismatches"]), "pointer order mismatch missing")
@@ -81,9 +86,10 @@ def main() -> int:
     require(not validate(invalid), "invalid capture diagnostic must validate structurally")
 
     old_capture = exact_capture()
-    current_observed = parse_time(load(EVIDENCE)["observed_at"])
+    current_observed = parse_time(str(load(EVIDENCE)["observed_at"]))
     old_capture["observed_at"] = (current_observed - timedelta(minutes=1)).isoformat()
-    expired = build(old_capture, "2026-08-12T11:00:00+07:00")
+    expired_now = (current_observed + timedelta(seconds=MAX_AGE_SECONDS + 1)).isoformat()
+    expired = build(old_capture, expired_now)
     require(expired["verdict"] == "HOLD_FRESHNESS_EXPIRED_RECAPTURE_REQUIRED", "expired lease with old capture must HOLD for recapture")
     require(expired["operator_state"] == "EXPIRED", "expired recapture must not be drift")
     require(expired["mismatches"] == [], "expired recapture must not fabricate drift mismatches")
