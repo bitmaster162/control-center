@@ -1,10 +1,29 @@
 #!/usr/bin/env python3
 from copy import deepcopy
-import importlib.util,json,sys,unittest
+import importlib.util,sys,unittest
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location("r",HERE/"authority_capture_refresh_v2.py"); m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)
-CAP=json.loads((HERE.parent/"data"/"authority_refresh_capture.readonly.v2.json").read_text())
+
+ROOT_MODIFIED={
+ "CURRENT_POINTER.json":"2026-08-11T20:44:54.497Z",
+ "CURRENT_STATE.json":"2026-08-11T20:24:59.622Z",
+ "ROLE_INDEX.json":"2026-08-07T20:30:12.186Z",
+ "ROLE_VIEWS.json":"2026-08-07T20:29:49.791Z",
+ "MANIFEST.json":"2026-08-11T20:44:42.512Z",
+}
+def capture(when="2026-08-14T02:45:20+07:00"):
+ roots={name:{**values,"modified_time":ROOT_MODIFIED[name]} for name,values in m.EXPECTED.items()}
+ return {
+  "schema":m.CAPTURE_SCHEMA,"capture_kind":m.CAPTURE_KIND,"provider":m.PROVIDER,
+  "semantic_surface":m.SURFACE,"observed_at":when,"stable_roots":roots,
+  "safety":{
+   "provider_mutation_performed":False,"authority_granted":False,"registry_mutation_performed":False,
+   "runtime_mutation_performed":False,"merge":False,"deploy":False,"can_trade":False,
+   "capital_permission":"DENY","self_application":False,
+  },
+ }
+CAP=capture()
 def sync(when="2026-08-14T02:00:11+07:00"):
  return {"schema":"control-center.sync-evidence.review.v2","observed_at":when,"observations":[{
   "semantic_surface":"r64.authority","claim_dimension":"authority","source_class":"stable_authority_root","source_id":"old",
@@ -13,6 +32,8 @@ def sync(when="2026-08-14T02:00:11+07:00"):
  }]}
 NOW=m.parse_time("2026-08-14T02:45:20+07:00")
 class T(unittest.TestCase):
+ def test_fixture_is_exact_and_deterministic(self):
+  self.assertEqual(m.validate_capture(CAP,now=NOW),[])
  def test_real_capture_newer_candidate(self):
   x=m.classify(sync(),CAP,now=NOW); self.assertEqual(x["verdict"],"NEWER_EXACT_CAPTURE_CANDIDATE"); self.assertTrue(x["refresh_allowed"])
  def test_same_capture_no_refresh(self):
