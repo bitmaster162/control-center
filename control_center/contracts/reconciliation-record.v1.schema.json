@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:control-plane:reconciliation-record:v1",
+  "title": "Reconciliation Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "source_cut_id",
+    "subject_id",
+    "artifact_id",
+    "artifact_sha256",
+    "source_class",
+    "authority_class",
+    "observed_at",
+    "freshness",
+    "transport_status",
+    "semantic_status",
+    "apply_status",
+    "owner",
+    "do_not_touch",
+    "requested_action",
+    "human_gate_required",
+    "effect_authorized",
+    "execution_authorized"
+  ],
+  "properties": {
+    "schema": {
+      "const": "control_plane.reconciliation_record.v1"
+    },
+    "source_cut_id": {
+      "type": "string",
+      "pattern": "^cut-[0-9a-f]{64}$"
+    },
+    "subject_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_class": {
+      "enum": [
+        "CANONICAL_ACTIVE_STATE",
+        "HUMAN_DECISION",
+        "CONTROLLER_ADJUDICATION",
+        "PROJECT_OWNER_DECISION",
+        "PROVIDER_READBACK",
+        "AUDIT",
+        "VERIFIED_RETURN",
+        "TRANSPORT_OBSERVATION",
+        "TEMPLATE",
+        "DASHBOARD_PROJECTION",
+        "LAST_KNOWN_CACHE"
+      ]
+    },
+    "authority_class": {
+      "enum": [
+        "HUMAN",
+        "DETERMINISTIC_CONTROLLER",
+        "PROJECT_OWNER",
+        "FACTUAL_OBSERVATION",
+        "TRANSPORT_ONLY",
+        "NONE"
+      ]
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freshness": {
+      "enum": [
+        "FRESH",
+        "STALE",
+        "UNKNOWN",
+        "UNAVAILABLE",
+        "IDENTITY_CONFLICT"
+      ]
+    },
+    "logical_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "predecessor_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "supersedes_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "claim_value": {},
+    "claim_status": {
+      "enum": [
+        "PASS",
+        "PASS_WITH_CONDITIONS",
+        "OPEN",
+        "PARTIAL",
+        "REVISE",
+        "HOLD",
+        "REJECT",
+        "UNKNOWN"
+      ]
+    },
+    "current_observation": {
+      "type": "boolean"
+    },
+    "evidence_debt": {
+      "type": "boolean"
+    },
+    "transport_status": {
+      "type": "string"
+    },
+    "semantic_status": {
+      "enum": [
+        "UNREVIEWED",
+        "ACCEPTED",
+        "HOLD",
+        "REVISE",
+        "REJECTED",
+        "SUPERSEDED"
+      ]
+    },
+    "apply_status": {
+      "enum": [
+        "NOT_APPLIED",
+        "APPLY_ELIGIBLE",
+        "APPLIED",
+        "SUPERSEDED"
+      ]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "do_not_touch": {
+      "type": "boolean"
+    },
+    "requested_action": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "human_gate_required": {
+      "type": "boolean"
+    },
+    "action_evidence_fresh": {
+      "type": "boolean"
+    },
+    "effect_authorized": {
+      "const": false
+    },
+    "execution_authorized": {
+      "const": false
+    },
+    "readback_status": {
+      "enum": [
+        "NOT_DUE",
+        "REQUIRED",
+        "VERIFIED",
+        "FAILED",
+        "UNKNOWN"
+      ]
+    }
+  }
+}

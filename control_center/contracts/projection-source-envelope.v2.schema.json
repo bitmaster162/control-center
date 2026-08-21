@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:control-plane:projection-source-envelope:v2",
+  "title": "Projection Source Envelope v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "source_id",
+    "source_class",
+    "authority_scope",
+    "locator",
+    "identity",
+    "observed_at",
+    "fetched_at",
+    "freshness",
+    "payload_sha256",
+    "required_for"
+  ],
+  "properties": {
+    "schema": {
+      "const": "control_plane.projection_source_envelope.v2"
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_class": {
+      "enum": [
+        "CANONICAL_AUTHORITY",
+        "TRANSPORT_OBSERVATION",
+        "PROVIDER_OBSERVATION"
+      ]
+    },
+    "authority_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity": {
+      "type": "object"
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fetched_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "policy",
+        "expires_at"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "FRESH",
+            "STALE",
+            "UNKNOWN",
+            "UNAVAILABLE",
+            "IDENTITY_CONFLICT"
+          ]
+        },
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expires_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "payload_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "required_for": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
