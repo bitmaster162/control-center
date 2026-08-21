@@ -3,7 +3,7 @@
   "capture_kind": "READ_ONLY_PROVIDER_CAPTURE_PER_SURFACE",
   "provider": "GOOGLE_DRIVE_DIRECT_READBACK",
   "semantic_surface": "r64.authority",
-  "observed_at": "2026-08-14T02:45:20+07:00",
+  "observed_at": "2026-08-22T03:43:00+07:00",
   "stable_roots": {
     "CURRENT_POINTER.json": {
       "drive_file_id": "10HUmbzBVCQDnbFAL6UQ6B2O336ENkEW5",
