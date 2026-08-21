@@ -1,7 +1,7 @@
 {
   "schema": "control_center.provider_freshness_evidence.v1",
   "projection_kind": "NON_AUTHORITY_PROVIDER_READBACK_EVIDENCE",
-  "observed_at": "2026-08-12T04:59:00+07:00",
+  "observed_at": "2026-08-22T03:13:33+07:00",
   "freshness_scope": "AUTHORITY_CRITICAL_R64_STABLE_ROOTS",
   "freshness_status": "FRESH_AT_CAPTURE",
   "continuous_freshness": false,
@@ -54,7 +54,7 @@
   "informational_self_referential": {
     "control_center_github_lane": {
       "snapshot_head_sha": "8969c264d505a6d5cb8590eb5a1b74b461f0b19c",
-      "pre_capture_live_pr_head_sha": "8e80d54949d1abb09f6a8fd8038250c0957a8d60",
+      "pre_capture_live_pr_head_sha": "c4de2616c2ef3eb8108350904cc5c57cf54f0131",
       "snapshot_head_was_stale_at_capture": true,
       "authority_relevant": false,
       "self_reference_exempt": true,
