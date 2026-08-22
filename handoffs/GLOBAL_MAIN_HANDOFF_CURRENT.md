@@ -4,7 +4,7 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T08:30:00+07:00
+**Last updated:** 2026-08-22T08:42:27+07:00
 
 ## Canonical location
 
@@ -136,18 +136,17 @@ Candidate:
 - branch `agent/causal-spine-v1`
 - draft PR #115
 - base `master@021e2d521efc4df0ce390b38a919bc2f0b675460`
-- head observed after initial hardening: `e7d14326684319b3aa169ea3a0d2a5b9ca2ce25f`
-- 7 changed files
+- **fresh actual head:** `4ab6c77f714770f2c278dbe9f51cf6f38b9fe474`
+- **23 commits**
+- **10 changed files**
+- **1434 additions / 0 deletions**
 - unmerged
 - no deployment/runtime effect
 
-Current independent-review defects:
-- **CS-R1:** enforce `resolution.subject == spine.subject_id`.
-- **CS-R2:** evaluation-event verifier must enforce semantic no-effect invariants, not hash integrity only.
-- **CS-R3:** bind `CurrentPhysicalState.state_id` to provider evidence object identity.
+Historical review defects CS-R1/CS-R2/CS-R3 are described in the PR body as closed at an earlier candidate head, but the actual provider head has advanced again. The PR body is stale relative to current provider state.
 
 Exact next action:
-patch CS-R1/R2/R3 on the same candidate branch, add adversarial fixtures/CausalBench coverage, then provider-read back exact new head and CI. No merge.
+reconcile exact current head `4ab6c77...`, changed files, exact-head CI and independent review evidence before any merge-gate conclusion. No merge.
 
 ---
 
@@ -464,7 +463,7 @@ It must not infer ContinuityOS, Pandora, SCT, HANRI etc. solely from the prompt.
 
 ## P0 CORE
 Causal Spine:
-patch CS-R1/R2/R3 -> tests/CausalBench -> exact-head provider readback -> CI -> independent review -> no merge.
+fresh provider state is PR #115 head `4ab6c77...` with 23 commits / 10 changed files; PR body is stale. Reconcile exact-head diff -> exact-head CI -> independent review -> update PR metadata -> no merge.
 
 ## P0 KNOWLEDGE
 continue global product/asset census -> discover Claude/agent-built shells -> aliases/duplicates/supersessions -> evidence-backed product registry.
@@ -523,6 +522,83 @@ Previous large create-file write was interrupted before completion.
 Provider readback of `handoffs/GLOBAL_MAIN_HANDOFF_CURRENT.md` returned `404`.
 The failed attempt is not counted as a successful write.
 Recovery action: recreate CURRENT with this compact complete form and verify provider readback.
+
+## GMH-0008
+**Time:** 2026-08-22T08:42:27+07:00  
+**Lane:** GLOBAL / GEMINI DEEP RESEARCH / CLAUDE HANDOFF
+
+Received four Gemini Deep Research reports and byte-identified them.
+
+Research-cluster rule:
+the four Gemini outputs are correlated model-family outputs, not four independent evidence sources.
+
+Created:
+- `GEMINI_DEEP_RESEARCH_ADJUDICATION_R1_20260822.md`
+- `CLAUDE_OPUS_INDEPENDENT_ADJUDICATION_WORK_ORDER_R1_20260822.md`
+- `CLAUDE_REVIEW_PACKET_MANIFEST_R1_20260822.json`
+- `CLAUDE_GEMINI_ADJUDICATION_PACKET_R1_20260822.zip`
+
+Accepted as canonical direction from Gemini:
+- hard separation `source != build != deployment != runtime != effect != authority`;
+- deterministic provider-bound Causal Spine;
+- one canonical relational EvidenceStore per runtime;
+- bitemporal semantics;
+- vector retrieval as derivative only;
+- raw content-addressed evidence preservation;
+- governed fleet + sealed Work Orders + independent verification;
+- portable agent trajectory archive;
+- AuthorityLeak/Confused-Deputy security work;
+- provider readback / effect reconciliation;
+- benchmark program;
+- Agent Authority & Evidence Audit as P0 commercial candidate.
+
+Accepted only as direction / benchmark-first:
+- PostgreSQL 17 specifically;
+- exact schema/table count;
+- A2A/MCP internal transport choices;
+- Microsoft Agent Framework / OpenAI Agents SDK / Google ADK runtime choice;
+- OpenTelemetry/OpenInference mapping details;
+- ABAC/MAC implementation;
+- mandatory cryptographic signatures;
+- exact graph engine.
+
+Held for Claude independent adjudication:
+- ArchiveOS keep vs physical merge;
+- ContinuityOS logical boundary vs service elimination;
+- HANRI vs Control Center merge proposal;
+- Return Broker adapt/replace/kill;
+- SQLite standalone edge mode;
+- TRIAXIS boundary;
+- Pandora visual-only vs graph/simulation projection;
+- Python vs mandatory Rust for deterministic Causal Spine.
+
+Rejected from automatic adoption:
+- blanket KILL/FREEZE of OKX NFT, Crypto Guides, AI Skill Lab, VisionAssist, Sovereign Arena or AI Setup;
+- freeze-all-non-core repositories;
+- immediate DNS/product shutdown;
+- mandatory Gemini pricing/revenue targets;
+- enterprise-only strategy that discards the broader portfolio without product-specific evidence.
+
+Fresh ContinuityOS provider readback during this step:
+- PR #115: OPEN / DRAFT / UNMERGED / mergeable
+- base SHA `021e2d521efc4df0ce390b38a919bc2f0b675460`
+- actual head `4ab6c77f714770f2c278dbe9f51cf6f38b9fe474`
+- 23 commits
+- 10 changed files
+- 1434 additions / 0 deletions
+- PR body remains stale and still names older head/counts.
+
+External primary-source spot-check:
+- A2A v1.0 is current production-ready standard; MCP and A2A are complementary.
+- OpenTelemetry GenAI semantic conventions are actively used but continue to evolve; map to them, do not make them our sole canonical trajectory schema.
+- Microsoft Agent Framework/Foundry supports A2A/MCP-oriented hosting patterns, but runtime adoption remains benchmark-first.
+
+Authority effect:
+research intake + documentation only.
+No merge, deploy, runtime, destructive Drive, trading or capital action.
+
+Exact next action:
+send Claude the sealed review packet and require a strict ACCEPT/MODIFY/REJECT adjudication; then incorporate only the adjudicated delta into this Global Main Handoff before broader architecture refactors.
 
 ---
 
