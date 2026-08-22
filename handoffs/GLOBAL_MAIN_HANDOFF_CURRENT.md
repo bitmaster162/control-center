@@ -4,9 +4,9 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T10:24:00+07:00
+**Last updated:** 2026-08-22T10:34:00+07:00
 
-Historical detail is preserved in Git history. Fresh provider physical evidence overrides this file where they conflict.
+Historical detail is preserved in Git history and `handoffs/deltas/`. Fresh provider physical evidence overrides this file where they conflict.
 
 ## AUTHORITY
 
@@ -32,10 +32,14 @@ Repo `bitmaster162/continuityos`, Issue #111, draft PR #115.
 Rule:
 `ORIGIN + MATERIAL CORRECTION/PIVOT + CURRENT PHYSICAL STATE`.
 
-Last exact candidate:
-- base `021e2d521efc4df0ce390b38a919bc2f0b675460`
-- head `8753edf511ec9cc195ca0369a8741279a5eda5a8`
-- OPEN / DRAFT / UNMERGED
+Fresh provider readback 2026-08-22:
+- PR #115 OPEN
+- `draft=true`
+- `merged=false`
+- `mergeable=true`
+- base `master@021e2d521efc4df0ce390b38a919bc2f0b675460`
+- candidate `agent/causal-spine-v1@8753edf511ec9cc195ca0369a8741279a5eda5a8`
+- 25 commits / 11 changed files / +1460 / -0
 
 Exact-head PASS already recorded:
 - P0 Unified Shadow Continuity `32544706744`
@@ -45,222 +49,188 @@ Exact-head PASS already recorded:
 - direct CausalBench gate closed
 
 State:
-`TECHNICALLY_GREEN / INDEPENDENT_OR_OWNER_MERGE_GATE_OUTSTANDING`.
+`TECHNICALLY_GREEN / DRAFT / UNMERGED / INDEPENDENT_OR_OWNER_MERGE_GATE_OUTSTANDING`.
 
 No merge authority.
 
-## UAI — GMH-0023+
+### Historical causal lineage — GMH-0026
+
+New Claude Cowork historical evidence resolves a real product-direction origin/pivot chain:
+
+**Origin / early product state — 2026-06-17**  
+`project_continuityos_product.md` / Drive object `1RCpR5PAUSmnJ9chLL3pnoVNyp8O5QTZe` records ContinuityOS as an open-source hybrid memory/continuity product and its same-day expansion.
+
+**Material pivot — 2026-06-17**  
+`project_continuityos_pivot.md` / Drive object `1FTWLvygBKN2JHqmvat3VN8xIRWklS4Iv` explicitly records the pivot from broad memory/twin platform to a narrow **AI Agent Governance Gateway** with a hard preflight boundary: dangerous tools do not execute without a ContinuityOS decision.
+
+**Current physical state — 2026-08-22**  
+GitHub provider readback above: base master + draft/unmerged Causal Spine candidate.
+
+Causal read:
+`memory/continuity → hard governance boundary → causal/evidence-bound governance candidate`.
+
+Local `Historical Causal Bench` over this fixture: **15/15 PASS**. This proves fixture consistency only; it grants no operational authority.
+
+## CLAUDE COWORK HISTORICAL ARCHIVE — GMH-0026
+
+User-specified source:
+`C:\Users\coins\My Drive\Control canter\00_INBOX_RAW\Cowork\bb66f3b3-cee5-425c-9447-ef4aea0805cf`
+
+Provider identities:
+- session folder ID `1Kz2GxJM-t1s34vTwZ8ppj89XRx0BihMt`
+- inventory `session_folder_files.txt` ID `1e8hcCmoURKllD1HMk-X9IQqyv_1FEl8x`
+- inventory original modified `2026-07-21T17:20:16.452Z`
+- Drive-created/synced `2026-08-20T01:37:26.496Z`
+
+Invariant:
+`DRIVE_UPLOAD_TIME != SOURCE_EVENT_TIME`.
+
+This is a historical Cowork/local-agent archive synced recently, **not** by itself a fresh August-22 Claude Web R2 report.
+
+Inventory census:
+- 5,793 file records
+- 2,098,164,880 logical bytes (~2,000.97 MiB; non-deduplicated logical total)
+- 218 local sessions
+- 46 sessions with explicit outputs
+- 205 sessions with uploads
+- 414 upload files
+- 1,015 explicit output files
+- 880 Claude project JSONL/log files
+- 218 audit logs
+- 123 space-memory/reference files
+
+High-value recovered evidence:
+- ContinuityOS product/pivot memories — ACCEPT as historical causal evidence
+- `_research_MEMORY_BUS.txt` (`1mtPi5NEgkBGjLfStu-TBUMXvQ9qJ7U9p`) — ADAPT pass-by-reference/provenance failure framing; reject ungated shared mutable truth
+- `Перенос Агентов Между Моделями.txt` (`1LxwCWOyIGdFBLmiwH0btMbwdR6z5mtfk`) — ACCEPT model-independent external identity principle; reject model weights as canonical identity
+- `Форматы экспорта данных LLM.txt` (`12VEmhM2lvWQQtku1CsxqO-5bbkU4bhDY`) — ADAPT parser/loss ideas; exact vendor schemas remain unverified
+- `Возможности архитектуры проекта Pandora.txt` (`1BQEOf2IpurrjkqFAs1bFbAJob9DR7CR0`) — `HISTORICAL_CONCEPT_SPEC`, not current implementation proof
+
+Full persisted delta:
+`handoffs/deltas/GMH_DELTA_R26_CLAUDE_COWORK_INGEST_20260822.md`.
+
+## UAI
 
 UAI v1.1 invariant:
 `provider_object_identity != byte_identity != semantic_family_identity`.
 
-Identity separates:
-- logical artifact identity
-- exact version identity
-- provider object/revision
-- raw SHA-256
-- custody locator
-- provider observation
-- semantic family
+Identity separates logical artifact, exact version, provider object/revision, raw SHA, custody location/observation and semantic family. Physical identity carries no operational authority. T0/T1/T2 never grants deletion.
 
-Physical identity carries no operational authority. T0/T1/T2 never grants deletion.
+Executable `ArtifactIdentityBench v0`: **23/23 PASS**, including real T0 fixtures AXIOM/LifeOS/MAWorld.
 
-Deterministic ID contract:
-- `artifact_id` binds `source_system + provider_object_id`
-- rename/move with stable provider object preserves logical artifact
-- exact version binds artifact + identity basis + provider revision/hash
-- `PROVIDER_OBSERVATION_ONLY` cannot mint exact `artifact_version_id`
-- immutable provider revision with conflicting raw hashes => `IDENTITY_CONFLICT`
-- `derived_from` must remain acyclic
+Cowork delta adds one adapter rule:
+provider export format/version belongs to an observation/adapter receipt, **not stable logical identity**.
 
-Executable `ArtifactIdentityBench v0`:
-- **23/23 PASS**
-- 3 real T0 fixtures: AXIOM v35, LifeOS, MAWorld
-- exact bytes do not collapse provider identity
-- rename/revision/conflict/observation-only/name-collision/cycle/canonical-SHA checks PASS
-- no authority/effect grant fields in UAI identity schema
+For provider imports record:
+- observed source format
+- provider object/version
+- adapter version
+- lost fields
+- synthesized fields
+- output digest
 
-Artifact pack:
-`ARTIFACT_IDENTITY_BENCH_PACK_R1_20260822`.
+Exact vendor export schema must be observed or current-provider verified; never hardcoded from stale research.
 
-## ATB — GMH-0024
+## ATB
 
-ATB v2.1 layering:
+ATB v2.1:
 `provider-native / ATOF → ATIF → optional OTel/OpenInference → ATB → UAI/ArchiveOS/ContinuityOS/EvidenceStore → Pandora`.
 
-Core semantics:
+Core:
 - `bundle_grants = NONE`
-- `observed_effects[]` records what actually happened
-- observed successful effect != permission to repeat it
+- `observed_effects[]` records actual effects
+- successful observed effect != permission to repeat
 - `effect_replay_policy = PROHIBITED`
+- raw provider evidence and declared mapping losses preserved
 - no hidden/private chain-of-thought requirement
-- raw provider evidence and declared normalization losses are preserved
 
-Executable `AgentTrajectoryReplayBench v0` locally PASS:
-- **31/31 checks PASS**
-- 5 scenarios
-- complete internal trajectory supports structural/input replay without claiming deterministic replay
-- ATOF→ATIF fixture requires explicit loss declaration
-- subagent parent/child delegation preserved
-- successful external effect can be recorded while `bundle_grants.external_effect=false`
-- effect receipt + provider readback remain separately bound
-- missing raw source downgrades input replay instead of inventing completeness
-- hidden/private CoT is not required
-- member digest/size tamper detected
-- sequence conflict detected
+Executable `AgentTrajectoryReplayBench v0`: **31/31 PASS** across 5 cases.
 
-Pack:
-`AGENT_TRAJECTORY_REPLAY_BENCH_PACK_R1_20260822`.
+Cowork strengthens pass-by-reference: large contexts should move between agents as verifiable UAI/ATB references where possible, not repeated full-context copies. A reference never grants write/truth/effect authority.
 
-Repo implementation of UAI/ATB remains held pending research adjudication.
-
-## CURRENT TRUTH / CURRENTNESS — GMH-0025
+## CURRENT TRUTH / CURRENTNESS
 
 Evidence ladder:
 `DISCOVERED_REFERENCE → PROVIDER_OBJECT_CONFIRMED → EXACT_BYTES_CONFIRMED → WORKSPACE_ACTIVITY_CONFIRMED → SOURCE_CUSTODY_CONFIRMED → BUILD_CONFIRMED → DEPLOYMENT_CONFIRMED → RUNTIME_CONFIRMED → EFFECT_CONFIRMED`.
 
-No level is inferred from filename/version/date alone.
+Executable `CurrentTruthBench v0`: **14/14 PASS**.
 
-Executable `CurrentTruthBench v0` locally PASS:
-- **14/14 PASS**
-- real fixtures: Pandora, MAWorld, LifeOS, BitEvo, Fable, AXIOM/OKX
-- source does not imply deployment
-- deployment does not imply runtime
-- runtime does not imply effect
-- Vercel READY does not imply GitHub quality-gate PASS
-- workspace activity does not imply active service
-- search miss does not prove non-existence
-- same/similar name does not prove identity
-- fresh provider readback beats stale narrative for current-state adjudication
-
-Pack:
-`CURRENT_TRUTH_BENCH_PACK_R1_20260822`.
+New negative fixtures from Cowork:
+1. recent Drive sync must not make a July artifact “current August reasoning”;
+2. historical/spec architecture must not overwrite observed implementation;
+3. provider-export research must not become current provider schema without provider evidence.
 
 ### Fable
 
-Provider evidence separates at least:
-1. `fable-observer` research workspace (`Q33_fable-observer`, `13_fable-observer`)
-2. `FABLE-5 (claude-fable-5)` external auditor/runtime identity from memory-install audit lineage
+Separate:
+1. `fable-observer` research workspace
+2. `FABLE-5 (claude-fable-5)` auditor/runtime role
 3. `fable-mythos-agents-2026` guide/site/material family
-
-The Fable/Mythos guide describes a target architecture for improving agents; that supports guide/material classification, not runtime identity.
 
 State:
 `FABLE_OBSERVER_RESEARCH_WORKSPACE_CONFIRMED / FABLE_MYTHOS_GUIDE_SITE_FAMILY_CONFIRMED / FABLE5_AUDITOR_RUNTIME_ROLE_SEPARATE / SOFTWARE_SOURCE_RUNTIME_RELATIONSHIPS_UNPROVEN`.
 
 ### Forge
 
-Drive folder `1Ls5QvD_MgUKrQhS3DrAJPMR6GOMyXiR2` is `PFI_RESEARCH_CONTENT_PIPELINE_FAMILY`.
-
-Its own index records:
+Drive `forge` folder `1Ls5QvD_MgUKrQhS3DrAJPMR6GOMyXiR2` = `PFI_RESEARCH_CONTENT_PIPELINE_FAMILY`, with own index:
 `PFI signals → guide + TG post + fishka → later x402 endpoint`.
 
-It is not automatically Money Forge / MAWorld Knowledge Foundry / AXIOM Forge components.
+Not automatically Money Forge / Knowledge Foundry / AXIOM Forge components.
 
 ### AXIOM / Parasite Hunter / OKX
 
-GitHub `bitmaster162/okx-nft-bot` is current active source, default `master`; latest observed merge on 2026-08-22:
-`7bc97f7f14f5ffa130ec4c8a70fb1c2a523543fa` / PR #114 / R90 fail-closed effect-safety repairs.
+`bitmaster162/okx-nft-bot` current active source; latest observed 2026-08-22 merge PR #114 at `7bc97f7f14f5ffa130ec4c8a70fb1c2a523543fa`.
 
-Drive separately exposes:
-- `parasite_hunter_axiom_*` v13/v15/v16/v17/v26/v35/v62/v67 artifact lineage
-- multiple `okx-nft-parasite-hunter` folders
-- `Q26_parasite-hunter-game`
-- `38_parasite-hunter-game`
-- Meshy-ready bundle family
-
-This supports a broader domain/product-family adjacency, but exact source provenance between AXIOM HTML artifacts and the current GitHub repo remains unproven.
+Drive separately exposes AXIOM HTML lineage and Parasite Hunter families. Broader adjacency is evidenced; exact source/build provenance remains unproven.
 
 State:
 `OKX_NFT_CURRENT_SOURCE_CONFIRMED / AXIOM_ARTIFACT_LINEAGE_CONFIRMED / BROADER_FAMILY_ADJACENCY_CONFIRMED / EXACT_SOURCE_PROVENANCE_UNPROVEN`.
 
-Do not auto-merge; use `UNPROVEN_RELATION` or bounded T2 candidate until explicit build/path/hash evidence exists.
-
 ### LifeOS
 
-Drive exposes multiple `lifeos` provider folders.
+Drive folders + source-tree inventory evidence including `apps/lifeos/lifeos_core.py`.
 
-Git-style provider inventory now gives concrete source-tree evidence including:
-`apps/lifeos/lifeos_core.py`
-and associated LifeOS tests/files with blob IDs.
-
-Separate repeated `15_LIFEOS_RESEARCH_ADDENDUM.md` objects remain a T0/custody family.
-
-State upgraded to:
+State:
 `SOURCE_TREE_EVIDENCED / PROVIDER_WORKSPACE_CONFIRMED / LIVE_REPO_HEAD_UNRESOLVED / BUILD_DEPLOYMENT_RUNTIME_UNPROVEN`.
 
 ### MAWorld
 
-Drive exposes concrete folders:
-- `MAWorld`
-- `maworld_core`
-- `_MAWORLD_STAGING`
-- `maworld-pfi-autopull-daily`
+Drive folders `MAWorld`, `maworld_core`, `_MAWORLD_STAGING`, `maworld-pfi-autopull-daily`; source-tree inventory includes `libs/maworld_core/*` such as authority/containment/mandate/registry/runner/arena modules.
 
-`maworld-pfi-autopull-daily` is provider-visible and updated on 2026-08-22, proving current workspace/storage activity only.
-
-Git-style provider inventory includes `libs/maworld_core/*`, including:
-- `action_authority.py`
-- `agent_containment.py`
-- `agent_mandate.py`
-- `agent_mandate_v2.py`
-- `agent_registry.py`
-- `agents_runner.py`
-- `arena_bridge.py`
-- additional modules
-
-State upgraded to:
+State:
 `SOURCE_TREE_EVIDENCED / CURRENT_WORKSPACE_ACTIVITY_CONFIRMED / LIVE_REPO_HEAD_UNRESOLVED / DEPLOYMENT_RUNTIME_UNPROVEN`.
-
-Repeated `MAWORLD_KNOWLEDGE_FOUNDRY_ARCHITECTURE_V1.md` objects remain a separate exact/custody identity family.
 
 ### Pandora
 
-Drive source custody confirmed in `continuity-os-graph` (`16jblEO8nnfVUm6cbFXyfyck2hJosMD7O`) with `pandora_engine.py`, `build_epoch_viz.py`, `epoch_graph_3d.html`, `pandora_compute_glsl.html`, `universe.json` and supporting source.
+Observed current source custody:
+`continuity-os-graph` Drive folder `16jblEO8nnfVUm6cbFXyfyck2hJosMD7O`, with `pandora_engine.py`, `build_epoch_viz.py`, `epoch_graph_3d.html`, `pandora_compute_glsl.html`, `universe.json` and supporting source.
 
-Current GitHub indexed search still does not resolve its repo identity. Search absence is not non-existence.
+Historical Cowork research separately proposes a much broader WASM/neurosymbolic Pandora. Do not merge these evidence classes.
+
+Graph semantics add:
+- `SPEC_PROPOSES`
+- `IMPLEMENTATION_OBSERVED_AS`
 
 State:
-`DRIVE_SOURCE_CUSTODY_CONFIRMED / DEPLOYMENT_UNPROVEN / RUNTIME_UNPROVEN`.
+`DRIVE_SOURCE_CUSTODY_CONFIRMED / HISTORICAL_CONCEPT_SEPARATED / DEPLOYMENT_UNPROVEN / RUNTIME_UNPROVEN`.
 
 ## PANDORA
 
-Decision: Pandora remains a derived graph/time/causal/simulation lens over UAI + ContinuityOS + Causal Spine + ATB; never canonical truth/effect authority.
+Pandora remains a derived graph/time/causal/simulation lens over UAI + ContinuityOS + Causal Spine + ATB; never canonical truth/effect authority.
 
 First integration boundary: OFFLINE VIEW ONLY.
 
-Executable `PandoraProjectionBench v0`:
-- **14/14 PASS**
-- 17 nodes / 10 edges
-- deterministic graph SHA `bfdb36ef9a7814031c16a6820018aed8751f9f0fd54ee257f8beb38122cc7dec`
-- source custody does not infer deployment/runtime
-- Fable/Forge collisions remain separate
-- AXIOM↔OKX remains UNPROVEN
-- all three T0 pairs preserve provider objects
-- authority surface zero
-- tamper detected
+Executable `PandoraProjectionBench v0`: **14/14 PASS**, 17 nodes / 10 edges, deterministic graph SHA `bfdb36ef9a7814031c16a6820018aed8751f9f0fd54ee257f8beb38122cc7dec`.
 
-State:
-`PANDORA_PROJECTION_CONTRACT_EXECUTABLE_PASS / OFFLINE_ONLY / NO_LIVE_INTEGRATION_AUTHORITY`.
-
-Live MCP writes, Portal/Gate/Wormhole networking, Satellite HTTP, arbitrary Compute/WGSL, server inference and canonical write-back remain DENY.
+Effect-capable/network/code-execution Pandora surfaces remain DENY in governed-view mode.
 
 ## STANDARDS DIRECTION
 
-Adapt/integrate where useful:
-- W3C PROV / PROV-O
-- OCI-style digest/size/media descriptors
-- ATIF / ATOF adapters
-- OTel GenAI / OpenInference observability projections
-- OpenLineage
-- CloudEvents
-- purl for software-package subtype only
-- DSSE
-- in-toto / SLSA patterns
+Adapt/integrate:
+W3C PROV, OCI-style descriptors, ATIF, ATOF, OTel GenAI/OpenInference projections, OpenLineage, CloudEvents, purl for package subtype, DSSE, in-toto/SLSA patterns.
 
 Benchmark/defer from MVP:
-- Sigstore/Rekor public transparency integration
-- SCITT transparency integration
+Sigstore/Rekor public transparency; SCITT transparency integration.
 
 Principle:
 `standardize commodity envelopes; keep proprietary causal/authority/effect/current-state semantics`.
@@ -268,15 +238,19 @@ Principle:
 ## RESEARCH
 
 Sequence:
-Gemini correlated cluster → Claude R1 no-web → ChatGPT live-web correction → **Claude Web Deep Research R2 outstanding** → GPT Deep Research R3 after Claude adjudication.
+Gemini correlated cluster → Claude R1 no-web → ChatGPT live-web correction → Claude Cowork historical archive ingest → **Claude Web Deep Research R2 outstanding** → GPT Deep Research R3 after Claude R2 adjudication.
 
-No Claude R2 result accepted yet.
+The Cowork archive source inventory ends at 2026-07-21 and does **not** constitute the requested fresh Claude Web R2 result.
+
+A GPT R3 Cowork source delta is staged locally, but GPT dispatch remains HOLD.
+
+Current official export docs were used only to bound old Claude claims: provider adapters must be observed-schema/loss-receipt driven. No hidden-CoT requirement.
 
 ## P0 CASH
 
 Single lane: `Agent Authority & Evidence Audit`.
 
-Vercel `bitevo_agent_site` production READY at Git SHA `6a9d20537da01f9e5cb1ae1a06d627f2fa0f9e00`.
+Vercel `bitevo_agent_site` production READY at `main@6a9d20537da01f9e5cb1ae1a06d627f2fa0f9e00`.
 
 Published ladder:
 Free triage → `$1,500` Entry Audit first paid target → `$4,900` Primary Audit → hardening after verified findings.
@@ -284,28 +258,20 @@ Free triage → `$1,500` Entry Audit first paid target → `$4,900` Primary Audi
 State:
 `LIVE_OFFER / PROSPECT_PACK_READY / NO_PAYMENT_PROOF`.
 
-`ENTRY_AUDIT_PROSPECT_PACK_R1_20260822` remains staged only: `sent=false`; not customer evidence/certification. Outreach/payment/testing stays human-gated.
-
-Decision Sprint = secondary HOLD. Forensics = secondary ONE_GATE_FROM_SALE.
+Prospect pack remains `sent=false`; outreach/payment/testing human-gated.
 
 ## BITEVO CI
 
-Production Vercel READY != GitHub quality PASS.
+Vercel READY != GitHub quality PASS.
 
-Confirmed design defect: GitHub CI generated `provider=github/CI_BOUND` then old workflow required the same receipt to satisfy Vercel/Cloudflare `PROVIDER_BOUND` checks.
-
-Isolated candidate:
-- repo `bitmaster162/bitevo-agent-site`
+Provider-context CI defect isolated on draft PR #8:
 - branch `agent/provider-context-quality-gate-fix`
 - head `8e230699baa19561ed3189cb53f7e769ac9d985b`
-- draft PR #8
-- one workflow file
 - main untouched / no deploy
 
-Normal PR run `32547206641` was automatic; no rerun. It failed before executable steps; jobs expose zero steps and logs were unavailable. State:
-`PRE_EXECUTION_JOB_FAILURE / ROOT_CAUSE_UNKNOWN / CANDIDATE_UNVALIDATED_BY_CI`.
+Automatic PR run `32547206641` failed before executable steps; zero returned steps/log evidence unavailable. `PRE_EXECUTION_JOB_FAILURE / ROOT_CAUSE_UNKNOWN / CANDIDATE_UNVALIDATED_BY_CI`.
 
-Current main `6a9d205...` also remains quarantined by `main-history-audit` due observed direct/non-PR main history. Do not weaken the governance signal.
+Do not rerun merely to prove status and do not weaken `main-history-audit`.
 
 ## STORAGE
 
@@ -313,23 +279,26 @@ Old R59 non-actionable after rollback/authority drift; R59R2 exact owner token w
 
 ## QUEUE
 
-1. Ingest + independently adjudicate Claude Web R2 when returned.
-2. Causal Spine independent/owner merge gate; no merge.
-3. Bind LifeOS `apps/lifeos/*` and MAWorld `libs/maworld_core/*` source-tree inventories to exact repo/commit if provider evidence exists.
-4. Search build/export receipts connecting AXIOM HTML lineage to source provenance.
-5. UAI/ATB/Pandora/CurrentTruth contracts are executable locally; repo implementation remains held pending research adjudication.
-6. P0 CASH Authority Audit only; any send is human-gated.
-7. BitEvo PR #8 remains draft/unmerged pending executable CI evidence + explicit main-history resolution.
-8. Build GPT Deep Research R3 after Claude R2.
+1. Continue high-value indexing of newly synced Claude Cowork archive as historical evidence; never promote sync date to source date.
+2. Ingest + independently adjudicate actual Claude Web R2 when returned/found.
+3. Causal Spine independent/owner merge gate; no merge.
+4. Use Cowork product+pivot memories as real Causal Spine regression fixtures.
+5. Bind LifeOS and MAWorld source-tree inventories to exact repo/commit if provider evidence exists.
+6. Search build/export receipts connecting AXIOM HTML lineage to source provenance.
+7. Extend Pandora/CurrentTruth negative fixtures with `historical spec != current implementation`.
+8. UAI/ATB repo implementation remains held pending Claude Web R2/GPT R3 research adjudication.
+9. P0 CASH Authority Audit only; sends remain human-gated.
+10. GPT Deep Research R3 only after Claude Web R2.
 
 ## RECENT
 
 GMH-0020: BitEvo CI provider-context defect isolated; draft PR #8; Entry Audit prospect pack staged.  
-GMH-0021: Pandora offline derived-projection contract created from confirmed Drive source custody.  
-GMH-0022: PandoraProjectionBench v0 PASS 14/14; AXIOM/OKX adjacency separated.  
-GMH-0023: UAI deterministic ID contract + ArtifactIdentityBench v0 PASS 23/23 with 3 real T0 fixtures.  
-GMH-0024: AgentTrajectoryReplayBench v0 executable PASS 31/31 across 5 replay/effect scenarios.  
-GMH-0025: CurrentTruthBench v0 PASS 14/14; LifeOS and MAWorld upgraded to source-tree/workspace-evidenced without inferring deployment/runtime.
+GMH-0021: Pandora offline derived-projection contract created.  
+GMH-0022: PandoraProjectionBench v0 PASS 14/14.  
+GMH-0023: ArtifactIdentityBench v0 PASS 23/23 with real T0 fixtures.  
+GMH-0024: AgentTrajectoryReplayBench v0 PASS 31/31.  
+GMH-0025: CurrentTruthBench v0 PASS 14/14; LifeOS/MAWorld source/workspace evidence upgraded without runtime inference.  
+GMH-0026: exact Claude Cowork archive ingested; 5,793-record census; historical ContinuityOS origin+pivot recovered; Historical Causal Bench PASS 15/15; historical Pandora spec separated from current source; GPT remains HOLD pending actual Claude Web R2.
 
 ## RESUME
 
