@@ -4,7 +4,7 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T11:22:04+07:00
+**Last updated:** 2026-08-22T11:26:12+07:00
 
 Historical detail is preserved in Git history and `handoffs/deltas/`. Fresh provider physical evidence overrides this file where they conflict.
 
@@ -155,10 +155,39 @@ Separate `fable-observer` research workspace, FABLE-5 auditor/runtime identity a
 Drive `forge` = `PFI_RESEARCH_CONTENT_PIPELINE_FAMILY`; do not auto-merge with Money Forge/Knowledge Foundry/AXIOM Forge.
 
 ### AXIOM / OKX
-Current OKX source and AXIOM artifact lineage exist, but historical Cowork OKX runtime notes are historical only. Broader exact source/build/runtime provenance remains separately gated.
+Current OKX source remains separately provider-bound. AXIOM exact-byte Drive artifact lineage remains confirmed.
 
-### LifeOS / MAWorld
-Source/workspace evidence exists; live repo/build/deployment/runtime must be provider-bound before promotion.
+Fresh bounded connected-GitHub searches did **not** resolve a dedicated `axiom` repo or indexed `AXIOM` code hit under `bitmaster162`.
+
+AXIOM state:
+`ARTIFACT_LINEAGE_CONFIRMED / DEDICATED_GITHUB_REPO_IDENTITY_UNRESOLVED / SOURCE_BUILD_RUNTIME_UNPROVEN`.
+
+Historical Cowork OKX runtime notes remain historical only and grant no runtime/trading authority.
+
+### LifeOS / MAWorld — GMH-0028
+Fresh bounded connected-GitHub searches did **not** resolve standalone `lifeos` or `maworld` repositories, nor indexed hits for `lifeos`/`maworld_core`.
+
+Drive git-tree inventory proves LifeOS paths:
+- `apps/lifeos/lifeos_core.py`
+- `apps/lifeos/test_lifeos.py`
+
+inside a larger source-tree family alongside Knowledge Foundry, Money Forge, Trading Cell and governance/runtime services.
+
+LifeOS state:
+`SOURCE_TREE_COMPONENT_EVIDENCED / DEDICATED_REPO_IDENTITY_UNRESOLVED / BUILD_DEPLOYMENT_RUNTIME_UNPROVEN`.
+
+MAWorld `CODEX_HANDOFF.md` dated 2026-07-22 explicitly records:
+`LIVE OFF / BUILD_FREEZE BLOCKED / production HOLD`
+and requires external acceptances/signed evidence + owner decision before production.
+
+MAWorld state:
+`SOURCE_SECURITY_FAMILY_EVIDENCED / HISTORICAL_PRODUCTION_HOLD / DEDICATED_GITHUB_REPO_IDENTITY_UNRESOLVED / CURRENT_RUNTIME_UNPROVEN`.
+
+New invariants:
+- `COMPONENT_PATH != REPOSITORY_IDENTITY`
+- `SOURCE_TREE_PRESENCE != BUILD_DEPLOYMENT_RUNTIME`
+- `HISTORICAL_SECURITY_HANDOFF != CURRENT_RUNTIME`
+- `BOUNDED_NEGATIVE_SEARCH != NONEXISTENCE`.
 
 ### Pandora
 Current source custody = Drive `continuity-os-graph` `16jblEO8nnfVUm6cbFXyfyck2hJosMD7O`.
@@ -264,12 +293,13 @@ Old R59 non-actionable after rollback/authority drift; R59R2 exact owner token w
 2. Ingest + independently adjudicate actual Claude Web R2 when returned/found.
 3. Causal Spine independent/owner merge gate; no merge.
 4. Bind more real historical causal fixtures where they materially improve current decisions.
-5. LifeOS/MAWorld exact repo/commit binding if provider evidence exists.
-6. AXIOM HTML lineage → source/build provenance search.
-7. UAI/ATB repo implementation remains held pending Claude Web R2/GPT R3.
-8. P0 CASH Authority Audit only; sends remain human-gated.
-9. GPT R3 only after Claude Web R2, sanitized source pack only.
-10. Never use Cowork historical credentials; rotation status requires fresh provider evidence.
+5. Search MAWorld/LifeOS exact VCS provenance by remote/repository ID/commit receipts, not assumed repo names.
+6. Bind the evidenced monorepo tree to exact repo/commit if provider evidence exists; keep LifeOS component-scoped until then.
+7. AXIOM HTML lineage → source/build provenance search.
+8. UAI/ATB repo implementation remains held pending Claude Web R2/GPT R3.
+9. P0 CASH Authority Audit only; sends remain human-gated.
+10. GPT R3 only after Claude Web R2, sanitized source pack only.
+11. Never use Cowork historical credentials; rotation status requires fresh provider evidence.
 
 ## RECENT
 
@@ -280,7 +310,8 @@ GMH-0023: ArtifactIdentityBench PASS 23/23.
 GMH-0024: AgentTrajectoryReplayBench PASS 31/31.  
 GMH-0025: CurrentTruthBench PASS 14/14.  
 GMH-0026: Cowork historical archive ingested; ContinuityOS origin+pivot recovered; Historical Causal Bench PASS 15/15.  
-GMH-0027: Cowork classified secret-bearing/contaminated; sanitized-source policy enforced; commercial audit causal spine recovered; fresh Vercel production/preview distinction bound; Cowork Historical CurrentTruth Bench PASS 23/23.
+GMH-0027: Cowork classified secret-bearing/contaminated; sanitized-source policy enforced; commercial audit causal spine recovered; fresh Vercel production/preview distinction bound; Cowork Historical CurrentTruth Bench PASS 23/23.  
+GMH-0028: bounded live GitHub identity search found no dedicated LifeOS/MAWorld/AXIOM repos; Drive git-tree proves LifeOS as component; MAWorld historical security handoff remains production HOLD; repo/runtime identities remain unresolved.
 
 ## RESUME
 
