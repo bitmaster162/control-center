@@ -4,7 +4,7 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T09:36:09+07:00
+**Last updated:** 2026-08-22T09:43:53+07:00
 
 ## Canonical location
 `bitmaster162/control-center` → `global/main-handoff-current` → `handoffs/GLOBAL_MAIN_HANDOFF_CURRENT.md`
@@ -422,12 +422,78 @@ Portfolio is modeled with:
 Current operating strategy:
 `one paid manual pilot + one P0 core frontier + bounded finish-to-market/proof lanes`
 
-Revenue-now candidates remain:
-- 7-Day Operator Decision Sprint
-- AI-Agent Reliability Audit
-- Forensics/OSINT service
+## P0 CASH — resolved current truth
+
+The single current P0 CASH lane is:
+
+`Agent Authority & Evidence Audit`
+
+Fresh Vercel provider state:
+- project: `bitevo_agent_site`
+- project ID: `prj_U2iHyiwhJlO33r0u4uN65PpdzEiv`
+- production deployment: `dpl_7coXfJt5BHYubLMejnpnt5q9rJH9`
+- state: `READY`
+- source: `bitmaster162/bitevo-agent-site`
+- production Git SHA: `6a9d20537da01f9e5cb1ae1a06d627f2fa0f9e00`
+
+Fresh production HTTP readback:
+- `/intake` = 200
+- `/agent-authority-audit` = 200
+- `/pricing` = 200
+- `/consulting` = 200
+
+Current public commercial ladder:
+1. Free Scope / Authority Triage — 20 min.
+2. `$1,500` fixed Entry Audit — 1 critical action chain + 1 primary failure hypothesis + bounded reproduction + concise finding memo.
+3. `$4,900` fixed Agent Authority & Evidence Audit — 5 working days after complete evidence/access + written scope; 1 staging/test workflow; up to 3 integrations; 10–20 agreed failure scenarios; one retest.
+4. Hardening & Repair — separately quoted only after verified findings.
+
+Recommended first paid target:
+`$1,500 Entry Audit`.
+
+Current commercial truth:
+`LIVE_OFFER_AND_PRODUCTION_SURFACE / NO_PAYMENT_PROOF`
+
+Public intake is intentionally local/browser-only and does not transmit, book, accept payment or authorize testing. Scheduling/payment/Rules of Engagement require an external agreed business channel.
+
+### Current commercial False Green
+
+Vercel production is READY on `main@6a9d205...`, but GitHub Actions run `32545562743` for the exact same SHA is `completed/failure`.
+
+Jobs:
+- `quality-gate`: FAILURE
+- `main-history-audit`: FAILURE
+
+The workflow definition proves `main-history-audit` is a detective control that fails when main history has no associated PR merged to main; this exact run was triggered by a push to main.
+
+The standalone `quality-gate` root cause remains UNKNOWN because job logs are unavailable through the current connector. Do not infer its failure reason.
+
+Therefore:
+`VERCEL_READY != REPOSITORY_QUALITY_GATE_PASS`.
+
+No rerun requested.
+
+### Secondary commercial lanes
+
+7-Day Operator Decision Sprint:
+- internal truth `PRODUCT_DEFINED_NO_PAYMENT_PROOF`
+- Roman outreach artifact remains `DRAFT_LOCKED / NOT_SENT`
+- current production route `/operator-decision-sprint` = 404
+- classification: `HOLD_AS_SECONDARY_COMMERCIAL_EXPERIMENT`
+
+Blockchain Forensics / OSINT:
+- real research/service dossier
+- `NOT_A_SINGLE_SOFTWARE_PRODUCT`
+- `READY_ONLY_AFTER_CASE_SCOPING_AND_REDACTION`
+- current production route `/forensics` = 404
+- classification: `ONE_GATE_FROM_SALE / SECONDARY`
 
 No blanket Gemini KILL/FREEZE decisions accepted.
+
+Exact P0 CASH evidence gate:
+`reviewed prospect -> explicit/user-sent outreach -> response -> bounded scope -> payment/commitment -> Entry Audit delivery -> buyer acceptance/usefulness`.
+
+Do not count page views, research reports, internal dogfood, free calls, drafts or deployment as paid-market proof.
 
 ---
 
@@ -469,7 +535,7 @@ Destructive cleanup remains separately gated:
 2. P0 RESEARCH: ingest Claude Web R2 when returned.
 3. P0 KNOWLEDGE: continue exact identity/source/currentness resolution.
 4. NEXT CORE: UAI v1.1 / ATB v2.1 contract review; repo implementation held.
-5. P0 CASH: verify sellable surface/customer/payment evidence.
+5. P0 CASH: Authority Audit is the sole current cash lane; next = reconcile exact quality-gate failure read-only + prepare one evidence-safe Entry Audit prospect/sample packet; no send.
 6. P1 GRAPH: Pandora projection contract now has confirmed Drive source custody.
 7. AFTER CLAUDE R2: refresh GPT Deep Research R3 and dispatch.
 
@@ -521,6 +587,37 @@ Self-audit hardened UAI/ATB:
 Authority effect:
 documentation/contracts/read-only research only.
 No merge, deploy, runtime mutation, destructive storage, trading or capital effect.
+
+## GMH-0019
+**Time:** 2026-08-22T09:43:53+07:00  
+**Lane:** P0 CASH / BITEVO COMMERCIAL CURRENT TRUTH
+
+Fresh provider reconciliation selected one current cash lane:
+`Agent Authority & Evidence Audit`.
+
+Verified:
+- Vercel production project/deployment is READY on `main@6a9d205...`;
+- live `/agent-authority-audit`, `/pricing`, `/consulting`, `/intake` surfaces;
+- Free / $1,500 Entry / $4,900 Primary commercial ladder;
+- bounded deliverables and explicit claim ceilings;
+- public intake does not transmit/book/pay/authorize testing.
+
+Commercial decision:
+- first paid target = `$1,500 Entry Audit`;
+- `$4,900 Primary Audit` remains the full engagement;
+- Decision Sprint = secondary HOLD;
+- Forensics = secondary ONE_GATE_FROM_SALE.
+
+Payment/customer evidence remains unproven.
+
+False Green recorded:
+GitHub Actions run `32545562743` for the exact production SHA is FAILURE while Vercel is READY.
+`main-history-audit` failure is consistent with its explicit direct/non-PR main-history detective control.
+Standalone `quality-gate` root cause remains UNKNOWN pending read-only evidence; no rerun.
+
+Authority effect:
+read-only provider reconciliation + documentation only.
+No outreach/send/payment/deploy/merge/runtime/destructive effect.
 
 ---
 
