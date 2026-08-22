@@ -4,7 +4,7 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T09:55:00+07:00
+**Last updated:** 2026-08-22T10:14:00+07:00
 
 Historical detail is preserved in Git history. Provider physical evidence overrides this file if they conflict.
 
@@ -44,7 +44,7 @@ ATB v2.1:
 
 `bundle_grants=NONE`; `observed_effects[]` records what happened; effect replay prohibited. No hidden/private CoT requirement.
 
-Draft-2020-12 schemas and ArtifactIdentityBench/AgentTrajectoryReplayBench specs exist locally; repo implementation held pending research adjudication.
+Draft-2020-12 UAI/ATB schemas plus ArtifactIdentityBench and AgentTrajectoryReplayBench specs exist locally; repo implementation held pending research adjudication.
 
 Standards direction: adapt W3C PROV, OCI descriptors, ATIF/ATOF, OTel/OpenInference, OpenLineage, CloudEvents, purl for software packages, DSSE, in-toto/SLSA. Benchmark/defer Sigstore/Rekor and SCITT integration.
 
@@ -56,13 +56,31 @@ Real T0 fixtures retained for AXIOM v35, LifeOS and MAWorld; provider identities
 
 Fable split: `fable-observer` research project != `FABLE-5 (claude-fable-5)` auditor/runtime != `fable-mythos-agents-2026` site family; relation UNPROVEN.
 
-Concrete Drive `forge` folder `1Ls5QvD_MgUKrQhS3DrAJPMR6GOMyXiR2` = `PFI_RESEARCH_CONTENT_PIPELINE_FAMILY`, not automatically Money Forge/Knowledge Foundry/AXIOM Forge.
+Concrete Drive `forge` folder `1Ls5QvD_MgUKrQhS3DrAJPMR6GOMyXiR2` = `PFI_RESEARCH_CONTENT_PIPELINE_FAMILY`, not automatically Money Forge/Knowledge Foundry/AXIOM Forge. Its provider index records `PFI signals → guide + TG post + fishka → later x402 endpoint`.
 
-## PANDORA — GMH-0021
+### AXIOM / OKX current delta
+
+Fresh GitHub provider state confirms `bitmaster162/okx-nft-bot` is active, public, not archived, default branch `master`.
+
+Latest observed merge on 2026-08-22:
+`7bc97f7f14f5ffa130ec4c8a70fb1c2a523543fa` — PR #114 / R90 composed fail-closed effect safety repairs.
+
+Drive separately contains a concrete `parasite_hunter_axiom_*` lineage spanning v13/v15/v16/v17/v26/v35/v62/v67-era artifacts.
+
+Current relation:
+`OKX_NFT_CURRENT_SOURCE_CONFIRMED` + `AXIOM_DRIVE_ARTIFACT_LINEAGE_CONFIRMED` + `RELATION_UNPROVEN`.
+
+Current GitHub code/issue searches did not resolve `AXIOM`, `parasite_hunter`, `pandora_engine`, `MAWORLD`, or `epoch_graph_3d` source linkage. Search absence is not a non-existence claim.
+
+LifeOS remains `RESEARCH_ARTIFACT_FAMILY_CONFIRMED / SOURCE_RUNTIME_UNRESOLVED`.
+
+MAWorld has explicit `PROJECT_ID=maworld` research material plus repeated Knowledge Foundry architecture objects; state `PROJECT_AND_ARCHITECTURE_ARTIFACT_FAMILY_CONFIRMED / CURRENT_RUNTIME_UNPROVEN`.
+
+## PANDORA
 
 Source custody confirmed in Drive `continuity-os-graph` (`16jblEO8nnfVUm6cbFXyfyck2hJosMD7O`) with `pandora_engine.py`, `build_epoch_viz.py`, `epoch_graph_3d.html`, `pandora_compute_glsl.html`, `universe.json` and supporting source.
 
-New contract: `PANDORA_DERIVED_GRAPH_CAUSAL_PROJECTION_CONTRACT_R1_20260822`.
+Contract: `PANDORA_DERIVED_GRAPH_CAUSAL_PROJECTION_CONTRACT_R1_20260822`.
 
 Decision: Pandora is a derived graph/time/causal/simulation lens over UAI + ContinuityOS + Causal Spine + ATB. It never writes canonical truth directly.
 
@@ -70,7 +88,34 @@ Graph layers: G0 provenance, G1 event/supersession, G2 claim/evidence, G3 causal
 
 First integration boundary is OFFLINE VIEW ONLY: frozen evidence snapshot → deterministic projection → hashed JSON graph → local viewer. Live MCP writes, Portal/Gate/Wormhole networking, Satellite HTTP, arbitrary Compute/WGSL, server inference and canonical write-back are DENY.
 
-State: `PANDORA_SOURCE_CONFIRMED / OFFLINE_DERIVED_PROJECTION_READY_FOR_SPEC / LIVE_EFFECT_INTEGRATION_DENY`.
+### GMH-0022 — PandoraProjectionBench v0
+
+Created and locally executed:
+- `robert.pandora.projection.v1.schema.json`
+- `PANDORA_PROJECTION_REAL_FIXTURES_V0_20260822.json`
+- `PANDORA_PROJECTION_BENCH_V0_SPEC.md`
+- `pandora_projection_bench_v0.py`
+- deterministic sample projection + receipt.
+
+JSON Schema Draft 2020-12 validation: PASS.
+
+Executable benchmark: **14/14 checks PASS**.
+
+Receipt:
+- nodes: 17
+- edges: 10
+- deterministic graph-output SHA-256: `bfdb36ef9a7814031c16a6820018aed8751f9f0fd54ee257f8beb38122cc7dec`
+- no deployment node inferred from source custody
+- no runtime confirmation inferred
+- Fable identities preserved separately
+- Forge identities preserved separately
+- AXIOM↔OKX relation stays `UNPROVEN_RELATION`
+- 3 real T0 pairs preserve separate provider-object nodes
+- authority surface remains zero
+- tampered graph material changes digest and is rejected by receipt check.
+
+State:
+`PANDORA_PROJECTION_CONTRACT_EXECUTABLE_PASS / OFFLINE_ONLY / NO_LIVE_INTEGRATION_AUTHORITY`.
 
 ## RESEARCH
 
@@ -92,7 +137,7 @@ State: `LIVE_OFFER / PROSPECT_PACK_READY / NO_PAYMENT_PROOF`.
 
 Decision Sprint = secondary HOLD; Forensics = secondary ONE_GATE_FROM_SALE.
 
-## BITEVO CI — GMH-0020
+## BITEVO CI
 
 Production Vercel READY does not equal GitHub quality PASS.
 
@@ -115,15 +160,16 @@ Old R59 non-actionable after rollback/authority drift; R59R2 exact owner token w
 3. UAI v1.1 / ATB v2.1 review; implementation held.
 4. P0 CASH Authority Audit only; any send is human-gated.
 5. BitEvo PR #8 stays draft/unmerged pending executable CI evidence + explicit main-history resolution.
-6. Continue exact identity/currentness census.
-7. PandoraProjectionBench/schema after research adjudication; live effect integration DENY.
+6. Extend physical identity resolution without name-based merges.
+7. Pandora projection contract/bench is executable PASS; live integration remains DENY until research adjudication + separate write gate.
 8. Build GPT Deep Research R3 after Claude R2.
 
 ## RECENT
 
 GMH-0019: P0 CASH resolved to Authority Audit.  
 GMH-0020: BitEvo CI provider-context defect isolated; draft PR #8; Entry Audit prospect pack staged.  
-GMH-0021: Pandora offline derived-projection contract created from confirmed Drive source custody.
+GMH-0021: Pandora offline derived-projection contract created from confirmed Drive source custody.  
+GMH-0022: PandoraProjectionBench v0 executed PASS; AXIOM/OKX adjacency separated; identity delta R3 recorded.
 
 ## RESUME
 
