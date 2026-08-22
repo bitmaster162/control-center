@@ -4,7 +4,7 @@
 **Owner:** Robert  
 **Maintainer:** ChatGPT  
 **Timezone:** Asia/Bangkok  
-**Last updated:** 2026-08-22T08:58:56+07:00
+**Last updated:** 2026-08-22T09:05:28+07:00
 
 ## Canonical location
 `bitmaster162/control-center` → `global/main-handoff-current` → `handoffs/GLOBAL_MAIN_HANDOFF_CURRENT.md`
@@ -25,88 +25,97 @@ Defaults unless a fresher exact project gate overrides them:
 
 ---
 
-# 1. Accepted global responsibility map
+# 1. Global responsibility map
 
 `Robert/Human Sovereign → Control Center → {HANRI, TRIAXIS} → Knowledge Foundry → {ContinuityOS, ArchiveOS} → EvidenceStore → {SCT, Retrieval/Graph} → domain products`
 
-- Control Center: accepted intent/current-truth projection/effect gate.
-- HANRI: freshness/contradiction/attention/shadow proposals; no self-approval.
-- TRIAXIS: logically independent adversarial verifier.
-- ContinuityOS: event/replay/continuity semantics.
-- ArchiveOS: exact raw evidence/provenance custody.
-- Knowledge Foundry: claims/evidence/contradictions/causal processing; no truth self-promotion.
-- EvidenceStore: one canonical relational backend per runtime; PostgreSQL production target; bitemporal `valid_time` + `transaction_time`.
-- pgvector/lexical/graph: derived retrieval/projections only.
-- SCT: provider-independent Person/Decision Twin; `execution_authority=NONE`.
-- BitEvo: commercial/operator umbrella, not infrastructure truth owner.
-- Pandora: graph/epoch/time/causal visualization + optional simulation projection; no canonical authority.
+Boundaries:
+- Control Center = accepted intent/current-truth projection/effect gate.
+- HANRI = freshness/contradiction/attention/shadow proposals; no self-approval.
+- TRIAXIS = logically independent adversarial verifier.
+- ContinuityOS = event/replay/continuity semantics.
+- ArchiveOS = exact raw evidence/provenance custody.
+- Knowledge Foundry = claims/evidence/contradictions/causal processing; no truth self-promotion.
+- EvidenceStore = one canonical relational backend per runtime; PostgreSQL production target; bitemporal `valid_time` + `transaction_time`.
+- pgvector/lexical/graph = derived retrieval/projection only.
+- SCT = provider-independent Person/Decision Twin; `execution_authority=NONE`.
+- BitEvo = commercial/operator umbrella, not infrastructure truth owner.
+- Pandora = graph/epoch/time/causal visualization + optional simulation projection; no canonical authority.
 
-Logical responsibility and physical storage/process topology are different decisions. Shared PostgreSQL does not require a monolith.
+Logical responsibility and physical service/storage topology remain separate decisions.
 
 ---
 
-# 2. P0 CORE — Causal Spine
+# 2. P0 CORE — Causal Spine candidate TECHNICALLY GREEN
 
-Rule: `ORIGIN + MATERIAL CORRECTION/PIVOT + CURRENT PHYSICAL STATE`.
+Rule:
+`ORIGIN + MATERIAL CORRECTION/PIVOT + CURRENT PHYSICAL STATE`
+
 Missing/unproven frontier => `CAUSAL_SPINE_INCOMPLETE`.
-`NO_MATERIAL_PIVOT_FOUND` requires bounded-search evidence.
-Causal pass never grants source/canonical/merge/deploy/runtime/trading/capital/effect authority.
+`NO_MATERIAL_PIVOT_FOUND` requires completed bounded-search evidence.
+A causal pass grants no source/canonical/merge/deploy/runtime/trading/capital/effect authority.
 
-## Live lane
+## Exact live candidate
 - repo: `bitmaster162/continuityos`
 - Issue #111
 - Draft PR #115
 - branch `agent/causal-spine-v1`
 - base `master@021e2d521efc4df0ce390b38a919bc2f0b675460`
-- fresh head `8753edf511ec9cc195ca0369a8741279a5eda5a8`
-- PR OPEN / DRAFT / UNMERGED / mergeable
+- head `8753edf511ec9cc195ca0369a8741279a5eda5a8`
+- OPEN / DRAFT / UNMERGED / mergeable
 - 25 commits
 - 11 changed files
 - 1460 additions / 0 deletions
 
-Scope: Causal Spine implementation, 3 strict schemas, CausalBench v0, causal tests, schema package tests, one package-data line in `pyproject.toml`.
+Scope remains Causal Spine only: implementation, 3 strict schemas, CausalBench v0, causal/schema/benchmark tests, and one package-data line in `pyproject.toml`.
 
 Closed/regression-covered:
 - CS-R1 cross-subject current-state binding
 - CS-R2 rehashed authority/effect laundering
-- CS-R3 `state_id` evidence binding
+- CS-R3 `state_id` provider-evidence binding
 
-## Exact benchmark/wheel gate
-Superseded head `c2da7c2...` proved CausalBench in clean-source full pytest but exposed a wheel-boundary error because source-only `bench/` is intentionally not shipped.
+## Exact-head CI
+All required synchronize-triggered workflows are PASS; no rerun requested:
+- P0 Unified Shadow Continuity `32544706744`: SUCCESS
+- CodeQL `32544706731`: SUCCESS
+- review-gates `32544706828`: SUCCESS
+  - Ubuntu Python 3.11: SUCCESS
+  - Windows Python 3.11: SUCCESS
 
-Current head `8753edf5...` corrects that boundary:
-- source/editable CI executes CausalBench v0;
-- wheel-only skips only when the parent package `bench` itself is absent;
-- all other missing-module errors re-raise;
-- benchmark code is not added to the production wheel.
-
-Fresh exact-head evidence currently:
-- CodeQL run `32544706731`: PASS
-- P0 Unified Shadow Continuity `32544706744`: PASS
-- review-gates `32544706828`: IN PROGRESS at last read
-  - Ubuntu Python 3.11: PASS end-to-end
-  - Windows Python 3.11: clean-source PASS; wheel-only test in progress at last read
-
-Ubuntu exact-head proof includes:
+Ubuntu exact-head evidence:
 - clean-source full pytest: `1165 passed, 12 skipped, 8 subtests passed`
-- CausalBench test collected/executed in that source run
-- wheel build PASS with Causal Spine module + 3 schemas packaged
-- wheel-only pytest: `1140 passed, 21 skipped, 8 subtests passed`
+- direct CausalBench hook collected/executed
+- wheel build PASS with Causal Spine module + 3 schemas
+- isolated wheel-only pytest: `1140 passed, 21 skipped, 8 subtests passed`
 - editable full pytest: `1165 passed, 12 skipped, 8 subtests passed`
-- governance corpus 30/30 agreement, 22/22 risky not auto-run, 8/8 adversarial dangerous not auto-run
+- governance corpus: 30/30 labeled agreement; 22/22 risky not auto-run; 8/8 adversarial dangerous not auto-run
 - portable hardening 10/10 PASS
-- Linux realpath/symlink regression PASS
-- secret scan finding_count 0 excluding known fixture
+- Linux symlink/realpath PASS
+- secret scan finding_count 0 outside allowlisted fixture
 
-No workflow rerun requested.
+Windows exact-head review-gates completed the clean-source/build/wheel/editable/full-pytest/compile/governance/hardening/receipt chain SUCCESS; Linux-only symlink step correctly skipped.
 
-**Next P0 action:** exact-head Windows/review-gates readback → reconcile PR #115 stale body → COMMENT technical review (not self-APPROVE) → keep draft/unmerged.
+## Benchmark/wheel boundary
+The new direct benchmark gate caught a real intermediate defect: source CausalBench passed, but wheel-only collection originally imported source-only `bench/`. Final head fixes the boundary without shipping benchmark corpus in production wheel:
+- source/editable CI runs CausalBench;
+- wheel-only skips only when parent package `bench` is absent;
+- any other missing-module error re-raises;
+- packaged causal implementation/schemas remain wheel-tested.
+
+## PR reconciliation / review
+- stale PR #115 body has been replaced with exact head, scope, CI and boundary evidence.
+- technical review COMMENT submitted on exact head: review id `4998639258`.
+- review deliberately used COMMENT, not APPROVE, preserving independent review/merge separation.
+
+**Current P0 CORE state:** `CANDIDATE_TECHNICALLY_GREEN / DRAFT / UNMERGED / INDEPENDENT_OR_OWNER_MERGE_GATE_OUTSTANDING`.
+
+**Do not merge from this handoff.**
 
 ---
 
 # 3. Memory / knowledge / trajectory direction
 
-Universal Artifact Identity binds source/provider IDs, provider revision, locator, raw SHA-256, size/type, observed time, custody role, parent/derived relations and semantic family.
+Universal Artifact Identity binds source/provider IDs, revision, locator, raw SHA-256, size/type, observed time, custody role, parent/derived relations and semantic family.
 
 Dedup:
 - T0 EXACT = same bytes/hash
@@ -116,9 +125,9 @@ Dedup:
 Universal ingestion:
 `DISCOVER → IDENTIFY → HASH RAW → PRESERVE RAW → PARSE → NORMALIZE → CLASSIFY → DEDUP → SEMANTIC FAMILY → AUTHORSHIP → PROVENANCE → EVENTS → CAUSAL FRONTIERS → CONTRADICTIONS → CURRENT STATE → SQL → READBACK → RETRIEVAL → GRAPH`.
 
-Agent Trajectory Bundle remains provider-neutral and content-addressed. OpenTelemetry/OpenInference may be interop mappings, not canonical replacement.
+Agent Trajectory Bundle remains provider-neutral/content-addressed. OpenTelemetry/OpenInference may map into it; they do not replace it.
 
-A2A/MCP/framework choice remains benchmark-first.
+A2A/MCP/framework/runtime choice remains benchmark-first.
 
 ---
 
@@ -128,19 +137,20 @@ Four Gemini Deep Research outputs were treated as one correlated research cluste
 
 Accepted direction: Causal Spine, bitemporal EvidenceStore, raw CAS, derived retrieval, governed fleet, trajectory archive, provider readback, authority-leak/confused-deputy security, benchmark program, Agent Authority & Evidence Audit wedge.
 
-Held for Claude: ArchiveOS topology; ContinuityOS service/storage split; HANRI vs Control Center; Return Broker; SQLite edge; TRIAXIS structure; Pandora scope; Python vs mandatory Rust; standards/framework choices; commercial portfolio strategy.
+Held for Claude: ArchiveOS topology; ContinuityOS service/storage split; HANRI vs Control Center; Return Broker; SQLite edge; TRIAXIS structure; Pandora scope; Python vs mandatory Rust; standards/framework choices; enterprise-first vs portfolio-parallel strategy.
 
-Rejected from automatic Gemini adoption: blanket product KILL/FREEZE, freeze-all-non-core, immediate DNS/product shutdowns, mandatory revenue/pricing numbers, enterprise-only destruction of broader portfolio.
+Rejected from automatic Gemini adoption: blanket product KILL/FREEZE, freeze-all-non-core, immediate product/DNS shutdowns, mandatory price/revenue targets, enterprise-only destruction of portfolio option value.
 
 Claude received sealed review packet. No Claude output has been accepted yet.
 
 ---
 
-# 5. Product / commercial census — fresh delta R2
+# 5. Product / commercial census — delta R2
 
-Durable evidence artifact: `/GLOBAL_MAIN_HANDOFF/PRODUCT_PORTFOLIO_CENSUS_DELTA_R2_20260822.md`.
+Durable Library artifact:
+`/GLOBAL_MAIN_HANDOFF/PRODUCT_PORTFOLIO_CENSUS_DELTA_R2_20260822.md`
 
-Current portfolio ontology is **not** “44 independent businesses” and **not** “one mega-monolith”. Maintain:
+Portfolio is neither “44 businesses” nor “one megamonolith”. Maintain five views:
 1. Canonical Portfolio Register
 2. Extended Strategic Program Register
 3. Alias/Family Register
@@ -149,35 +159,32 @@ Current portfolio ontology is **not** “44 independent businesses” and **not*
 
 Rules:
 - `Commercial priority != architectural importance`
-- `Not in one registry != nonexistent`
 - `Alias != project identity`
 - `Component != product`
 - `Research program != runtime`
-- conceptual similarity is `UNPROVEN_RELATION` until source/interface/data-flow/runtime evidence exists
+- conceptual similarity = `UNPROVEN_RELATION` until source/interface/data-flow/runtime evidence exists
 
-## Revenue-now internal lanes
-- 7-Day Operator Decision Sprint: `SELLABLE_MANUAL_PILOT_PENDING`; working `SELL_NOW`, payment proof absent.
-- AI-Agent Reliability Audit: `PUBLIC_OFFER_NO_PAYMENT_PROOF`; working `SELL_NOW`, delivery/payment proof absent.
-- Blockchain Forensics / OSINT: active personal-investigation lane exists; commercial service remains separate and requires provenance/legal/case separation.
+Revenue-now internal lanes:
+- 7-Day Operator Decision Sprint — `SELLABLE_MANUAL_PILOT_PENDING`; working `SELL_NOW`, payment proof absent.
+- AI-Agent Reliability Audit — `PUBLIC_OFFER_NO_PAYMENT_PROOF`; working `SELL_NOW`, delivery/payment proof absent.
+- Blockchain Forensics/OSINT — personal investigation and customer service must remain separate; legal/provenance/case gates apply.
 
-## Key product corrections
-- Crypto Guides: internal `PUBLIC_LIVE_EDITORIAL_AUDIT`; GitHub source exists with restored 162-guide state. `FINISH_FIRST/CURRENTNESS_REVERIFY`, not blanket KILL.
-- VisionAssist: internal P0 `R57_IN_PROGRESS`, empirical evidence gate; GitHub shows fresh merge activity on 2026-08-22. `FINISH_FIRST`.
-- OKX NFT / Parasite line: GitHub shows fresh R90 safety merge activity on 2026-08-22. No blanket KILL without product-specific current/effect/commercial audit.
-- AI Skill Lab: GitHub shows R70 commercial-parity merge on 2026-08-21. No blanket FREEZE from Gemini hypothesis.
-- AXIOM Game / Parasite Hunter: separate internal P1, empirical proof gate; `FINISH_FIRST/EMPIRICAL_PROOF` pending current source mapping.
-- Fable 5 Observer vs Fable5 platform package: `ENTITY_SPLIT_REQUIRED`; do not silently merge identities.
-- Amora: internal `PARKED`; `$AMORA` holds with parent; working `FREEZE/HOLD` until explicit revival.
-- LifeOS × MAWorld × HANRI: strategic proof program, not one product; synthetic-only/no external effect for first habitat.
-- Forge/Foundry variants: merge lock; `ENTITY_RECAPTURE_REQUIRED`.
-- Pandora: queued strategic proof, no truth authority.
+Key corrections:
+- Crypto Guides: `PUBLIC_LIVE_EDITORIAL_AUDIT`; visible source restored to 162-guide state → `FINISH_FIRST/CURRENTNESS_REVERIFY`, not blanket KILL.
+- VisionAssist: P0 empirical gate; fresh GitHub merge activity on 2026-08-22 → `FINISH_FIRST`.
+- OKX NFT / Parasite line: fresh R90 safety merge activity on 2026-08-22 → no blanket KILL without product-specific audit.
+- AI Skill Lab: fresh R70 commercial-parity merge on 2026-08-21 → no blanket FREEZE.
+- AXIOM Game / Parasite Hunter: empirical proof gate → `FINISH_FIRST/EMPIRICAL_PROOF` pending source mapping.
+- Fable 5 Observer vs Fable5 package: `ENTITY_SPLIT_REQUIRED`.
+- Amora: internal `PARKED`; `$AMORA` holds with parent → `FREEZE/HOLD` until explicit revival.
+- LifeOS × MAWorld × HANRI: strategic proof program, not one product; first habitat synthetic-only/no external effect.
+- Forge/Foundry: merge lock; `ENTITY_RECAPTURE_REQUIRED`.
+- Pandora: queued strategic proof; no truth authority.
 
-Fresh owner GitHub surface currently exposes 15 repositories. Fable/AXIOM/Amora/LifeOS/MAWorld/Pandora are not separate visible owner repos there, so their currentness must be reconstructed from Library/Drive/local handoffs rather than inferred from GitHub absence.
+Fresh owner GitHub surface exposes 15 repositories. Fable/AXIOM/Amora/LifeOS/MAWorld/Pandora are not separate visible owner repos there, so currentness must be recovered from Library/Drive/local handoffs rather than inferred from GitHub absence.
 
-Best current portfolio strategy remains:
+Best current portfolio strategy:
 `one paid manual pilot + one P0 core infrastructure frontier + bounded finish-to-market/proof lanes`.
-
-Exact prices, margins, sales cycles and revenue targets remain hypotheses until observed.
 
 ---
 
@@ -195,27 +202,31 @@ Read freshest cleanup handoff before destructive storage mutation.
 
 # 7. Current queue
 
-1. **P0 CORE ACTIVE:** finish exact-head CI → PR metadata/review → no merge.
-2. **P0 KNOWLEDGE READ-ONLY:** map Fable/AXIOM/Forge/Pandora/LifeOS/MAWorld identities to exact physical sources and current gates.
-3. **P0 CASH READY:** verify current sellable surfaces for Decision Sprint + Reliability Audit + Forensics and collect real external evidence.
-4. **P1 GRAPH READ-ONLY:** Pandora source census/projection contract.
-5. **P1 SKILLS WAITING INPUT:** user-provided recent skill pack intake/classification.
+1. **P0 CORE:** candidate is technically green; await independent/owner merge-gate adjudication. No merge.
+2. **P0 KNOWLEDGE READ-ONLY:** continue exact identity/currentness mapping for Fable/AXIOM/Forge/Pandora/LifeOS/MAWorld and other non-GitHub surfaces.
+3. **P0 CASH:** verify actual sellable surfaces/evidence for Decision Sprint + Reliability Audit + Forensics.
+4. **NEXT CORE DESIGN, READ-ONLY UNTIL WRITE SLOT CLEARS:** Universal Artifact Identity + Agent Trajectory Bundle integration map.
+5. **P1 GRAPH:** Pandora source census/projection contract.
+6. **P1 SKILLS:** user recent skill pack intake when supplied.
 
 ---
 
 # Recent GMH ledger
 
 ## GMH-0008 — Gemini intake / Claude handoff
-Gemini research cluster adjudicated with boundaries; Claude received sealed independent review packet.
+Gemini cluster adjudicated with boundaries; Claude received sealed independent review packet.
 
 ## GMH-0009 — Exact CausalBench gate
-Added direct CausalBench execution under source/editable pytest.
+Direct benchmark execution added to source/editable CI.
 
 ## GMH-0010 — Wheel-boundary correction
-CI caught source-only benchmark import in wheel-only test. Corrected boundary without shipping benchmark corpus in production wheel. New head `8753edf5...`; Ubuntu exact-head gate PASS; Windows still running at last read.
+CI caught source-only benchmark/wheel coupling. Boundary corrected without shipping benchmark corpus.
 
 ## GMH-0011 — Product census delta R2
-Recovered current portfolio ontology, revenue-now lanes and anti-merge rules from Library; cross-checked visible owner GitHub surface. Persisted `PRODUCT_PORTFOLIO_CENSUS_DELTA_R2_20260822.md` in `/GLOBAL_MAIN_HANDOFF/`. No product kill/merge/deploy action taken.
+Recovered portfolio ontology, revenue-now lanes and anti-merge rules; persisted census delta in Library.
+
+## GMH-0012 — Causal Spine exact-head technical gate closed
+Head `8753edf5...` is green on P0 Unified Shadow Continuity, CodeQL and review-gates Ubuntu/Windows. PR body reconciled to exact evidence. Technical COMMENT review `4998639258` submitted, not APPROVE. PR remains draft/unmerged and requires independent/owner merge-gate authority.
 
 ---
 
