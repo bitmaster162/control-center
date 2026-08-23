@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
+import jsonschema
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "control_center/scripts/rmr_evidence_consumer.py"
+SCHEMA_PATH = ROOT / "control_center/contracts/RMR_EVIDENCE_ENVELOPE_V1.schema.json"
 spec = importlib.util.spec_from_file_location("rmr_evidence_consumer", MODULE_PATH)
 assert spec and spec.loader
 rmr = importlib.util.module_from_spec(spec)
@@ -213,3 +216,146 @@ def test_no_current_truth_promotion_vocabulary():
     assert e["consumer_decision"] not in rmr.FORBIDDEN_AUTHORITY_LABELS
     assert "CURRENT_TRUTH_ACCEPTED" not in rmr.CONSUMER_DECISIONS
     assert e["current_truth_promoted"] is False
+
+
+def operation_body(operation="search_text", **overrides):
+    body = {
+        "operation": operation,
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "rows": [{"provenance_status": "DIRECT_SOURCE_BACKED", "conflict_indication": False}],
+        "returned_count": 1,
+        "has_more": False,
+    }
+    body.update(overrides)
+    return body
+
+
+def test_operation_router_status_drift_after_exact_preflight_rejected():
+    body = operation_body(router_status="LIVE")
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_operation_build_head_drift_after_exact_preflight_rejected():
+    body = operation_body(
+        build_identity={"source_head": "0" * 40, "source_tree": rmr.PINNED_RMR_TREE}
+    )
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_operation_source_identity_mismatch_after_exact_preflight_rejected():
+    body = operation_body(source_identity={"identity_match": False})
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_operation_echo_mismatch_rejected():
+    body = operation_body(operation="search_all")
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_has_more_string_rejected_not_coerced():
+    body = operation_body(has_more="false")
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_negative_returned_count_rejected():
+    body = operation_body(returned_count=-1)
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_boolean_returned_count_rejected():
+    body = operation_body(returned_count=True)
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_rows_non_list_rejected():
+    body = operation_body(rows={"not": "a-list"})
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_row_non_mapping_rejected():
+    body = operation_body(rows=["not-an-object"])
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_conflict_indication_non_bool_rejected():
+    body = operation_body(conflict_indication="false")
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+class _BoundedReadResponse:
+    def __init__(self, *, content_length=None, raw=b"{}"):
+        self.status = 200
+        self._content_length = content_length
+        self._raw = raw
+        self.read_called = False
+        self.read_amount = None
+
+    def getheader(self, name):
+        if name.lower() == "content-length":
+            return self._content_length
+        return None
+
+    def read(self, amount=None):
+        self.read_called = True
+        self.read_amount = amount
+        return self._raw
+
+    def getheaders(self):
+        return [("Content-Type", "application/json")]
+
+
+class _BoundedReadConnection:
+    def __init__(self, response):
+        self.response = response
+        self.closed = False
+
+    def request(self, method, path, body=None, headers=None):
+        return None
+
+    def getresponse(self):
+        return self.response
+
+    def close(self):
+        self.closed = True
+
+
+def test_oversized_content_length_rejected_without_full_body_read(monkeypatch):
+    monkeypatch.setattr(rmr, "MAX_RESPONSE_BYTES", 32)
+    response = _BoundedReadResponse(content_length="33", raw=b"{}")
+    connection = _BoundedReadConnection(response)
+    monkeypatch.setattr(rmr.http.client, "HTTPConnection", lambda *args, **kwargs: connection)
+
+    with pytest.raises(rmr.ResponseTooLarge):
+        rmr._default_transport("GET", "/healthz", None, None, 1.0)
+    assert response.read_called is False
+    assert connection.closed is True
+
+
+def test_oversized_response_without_content_length_uses_bounded_read(monkeypatch):
+    monkeypatch.setattr(rmr, "MAX_RESPONSE_BYTES", 32)
+    response = _BoundedReadResponse(content_length=None, raw=b"x" * 33)
+    connection = _BoundedReadConnection(response)
+    monkeypatch.setattr(rmr.http.client, "HTTPConnection", lambda *args, **kwargs: connection)
+
+    with pytest.raises(rmr.ResponseTooLarge):
+        rmr._default_transport("GET", "/healthz", None, None, 1.0)
+    assert response.read_called is True
+    assert response.read_amount == 33
+    assert connection.closed is True
+
+
+def test_happy_path_envelope_validates_against_existing_schema():
+    envelope = client(FakeTransport()).consume("search_text", key="abc", limit=20, offset=0)
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=envelope, schema=schema)
