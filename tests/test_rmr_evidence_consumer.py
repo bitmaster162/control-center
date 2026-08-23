@@ -168,7 +168,8 @@ def test_provenance_gap_pass_through():
     }
     e = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
     assert e["consumer_decision"] == "EVIDENCE_GAP"
-    assert e["coverage_warning"] == "explicit gaps preserved"
+    assert "explicit gaps preserved" in e["coverage_warning"]
+    assert "conflict indication missing" in e["coverage_warning"]
     assert e["provenance_status"] == "PARTIAL_PROVENANCE"
 
 
@@ -495,3 +496,91 @@ def test_top_level_partial_provenance_envelope_validates_existing_schema():
     envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     jsonschema.validate(instance=envelope, schema=schema)
+
+
+def test_nonzero_evidence_missing_provenance_is_gap_not_accepted():
+    body = operation_body(
+        rows=[{"conflict_indication": False}],
+        returned_count=1,
+        has_more=False,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["provenance_status"] is None
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert "provenance status missing" in envelope["coverage_warning"]
+
+
+def test_zero_row_search_remains_gap_without_invented_provenance():
+    body = operation_body(rows=[], returned_count=0, has_more=False)
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["provenance_status"] is None
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert envelope["coverage_warning"] == "zero rows returned"
+
+
+def test_search_missing_has_more_is_explicit_gap_not_silent_false():
+    body = operation_body(
+        rows=[{"provenance_status": "DIRECT_SOURCE_BACKED", "conflict_indication": False}],
+        returned_count=1,
+    )
+    body.pop("has_more")
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["has_more"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert "pagination status missing" in envelope["coverage_warning"]
+
+
+def test_search_explicit_has_more_false_remains_valid():
+    envelope = client(FakeTransport(operation_body=operation_body(has_more=False))).consume("search_text", key="abc")
+    assert envelope["has_more"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_ACCEPTED_FOR_REVIEW"
+    assert envelope["coverage_warning"] is None
+
+
+def test_nonzero_evidence_missing_conflict_signal_is_gap():
+    body = operation_body(
+        rows=[{"provenance_status": "DIRECT_SOURCE_BACKED"}],
+        returned_count=1,
+        has_more=False,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert "conflict indication missing" in envelope["coverage_warning"]
+
+
+def test_explicit_top_level_conflict_false_is_sufficient_signal():
+    body = operation_body(
+        rows=[{"provenance_status": "DIRECT_SOURCE_BACKED"}],
+        returned_count=1,
+        has_more=False,
+        conflict_indication=False,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_ACCEPTED_FOR_REVIEW"
+    assert envelope["coverage_warning"] is None
+
+
+def test_explicit_conflict_true_remains_conflict_even_with_other_gap_warning():
+    body = operation_body(
+        rows=[{"conflict_indication": True}],
+        returned_count=1,
+        has_more=False,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["conflict_indication"] is True
+    assert envelope["consumer_decision"] == "EVIDENCE_CONFLICT"
+    assert "provenance status missing" in envelope["coverage_warning"]
+
+
+def test_completeness_gap_envelopes_validate_existing_schema():
+    body = operation_body(
+        rows=[{"provenance_status": "DIRECT_SOURCE_BACKED"}],
+        returned_count=1,
+        has_more=False,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=envelope, schema=schema)
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
