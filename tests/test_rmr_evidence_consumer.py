@@ -359,3 +359,139 @@ def test_happy_path_envelope_validates_against_existing_schema():
     envelope = client(FakeTransport()).consume("search_text", key="abc", limit=20, offset=0)
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     jsonschema.validate(instance=envelope, schema=schema)
+
+
+def test_top_level_partial_provenance_preserved_and_classified_partial():
+    body = operation_body(
+        rows=[],
+        returned_count=1,
+        provenance_status="PARTIAL_PROVENANCE",
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["provenance_status"] == "PARTIAL_PROVENANCE"
+    assert envelope["consumer_decision"] == "EVIDENCE_PARTIAL"
+
+
+def test_top_level_candidate_only_preserved_and_classified_partial():
+    body = operation_body(
+        rows=[],
+        returned_count=1,
+        provenance_status="CANDIDATE_ONLY",
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["provenance_status"] == "CANDIDATE_ONLY"
+    assert envelope["consumer_decision"] == "EVIDENCE_PARTIAL"
+
+
+def test_top_level_and_row_provenance_merge_deterministically():
+    body = operation_body(
+        provenance_status=["PARTIAL_PROVENANCE", "DIRECT_SOURCE_BACKED"],
+        rows=[{"provenance_status": "CANDIDATE_ONLY", "conflict_indication": False}],
+        returned_count=1,
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["provenance_status"] == [
+        "CANDIDATE_ONLY",
+        "DIRECT_SOURCE_BACKED",
+        "PARTIAL_PROVENANCE",
+    ]
+    assert envelope["consumer_decision"] == "EVIDENCE_PARTIAL"
+
+
+@pytest.mark.parametrize(
+    "bad_provenance",
+    [42, {"status": "PARTIAL_PROVENANCE"}, ["A", 1], ["A", "A"]],
+)
+def test_malformed_top_level_provenance_rejected(bad_provenance):
+    body = operation_body(provenance_status=bad_provenance)
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_search_response_missing_rows_and_returned_count_rejected():
+    body = {
+        "operation": "search_text",
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+    }
+    with pytest.raises(rmr.ResponseShapeError):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_rows_without_returned_count_derives_len_rows():
+    body = operation_body()
+    body.pop("returned_count")
+    body["rows"] = [
+        {"provenance_status": "DIRECT_SOURCE_BACKED", "conflict_indication": False},
+        {"provenance_status": "DIRECT_SOURCE_BACKED", "conflict_indication": False},
+    ]
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["returned_count"] == 2
+
+
+def test_explicit_zero_returned_count_remains_valid_nonbool_integer():
+    body = operation_body(rows=[], returned_count=0)
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["returned_count"] == 0
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+
+
+def test_current_truth_promoted_true_rejected():
+    body = operation_body(current_truth_promoted=True)
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_current_truth_promoted_false_accepted():
+    body = operation_body(current_truth_promoted=False)
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["current_truth_promoted"] is False
+    assert envelope["evidence"]["current_truth_promoted"] is False
+
+
+def test_execution_authority_forbidden_rejected():
+    body = operation_body(execution_authority="EXECUTION_AUTHORIZED")
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_execution_authority_none_accepted():
+    body = operation_body(execution_authority="NONE")
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["execution_authority"] == "NONE"
+    assert envelope["evidence"]["execution_authority"] == "NONE"
+
+
+@pytest.mark.parametrize(
+    "forbidden_decision",
+    sorted(rmr.FORBIDDEN_AUTHORITY_LABELS),
+)
+def test_forbidden_top_level_consumer_decision_rejected(forbidden_decision):
+    body = operation_body(consumer_decision=forbidden_decision)
+    with pytest.raises(rmr.IdentityMismatch):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+def test_ordinary_row_text_with_forbidden_words_is_not_authority_metadata():
+    body = operation_body(
+        rows=[
+            {
+                "provenance_status": "DIRECT_SOURCE_BACKED",
+                "conflict_indication": False,
+                "text": "historical text mentions CURRENT_TRUTH_ACCEPTED and EXECUTION_AUTHORIZED",
+            }
+        ]
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["consumer_decision"] == "EVIDENCE_ACCEPTED_FOR_REVIEW"
+
+
+def test_top_level_partial_provenance_envelope_validates_existing_schema():
+    body = operation_body(
+        rows=[],
+        returned_count=1,
+        provenance_status="PARTIAL_PROVENANCE",
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=envelope, schema=schema)
