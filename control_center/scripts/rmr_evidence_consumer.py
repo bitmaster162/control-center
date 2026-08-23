@@ -19,6 +19,7 @@ PINNED_RMR_IDENTITY_SHA256 = "271ba9ba2f78c0cd03db7cb16ae3d2dbe9511926703658d528
 EXPECTED_AUTHORITY_CLASS = "EVIDENCE_ONLY"
 EXPECTED_ROUTER_STATUS = "CANDIDATE_NOT_LIVE"
 EXPECTED_SERVICE_STATUS = "READY_LOOPBACK_ONLY"
+MAX_RESPONSE_BYTES = 16 * 1024 * 1024
 
 ALLOWED_OPERATIONS = frozenset(
     {
@@ -95,6 +96,14 @@ class UnsupportedOperation(EvidenceConsumerError):
     pass
 
 
+class ResponseShapeError(EvidenceConsumerError):
+    pass
+
+
+class ResponseTooLarge(EvidenceConsumerError):
+    pass
+
+
 def _canonical_json_bytes(value: Any) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
@@ -110,6 +119,28 @@ def _utc_now() -> str:
 def validate_endpoint(endpoint: str) -> None:
     if endpoint != RMR_BASE_URL:
         raise EndpointRejected(f"RMR endpoint must be exactly {RMR_BASE_URL}")
+
+
+def _is_nonbool_int(value: Any) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def _read_bounded_response(response: http.client.HTTPResponse) -> bytes:
+    declared = response.getheader("Content-Length")
+    if declared is not None:
+        try:
+            declared_bytes = int(declared)
+        except (TypeError, ValueError) as exc:
+            raise EvidenceConsumerError("invalid RMR Content-Length") from exc
+        if declared_bytes < 0:
+            raise EvidenceConsumerError("invalid negative RMR Content-Length")
+        if declared_bytes > MAX_RESPONSE_BYTES:
+            raise ResponseTooLarge("RMR response exceeds MAX_RESPONSE_BYTES")
+
+    raw = response.read(MAX_RESPONSE_BYTES + 1)
+    if len(raw) > MAX_RESPONSE_BYTES:
+        raise ResponseTooLarge("RMR response exceeds MAX_RESPONSE_BYTES")
+    return raw
 
 
 def _default_transport(
@@ -132,10 +163,12 @@ def _default_transport(
     try:
         conn.request(method, path, body=body, headers=headers)
         response = conn.getresponse()
-        raw = response.read()
+        raw = _read_bounded_response(response)
         parsed = json.loads(raw.decode("utf-8")) if raw else None
         return response.status, {k.lower(): v for k, v in response.getheaders()}, parsed
-    except (OSError, socket.timeout, json.JSONDecodeError) as exc:
+    except EvidenceConsumerError:
+        raise
+    except (OSError, socket.timeout, http.client.HTTPException, json.JSONDecodeError, UnicodeDecodeError) as exc:
         raise EvidenceConsumerError("RMR transport failure") from exc
     finally:
         conn.close()
@@ -215,7 +248,7 @@ class RMREvidenceConsumer:
             raise IdentityMismatch("RMR source identity is not runtime-bound")
         if body.get("tracked_file_hashes_match") is not True:
             raise IdentityMismatch("RMR tracked-file hashes mismatch")
-        if body.get("query_only") != 1:
+        if not _is_nonbool_int(body.get("query_only")) or body.get("query_only") != 1:
             raise HealthGateError("RMR query_only invariant failed")
         return body
 
@@ -229,8 +262,10 @@ class RMREvidenceConsumer:
             raise HealthGateError("RMR status gate failed")
         if "access-control-allow-origin" in {str(k).lower() for k in headers}:
             raise HealthGateError("unexpected CORS exposure")
-        if body.get("read_only") is not True or body.get("query_only") != 1:
-            raise HealthGateError("RMR read-only/query-only invariant failed")
+        if body.get("read_only") is not True:
+            raise HealthGateError("RMR read-only invariant failed")
+        if not _is_nonbool_int(body.get("query_only")) or body.get("query_only") != 1:
+            raise HealthGateError("RMR query_only invariant failed")
         if body.get("authority_class") != self.binding.authority_class:
             raise IdentityMismatch("RMR authority-class mismatch")
         if body.get("router_status") != self.binding.router_status:
@@ -245,6 +280,95 @@ class RMREvidenceConsumer:
             raise IdentityMismatch("RMR tree mismatch")
         return body
 
+    def _validate_operation_currentness(self, operation: str, body: Mapping[str, Any]) -> None:
+        if body.get("operation") != operation:
+            raise ResponseShapeError("RMR operation echo mismatch")
+        if body.get("read_only") is not True:
+            raise IdentityMismatch("RMR operation escaped read-only ceiling")
+        if body.get("authority_class") != self.binding.authority_class:
+            raise IdentityMismatch("RMR operation authority-class mismatch")
+
+        exact_optional = {
+            "router_status": self.binding.router_status,
+            "service_status": self.binding.service_status,
+            "source_head": self.binding.head,
+            "source_tree": self.binding.tree,
+            "approved_source_head": self.binding.head,
+            "approved_source_tree": self.binding.tree,
+        }
+        for key, expected in exact_optional.items():
+            if key in body and body.get(key) != expected:
+                raise IdentityMismatch(f"RMR operation currentness mismatch: {key}")
+
+        if "query_only" in body:
+            query_only = body.get("query_only")
+            if not _is_nonbool_int(query_only) or query_only != 1:
+                raise HealthGateError("RMR operation query_only invariant failed")
+
+        if "source_identity_runtime_bound" in body and body.get("source_identity_runtime_bound") is not True:
+            raise IdentityMismatch("RMR operation source identity is not runtime-bound")
+        if "tracked_file_hashes_match" in body and body.get("tracked_file_hashes_match") is not True:
+            raise IdentityMismatch("RMR operation tracked-file hashes mismatch")
+
+        if "source_identity" in body:
+            source_identity = body.get("source_identity")
+            if not isinstance(source_identity, Mapping) or source_identity.get("identity_match") is not True:
+                raise IdentityMismatch("RMR operation source identity mismatch")
+
+        if "build_identity" in body:
+            build_identity = body.get("build_identity")
+            if not isinstance(build_identity, Mapping):
+                raise ResponseShapeError("RMR operation build_identity must be an object")
+            if build_identity.get("source_head") != self.binding.head:
+                raise IdentityMismatch("RMR operation HEAD mismatch")
+            if build_identity.get("source_tree") != self.binding.tree:
+                raise IdentityMismatch("RMR operation tree mismatch")
+
+    @staticmethod
+    def _validate_response_metadata(body: Mapping[str, Any]) -> None:
+        if "rows" in body:
+            rows = body.get("rows")
+            if not isinstance(rows, list):
+                raise ResponseShapeError("RMR rows must be a list when present")
+            for row in rows:
+                if not isinstance(row, Mapping):
+                    raise ResponseShapeError("RMR row must be an object")
+                if "conflict_indication" in row and not isinstance(row.get("conflict_indication"), bool):
+                    raise ResponseShapeError("row conflict_indication must be boolean")
+                if "coverage_warning" in row:
+                    warning = row.get("coverage_warning")
+                    if warning is not None and not isinstance(warning, str):
+                        raise ResponseShapeError("row coverage_warning must be string or null")
+                if "provenance_status" in row:
+                    provenance = row.get("provenance_status")
+                    if provenance is not None and not isinstance(provenance, str):
+                        raise ResponseShapeError("row provenance_status must be string or null")
+
+        if "returned_count" in body:
+            returned_count = body.get("returned_count")
+            if not _is_nonbool_int(returned_count) or returned_count < 0:
+                raise ResponseShapeError("RMR returned_count must be a non-negative integer")
+
+        if "has_more" in body and not isinstance(body.get("has_more"), bool):
+            raise ResponseShapeError("RMR has_more must be boolean")
+
+        if "conflict_indication" in body and not isinstance(body.get("conflict_indication"), bool):
+            raise ResponseShapeError("RMR conflict_indication must be boolean")
+
+        if "coverage_warning" in body:
+            warning = body.get("coverage_warning")
+            if warning is not None and not isinstance(warning, str):
+                raise ResponseShapeError("RMR coverage_warning must be string or null")
+
+    @staticmethod
+    def _returned_count(body: Mapping[str, Any]) -> int:
+        if "returned_count" in body:
+            return body["returned_count"]
+        rows = body.get("rows")
+        if isinstance(rows, list):
+            return len(rows)
+        return 1
+
     def preflight(self) -> dict[str, Any]:
         health = self._health_gate()
         status = self._status_gate()
@@ -253,26 +377,24 @@ class RMREvidenceConsumer:
     @staticmethod
     def _classify(body: Mapping[str, Any]) -> tuple[str, str | None, bool, bool]:
         rows = body.get("rows")
-        returned_count = body.get("returned_count")
-        has_more = bool(body.get("has_more", False))
+        returned_count = RMREvidenceConsumer._returned_count(body)
+        has_more = body.get("has_more", False)
 
         provenance_values: list[str] = []
         coverage_warning = None
         conflict = False
         if isinstance(rows, list):
             for row in rows:
-                if not isinstance(row, Mapping):
-                    continue
                 p = row.get("provenance_status")
                 if isinstance(p, str):
                     provenance_values.append(p)
                 w = row.get("coverage_warning")
                 if coverage_warning is None and isinstance(w, str) and w.strip():
                     coverage_warning = w.strip()
-                if bool(row.get("conflict_indication")):
+                if row.get("conflict_indication") is True:
                     conflict = True
 
-        if body.get("conflict_indication"):
+        if body.get("conflict_indication") is True:
             conflict = True
         if coverage_warning is None and isinstance(body.get("coverage_warning"), str):
             coverage_warning = body.get("coverage_warning") or None
@@ -303,17 +425,16 @@ class RMREvidenceConsumer:
             raise EvidenceConsumerError(f"RMR operation failed with HTTP {status}")
         if "access-control-allow-origin" in {str(k).lower() for k in headers}:
             raise HealthGateError("unexpected CORS exposure")
-        if body.get("read_only") is not True or body.get("authority_class") != EXPECTED_AUTHORITY_CLASS:
-            raise IdentityMismatch("RMR operation escaped evidence-only/read-only ceiling")
+
+        self._validate_operation_currentness(operation, body)
+        self._validate_response_metadata(body)
 
         decision, coverage_warning, conflict, has_more = self._classify(body)
         if decision not in CONSUMER_DECISIONS or decision in FORBIDDEN_AUTHORITY_LABELS:
             raise EvidenceConsumerError("invalid consumer decision")
 
         rows = body.get("rows")
-        returned_count = body.get("returned_count")
-        if not isinstance(returned_count, int):
-            returned_count = len(rows) if isinstance(rows, list) else (1 if body else 0)
+        returned_count = self._returned_count(body)
 
         provenance_status = None
         if isinstance(rows, list):
