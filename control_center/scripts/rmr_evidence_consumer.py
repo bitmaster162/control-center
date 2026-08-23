@@ -462,7 +462,7 @@ class RMREvidenceConsumer:
             warnings.append("provenance status missing")
         if is_search and not has_more_present:
             warnings.append("pagination status missing")
-        if returned_count > 0 and isinstance(rows, list) and rows and not conflict_signal_present:
+        if returned_count > 0 and not conflict_signal_present:
             warnings.append("conflict indication missing")
 
         coverage_warning = "; ".join(dict.fromkeys(warnings)) or None
