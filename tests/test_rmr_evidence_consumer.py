@@ -56,7 +56,7 @@ class FakeTransport:
         self.health_body = health_body if health_body is not None else health()
         self.status_body = status_body if status_body is not None else status()
         self.operation_body = operation_body if operation_body is not None else {
-            "operation": "search_text",
+            "operation": "search_messages",
             "read_only": True,
             "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
             "rows": [{"provenance_status": "DIRECT_SOURCE_BACKED", "conflict_indication": False}],
@@ -159,7 +159,7 @@ def test_unsupported_operation_rejected_before_network():
 
 def test_provenance_gap_pass_through():
     body = {
-        "operation": "search_text",
+        "operation": "search_messages",
         "read_only": True,
         "authority_class": "EVIDENCE_ONLY",
         "rows": [{"provenance_status": "PARTIAL_PROVENANCE", "coverage_warning": "explicit gaps preserved"}],
@@ -219,7 +219,7 @@ def test_no_current_truth_promotion_vocabulary():
     assert e["current_truth_promoted"] is False
 
 
-def operation_body(operation="search_text", **overrides):
+def operation_body(operation="search_messages", **overrides):
     body = {
         "operation": operation,
         "read_only": True,
@@ -413,7 +413,7 @@ def test_malformed_top_level_provenance_rejected(bad_provenance):
 
 def test_search_response_missing_rows_and_returned_count_rejected():
     body = {
-        "operation": "search_text",
+        "operation": "search_messages",
         "read_only": True,
         "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
     }
@@ -591,7 +591,7 @@ def test_completeness_gap_envelopes_validate_existing_schema():
 
 def test_nonzero_search_rows_absent_missing_conflict_signal_is_gap():
     body = {
-        "operation": "search_text",
+        "operation": "search_messages",
         "read_only": True,
         "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
         "returned_count": 1,
@@ -641,7 +641,7 @@ def test_nonzero_getter_rows_absent_missing_conflict_signal_is_gap():
 )
 def test_explicit_top_level_conflict_false_clears_r39_completeness_gap(operation, rows):
     body = {
-        "operation": operation,
+        "operation": "search_messages" if operation == "search_text" else operation,
         "read_only": True,
         "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
         "returned_count": 1,
@@ -671,3 +671,94 @@ def test_r39_explicit_conflict_true_still_wins():
     assert envelope["conflict_indication"] is True
     assert envelope["consumer_decision"] == "EVIDENCE_CONFLICT"
     assert envelope["coverage_warning"] is None
+
+
+def actual_r7_status_body(**overrides):
+    body = {
+        "operation": "status",
+        "source_id": "R1_4R_PRIMARY",
+        "source_identity": {"identity_match": True},
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "router_status": rmr.EXPECTED_ROUTER_STATUS,
+        "query_only": 1,
+        "build_identity": {
+            "source_head": rmr.PINNED_RMR_HEAD,
+            "source_tree": rmr.PINNED_RMR_TREE,
+        },
+        "table_count": 93,
+    }
+    body.update(overrides)
+    return body
+
+
+def test_r41_actual_r7_search_text_alias_is_accepted():
+    body = operation_body(operation="search_messages")
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["operation"] == "search_text"
+    assert envelope["evidence"]["operation"] == "search_messages"
+    assert envelope["consumer_decision"] == "EVIDENCE_ACCEPTED_FOR_REVIEW"
+
+
+def test_r41_search_text_wrong_alias_is_rejected():
+    body = operation_body(operation="search_all")
+    with pytest.raises(rmr.ResponseShapeError, match="operation echo mismatch"):
+        client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+
+
+@pytest.mark.parametrize("operation", ["search_messages", "get_message", "coverage"])
+def test_r41_non_search_text_operations_still_require_exact_echo(operation):
+    body = operation_body(operation="search_text")
+    with pytest.raises(rmr.ResponseShapeError, match="operation echo mismatch"):
+        client(FakeTransport(operation_body=body)).consume(operation, key="abc")
+
+
+def test_r41_actual_r7_status_without_rows_or_count_is_schema_valid_gap():
+    body = actual_r7_status_body()
+    envelope = client(FakeTransport(status_body=body)).consume("status")
+    assert envelope["operation"] == "status"
+    assert envelope["returned_count"] == 1
+    assert envelope["has_more"] is False
+    assert envelope["provenance_status"] is None
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert "provenance status missing" in envelope["coverage_warning"]
+    assert "conflict indication missing" in envelope["coverage_warning"]
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=envelope, schema=schema)
+
+
+def test_r41_status_count_derivation_is_status_only():
+    assert rmr.RMREvidenceConsumer._returned_count(actual_r7_status_body()) == 1
+    with pytest.raises(rmr.ResponseShapeError):
+        rmr.RMREvidenceConsumer._returned_count(
+            {
+                "operation": "get_message",
+                "read_only": True,
+                "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+            }
+        )
+
+
+@pytest.mark.parametrize(
+    "overrides,exc_type",
+    [
+        ({"router_status": "LIVE"}, rmr.IdentityMismatch),
+        ({"query_only": 0}, rmr.HealthGateError),
+        ({"source_identity": {"identity_match": False}}, rmr.IdentityMismatch),
+        ({"build_identity": {"source_head": "0" * 40, "source_tree": rmr.PINNED_RMR_TREE}}, rmr.IdentityMismatch),
+        ({"build_identity": {"source_head": rmr.PINNED_RMR_HEAD, "source_tree": "0" * 40}}, rmr.IdentityMismatch),
+    ],
+)
+def test_r41_status_currentness_identity_query_only_drift_remains_rejected(overrides, exc_type):
+    body = actual_r7_status_body(**overrides)
+    with pytest.raises(exc_type):
+        client(FakeTransport(status_body=body)).consume("status")
+
+
+def test_r41_actual_r7_search_alias_envelope_validates_existing_schema():
+    body = operation_body(operation="search_messages")
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=envelope, schema=schema)
+

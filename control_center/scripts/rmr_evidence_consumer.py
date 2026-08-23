@@ -281,7 +281,8 @@ class RMREvidenceConsumer:
         return body
 
     def _validate_operation_currentness(self, operation: str, body: Mapping[str, Any]) -> None:
-        if body.get("operation") != operation:
+        expected_operation = "search_messages" if operation == "search_text" else operation
+        if body.get("operation") != expected_operation:
             raise ResponseShapeError("RMR operation echo mismatch")
         if body.get("read_only") is not True:
             raise IdentityMismatch("RMR operation escaped read-only ceiling")
@@ -386,7 +387,7 @@ class RMREvidenceConsumer:
         if body.get("consumer_decision") in FORBIDDEN_AUTHORITY_LABELS:
             raise IdentityMismatch("RMR operation asserted forbidden authority decision")
 
-        if "returned_count" not in body and "rows" not in body:
+        if "returned_count" not in body and "rows" not in body and body.get("operation") != "status":
             raise ResponseShapeError("RMR response must provide returned_count or rows")
 
     @staticmethod
@@ -396,6 +397,8 @@ class RMREvidenceConsumer:
         rows = body.get("rows")
         if isinstance(rows, list):
             return len(rows)
+        if body.get("operation") == "status":
+            return 1
         raise ResponseShapeError("RMR response count is unavailable")
 
     @staticmethod
