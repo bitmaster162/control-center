@@ -325,6 +325,18 @@ class RMREvidenceConsumer:
                 raise IdentityMismatch("RMR operation tree mismatch")
 
     @staticmethod
+    def _validate_provenance_value(value: Any, *, field: str) -> None:
+        if value is None or isinstance(value, str):
+            return
+        if isinstance(value, list):
+            if any(not isinstance(item, str) for item in value):
+                raise ResponseShapeError(f"{field} list items must be strings")
+            if len(set(value)) != len(value):
+                raise ResponseShapeError(f"{field} list items must be unique")
+            return
+        raise ResponseShapeError(f"{field} must be string, unique string list, or null")
+
+    @staticmethod
     def _validate_response_metadata(body: Mapping[str, Any]) -> None:
         if "rows" in body:
             rows = body.get("rows")
@@ -360,6 +372,23 @@ class RMREvidenceConsumer:
             if warning is not None and not isinstance(warning, str):
                 raise ResponseShapeError("RMR coverage_warning must be string or null")
 
+        if "provenance_status" in body:
+            RMREvidenceConsumer._validate_provenance_value(
+                body.get("provenance_status"), field="RMR provenance_status"
+            )
+
+        if "current_truth_promoted" in body and body.get("current_truth_promoted") is not False:
+            raise IdentityMismatch("RMR operation asserted Current Truth promotion")
+
+        if "execution_authority" in body and body.get("execution_authority") != "NONE":
+            raise IdentityMismatch("RMR operation asserted execution authority")
+
+        if body.get("consumer_decision") in FORBIDDEN_AUTHORITY_LABELS:
+            raise IdentityMismatch("RMR operation asserted forbidden authority decision")
+
+        if "returned_count" not in body and "rows" not in body:
+            raise ResponseShapeError("RMR response must provide returned_count or rows")
+
     @staticmethod
     def _returned_count(body: Mapping[str, Any]) -> int:
         if "returned_count" in body:
@@ -367,7 +396,28 @@ class RMREvidenceConsumer:
         rows = body.get("rows")
         if isinstance(rows, list):
             return len(rows)
-        return 1
+        raise ResponseShapeError("RMR response count is unavailable")
+
+    @staticmethod
+    def _provenance_status(body: Mapping[str, Any]) -> str | list[str] | None:
+        values: set[str] = set()
+        top = body.get("provenance_status")
+        if isinstance(top, str):
+            values.add(top)
+        elif isinstance(top, list):
+            values.update(top)
+
+        rows = body.get("rows")
+        if isinstance(rows, list):
+            for row in rows:
+                provenance = row.get("provenance_status")
+                if isinstance(provenance, str):
+                    values.add(provenance)
+
+        ordered = sorted(values)
+        if not ordered:
+            return None
+        return ordered[0] if len(ordered) == 1 else ordered
 
     def preflight(self) -> dict[str, Any]:
         health = self._health_gate()
@@ -380,14 +430,12 @@ class RMREvidenceConsumer:
         returned_count = RMREvidenceConsumer._returned_count(body)
         has_more = body.get("has_more", False)
 
-        provenance_values: list[str] = []
+        provenance = RMREvidenceConsumer._provenance_status(body)
+        provenance_values = [provenance] if isinstance(provenance, str) else list(provenance or [])
         coverage_warning = None
         conflict = False
         if isinstance(rows, list):
             for row in rows:
-                p = row.get("provenance_status")
-                if isinstance(p, str):
-                    provenance_values.append(p)
                 w = row.get("coverage_warning")
                 if coverage_warning is None and isinstance(w, str) and w.strip():
                     coverage_warning = w.strip()
@@ -436,13 +484,7 @@ class RMREvidenceConsumer:
         rows = body.get("rows")
         returned_count = self._returned_count(body)
 
-        provenance_status = None
-        if isinstance(rows, list):
-            vals = sorted(
-                {str(row.get("provenance_status")) for row in rows if isinstance(row, Mapping) and row.get("provenance_status")}
-            )
-            if vals:
-                provenance_status = vals if len(vals) > 1 else vals[0]
+        provenance_status = self._provenance_status(body)
 
         return {
             "request_id": self._request_id_factory(),
