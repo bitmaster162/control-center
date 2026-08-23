@@ -367,6 +367,7 @@ def test_top_level_partial_provenance_preserved_and_classified_partial():
         rows=[],
         returned_count=1,
         provenance_status="PARTIAL_PROVENANCE",
+        conflict_indication=False,
     )
     envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
     assert envelope["provenance_status"] == "PARTIAL_PROVENANCE"
@@ -378,6 +379,7 @@ def test_top_level_candidate_only_preserved_and_classified_partial():
         rows=[],
         returned_count=1,
         provenance_status="CANDIDATE_ONLY",
+        conflict_indication=False,
     )
     envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
     assert envelope["provenance_status"] == "CANDIDATE_ONLY"
@@ -492,6 +494,7 @@ def test_top_level_partial_provenance_envelope_validates_existing_schema():
         rows=[],
         returned_count=1,
         provenance_status="PARTIAL_PROVENANCE",
+        conflict_indication=False,
     )
     envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
@@ -584,3 +587,87 @@ def test_completeness_gap_envelopes_validate_existing_schema():
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     jsonschema.validate(instance=envelope, schema=schema)
     assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+
+
+def test_nonzero_search_rows_absent_missing_conflict_signal_is_gap():
+    body = {
+        "operation": "search_text",
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "returned_count": 1,
+        "has_more": False,
+        "provenance_status": "DIRECT_SOURCE_BACKED",
+    }
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert envelope["coverage_warning"] == "conflict indication missing"
+
+
+def test_nonzero_search_empty_rows_missing_conflict_signal_is_gap():
+    body = operation_body(
+        rows=[],
+        returned_count=1,
+        has_more=False,
+        provenance_status="DIRECT_SOURCE_BACKED",
+    )
+    envelope = client(FakeTransport(operation_body=body)).consume("search_text", key="abc")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert envelope["coverage_warning"] == "conflict indication missing"
+
+
+def test_nonzero_getter_rows_absent_missing_conflict_signal_is_gap():
+    body = {
+        "operation": "get_message",
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "returned_count": 1,
+        "provenance_status": "DIRECT_SOURCE_BACKED",
+    }
+    envelope = client(FakeTransport(operation_body=body)).consume("get_message", message_id="m1")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_GAP"
+    assert envelope["coverage_warning"] == "conflict indication missing"
+
+
+@pytest.mark.parametrize(
+    ("operation", "rows"),
+    [
+        ("search_text", None),
+        ("search_text", []),
+        ("get_message", None),
+    ],
+)
+def test_explicit_top_level_conflict_false_clears_r39_completeness_gap(operation, rows):
+    body = {
+        "operation": operation,
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "returned_count": 1,
+        "provenance_status": "DIRECT_SOURCE_BACKED",
+        "conflict_indication": False,
+    }
+    if operation.startswith("search_"):
+        body["has_more"] = False
+    if rows is not None:
+        body["rows"] = rows
+    envelope = client(FakeTransport(operation_body=body)).consume(operation, key="abc")
+    assert envelope["conflict_indication"] is False
+    assert envelope["consumer_decision"] == "EVIDENCE_ACCEPTED_FOR_REVIEW"
+    assert envelope["coverage_warning"] is None
+
+
+def test_r39_explicit_conflict_true_still_wins():
+    body = {
+        "operation": "get_message",
+        "read_only": True,
+        "authority_class": rmr.EXPECTED_AUTHORITY_CLASS,
+        "returned_count": 1,
+        "provenance_status": "DIRECT_SOURCE_BACKED",
+        "conflict_indication": True,
+    }
+    envelope = client(FakeTransport(operation_body=body)).consume("get_message", message_id="m1")
+    assert envelope["conflict_indication"] is True
+    assert envelope["consumer_decision"] == "EVIDENCE_CONFLICT"
+    assert envelope["coverage_warning"] is None
