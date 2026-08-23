@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://control-center.local/contracts/RMR_EVIDENCE_ENVELOPE_V1.schema.json",
+  "title": "RMR Evidence Envelope V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "timestamp_utc",
+    "rmr_head",
+    "rmr_tree",
+    "rmr_identity_sha256",
+    "rmr_identity_binding",
+    "operation",
+    "input_digest_sha256",
+    "returned_count",
+    "has_more",
+    "authority_class",
+    "router_status",
+    "provenance_status",
+    "coverage_warning",
+    "conflict_indication",
+    "response_digest_sha256",
+    "consumer_decision",
+    "elapsed_ms",
+    "evidence",
+    "current_truth_promoted",
+    "execution_authority"
+  ],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "timestamp_utc": {"type": "string", "pattern": "Z$"},
+    "rmr_head": {"const": "8f82ad49c6ddcde7c698eec101b5f0ed985f24bc"},
+    "rmr_tree": {"const": "911467a1a1d355b51fbe70ff95b86cd63fb7a212"},
+    "rmr_identity_sha256": {"const": "271ba9ba2f78c0cd03db7cb16ae3d2dbe9511926703658d5288677956bff02c2"},
+    "rmr_identity_binding": {"const": "PINNED_CONFIG_PLUS_RUNTIME_IDENTITY_MATCH"},
+    "operation": {"type": "string", "minLength": 1},
+    "input_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "returned_count": {"type": "integer", "minimum": 0},
+    "has_more": {"type": "boolean"},
+    "authority_class": {"const": "EVIDENCE_ONLY"},
+    "router_status": {"const": "CANDIDATE_NOT_LIVE"},
+    "provenance_status": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      ]
+    },
+    "coverage_warning": {"type": ["string", "null"]},
+    "conflict_indication": {"type": "boolean"},
+    "response_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "consumer_decision": {
+      "enum": [
+        "EVIDENCE_ACCEPTED_FOR_REVIEW",
+        "EVIDENCE_PARTIAL",
+        "EVIDENCE_CONFLICT",
+        "EVIDENCE_GAP",
+        "EVIDENCE_REJECTED_STALE_OR_IDENTITY_MISMATCH",
+        "EVIDENCE_REJECTED_HEALTH_OR_AUTH_FAILURE"
+      ]
+    },
+    "elapsed_ms": {"type": "integer", "minimum": 0},
+    "evidence": {"type": "object"},
+    "current_truth_promoted": {"const": false},
+    "execution_authority": {"const": "NONE"}
+  }
+}
