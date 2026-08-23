@@ -428,24 +428,44 @@ class RMREvidenceConsumer:
     def _classify(body: Mapping[str, Any]) -> tuple[str, str | None, bool, bool]:
         rows = body.get("rows")
         returned_count = RMREvidenceConsumer._returned_count(body)
+        operation = body.get("operation", "")
+        is_search = isinstance(operation, str) and operation.startswith("search_")
+        has_more_present = "has_more" in body
         has_more = body.get("has_more", False)
 
         provenance = RMREvidenceConsumer._provenance_status(body)
         provenance_values = [provenance] if isinstance(provenance, str) else list(provenance or [])
-        coverage_warning = None
+        warnings: list[str] = []
         conflict = False
+        conflict_signal_present = "conflict_indication" in body
+
         if isinstance(rows, list):
             for row in rows:
                 w = row.get("coverage_warning")
-                if coverage_warning is None and isinstance(w, str) and w.strip():
-                    coverage_warning = w.strip()
-                if row.get("conflict_indication") is True:
-                    conflict = True
+                if isinstance(w, str) and w.strip() and w.strip() not in warnings:
+                    warnings.append(w.strip())
+                if "conflict_indication" in row:
+                    conflict_signal_present = True
+                    if row.get("conflict_indication") is True:
+                        conflict = True
 
         if body.get("conflict_indication") is True:
             conflict = True
-        if coverage_warning is None and isinstance(body.get("coverage_warning"), str):
-            coverage_warning = body.get("coverage_warning") or None
+        if isinstance(body.get("coverage_warning"), str):
+            top_warning = body.get("coverage_warning") or None
+            if top_warning and top_warning.strip() and top_warning.strip() not in warnings:
+                warnings.append(top_warning.strip())
+
+        # Evidence completeness is explicit. Unknown provenance, pagination, or conflict
+        # state is a GAP; it is never silently rewritten into a positive assertion.
+        if returned_count > 0 and provenance is None:
+            warnings.append("provenance status missing")
+        if is_search and not has_more_present:
+            warnings.append("pagination status missing")
+        if returned_count > 0 and isinstance(rows, list) and rows and not conflict_signal_present:
+            warnings.append("conflict indication missing")
+
+        coverage_warning = "; ".join(dict.fromkeys(warnings)) or None
 
         if conflict:
             return "EVIDENCE_CONFLICT", coverage_warning, True, has_more
@@ -453,7 +473,7 @@ class RMREvidenceConsumer:
             return "EVIDENCE_GAP", coverage_warning, False, has_more
         if any(p in {"PARTIAL_PROVENANCE", "CANDIDATE_ONLY"} for p in provenance_values):
             return "EVIDENCE_PARTIAL", coverage_warning, False, has_more
-        if returned_count == 0 and body.get("operation", "").startswith("search_"):
+        if returned_count == 0 and is_search:
             return "EVIDENCE_GAP", coverage_warning or "zero rows returned", False, has_more
         return "EVIDENCE_ACCEPTED_FOR_REVIEW", coverage_warning, False, has_more
 
@@ -481,9 +501,7 @@ class RMREvidenceConsumer:
         if decision not in CONSUMER_DECISIONS or decision in FORBIDDEN_AUTHORITY_LABELS:
             raise EvidenceConsumerError("invalid consumer decision")
 
-        rows = body.get("rows")
         returned_count = self._returned_count(body)
-
         provenance_status = self._provenance_status(body)
 
         return {
