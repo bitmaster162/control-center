@@ -18,6 +18,7 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#portfolio-governance">PORTFOLIO GOV</a>
     <a href="#system-attention">SYSTEM ATTENTION</a>
     <a href="#provider-lease">PROVIDER LEASE</a>
     <a href="#execution-scope">EXECUTION SCOPE</a>
@@ -43,6 +44,14 @@
         <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
+    </section>
+
+    <section id="portfolio-governance" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">PORTFOLIO CONTROL</p><h2>Portfolio Governance</h2></div>
+        <span class="pill">projection ≠ priority authority ≠ execution</span>
+      </div>
+      <div id="portfolio-governance-list"><div class="empty">Loading portfolio governance…</div></div>
     </section>
 
     <section id="system-attention" class="panel">
@@ -104,6 +113,7 @@
   <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
 
   <script src="./app.js" defer></script>
+  <script src="./portfolio_governance.js" defer></script>
   <script src="./system_attention.js" defer></script>
   <script src="./provider_lease.js" defer></script>
   <script src="./lifecycle.js" defer></script>
