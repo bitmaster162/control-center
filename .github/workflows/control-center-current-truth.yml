@@ -133,4 +133,6 @@ jobs:
           node --check control_center/ui/execution_scope.js
           node --check control_center/ui/portfolio_governance.js
           node --check control_center/ui/portfolio_terminal.js
+          node --check control_center/ui/portfolio_identity.js
           node control_center/ui/test_portfolio_governance.js
+          node control_center/ui/test_portfolio_identity.js
