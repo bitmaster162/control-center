@@ -1,7 +1,7 @@
 {
   "schema": "control_center.portfolio_project_identity_evidence.v1",
   "projection_kind": "CANDIDATE_NON_AUTHORITY_PROJECT_IDENTITY_EVIDENCE",
-  "assembled_at": "2026-08-24T07:53:00+07:00",
+  "assembled_at": "2026-08-24T08:05:00+07:00",
   "subject": {
     "display_name": "MAWorld",
     "canonical_candidate": "maworld"
@@ -44,14 +44,47 @@
     "return-plane-v2",
     "tradingos"
   ],
+  "historical_identity_evidence": {
+    "source_kind": "GOOGLE_DRIVE_BOUNDED_EVIDENCE_DOSSIER",
+    "drive_file_id": "1dTv1MgxrcWgufZQsRU8yFTUsJyI_aYy_",
+    "title": "02_ATTACH_EVIDENCE_DOSSIER.md",
+    "dossier_project_id": "maworld",
+    "dossier_topic_lock": "MAWORLD",
+    "dossier_generated_at": "2026-07-30T19:24:15+00:00",
+    "historical_generation": "R58",
+    "historical_evidence_class_claim": "EXACT_LOCAL_R58_ROW",
+    "historical_record": {
+      "id": "maworld",
+      "name": "MAWorld",
+      "aliases": [
+        "Multi-agent world / MAWorld RLS"
+      ],
+      "category": "multi_agent_runtime",
+      "owner": "CODEX-03",
+      "scope": "PostgreSQL/RLS-backed multi-agent isolation/runtime experiment",
+      "implementation": "BLOCKED_AT_INITDB",
+      "status": "R57_IN_PROGRESS",
+      "truth_class": "VERIFIED_FAILURE_PREDECESSOR"
+    },
+    "primary_registry_locator": {
+      "name": "R58_CANONICAL_PROJECT_REGISTRY.json",
+      "file_library_id": "file_00000000edc481faa260775c67f51102",
+      "bytes_embedded_in_dossier": false,
+      "sha256": "UNKNOWN"
+    },
+    "currentity_ceiling": "HISTORICAL_R58_IDENTITY_ONLY_NOT_CURRENT_R64_AUTHORITY",
+    "semantic_identity_supported": true,
+    "current_registry_adoption_supported": false
+  },
   "candidate_result": {
-    "classification": "DISTINCT_IDENTIFIER_CANDIDATE",
+    "classification": "HISTORICAL_PROJECT_IDENTITY_EVIDENCED",
     "canonical_registry_match": null,
-    "semantic_alias_status": "NOT_EVIDENCED",
-    "decision": "HUMAN_ALIAS_OR_NEW_PROJECT_REGISTRY_GATE",
+    "historical_project_id": "maworld",
+    "semantic_alias_status": "HISTORICAL_CANONICAL_IDENTITY",
+    "decision": "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE",
     "registry_gate_required": true
   },
-  "interpretation_boundary": "Repeated provider observations establish a stable unregistered identifier only. They do not prove that MAWorld is semantically distinct from every existing project or authorize a new registry entry.",
+  "interpretation_boundary": "Current R64 Portfolio does not contain maworld, while a bounded Drive dossier reproduces an R58 canonical project row for id=maworld/name=MAWorld/alias=Multi-agent world / MAWorld RLS and explicitly warns that R58 is not automatically current truth after R58. This supports historical semantic identity but does not authorize current registry adoption or any execution.",
   "safety": {
     "authority_granted": false,
     "identity_authority_granted": false,
