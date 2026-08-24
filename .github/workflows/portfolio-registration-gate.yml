@@ -1,0 +1,29 @@
+name: Portfolio Operational Registration Gate
+
+on:
+  pull_request:
+    paths:
+      - 'control_center/data/portfolio_operational_registration_evidence.candidate.v1.json'
+      - 'control_center/data/portfolio_identity_adoptions.current.v1.json'
+      - 'control_center/data/current_control_plane.generated.v1.json'
+      - 'control_center/data/agent_control_plane.generated.v1.json'
+      - 'control_center/ui/portfolio_registration.js'
+      - 'control_center/ui/test_portfolio_registration.js'
+      - 'control_center/ui/index.html'
+      - '.github/workflows/portfolio-registration-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-registration-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Portfolio registration module
+        run: node --check control_center/ui/portfolio_registration.js
+      - name: Adversarial Portfolio operational registration tests
+        run: node control_center/ui/test_portfolio_registration.js

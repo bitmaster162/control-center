@@ -1,0 +1,98 @@
+{
+  "schema": "control_center.portfolio_operational_registration_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_OPERATIONAL_REGISTRATION_EVIDENCE",
+  "assembled_at": "2026-08-24T08:34:00+07:00",
+  "subject": {"canonical_id": "maworld", "display_name": "MAWorld"},
+  "source_binding": {
+    "control_observed_at": "2026-08-12T03:45:00+07:00",
+    "agent_control_observed_at": "2026-08-12T03:45:00+07:00",
+    "canonical_generation": "R64",
+    "identity_adoption_approval": "APPROVE_MAWORLD_CURRENT_PORTFOLIO_IDENTITY_ADOPTION_R1"
+  },
+  "current_return_registry": {
+    "fetch_class": "CURRENT_PROVIDER_BYTES",
+    "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+    "generation_label": "R50_AUDIT",
+    "provider_modified_time": "2026-07-29T16:30:55.472Z",
+    "payload_age_note": "Current provider bytes fetched at this gate; payload generation/timestamp remains R50-era and is not claimed continuously fresh."
+  },
+  "operational_observations": [
+    {
+      "slot": "CODEX-03",
+      "project": "MAWorld",
+      "reported_state": "RLS_TEST_FAIL",
+      "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21",
+      "reported_next": "CAPTURE_INITDB_STDOUT_STDERR_AND_FIX_ONE_ROOT_CAUSE",
+      "return_sha256": "83919140df509fb735d6b6ef2ff4d9b4b1b2aa9f1952c63fc8f7951dccc9deb8",
+      "harness_error_code": "INITDB_FAILED",
+      "source_mutation": false,
+      "teardown": "CLEAN",
+      "no_further_agent_work": true
+    },
+    {
+      "slot": "ANTIGRAVITY_WO041",
+      "project": "MAWorld",
+      "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB",
+      "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE",
+      "reported_next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR",
+      "verified_return_sha256": "83919140df509fb735d6b6ef2ff4d9b4b1b2aa9f1952c63fc8f7951dccc9deb8",
+      "verdict": "INDEPENDENT_RLS_EVALUATION_COMPLETE_INITDB_FAIL",
+      "rerun_executed": false,
+      "postgres_executed_by_reviewer": false,
+      "no_further_agent_work": true
+    }
+  ],
+  "owner_candidate": {
+    "id": "CODEX-03",
+    "authority_granted": false,
+    "evidence_sources": [
+      {"drive_file_id": "1VHp7pUdFkp-4tm0zmgevLQunXhk94obM", "title": "21_maworld.md", "claim": "Owner: CODEX-03"},
+      {"drive_file_id": "1D42ihGiwFE6T3S6Ftvz7zzu4tOSxSRXS", "title": "R57_DISPATCH.md", "claim": "CODEX-03 assigned MAWorld PostgreSQL sandbox close"}
+    ],
+    "interpretation": "OWNER_CANDIDATE_EVIDENCED_AUTHORITY_NOT_PROMOTED"
+  },
+  "repository_identity": {
+    "local_root": "C:\\PROJECTS\\MAWorld",
+    "branch": "main",
+    "head": "f82b9ccf880a9b781dac3273834a4d13a9062fc3",
+    "tree": "1069056c9088f4b0b2db4822cd89dc118cc6a6da",
+    "clean": true,
+    "last_exact_evidence_at": "2026-08-01T08:50:15.875Z",
+    "evidence_sources": ["13JEHbNB-nXXKLkFgfZRYNsUtcE0qrUBl", "1bDTNKi2iCYNsFf_koEmHSlo0AJSdYZ2C"],
+    "github_repository": null,
+    "github_repository_status": "NOT_EVIDENCED",
+    "fresh_readback_required_before_implementation": true
+  },
+  "registration_candidate": {
+    "owner_candidate": "CODEX-03",
+    "owner_authority_granted": false,
+    "state": "FAILURE_DIAGNOSTIC_REQUIRED",
+    "blocked_by": ["INITDB_FAILED_ROOT_CAUSE_UNRESOLVED", "FRESH_GIT_BASELINE_READBACK_REQUIRED_BEFORE_IMPLEMENTATION"],
+    "next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR",
+    "operational_registration_authorized": false,
+    "implementation_ready": false,
+    "repair_authorized": false
+  },
+  "proposed_human_gate": {
+    "approval_phrase": "APPROVE_MAWORLD_OPERATIONAL_PROJECT_REGISTRATION_R1",
+    "scope": "CURRENT_PORTFOLIO_OPERATIONAL_REGISTRATION_ONLY",
+    "does_not_authorize": ["OWNER_AUTHORITY_PROMOTION", "REPAIR", "IMPLEMENTATION", "DISPATCH", "MERGE", "DEPLOY", "RUNTIME_MUTATION", "TRADING", "CAPITAL_USE"]
+  },
+  "safety": {
+    "authority_granted": false,
+    "operational_registration_authorized": false,
+    "owner_authority_granted": false,
+    "state_authority_granted": false,
+    "policy_binding_authorized": false,
+    "repair_authorized": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "runtime_mutation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

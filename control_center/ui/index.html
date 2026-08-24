@@ -7,140 +7,28 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <p class="eyebrow">GLOBAL COMMAND · NON-AUTHORITY PROJECTION</p>
-      <h1>Control Center</h1>
-      <p id="observed-at" class="muted">Loading current-control projection…</p>
-    </div>
-    <div id="safety" class="safety"></div>
-  </header>
-
-  <nav class="tabs" aria-label="Control Center views">
-    <a href="#now">NOW</a>
-    <a href="#portfolio-governance">PORTFOLIO GOV</a>
-    <a href="#portfolio-terminal">TERMINAL ENGINE</a>
-    <a href="#portfolio-identity">PROJECT IDENTITY</a>
-    <a href="#system-attention">SYSTEM ATTENTION</a>
-    <a href="#provider-lease">PROVIDER LEASE</a>
-    <a href="#execution-scope">EXECUTION SCOPE</a>
-    <a href="#human-gate-packets">HUMAN GATE</a>
-    <a href="#command-queue">COMMAND QUEUE</a>
-    <a href="#agents">AGENTS</a>
-    <a href="#agent-control">AGENT CONTROL</a>
-    <a href="#work-lifecycle">WORK LIFECYCLE</a>
-    <a href="#decision-gates">DECISION GATES</a>
-    <a href="#effect-readback">EFFECT / READBACK</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#work">WORK</a>
-    <a href="#returns">RETURNS</a>
-    <a href="#decisions">GOVERNANCE</a>
-    <a href="#commercial">COMMERCIAL</a>
-    <a href="#hanri">HANRI</a>
-  </nav>
-
+  <header class="topbar"><div><p class="eyebrow">GLOBAL COMMAND · NON-AUTHORITY PROJECTION</p><h1>Control Center</h1><p id="observed-at" class="muted">Loading current-control projection…</p></div><div id="safety" class="safety"></div></header>
+  <nav class="tabs" aria-label="Control Center views"><a href="#now">NOW</a><a href="#portfolio-governance">PORTFOLIO GOV</a><a href="#portfolio-terminal">TERMINAL ENGINE</a><a href="#portfolio-identity">PROJECT IDENTITY</a><a href="#portfolio-registration">REGISTRATION GATE</a><a href="#system-attention">SYSTEM ATTENTION</a><a href="#provider-lease">PROVIDER LEASE</a><a href="#execution-scope">EXECUTION SCOPE</a><a href="#human-gate-packets">HUMAN GATE</a><a href="#command-queue">COMMAND QUEUE</a><a href="#agents">AGENTS</a><a href="#agent-control">AGENT CONTROL</a><a href="#work-lifecycle">WORK LIFECYCLE</a><a href="#decision-gates">DECISION GATES</a><a href="#effect-readback">EFFECT / READBACK</a><a href="#projects">PROJECTS</a><a href="#work">WORK</a><a href="#returns">RETURNS</a><a href="#decisions">GOVERNANCE</a><a href="#commercial">COMMERCIAL</a><a href="#hanri">HANRI</a></nav>
   <main>
-    <section id="now" class="panel hero-panel">
-      <div class="section-head">
-        <div><p class="eyebrow">OPERATOR ATTENTION</p><h2>NOW</h2></div>
-        <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
-      </div>
-      <div id="now-cards" class="grid cards"></div>
-    </section>
-
-    <section id="portfolio-governance" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">PORTFOLIO CONTROL</p><h2>Portfolio Governance + Arbiter</h2></div>
-        <span class="pill">recommendation ≠ priority authority ≠ execution</span>
-      </div>
-      <div id="portfolio-governance-list"><div class="empty">Loading portfolio governance…</div></div>
-    </section>
-
-    <section id="portfolio-terminal" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">TERMINAL CONTROL</p><h2>Terminal / Kill / Sunset Engine</h2></div>
-        <span class="pill">classification ≠ close ≠ sunset ≠ execution</span>
-      </div>
-      <div id="portfolio-terminal-list"><div class="empty">Loading terminal classification…</div></div>
-    </section>
-
-    <section id="portfolio-identity" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">REGISTRY RECONCILIATION</p><h2>Project Identity</h2></div>
-        <span class="pill">identifier ≠ semantic alias ≠ registration</span>
-      </div>
-      <div id="portfolio-identity-list"><div class="empty">Loading project identity reconciliation…</div></div>
-    </section>
-
-    <section id="system-attention" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">SYSTEM HOLD ATTENTION</p><h2>System Attention</h2></div>
-        <span class="pill">attention ≠ HUMAN_NOW ≠ effect gate</span>
-      </div>
-      <div id="system-attention-list"><div class="empty">Loading system attention…</div></div>
-    </section>
-
-    <section id="provider-lease" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">PROVIDER FRESHNESS</p><h2>Provider Lease</h2></div>
-        <span class="pill">fresh-at-capture ≠ continuous</span>
-      </div>
-      <div id="provider-lease-list"><div class="empty">Loading provider freshness lease…</div></div>
-    </section>
-
-    <section id="execution-scope" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">SOURCE-BOUND EFFECT READINESS</p><h2>Execution Scope Binder</h2></div>
-        <span class="pill">scope ≠ authority ≠ execution</span>
-      </div>
-      <div id="execution-scope-list"></div>
-    </section>
-
-    <section id="human-gate-packets" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">HUMAN AUTHORITY BOUNDARY</p><h2>Human Gate Packet</h2></div>
-        <span class="pill">packet ≠ authority ≠ execution</span>
-      </div>
-      <div id="human-gate-packets-list"></div>
-    </section>
-
-    <section id="command-queue" class="panel">
-      <div class="section-head">
-        <div><p class="eyebrow">GLOBAL ROUTING</p><h2>Command Queue</h2></div>
-        <span class="pill">priority ≠ authority</span>
-      </div>
-      <div id="command-queue-list"></div>
-    </section>
-
+    <section id="now" class="panel hero-panel"><div class="section-head"><div><p class="eyebrow">OPERATOR ATTENTION</p><h2>NOW</h2></div><span class="pill">Human Gate Packet · HUMAN_NOW only</span></div><div id="now-cards" class="grid cards"></div></section>
+    <section id="portfolio-governance" class="panel"><div class="section-head"><div><p class="eyebrow">PORTFOLIO CONTROL</p><h2>Portfolio Governance + Arbiter</h2></div><span class="pill">recommendation ≠ priority authority ≠ execution</span></div><div id="portfolio-governance-list"><div class="empty">Loading portfolio governance…</div></div></section>
+    <section id="portfolio-terminal" class="panel"><div class="section-head"><div><p class="eyebrow">TERMINAL CONTROL</p><h2>Terminal / Kill / Sunset Engine</h2></div><span class="pill">classification ≠ close ≠ sunset ≠ execution</span></div><div id="portfolio-terminal-list"><div class="empty">Loading terminal classification…</div></div></section>
+    <section id="portfolio-identity" class="panel"><div class="section-head"><div><p class="eyebrow">REGISTRY RECONCILIATION</p><h2>Project Identity</h2></div><span class="pill">identifier ≠ semantic alias ≠ registration</span></div><div id="portfolio-identity-list"><div class="empty">Loading project identity reconciliation…</div></div></section>
+    <section id="portfolio-registration" class="panel"><div class="section-head"><div><p class="eyebrow">OPERATIONAL REGISTRY GATE</p><h2>Project Registration Evidence</h2></div><span class="pill">registration candidate ≠ owner authority ≠ repair authority</span></div><div id="portfolio-registration-list"><div class="empty">Loading operational registration gate…</div></div></section>
+    <section id="system-attention" class="panel"><div class="section-head"><div><p class="eyebrow">SYSTEM HOLD ATTENTION</p><h2>System Attention</h2></div><span class="pill">attention ≠ HUMAN_NOW ≠ effect gate</span></div><div id="system-attention-list"><div class="empty">Loading system attention…</div></div></section>
+    <section id="provider-lease" class="panel"><div class="section-head"><div><p class="eyebrow">PROVIDER FRESHNESS</p><h2>Provider Lease</h2></div><span class="pill">fresh-at-capture ≠ continuous</span></div><div id="provider-lease-list"><div class="empty">Loading provider freshness lease…</div></div></section>
+    <section id="execution-scope" class="panel"><div class="section-head"><div><p class="eyebrow">SOURCE-BOUND EFFECT READINESS</p><h2>Execution Scope Binder</h2></div><span class="pill">scope ≠ authority ≠ execution</span></div><div id="execution-scope-list"></div></section>
+    <section id="human-gate-packets" class="panel"><div class="section-head"><div><p class="eyebrow">HUMAN AUTHORITY BOUNDARY</p><h2>Human Gate Packet</h2></div><span class="pill">packet ≠ authority ≠ execution</span></div><div id="human-gate-packets-list"></div></section>
+    <section id="command-queue" class="panel"><div class="section-head"><div><p class="eyebrow">GLOBAL ROUTING</p><h2>Command Queue</h2></div><span class="pill">priority ≠ authority</span></div><div id="command-queue-list"></div></section>
     <section id="agents" class="panel"><div class="section-head"><div><p class="eyebrow">FLEET OWNERSHIP</p><h2>Agents & Owners</h2></div></div><div id="agents-list" class="table-wrap"></div></section>
     <section id="agent-control" class="panel"><div class="section-head"><div><p class="eyebrow">DISPATCH CONTROL</p><h2>Agent Control Plane</h2></div><span class="pill">observe ≠ dispatch</span></div><div id="agent-control-list"></div></section>
     <section id="work-lifecycle" class="panel"><div class="section-head"><div><p class="eyebrow">END-TO-END CONTROL</p><h2>Work Order Lifecycle</h2></div><span class="pill">return ≠ accept ≠ apply</span></div><div id="work-lifecycle-list"></div></section>
     <section id="decision-gates" class="panel"><div class="section-head"><div><p class="eyebrow">AUTHORITY COMPRESSION</p><h2>Decision / Effect Gate Ledger</h2></div><span class="pill">accept ≠ authorize ≠ execute</span></div><div id="decision-gates-list"></div></section>
     <section id="effect-readback" class="panel"><div class="section-head"><div><p class="eyebrow">EFFECT EVIDENCE</p><h2>Effect Execution / Readback</h2></div><span class="pill">authorize ≠ execute ≠ close</span></div><div id="effect-readback-list"></div></section>
-    <section id="projects" class="panel"><div class="section-head"><div><p class="eyebrow">PORTFOLIO</p><h2>Projects</h2></div></div><div id="projects-list" class="grid cards"></div></section>
-    <section id="work" class="panel"><div class="section-head"><div><p class="eyebrow">DISPATCH</p><h2>Work</h2></div></div><div id="work-list" class="table-wrap"></div></section>
-    <section id="returns" class="panel"><div class="section-head"><div><p class="eyebrow">RETURN PLANE</p><h2>Returns</h2></div><span class="pill">transport ≠ acceptance ≠ apply</span></div><div id="returns-list" class="table-wrap"></div></section>
-    <section id="decisions" class="panel"><div class="section-head"><div><p class="eyebrow">ACCEPTED CONTROL DECISIONS</p><h2>Governance</h2></div></div><div id="decisions-list" class="grid cards"></div></section>
-    <section id="commercial" class="panel"><div class="section-head"><div><p class="eyebrow">REVENUE</p><h2>Commercial</h2></div></div><div id="commercial-list" class="grid cards"></div></section>
-    <section id="hanri" class="panel">
-      <div class="section-head"><div><p class="eyebrow">TECHNICAL SUBVIEW</p><h2>HANRI</h2></div></div>
-      <div class="callout"><strong>Boundary:</strong> HANRI observes, proposes, tests and returns evidence. Control Center adjudicates current truth and effects.<div class="links"><a href="https://github.com/bitmaster162/control-center/pull/29">HANRI Pilot 02 PR #29</a><a href="https://github.com/bitmaster162/control-center/pull/30">Control Center PR #30</a></div></div>
-    </section>
+    <section id="projects" class="panel"><div class="section-head"><div><p class="eyebrow">PORTFOLIO</p><h2>Projects</h2></div></div><div id="projects-list" class="grid cards"></div></section><section id="work" class="panel"><div class="section-head"><div><p class="eyebrow">DISPATCH</p><h2>Work</h2></div></div><div id="work-list" class="table-wrap"></div></section><section id="returns" class="panel"><div class="section-head"><div><p class="eyebrow">RETURN PLANE</p><h2>Returns</h2></div><span class="pill">transport ≠ acceptance ≠ apply</span></div><div id="returns-list" class="table-wrap"></div></section><section id="decisions" class="panel"><div class="section-head"><div><p class="eyebrow">ACCEPTED CONTROL DECISIONS</p><h2>Governance</h2></div></div><div id="decisions-list" class="grid cards"></div></section><section id="commercial" class="panel"><div class="section-head"><div><p class="eyebrow">REVENUE</p><h2>Commercial</h2></div></div><div id="commercial-list" class="grid cards"></div></section>
+    <section id="hanri" class="panel"><div class="section-head"><div><p class="eyebrow">TECHNICAL SUBVIEW</p><h2>HANRI</h2></div></div><div class="callout"><strong>Boundary:</strong> HANRI observes, proposes, tests and returns evidence. Control Center adjudicates current truth and effects.<div class="links"><a href="https://github.com/bitmaster162/control-center/pull/29">HANRI Pilot 02 PR #29</a><a href="https://github.com/bitmaster162/control-center/pull/30">Control Center PR #30</a></div></div></section>
   </main>
-
   <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
-
-  <script src="./app.js" defer></script>
-  <script src="./portfolio_governance.js" defer></script>
-  <script src="./portfolio_terminal.js" defer></script>
-  <script src="./portfolio_identity.js" defer></script>
-  <script src="./system_attention.js" defer></script>
-  <script src="./provider_lease.js" defer></script>
-  <script src="./lifecycle.js" defer></script>
-  <script src="./decision_ledger.js" defer></script>
-  <script src="./effect_readback.js" defer></script>
-  <script src="./command_queue.js" defer></script>
-  <script src="./human_gate_packets.js" defer></script>
-  <script src="./execution_scope.js" defer></script>
+  <script src="./app.js" defer></script><script src="./portfolio_governance.js" defer></script><script src="./portfolio_terminal.js" defer></script><script src="./portfolio_identity.js" defer></script><script src="./portfolio_registration.js" defer></script><script src="./system_attention.js" defer></script><script src="./provider_lease.js" defer></script><script src="./lifecycle.js" defer></script><script src="./decision_ledger.js" defer></script><script src="./effect_readback.js" defer></script><script src="./command_queue.js" defer></script><script src="./human_gate_packets.js" defer></script><script src="./execution_scope.js" defer></script>
 </body>
 </html>
