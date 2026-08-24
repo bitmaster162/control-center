@@ -1,0 +1,90 @@
+{
+  "schema": "control_center.portfolio_policy.v1",
+  "policy_kind": "CANDIDATE_NON_AUTHORITY_POLICY",
+  "policy_version": "R3",
+  "policy_owner": "ROBERT",
+  "approval_scope": "AUTHORIZED_FOR_BRANCH_IMPLEMENTATION_ONLY",
+  "source_note": "Portfolio Control Center/dashboard direction and bounded implementation were approved by the human owner in the current conversation on 2026-08-24. This branch artifact is a candidate policy input and is not canonical adoption, merge authority, deployment authority, or effect authority.",
+  "portfolio": {
+    "max_active_lanes": 3,
+    "progress_unit": "CLOSED_INVARIANT_OR_PROOF_OBLIGATION",
+    "single_active_blocker_target": true,
+    "terminal_verdicts": [
+      "PASS",
+      "REJECT",
+      "BLOCKED_EXTERNAL",
+      "HOLD",
+      "SUNSET"
+    ],
+    "definition_of_done_dimensions": [
+      "technical_acceptance",
+      "operational_usability",
+      "commercial_validation",
+      "production_qualification"
+    ],
+    "arbiter": {
+      "mode": "PRESERVE_PROVIDER_OPERATOR_ATTENTION_ORDER",
+      "ordering_source": "agent_control_plane.generated.v1.json#operator_attention.rank",
+      "rescore": false,
+      "weighted_score": false,
+      "evidence_gate": "EXACT_AT_CAPTURE",
+      "ambiguous_rank_action": "HOLD_AMBIGUOUS_RANK",
+      "no_eligible_action": "HOLD_NO_ELIGIBLE_ATTENTION",
+      "eligibility": {
+        "exclude_do_not_touch": true,
+        "require_auto_dispatch_false": true,
+        "require_slot_dispatch_authorized_false": true,
+        "require_named_requested_next": true
+      },
+      "recommendation_scope": "HUMAN_ATTENTION_ONLY",
+      "execution_authority": "NONE"
+    }
+  },
+  "projects": {
+    "control-center": {
+      "policy_state": "CANDIDATE_BOUND",
+      "definition_of_done": {
+        "technical_acceptance": [
+          "Candidate head passes repository CI",
+          "Candidate head passes Control Center Current Truth Projection",
+          "Portfolio Governance deterministic UI test passes"
+        ],
+        "operational_usability": [
+          "Dashboard renders tracked projects and operator-attention lanes from provider-backed generated inputs",
+          "Missing policy or evidence remains visibly missing",
+          "Dashboard remains projection-only and grants no effect authority"
+        ],
+        "commercial_validation": [
+          "NOT_YET_EVIDENCED"
+        ],
+        "production_qualification": [
+          "Explicit human merge approval after review",
+          "Fresh post-merge deployment/readback only if deployment is separately authorized"
+        ]
+      },
+      "kill_sunset_criteria": [
+        "SUNSET_OR_HOLD when no named active blocker or proof obligation justifies further work",
+        "STOP when another safe iteration does not change the decision or close an invariant",
+        "SUNSET when the human owner explicitly ends the lane"
+      ],
+      "freshness_policy": {
+        "source": "provider_freshness_evidence.current.v1.json",
+        "requires_exact_root_match_at_capture": true,
+        "continuous_freshness_required": false,
+        "expired_evidence_action": "HOLD_RECAPTURE",
+        "provider_drift_action": "HOLD_NO_REPAIR"
+      }
+    }
+  },
+  "safety": {
+    "authority_granted": false,
+    "source_of_truth_promoted": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}
