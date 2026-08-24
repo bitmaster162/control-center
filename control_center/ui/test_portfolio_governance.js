@@ -1,5 +1,6 @@
 const assert = require("node:assert/strict");
 const portfolio = require("./portfolio_governance.js");
+const terminal = require("./portfolio_terminal.js");
 
 const control = {
   schema: "control_center.current_control_plane_projection.v1",
@@ -78,7 +79,7 @@ const agentControl = {
 const policy = {
   schema: "control_center.portfolio_policy.v1",
   policy_kind: "CANDIDATE_NON_AUTHORITY_POLICY",
-  policy_version: "R3",
+  policy_version: "R4",
   portfolio: {
     max_active_lanes: 3,
     terminal_verdicts: ["PASS", "REJECT", "BLOCKED_EXTERNAL", "HOLD", "SUNSET"],
@@ -97,6 +98,27 @@ const policy = {
         require_named_requested_next: true
       },
       execution_authority: "NONE"
+    },
+    terminal_engine: {
+      mode: "EXPLICIT_SIGNALS_ONLY",
+      subject_source: "portfolio_arbiter.recommended_project",
+      evidence_source: "portfolio_terminal_evidence.candidate.v1.json",
+      provider_evidence_gate: "EXACT_AT_CAPTURE",
+      allowed_classifications: ["CONTINUE", "HOLD", "TERMINAL_CANDIDATE", "SUNSET_CANDIDATE"],
+      required_dod_dimensions: [
+        "technical_acceptance",
+        "operational_usability",
+        "commercial_validation",
+        "production_qualification"
+      ],
+      terminal_pass_value: "EVIDENCED_PASS",
+      sunset_requires_explicit_human_signal: true,
+      infer_from_free_text: false,
+      infer_from_project_state: false,
+      auto_close: false,
+      auto_sunset: false,
+      auto_repair: false,
+      execution_authority: "NONE"
     }
   },
   projects: {
@@ -107,7 +129,8 @@ const policy = {
         operational_usability: ["Provider-backed dashboard renders"]
       },
       kill_sunset_criteria: ["STOP when no proof obligation remains"],
-      freshness_policy: { source: "provider_freshness_evidence.current.v1.json" }
+      freshness_policy: { source: "provider_freshness_evidence.current.v1.json" },
+      terminal_evidence_binding_required: true
     }
   },
   safety: { authority_granted: false }
@@ -133,6 +156,18 @@ const freshness = {
     authority_critical_snapshot_match: true
   },
   safety: { evidence_grants_authority: false }
+};
+
+const terminalEvidence = {
+  schema: "control_center.portfolio_terminal_evidence.v1",
+  projection_kind: "CANDIDATE_NON_AUTHORITY_TERMINAL_EVIDENCE",
+  observed_at: "2026-08-24T07:45:00+07:00",
+  projects: {},
+  safety: {
+    authority_granted: false,
+    terminal_authority_granted: false,
+    sunset_authority_granted: false
+  }
 };
 
 const projection = portfolio.buildPortfolioProjection(control, agentControl, policy, freshness);
@@ -165,6 +200,20 @@ assert.equal(projection.invariants.active_lane_policy_matches_provider_invariant
 assert.equal(projection.invariants.arbiter_rescore_performed, false);
 assert.equal(projection.invariants.arbiter_execution_authority, "NONE");
 
+const currentTerminal = terminal.buildTerminalClassification(
+  control,
+  policy,
+  terminalEvidence,
+  projection.provider_evidence_binding,
+  projection.arbiter
+);
+assert.equal(currentTerminal.classification, "HOLD");
+assert.equal(currentTerminal.reason_code, "UNREGISTERED_PROJECT");
+assert.equal(currentTerminal.subject_project, "MAWorld");
+assert.equal(currentTerminal.execution_authority, "NONE");
+assert.equal(currentTerminal.auto_close_authorized, false);
+assert.equal(currentTerminal.auto_sunset_authorized, false);
+
 const driftedFreshness = {
   ...freshness,
   stable_roots: {
@@ -176,6 +225,15 @@ const driftedProjection = portfolio.buildPortfolioProjection(control, agentContr
 assert.equal(driftedProjection.provider_evidence_binding.status, "MISMATCH_HOLD");
 assert.equal(driftedProjection.arbiter.decision, "HOLD_EVIDENCE_NOT_EXACT");
 assert.equal(driftedProjection.arbiter.recommended_project, null);
+const driftedTerminal = terminal.buildTerminalClassification(
+  control,
+  policy,
+  terminalEvidence,
+  driftedProjection.provider_evidence_binding,
+  driftedProjection.arbiter
+);
+assert.equal(driftedTerminal.classification, "HOLD");
+assert.equal(driftedTerminal.reason_code, "PROVIDER_EVIDENCE_NOT_EXACT");
 
 const duplicateRank = {
   ...agentControl,
@@ -187,6 +245,14 @@ const duplicateRank = {
 const duplicateProjection = portfolio.buildPortfolioProjection(control, duplicateRank, policy, freshness);
 assert.equal(duplicateProjection.arbiter.decision, "HOLD_AMBIGUOUS_RANK");
 assert.equal(duplicateProjection.arbiter.recommended_project, null);
+const duplicateTerminal = terminal.buildTerminalClassification(
+  control,
+  policy,
+  terminalEvidence,
+  duplicateProjection.provider_evidence_binding,
+  duplicateProjection.arbiter
+);
+assert.equal(duplicateTerminal.reason_code, "NO_ARBITER_SUBJECT");
 
 const topDoNotTouch = {
   ...agentControl,
@@ -200,6 +266,107 @@ assert.equal(skippedProjection.arbiter.recommended_project, "Control Center");
 assert.equal(skippedProjection.arbiter.source_rank, 2);
 assert.equal(skippedProjection.arbiter.considered[0].eligible, false);
 assert.deepEqual(skippedProjection.arbiter.considered[0].rejection_reasons, ["do_not_touch"]);
+const missingTerminalEvidence = terminal.buildTerminalClassification(
+  control,
+  policy,
+  terminalEvidence,
+  skippedProjection.provider_evidence_binding,
+  skippedProjection.arbiter
+);
+assert.equal(missingTerminalEvidence.classification, "HOLD");
+assert.equal(missingTerminalEvidence.reason_code, "TERMINAL_EVIDENCE_MISSING");
+
+const continueEvidence = {
+  ...terminalEvidence,
+  projects: {
+    "control-center": {
+      proof_obligation_open: true,
+      human_sunset_requested: false,
+      explicit_terminal_verdict_evidenced: false,
+      dod_dimensions: {}
+    }
+  }
+};
+const continueClassification = terminal.buildTerminalClassification(
+  control,
+  policy,
+  continueEvidence,
+  skippedProjection.provider_evidence_binding,
+  skippedProjection.arbiter
+);
+assert.equal(continueClassification.classification, "CONTINUE");
+assert.equal(continueClassification.reason_code, "OPEN_PROOF_OR_BLOCKER");
+
+const passEvidence = {
+  ...terminalEvidence,
+  projects: {
+    "control-center": {
+      proof_obligation_open: false,
+      human_sunset_requested: false,
+      explicit_terminal_verdict_evidenced: false,
+      dod_dimensions: {
+        technical_acceptance: "EVIDENCED_PASS",
+        operational_usability: "EVIDENCED_PASS",
+        commercial_validation: "EVIDENCED_PASS",
+        production_qualification: "EVIDENCED_PASS"
+      }
+    }
+  }
+};
+const passClassification = terminal.buildTerminalClassification(
+  control,
+  policy,
+  passEvidence,
+  skippedProjection.provider_evidence_binding,
+  skippedProjection.arbiter
+);
+assert.equal(passClassification.classification, "TERMINAL_CANDIDATE");
+assert.equal(passClassification.terminal_verdict, "PASS");
+assert.equal(passClassification.auto_close_authorized, false);
+
+const rejectEvidence = {
+  ...terminalEvidence,
+  projects: {
+    "control-center": {
+      proof_obligation_open: false,
+      human_sunset_requested: false,
+      explicit_terminal_verdict: "REJECT",
+      explicit_terminal_verdict_evidenced: true,
+      dod_dimensions: {}
+    }
+  }
+};
+const rejectClassification = terminal.buildTerminalClassification(
+  control,
+  policy,
+  rejectEvidence,
+  skippedProjection.provider_evidence_binding,
+  skippedProjection.arbiter
+);
+assert.equal(rejectClassification.classification, "TERMINAL_CANDIDATE");
+assert.equal(rejectClassification.terminal_verdict, "REJECT");
+
+const sunsetEvidence = {
+  ...terminalEvidence,
+  projects: {
+    "control-center": {
+      proof_obligation_open: false,
+      human_sunset_requested: true,
+      explicit_terminal_verdict_evidenced: false,
+      dod_dimensions: {}
+    }
+  }
+};
+const sunsetClassification = terminal.buildTerminalClassification(
+  control,
+  policy,
+  sunsetEvidence,
+  skippedProjection.provider_evidence_binding,
+  skippedProjection.arbiter
+);
+assert.equal(sunsetClassification.classification, "SUNSET_CANDIDATE");
+assert.equal(sunsetClassification.terminal_verdict, "SUNSET");
+assert.equal(sunsetClassification.auto_sunset_authorized, false);
 
 assert.throws(
   () => portfolio.validateInputs({ ...control, projection_kind: "AUTHORITY" }, agentControl, policy, freshness),
@@ -228,6 +395,23 @@ assert.throws(
     }
   }, freshness),
   /authority or scoring invariant mismatch/
+);
+assert.throws(
+  () => terminal.validateTerminalInputs({
+    ...policy,
+    portfolio: {
+      ...policy.portfolio,
+      terminal_engine: { ...policy.portfolio.terminal_engine, auto_sunset: true }
+    }
+  }, terminalEvidence),
+  /authority invariant mismatch/
+);
+assert.throws(
+  () => terminal.validateTerminalInputs(policy, {
+    ...terminalEvidence,
+    safety: { ...terminalEvidence.safety, terminal_authority_granted: true }
+  }),
+  /authority invariant mismatch/
 );
 
 console.log("PORTFOLIO_GOVERNANCE_UI_TEST_PASS");
