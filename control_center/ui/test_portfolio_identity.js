@@ -11,13 +11,18 @@ const repoControl = readRepoJson("current_control_plane.generated.v1.json");
 const repoAgentControl = readRepoJson("agent_control_plane.generated.v1.json");
 const repoEvidence = readRepoJson("portfolio_project_identity.candidate.v1.json");
 const repoCurrent = identity.buildIdentityReconciliation(repoControl, repoAgentControl, repoEvidence);
-assert.equal(repoCurrent.classification, "DISTINCT_IDENTIFIER_CANDIDATE");
-assert.equal(repoCurrent.decision, "HUMAN_ALIAS_OR_NEW_PROJECT_REGISTRY_GATE");
-assert.equal(repoCurrent.reason_code, "REPEATED_PROVIDER_IDENTIFIER_NO_CANONICAL_REGISTRY_MATCH");
+assert.equal(repoCurrent.schema, "control_center.portfolio_project_identity_reconciliation.v2");
+assert.equal(repoCurrent.classification, "HISTORICAL_PROJECT_IDENTITY_EVIDENCED");
+assert.equal(repoCurrent.decision, "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE");
+assert.equal(repoCurrent.reason_code, "R58_CANONICAL_IDENTITY_CURRENT_R64_REGISTRY_ABSENT");
 assert.equal(repoCurrent.subject_display_name, "MAWorld");
 assert.equal(repoCurrent.canonical_candidate, "maworld");
-assert.equal(repoCurrent.semantic_alias_status, "NOT_EVIDENCED");
+assert.equal(repoCurrent.semantic_alias_status, "HISTORICAL_CANONICAL_IDENTITY");
 assert.equal(repoCurrent.canonical_registry_match, null);
+assert.equal(repoCurrent.historical_project_id, "maworld");
+assert.equal(repoCurrent.historical_generation, "R58");
+assert.equal(repoCurrent.historical_evidence_class, "EXACT_LOCAL_R58_ROW");
+assert.equal(repoCurrent.historical_source_file_id, "1dTv1MgxrcWgufZQsRU8yFTUsJyI_aYy_");
 assert.equal(repoCurrent.provider_observation_count, 3);
 assert.deepEqual(repoCurrent.provider_slots.sort(), ["ANTIGRAVITY_WO040", "ANTIGRAVITY_WO041", "CODEX-03"]);
 assert.equal(repoCurrent.registry_gate_required, true);
@@ -139,12 +144,47 @@ assert.equal(current.registry_gate_required, true);
 assert.equal(current.automatic_registration, false);
 assert.equal(current.execution_authority, "NONE");
 
+const historicalEvidence = {
+  ...evidence,
+  historical_identity_evidence: {
+    source_kind: "GOOGLE_DRIVE_BOUNDED_EVIDENCE_DOSSIER",
+    drive_file_id: "drive-maworld-dossier",
+    historical_generation: "R58",
+    historical_evidence_class_claim: "EXACT_LOCAL_R58_ROW",
+    historical_record: {
+      id: "maworld",
+      name: "MAWorld",
+      owner: "CODEX-03"
+    },
+    primary_registry_locator: {
+      name: "R58_CANONICAL_PROJECT_REGISTRY.json",
+      bytes_embedded_in_dossier: false
+    },
+    currentity_ceiling: "HISTORICAL_R58_IDENTITY_ONLY_NOT_CURRENT_R64_AUTHORITY",
+    semantic_identity_supported: true,
+    current_registry_adoption_supported: false
+  },
+  candidate_result: {
+    classification: "HISTORICAL_PROJECT_IDENTITY_EVIDENCED",
+    historical_project_id: "maworld",
+    semantic_alias_status: "HISTORICAL_CANONICAL_IDENTITY",
+    decision: "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE",
+    registry_gate_required: true
+  }
+};
+const historical = identity.buildIdentityReconciliation(control, agentControl, historicalEvidence);
+assert.equal(historical.classification, "HISTORICAL_PROJECT_IDENTITY_EVIDENCED");
+assert.equal(historical.decision, "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE");
+assert.equal(historical.historical_project_id, "maworld");
+assert.equal(historical.registry_gate_required, true);
+assert.equal(historical.automatic_registration, false);
+
 const collisionControl = {
   ...control,
   projects: [...control.projects, { id: "ma-world" }]
 };
 const collisionEvidence = {
-  ...evidence,
+  ...historicalEvidence,
   tracked_project_ids_at_capture: collisionControl.projects.map((project) => project.id),
   candidate_result: {
     classification: "MATCH_EXISTING_PROJECT",
@@ -159,6 +199,17 @@ assert.equal(collision.canonical_registry_match, "ma-world");
 assert.equal(collision.semantic_alias_status, "CANONICAL_IDENTIFIER_MATCH");
 assert.equal(collision.registry_gate_required, false);
 assert.equal(collision.automatic_registration, false);
+
+const brokenHistorical = {
+  ...historicalEvidence,
+  historical_identity_evidence: {
+    ...historicalEvidence.historical_identity_evidence,
+    current_registry_adoption_supported: true
+  }
+};
+const brokenHistoricalResult = identity.buildIdentityReconciliation(control, agentControl, brokenHistorical);
+assert.equal(brokenHistoricalResult.classification, "HOLD");
+assert.equal(brokenHistoricalResult.reason_code, "HISTORICAL_IDENTITY_EVIDENCE_INVALID");
 
 const insufficientEvidence = {
   ...evidence,
