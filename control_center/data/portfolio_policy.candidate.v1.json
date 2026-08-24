@@ -1,10 +1,10 @@
 {
   "schema": "control_center.portfolio_policy.v1",
   "policy_kind": "CANDIDATE_NON_AUTHORITY_POLICY",
-  "policy_version": "R3",
+  "policy_version": "R4",
   "policy_owner": "ROBERT",
   "approval_scope": "AUTHORIZED_FOR_BRANCH_IMPLEMENTATION_ONLY",
-  "source_note": "Portfolio Control Center/dashboard direction and bounded implementation were approved by the human owner in the current conversation on 2026-08-24. This branch artifact is a candidate policy input and is not canonical adoption, merge authority, deployment authority, or effect authority.",
+  "source_note": "Portfolio Control Center/dashboard direction and bounded implementation were approved by the human owner in the current conversation on 2026-08-24. This branch artifact is a candidate policy input and is not canonical adoption, merge authority, deployment authority, terminal authority, sunset authority, or effect authority.",
   "portfolio": {
     "max_active_lanes": 3,
     "progress_unit": "CLOSED_INVARIANT_OR_PROOF_OBLIGATION",
@@ -37,6 +37,32 @@
         "require_named_requested_next": true
       },
       "recommendation_scope": "HUMAN_ATTENTION_ONLY",
+      "execution_authority": "NONE"
+    },
+    "terminal_engine": {
+      "mode": "EXPLICIT_SIGNALS_ONLY",
+      "subject_source": "portfolio_arbiter.recommended_project",
+      "evidence_source": "portfolio_terminal_evidence.candidate.v1.json",
+      "provider_evidence_gate": "EXACT_AT_CAPTURE",
+      "allowed_classifications": [
+        "CONTINUE",
+        "HOLD",
+        "TERMINAL_CANDIDATE",
+        "SUNSET_CANDIDATE"
+      ],
+      "required_dod_dimensions": [
+        "technical_acceptance",
+        "operational_usability",
+        "commercial_validation",
+        "production_qualification"
+      ],
+      "terminal_pass_value": "EVIDENCED_PASS",
+      "sunset_requires_explicit_human_signal": true,
+      "infer_from_free_text": false,
+      "infer_from_project_state": false,
+      "auto_close": false,
+      "auto_sunset": false,
+      "auto_repair": false,
       "execution_authority": "NONE"
     }
   },
@@ -73,7 +99,8 @@
         "continuous_freshness_required": false,
         "expired_evidence_action": "HOLD_RECAPTURE",
         "provider_drift_action": "HOLD_NO_REPAIR"
-      }
+      },
+      "terminal_evidence_binding_required": true
     }
   },
   "safety": {
@@ -81,6 +108,8 @@
     "source_of_truth_promoted": false,
     "dispatch_authorized": false,
     "auto_fix_authorized": false,
+    "auto_close_authorized": false,
+    "auto_sunset_authorized": false,
     "merge_authorized": false,
     "deploy_authorized": false,
     "can_trade": false,
