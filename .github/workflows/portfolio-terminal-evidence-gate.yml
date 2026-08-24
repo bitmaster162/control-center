@@ -9,6 +9,8 @@ on:
       - 'control_center/data/current_control_plane.generated.v1.json'
       - 'control_center/ui/portfolio_terminal.js'
       - 'control_center/ui/portfolio_terminal_evidence_gate.js'
+      - 'control_center/ui/portfolio_policy_binding.js'
+      - 'control_center/ui/test_portfolio_policy_binding.js'
       - 'control_center/ui/test_portfolio_terminal_evidence.js'
       - '.github/workflows/portfolio-terminal-evidence-gate.yml'
 

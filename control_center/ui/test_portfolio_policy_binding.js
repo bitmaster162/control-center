@@ -22,6 +22,7 @@ assert.equal(bound.policy_authority_granted, false);
 assert.equal(bound.implementation_ready, false);
 assert.equal(bound.repair_authorized, false);
 assert.equal(bound.execution_authority, "NONE");
+// Historical transition contract at the moment policy binding was introduced.
 assert.equal(bound.expected_terminal_reason_after_binding, "TERMINAL_EVIDENCE_MISSING");
 
 const missingEntry = structuredClone(policy);
@@ -60,8 +61,9 @@ assert.equal(arbiter.recommended_project, "MAWorld");
 const terminalResult = terminal.buildTerminalClassification(control, policy, terminalEvidence, evidenceBinding, arbiter, registrations);
 assert.equal(terminalResult.subject_project, "maworld");
 assert.equal(terminalResult.project_registration_source, "HUMAN_OPERATIONAL_REGISTRATION_OVERLAY");
-assert.equal(terminalResult.classification, "HOLD");
-assert.equal(terminalResult.reason_code, "TERMINAL_EVIDENCE_MISSING");
+assert.equal(terminalResult.classification, "CONTINUE");
+assert.equal(terminalResult.reason_code, "OPEN_PROOF_OR_BLOCKER");
+assert.equal(terminalResult.terminal_verdict, null);
 assert.equal(terminalResult.execution_authority, "NONE");
 
 console.log("PORTFOLIO_POLICY_BINDING_TEST_PASS");
