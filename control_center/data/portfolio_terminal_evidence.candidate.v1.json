@@ -1,0 +1,21 @@
+{
+  "schema": "control_center.portfolio_terminal_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_TERMINAL_EVIDENCE",
+  "observed_at": "2026-08-24T07:45:00+07:00",
+  "scope": "PORTFOLIO_TERMINAL_CLASSIFICATION_INPUT_ONLY",
+  "source_note": "This file is a bounded evidence envelope for the R4 terminal/kill/sunset engine. Absence of a project entry means terminal evidence is not currently bound; the engine must HOLD rather than infer from free text, project state, or prior checkpoint claims.",
+  "projects": {},
+  "safety": {
+    "authority_granted": false,
+    "terminal_authority_granted": false,
+    "sunset_authority_granted": false,
+    "auto_close_authorized": false,
+    "auto_sunset_authorized": false,
+    "auto_repair_authorized": false,
+    "dispatch_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}
