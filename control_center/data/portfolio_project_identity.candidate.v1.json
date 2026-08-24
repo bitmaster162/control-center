@@ -1,0 +1,69 @@
+{
+  "schema": "control_center.portfolio_project_identity_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_PROJECT_IDENTITY_EVIDENCE",
+  "assembled_at": "2026-08-24T07:53:00+07:00",
+  "subject": {
+    "display_name": "MAWorld",
+    "canonical_candidate": "maworld"
+  },
+  "source_binding": {
+    "control_projection": "current_control_plane.generated.v1.json",
+    "control_observed_at": "2026-08-12T03:45:00+07:00",
+    "agent_control_projection": "agent_control_plane.generated.v1.json",
+    "agent_control_observed_at": "2026-08-12T03:45:00+07:00"
+  },
+  "minimum_distinct_slot_observations": 2,
+  "provider_observations": [
+    {
+      "slot": "ANTIGRAVITY_WO040",
+      "project_hint": "MAWorld",
+      "reported_state": "MAWORLD_TARGET_QUALIFICATION_READY",
+      "work_order": "ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION"
+    },
+    {
+      "slot": "ANTIGRAVITY_WO041",
+      "project_hint": "MAWorld",
+      "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB",
+      "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE"
+    },
+    {
+      "slot": "CODEX-03",
+      "project_hint": "MAWorld",
+      "reported_state": "RLS_TEST_FAIL",
+      "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21"
+    }
+  ],
+  "tracked_project_ids_at_capture": [
+    "control-center",
+    "operator-sprint",
+    "agent-authority-audit",
+    "bitevo-public",
+    "bitevo-core",
+    "hanri",
+    "p0-security",
+    "return-plane-v2",
+    "tradingos"
+  ],
+  "candidate_result": {
+    "classification": "DISTINCT_IDENTIFIER_CANDIDATE",
+    "canonical_registry_match": null,
+    "semantic_alias_status": "NOT_EVIDENCED",
+    "decision": "HUMAN_ALIAS_OR_NEW_PROJECT_REGISTRY_GATE",
+    "registry_gate_required": true
+  },
+  "interpretation_boundary": "Repeated provider observations establish a stable unregistered identifier only. They do not prove that MAWorld is semantically distinct from every existing project or authorize a new registry entry.",
+  "safety": {
+    "authority_granted": false,
+    "identity_authority_granted": false,
+    "alias_authority_granted": false,
+    "automatic_registration": false,
+    "canonical_registry_write_authorized": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}
