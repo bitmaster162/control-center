@@ -65,6 +65,32 @@
     return (control.projects || []).map((project) => String(project.id || "")).sort();
   }
 
+  function validateHistoricalIdentity(candidateId, displayName, historical) {
+    if (!historical) return { present: false, valid: false, reason: null };
+    const record = historical.historical_record || {};
+    const locator = historical.primary_registry_locator || {};
+    const valid = historical.source_kind === "GOOGLE_DRIVE_BOUNDED_EVIDENCE_DOSSIER"
+      && historical.historical_generation === "R58"
+      && historical.historical_evidence_class_claim === "EXACT_LOCAL_R58_ROW"
+      && historical.semantic_identity_supported === true
+      && historical.current_registry_adoption_supported === false
+      && historical.currentity_ceiling === "HISTORICAL_R58_IDENTITY_ONLY_NOT_CURRENT_R64_AUTHORITY"
+      && canonicalProjectId(record.id) === candidateId
+      && canonicalProjectId(record.name) === canonicalProjectId(displayName)
+      && locator.name === "R58_CANONICAL_PROJECT_REGISTRY.json"
+      && locator.bytes_embedded_in_dossier === false;
+    return {
+      present: true,
+      valid,
+      reason: valid ? null : "HISTORICAL_IDENTITY_EVIDENCE_INVALID",
+      record,
+      locator,
+      drive_file_id: historical.drive_file_id || null,
+      evidence_class: historical.historical_evidence_class_claim || null,
+      generation: historical.historical_generation || null
+    };
+  }
+
   function buildIdentityReconciliation(control, agentControl, evidence) {
     validateIdentityEvidence(evidence);
     if (!control || control.schema !== "control_center.current_control_plane_projection.v1" || control.projection_kind !== "NON_AUTHORITY_PROJECTION") {
@@ -77,7 +103,7 @@
     const displayName = String(evidence.subject?.display_name || "").trim();
     const candidateId = String(evidence.subject?.canonical_candidate || "").trim();
     const base = {
-      schema: "control_center.portfolio_project_identity_reconciliation.v1",
+      schema: "control_center.portfolio_project_identity_reconciliation.v2",
       projection_kind: "NON_AUTHORITY_IDENTITY_RECONCILIATION",
       subject_display_name: displayName || null,
       canonical_candidate: candidateId || null,
@@ -86,6 +112,10 @@
       reason_code: "UNSET",
       semantic_alias_status: "NOT_EVIDENCED",
       canonical_registry_match: null,
+      historical_project_id: null,
+      historical_generation: null,
+      historical_evidence_class: null,
+      historical_source_file_id: null,
       provider_observation_count: 0,
       provider_slots: [],
       registry_gate_required: true,
@@ -186,6 +216,7 @@
         registry_gate_required: false,
         explanation: [
           `Canonical identifier ${candidateId} matches tracked project ${canonicalMatch.id}.`,
+          "Current tracked registry identity outranks historical identity evidence for this reconciliation.",
           "This reconciliation is descriptive only and does not mutate project metadata or grant execution authority."
         ]
       };
@@ -193,6 +224,53 @@
         return hold(result, "CANDIDATE_CLAIM_MISMATCH", [
           "Derived identity classification conflicts with the candidate evidence packet claim.",
           "Recapture the candidate packet before relying on the reconciliation."
+        ]);
+      }
+      return result;
+    }
+
+    const historical = validateHistoricalIdentity(candidateId, displayName, evidence.historical_identity_evidence);
+    if (historical.present && !historical.valid) {
+      return hold({ ...base, provider_observation_count: distinctSourceSlots.size, provider_slots: Array.from(distinctSourceSlots) }, historical.reason, [
+        "Historical identity evidence is present but fails its bounded source/currentity contract.",
+        "No historical identity or current registry adoption is inferred."
+      ]);
+    }
+
+    if (historical.valid) {
+      const result = {
+        ...base,
+        classification: "HISTORICAL_PROJECT_IDENTITY_EVIDENCED",
+        decision: "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE",
+        reason_code: "R58_CANONICAL_IDENTITY_CURRENT_R64_REGISTRY_ABSENT",
+        semantic_alias_status: "HISTORICAL_CANONICAL_IDENTITY",
+        canonical_registry_match: null,
+        historical_project_id: historical.record.id,
+        historical_generation: historical.generation,
+        historical_evidence_class: historical.evidence_class,
+        historical_source_file_id: historical.drive_file_id,
+        provider_observation_count: distinctSourceSlots.size,
+        provider_slots: Array.from(distinctSourceSlots),
+        registry_gate_required: true,
+        explanation: [
+          `${distinctSourceSlots.size} distinct captured provider slots reproduce identifier ${displayName}.`,
+          `A bounded Drive dossier reproduces an ${historical.evidence_class} record from ${historical.generation} with id=${historical.record.id}, name=${historical.record.name}, owner=${historical.record.owner}.`,
+          `No current R64 tracked project ID canonicalizes to ${candidateId}.`,
+          "The historical dossier explicitly does not grant current authority and does not embed the primary R58 registry bytes.",
+          "Therefore identity is historically evidenced, but current Portfolio registry adoption remains an explicit human gate."
+        ]
+      };
+      const claim = evidence.candidate_result || {};
+      if (
+        claim.classification !== result.classification
+        || claim.historical_project_id !== result.historical_project_id
+        || claim.semantic_alias_status !== result.semantic_alias_status
+        || claim.decision !== result.decision
+        || claim.registry_gate_required !== true
+      ) {
+        return hold(result, "CANDIDATE_CLAIM_MISMATCH", [
+          "Derived historical identity classification does not match the candidate evidence packet claim.",
+          "The layer fails closed instead of silently rewriting the packet."
         ]);
       }
       return result;
@@ -233,12 +311,16 @@
 
   function renderIdentity(target, value) {
     const explanation = (value.explanation || []).map((item) => `<li>${esc(item)}</li>`).join("");
+    const historical = value.historical_project_id
+      ? `<p>Historical identity: <b>${esc(value.historical_project_id)}</b> · generation: <b>${esc(value.historical_generation)}</b> · evidence: ${badge(value.historical_evidence_class)}.</p>`
+      : "";
     target.innerHTML = `<div class="callout">
       <strong>Project Identity Reconciliation · ${badge(value.classification)}</strong>
       <p>Subject: <b>${esc(value.subject_display_name || "NONE")}</b> · canonical candidate: <b>${esc(value.canonical_candidate || "NONE")}</b> · provider observations: <b>${esc(value.provider_observation_count)}</b>.</p>
-      <p>Registry match: <b>${esc(value.canonical_registry_match || "NONE")}</b> · semantic alias: ${badge(value.semantic_alias_status)} · decision: ${badge(value.decision)}.</p>
+      <p>Current registry match: <b>${esc(value.canonical_registry_match || "NONE")}</b> · semantic identity: ${badge(value.semantic_alias_status)} · decision: ${badge(value.decision)}.</p>
+      ${historical}
       <ul>${explanation}</ul>
-      <p class="muted">Identity reconciliation is non-authority. It cannot register, rename, alias, repair, dispatch, merge, deploy, trade, allocate capital, or mutate canonical state.</p>
+      <p class="muted">Identity reconciliation is non-authority. Historical identity evidence is not current registry adoption. This layer cannot register, rename, alias, repair, dispatch, merge, deploy, trade, allocate capital, or mutate canonical state.</p>
     </div>`;
     return value;
   }
@@ -265,7 +347,7 @@
     }
   }
 
-  const api = { canonicalProjectId, validateIdentityEvidence, buildIdentityReconciliation, renderIdentity };
+  const api = { canonicalProjectId, validateIdentityEvidence, validateHistoricalIdentity, buildIdentityReconciliation, renderIdentity };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.PortfolioIdentity = api;
   if (typeof document !== "undefined") boot();
