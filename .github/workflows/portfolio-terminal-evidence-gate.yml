@@ -1,0 +1,31 @@
+name: Portfolio Terminal Evidence Gate
+
+on:
+  pull_request:
+    paths:
+      - 'control_center/data/portfolio_terminal_evidence.candidate.v1.json'
+      - 'control_center/data/portfolio_operational_registrations.current.v1.json'
+      - 'control_center/data/portfolio_policy.candidate.v1.json'
+      - 'control_center/data/current_control_plane.generated.v1.json'
+      - 'control_center/ui/portfolio_terminal.js'
+      - 'control_center/ui/portfolio_terminal_evidence_gate.js'
+      - 'control_center/ui/test_portfolio_terminal_evidence.js'
+      - '.github/workflows/portfolio-terminal-evidence-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-terminal-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Portfolio terminal evidence gate
+        run: |
+          node --check control_center/ui/portfolio_terminal.js
+          node --check control_center/ui/portfolio_terminal_evidence_gate.js
+      - name: Adversarial MAWorld terminal evidence tests
+        run: node control_center/ui/test_portfolio_terminal_evidence.js
