@@ -1,5 +1,29 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 const identity = require("./portfolio_identity.js");
+
+function readRepoJson(name) {
+  return JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", name), "utf8"));
+}
+
+const repoControl = readRepoJson("current_control_plane.generated.v1.json");
+const repoAgentControl = readRepoJson("agent_control_plane.generated.v1.json");
+const repoEvidence = readRepoJson("portfolio_project_identity.candidate.v1.json");
+const repoCurrent = identity.buildIdentityReconciliation(repoControl, repoAgentControl, repoEvidence);
+assert.equal(repoCurrent.classification, "DISTINCT_IDENTIFIER_CANDIDATE");
+assert.equal(repoCurrent.decision, "HUMAN_ALIAS_OR_NEW_PROJECT_REGISTRY_GATE");
+assert.equal(repoCurrent.reason_code, "REPEATED_PROVIDER_IDENTIFIER_NO_CANONICAL_REGISTRY_MATCH");
+assert.equal(repoCurrent.subject_display_name, "MAWorld");
+assert.equal(repoCurrent.canonical_candidate, "maworld");
+assert.equal(repoCurrent.semantic_alias_status, "NOT_EVIDENCED");
+assert.equal(repoCurrent.canonical_registry_match, null);
+assert.equal(repoCurrent.provider_observation_count, 3);
+assert.deepEqual(repoCurrent.provider_slots.sort(), ["ANTIGRAVITY_WO040", "ANTIGRAVITY_WO041", "CODEX-03"]);
+assert.equal(repoCurrent.registry_gate_required, true);
+assert.equal(repoCurrent.automatic_registration, false);
+assert.equal(repoCurrent.identity_authority_granted, false);
+assert.equal(repoCurrent.execution_authority, "NONE");
 
 const control = {
   schema: "control_center.current_control_plane_projection.v1",
