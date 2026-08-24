@@ -1,0 +1,81 @@
+{
+  "schema": "control_center.portfolio_policy_binding_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_POLICY_BINDING_EVIDENCE",
+  "assembled_at": "2026-08-24T08:56:00+07:00",
+  "subject": {
+    "canonical_id": "maworld",
+    "display_name": "MAWorld"
+  },
+  "registration_binding": {
+    "approval_phrase": "APPROVE_MAWORLD_OPERATIONAL_PROJECT_REGISTRATION_R1",
+    "scope": "CURRENT_PORTFOLIO_OPERATIONAL_REGISTRATION_ONLY",
+    "expected_registration_state": "CURRENT_PORTFOLIO_OPERATIONALLY_REGISTERED",
+    "expected_operational_state": "FAILURE_DIAGNOSTIC_REQUIRED",
+    "expected_owner_candidate": "CODEX-03",
+    "owner_authority_expected": false,
+    "implementation_ready_expected": false,
+    "repair_authorized_expected": false
+  },
+  "source_evidence": {
+    "current_return_registry": {
+      "drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+      "raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+      "generation": "R50_AUDIT",
+      "claims": [
+        "CODEX-03 reports MAWorld RLS_TEST_FAIL with INITDB_FAILED",
+        "CODEX-03 teardown is CLEAN and source_mutation is false",
+        "ANTIGRAVITY_WO041 independently verifies the same CODEX-03 return SHA and reports ACCEPTANCE_VERIFIED_FAIL_INITDB"
+      ],
+      "currentity_ceiling": "CURRENT_PROVIDER_BYTES_WITH_R50_ERA_PAYLOAD_NOT_CONTINUOUS_RUNTIME_FRESHNESS"
+    },
+    "internal_project_contract": {
+      "drive_file_id": "1VHp7pUdFkp-4tm0zmgevLQunXhk94obM",
+      "title": "21_maworld.md",
+      "provider_modified_time": "2026-07-30T18:01:26.280Z",
+      "claims": [
+        "Current gate is portable PostgreSQL sandbox with raw stdout/stderr, then RLS 21/21 and teardown",
+        "Owner reference is CODEX-03",
+        "Allowed research decisions include KEEP_RESEARCH_INFRA, MERGE, HOLD, KILL"
+      ],
+      "currentity_ceiling": "SOURCE_BACKED_INTERNAL_CONTRACT_NOT_RUNTIME_AUTHORITY"
+    },
+    "deep_research_decision": {
+      "drive_file_id": "1xm-Mi9PZZkjAR9c5ZcooGFOgz51kwven",
+      "title": "deep-research-report (28).md",
+      "provider_modified_time": "2026-07-31T20:04:36.277Z",
+      "cutoff_date": "2026-08-01",
+      "decision": "KEEP_RESEARCH_INFRA",
+      "implementation_status": "PARTIAL_INTERNAL_EVIDENCE",
+      "proof_gate": "ONE_COMPLETE_RECEIPT_BUNDLE_ON_VERIFIABLE_GIT_BASELINE",
+      "scope_boundary": "NARROW_INTERNAL_EXPERIMENTAL_ISOLATION_AND_EVIDENCE_HARNESS_NOT_GENERIC_AGENT_ORCHESTRATOR",
+      "currentity_ceiling": "ADVISORY_STRATEGIC_RESEARCH_NOT_CANONICAL_RUNTIME_OR_POLICY_AUTHORITY"
+    }
+  },
+  "binding_requirements": {
+    "policy_state": "CANDIDATE_BOUND",
+    "policy_binding_class": "SOURCE_BACKED_NON_AUTHORITY",
+    "portfolio_role": "INTERNAL_RESEARCH_INFRA",
+    "strategic_decision": "KEEP_RESEARCH_INFRA",
+    "terminal_evidence_binding_required": true,
+    "fresh_git_baseline_required_before_implementation": true,
+    "implementation_ready": false,
+    "repair_authorized": false,
+    "expected_terminal_reason_after_binding": "TERMINAL_EVIDENCE_MISSING"
+  },
+  "safety": {
+    "authority_granted": false,
+    "canonical_policy_adoption": false,
+    "policy_authority_granted": false,
+    "owner_authority_granted": false,
+    "implementation_authorized": false,
+    "repair_authorized": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "runtime_mutation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}
