@@ -1,3 +1,23 @@
+# Repository custody note — post-R70
+
+Current branch state for this document:
+
+- branch: `agent/r70-rmr-post-proof-runtime-closure`
+- current commit before this correction: `467742be07d3fed928fd0f2afdbd2ac755b5838c`
+- parent/base: `9a8e26dddc44178a8cdf6e606da2d5c4a45b7423`
+- repository path: `control_center/status/RMR_POST_PROOF_RUNTIME_CLOSURE_R69_20260827.md`
+- repository custody: `COMMITTED_ON_REVIEW_BRANCH`
+- PR: `NOT_CREATED`
+- merge: `NOT_PERFORMED`
+- Actions rerun: `NOT_PERFORMED`
+- runtime/service/Current Truth mutation: `NOT_PERFORMED`
+
+The R69 body below is intentionally preserved as the exact pre-write snapshot that R70 committed. Therefore its phrases `PREPARED / READ-ONLY / NOT COMMITTED`, `prepared locally only`, and its repository-write gate describe the **R69 pre-write state** and must not be read as the current branch state.
+
+This custody note changes no RMR semantic or authority conclusion. The effective authority ceiling remains `EVIDENCE_ONLY`, `CANDIDATE_NOT_LIVE`, `current_truth_promoted=false`, and `execution_authority=NONE`.
+
+---
+
 # RMR R69 — Post-Proof Runtime Closure
 
 Status: `PREPARED / READ-ONLY / NOT COMMITTED`
