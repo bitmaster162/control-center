@@ -17,6 +17,18 @@ RUAP_SCHEMA = "ruap.snapshot/v1"
 LENS_SCHEMA = "control_tower.portfolio_lens/v1"
 AUTHORITY_CEILING = "OBSERVE_ONLY"
 
+_ALLOWED_OBSERVATION_CLASSES = frozenset(
+    {
+        "PROVIDER_READBACK",
+        "ACCEPTED_META",
+        "RECEIPT",
+        "HANDOFF",
+        "HISTORICAL",
+        "INFERENCE",
+        "UNKNOWN",
+    }
+)
+
 _SEVERITY = {
     "CURRENT": 0,
     "PARTIAL": 1,
@@ -73,6 +85,13 @@ def sha256_ruap_snapshot(value: Any) -> str:
     return hashlib.sha256(canonical_ruap_snapshot(value)).hexdigest()
 
 
+def _required_text(row: Mapping[str, Any], key: str, error: str) -> str:
+    value = row.get(key)
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(error)
+    return value
+
+
 def _parse_snapshot(snapshot: bytes | str | Mapping[str, Any]) -> dict[str, Any]:
     if isinstance(snapshot, Mapping):
         data = dict(snapshot)
@@ -90,28 +109,37 @@ def _parse_snapshot(snapshot: bytes | str | Mapping[str, Any]) -> dict[str, Any]
         raise ValueError("SNAPSHOT_SCHEMA")
     if data.get("authority_ceiling") != AUTHORITY_CEILING:
         raise ValueError("AUTHORITY_CEILING")
-    if not isinstance(data.get("sources"), list):
+
+    sources = data.get("sources")
+    observations = data.get("observations")
+    if not isinstance(sources, list):
         raise ValueError("SOURCES")
-    if not isinstance(data.get("observations"), list):
+    if not isinstance(observations, list):
         raise ValueError("OBSERVATIONS")
-    source_ids = {
-        row.get("id")
-        for row in data["sources"]
-        if isinstance(row, Mapping) and isinstance(row.get("id"), str)
-    }
-    if len(source_ids) != len(data["sources"]):
-        raise ValueError("SOURCE_IDENTITY")
-    for obs in data["observations"]:
+
+    source_ids: set[str] = set()
+    for row in sources:
+        if not isinstance(row, Mapping):
+            raise ValueError("SOURCE_OBJECT")
+        source_id = _required_text(row, "id", "SOURCE_IDENTITY")
+        _required_text(row, "provider", "SOURCE_PROVIDER")
+        _required_text(row, "locator", "SOURCE_LOCATOR")
+        _required_text(row, "observed_at", "SOURCE_OBSERVED_AT")
+        if source_id in source_ids:
+            raise ValueError("SOURCE_IDENTITY")
+        source_ids.add(source_id)
+
+    for obs in observations:
         if not isinstance(obs, Mapping):
             raise ValueError("OBSERVATION_OBJECT")
-        if obs.get("source_id") not in source_ids:
+        source_id = _required_text(obs, "source_id", "OBSERVATION_SOURCE")
+        if source_id not in source_ids:
             raise ValueError("OBSERVATION_SOURCE")
-        if not isinstance(obs.get("subject"), str) or not obs["subject"]:
-            raise ValueError("OBSERVATION_SUBJECT")
-        if not isinstance(obs.get("claim"), str) or not obs["claim"]:
-            raise ValueError("OBSERVATION_CLAIM")
-        if not isinstance(obs.get("class"), str) or not obs["class"]:
-            raise ValueError("OBSERVATION_CLASS")
+        _required_text(obs, "subject", "OBSERVATION_SUBJECT")
+        _required_text(obs, "claim", "OBSERVATION_CLAIM")
+        observation_class = _required_text(obs, "class", "OBSERVATION_CLASS")
+        if observation_class not in _ALLOWED_OBSERVATION_CLASSES:
+            raise ValueError("OBSERVATION_CLASS_UNSUPPORTED")
     return data
 
 

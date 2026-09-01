@@ -111,6 +111,39 @@ class PortfolioLensTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "OBSERVATION_SOURCE"):
             build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
 
+    def test_rejects_missing_source_identity_fields(self):
+        cases = (
+            ("provider", "SOURCE_PROVIDER"),
+            ("locator", "SOURCE_LOCATOR"),
+            ("observed_at", "SOURCE_OBSERVED_AT"),
+        )
+        for field, error in cases:
+            with self.subTest(field=field):
+                value = fixture()
+                del value["sources"][0][field]
+                with self.assertRaisesRegex(ValueError, error):
+                    build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
+
+    def test_rejects_whitespace_source_identity_fields(self):
+        cases = (
+            ("id", "SOURCE_IDENTITY"),
+            ("provider", "SOURCE_PROVIDER"),
+            ("locator", "SOURCE_LOCATOR"),
+            ("observed_at", "SOURCE_OBSERVED_AT"),
+        )
+        for field, error in cases:
+            with self.subTest(field=field):
+                value = fixture()
+                value["sources"][0][field] = "   "
+                with self.assertRaisesRegex(ValueError, error):
+                    build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
+
+    def test_rejects_unsupported_observation_class(self):
+        value = fixture()
+        value["observations"][0]["class"] = "EXECUTION_AUTHORITY"
+        with self.assertRaisesRegex(ValueError, "OBSERVATION_CLASS_UNSUPPORTED"):
+            build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
+
     def test_projection_declares_hard_denies(self):
         result = build_portfolio_lens(fixture(), generated_at="2026-09-01T17:40:01+07:00")
         inv = result["invariants"]
