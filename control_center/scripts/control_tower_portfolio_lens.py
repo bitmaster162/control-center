@@ -64,6 +64,15 @@ def sha256_json(value: Any) -> str:
     return hashlib.sha256(canonical_json(value)).hexdigest()
 
 
+def canonical_ruap_snapshot(value: Any) -> bytes:
+    """RUAP/ContinuityOS canonical Snapshot IR bytes include one trailing LF."""
+    return canonical_json(value) + b"\n"
+
+
+def sha256_ruap_snapshot(value: Any) -> str:
+    return hashlib.sha256(canonical_ruap_snapshot(value)).hexdigest()
+
+
 def _parse_snapshot(snapshot: bytes | str | Mapping[str, Any]) -> dict[str, Any]:
     if isinstance(snapshot, Mapping):
         data = dict(snapshot)
@@ -232,7 +241,7 @@ def build_portfolio_lens(
         "input": {
             "schema": RUAP_SCHEMA,
             "snapshot_generated_at": data.get("generated_at"),
-            "snapshot_sha256": sha256_json(data),
+            "snapshot_sha256": sha256_ruap_snapshot(data),
         },
         "summary": {
             "entity_count": len(entities),

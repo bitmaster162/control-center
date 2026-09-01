@@ -119,6 +119,13 @@ class PortfolioLensTests(unittest.TestCase):
         self.assertEqual(inv["deploy_permission"], "DENY")
         self.assertTrue(inv["control_center_remains_semantic_authority"])
 
+    def test_ruap_snapshot_identity_uses_canonical_trailing_lf(self):
+        from control_tower_portfolio_lens import canonical_json, sha256_ruap_snapshot
+        import hashlib
+        value = fixture()
+        expected = hashlib.sha256(canonical_json(value) + b"\n").hexdigest()
+        self.assertEqual(sha256_ruap_snapshot(value), expected)
+
 
 if __name__ == "__main__":
     unittest.main()
