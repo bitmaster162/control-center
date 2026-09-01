@@ -144,6 +144,14 @@ class PortfolioLensTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "OBSERVATION_CLASS_UNSUPPORTED"):
             build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
 
+    def test_rejects_empty_derived_entity(self):
+        for subject in (" .x", ".x", " . "):
+            with self.subTest(subject=subject):
+                value = fixture()
+                value["observations"][0]["subject"] = subject
+                with self.assertRaisesRegex(ValueError, "OBSERVATION_ENTITY"):
+                    build_portfolio_lens(value, generated_at="2026-09-01T17:40:01+07:00")
+
     def test_projection_declares_hard_denies(self):
         result = build_portfolio_lens(fixture(), generated_at="2026-09-01T17:40:01+07:00")
         inv = result["invariants"]

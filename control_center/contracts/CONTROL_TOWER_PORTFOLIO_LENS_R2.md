@@ -1,6 +1,6 @@
 # Control Tower / Portfolio Lens Contract R2
 
-Status: LOCAL CANDIDATE / READ_ONLY / NO PROVIDER EFFECTS
+Status: MERGED_SOURCE / READ_ONLY / NO PROVIDER EFFECTS
 
 R2 preserves all R1 boundaries and adds the cross-system identity invariant:
 
