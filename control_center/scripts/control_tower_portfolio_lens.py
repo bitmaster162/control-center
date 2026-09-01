@@ -196,6 +196,8 @@ def build_portfolio_lens(
     for raw in data["observations"]:
         obs = dict(raw)
         entity = _entity_key(obs["subject"])
+        if not entity:
+            raise ValueError("OBSERVATION_ENTITY")
         grouped.setdefault(entity, []).append(obs)
 
     entities: list[dict[str, Any]] = []

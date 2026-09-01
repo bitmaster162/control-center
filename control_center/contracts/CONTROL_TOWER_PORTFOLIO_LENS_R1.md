@@ -1,6 +1,6 @@
 # Control Tower / Portfolio Lens Contract R1
 
-Status: LOCAL CANDIDATE / READ_ONLY / NO PROVIDER EFFECTS
+Status: MERGED_SOURCE / READ_ONLY / NO PROVIDER EFFECTS
 
 ## Role
 
