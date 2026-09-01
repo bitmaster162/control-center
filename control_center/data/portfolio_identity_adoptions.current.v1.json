@@ -1,0 +1,54 @@
+{
+  "schema": "control_center.portfolio_identity_adoptions.v1",
+  "projection_kind": "HUMAN_APPROVED_NON_EXECUTION_IDENTITY_OVERLAY",
+  "assembled_at": "2026-08-24T08:09:00+07:00",
+  "base_binding": {
+    "repository": "bitmaster162/control-center",
+    "base_branch": "gpt/github-ready-r1",
+    "base_sha": "9a8e26dddc44178a8cdf6e606da2d5c4a45b7423",
+    "candidate_branch": "agent/portfolio-governance-dashboard-r1",
+    "adoption_input_head_sha": "32d454a091273d4e2cbb84a842ba75f77c12b2c1",
+    "control_observed_at": "2026-08-12T03:45:00+07:00",
+    "canonical_generation": "R64"
+  },
+  "adoptions": [
+    {
+      "canonical_id": "maworld",
+      "display_name": "MAWorld",
+      "identity_source": {
+        "historical_generation": "R58",
+        "historical_evidence_class": "EXACT_LOCAL_R58_ROW",
+        "drive_file_id": "1dTv1MgxrcWgufZQsRU8yFTUsJyI_aYy_",
+        "historical_alias": "Multi-agent world / MAWorld RLS",
+        "historical_owner_reference": "CODEX-03"
+      },
+      "approval": {
+        "phrase": "APPROVE_MAWORLD_CURRENT_PORTFOLIO_IDENTITY_ADOPTION_R1",
+        "approved_at": "2026-08-24T08:09:00+07:00",
+        "scope": "CURRENT_PORTFOLIO_IDENTITY_ONLY"
+      },
+      "result": {
+        "current_identity_state": "CURRENT_PORTFOLIO_IDENTITY_ADOPTED",
+        "operational_project_registration": "NOT_GRANTED",
+        "current_owner_authority": "NOT_GRANTED",
+        "current_state_authority": "NOT_GRANTED",
+        "policy_binding_authority": "NOT_GRANTED"
+      }
+    }
+  ],
+  "safety": {
+    "authority_granted": false,
+    "operational_registration_authorized": false,
+    "owner_authority_granted": false,
+    "state_authority_granted": false,
+    "policy_authority_granted": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "runtime_mutation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

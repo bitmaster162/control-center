@@ -1,0 +1,102 @@
+{
+  "schema": "control_center.portfolio_project_identity_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_PROJECT_IDENTITY_EVIDENCE",
+  "assembled_at": "2026-08-24T08:05:00+07:00",
+  "subject": {
+    "display_name": "MAWorld",
+    "canonical_candidate": "maworld"
+  },
+  "source_binding": {
+    "control_projection": "current_control_plane.generated.v1.json",
+    "control_observed_at": "2026-08-12T03:45:00+07:00",
+    "agent_control_projection": "agent_control_plane.generated.v1.json",
+    "agent_control_observed_at": "2026-08-12T03:45:00+07:00"
+  },
+  "minimum_distinct_slot_observations": 2,
+  "provider_observations": [
+    {
+      "slot": "ANTIGRAVITY_WO040",
+      "project_hint": "MAWorld",
+      "reported_state": "MAWORLD_TARGET_QUALIFICATION_READY",
+      "work_order": "ANTIGRAVITY-WO040-MAWORLD-TARGET-QUALIFICATION"
+    },
+    {
+      "slot": "ANTIGRAVITY_WO041",
+      "project_hint": "MAWorld",
+      "reported_state": "ACCEPTANCE_VERIFIED_FAIL_INITDB",
+      "work_order": "ANTIGRAVITY-WO041-MAWORLD-POST-RUN-ACCEPTANCE"
+    },
+    {
+      "slot": "CODEX-03",
+      "project_hint": "MAWorld",
+      "reported_state": "RLS_TEST_FAIL",
+      "work_order": "CODEX03-R49B-MAWORLD-PHYSICAL-RLS-21OF21"
+    }
+  ],
+  "tracked_project_ids_at_capture": [
+    "control-center",
+    "operator-sprint",
+    "agent-authority-audit",
+    "bitevo-public",
+    "bitevo-core",
+    "hanri",
+    "p0-security",
+    "return-plane-v2",
+    "tradingos"
+  ],
+  "historical_identity_evidence": {
+    "source_kind": "GOOGLE_DRIVE_BOUNDED_EVIDENCE_DOSSIER",
+    "drive_file_id": "1dTv1MgxrcWgufZQsRU8yFTUsJyI_aYy_",
+    "title": "02_ATTACH_EVIDENCE_DOSSIER.md",
+    "dossier_project_id": "maworld",
+    "dossier_topic_lock": "MAWORLD",
+    "dossier_generated_at": "2026-07-30T19:24:15+00:00",
+    "historical_generation": "R58",
+    "historical_evidence_class_claim": "EXACT_LOCAL_R58_ROW",
+    "historical_record": {
+      "id": "maworld",
+      "name": "MAWorld",
+      "aliases": [
+        "Multi-agent world / MAWorld RLS"
+      ],
+      "category": "multi_agent_runtime",
+      "owner": "CODEX-03",
+      "scope": "PostgreSQL/RLS-backed multi-agent isolation/runtime experiment",
+      "implementation": "BLOCKED_AT_INITDB",
+      "status": "R57_IN_PROGRESS",
+      "truth_class": "VERIFIED_FAILURE_PREDECESSOR"
+    },
+    "primary_registry_locator": {
+      "name": "R58_CANONICAL_PROJECT_REGISTRY.json",
+      "file_library_id": "file_00000000edc481faa260775c67f51102",
+      "bytes_embedded_in_dossier": false,
+      "sha256": "UNKNOWN"
+    },
+    "currentity_ceiling": "HISTORICAL_R58_IDENTITY_ONLY_NOT_CURRENT_R64_AUTHORITY",
+    "semantic_identity_supported": true,
+    "current_registry_adoption_supported": false
+  },
+  "candidate_result": {
+    "classification": "HISTORICAL_PROJECT_IDENTITY_EVIDENCED",
+    "canonical_registry_match": null,
+    "historical_project_id": "maworld",
+    "semantic_alias_status": "HISTORICAL_CANONICAL_IDENTITY",
+    "decision": "HUMAN_CURRENT_REGISTRY_ADOPTION_GATE",
+    "registry_gate_required": true
+  },
+  "interpretation_boundary": "Current R64 Portfolio does not contain maworld, while a bounded Drive dossier reproduces an R58 canonical project row for id=maworld/name=MAWorld/alias=Multi-agent world / MAWorld RLS and explicitly warns that R58 is not automatically current truth after R58. This supports historical semantic identity but does not authorize current registry adoption or any execution.",
+  "safety": {
+    "authority_granted": false,
+    "identity_authority_granted": false,
+    "alias_authority_granted": false,
+    "automatic_registration": false,
+    "canonical_registry_write_authorized": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

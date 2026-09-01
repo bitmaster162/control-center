@@ -1,0 +1,56 @@
+{
+  "schema": "control_center.portfolio_terminal_evidence.v1",
+  "projection_kind": "CANDIDATE_NON_AUTHORITY_TERMINAL_EVIDENCE",
+  "observed_at": "2026-08-24T09:18:00+07:00",
+  "scope": "PORTFOLIO_TERMINAL_CLASSIFICATION_INPUT_ONLY",
+  "source_note": "Bounded machine-readable terminal evidence. It records only source-backed proof-obligation state and cannot grant terminal, sunset, repair, dispatch, merge, deploy, runtime, trading, or capital authority.",
+  "projects": {
+    "maworld": {
+      "evidence_class": "OPEN_PROOF_OBLIGATION_EVIDENCED",
+      "proof_obligation_open": true,
+      "human_sunset_requested": false,
+      "explicit_terminal_verdict_evidenced": false,
+      "dod_dimensions": {
+        "technical_acceptance": "BLOCKED",
+        "operational_usability": "NOT_EVIDENCED",
+        "commercial_validation": "NOT_EVIDENCED",
+        "production_qualification": "NOT_EVIDENCED"
+      },
+      "open_proof_obligations": [
+        "INITDB_FAILED_ROOT_CAUSE_UNRESOLVED",
+        "FRESH_GIT_BASELINE_READBACK_REQUIRED_BEFORE_IMPLEMENTATION",
+        "RLS_21_OF_21_RECEIPT_NOT_EVIDENCED",
+        "SUCCESSFUL_POST_RLS_TEARDOWN_RECEIPT_NOT_EVIDENCED"
+      ],
+      "source_binding": {
+        "operational_registration_approval": "APPROVE_MAWORLD_OPERATIONAL_PROJECT_REGISTRATION_R1",
+        "operational_registration_state": "FAILURE_DIAGNOSTIC_REQUIRED",
+        "operational_registration_result": "CURRENT_PORTFOLIO_OPERATIONALLY_REGISTERED",
+        "policy_state": "CANDIDATE_BOUND",
+        "policy_binding_class": "SOURCE_BACKED_NON_AUTHORITY",
+        "strategic_decision": "KEEP_RESEARCH_INFRA",
+        "return_registry_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+        "return_registry_raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+        "codex03_return_sha256": "83919140df509fb735d6b6ef2ff4d9b4b1b2aa9f1952c63fc8f7951dccc9deb8",
+        "independent_verifier_slot": "ANTIGRAVITY_WO041",
+        "external_research_decision": "KEEP_RESEARCH_INFRA",
+        "external_research_implementation_status": "PARTIAL_INTERNAL_EVIDENCE",
+        "external_research_cutoff": "2026-08-01"
+      }
+    }
+  },
+  "safety": {
+    "authority_granted": false,
+    "terminal_authority_granted": false,
+    "sunset_authority_granted": false,
+    "auto_close_authorized": false,
+    "auto_sunset_authorized": false,
+    "auto_repair_authorized": false,
+    "dispatch_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "runtime_mutation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY"
+  }
+}

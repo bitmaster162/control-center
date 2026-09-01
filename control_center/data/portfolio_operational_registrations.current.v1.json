@@ -1,0 +1,74 @@
+{
+  "schema": "control_center.portfolio_operational_registrations.v1",
+  "projection_kind": "HUMAN_APPROVED_NON_EXECUTION_OPERATIONAL_REGISTRATION_OVERLAY",
+  "assembled_at": "2026-08-24T08:46:00+07:00",
+  "base_binding": {
+    "repository": "bitmaster162/control-center",
+    "base_branch": "gpt/github-ready-r1",
+    "base_sha": "9a8e26dddc44178a8cdf6e606da2d5c4a45b7423",
+    "candidate_branch": "agent/portfolio-governance-dashboard-r1",
+    "registration_input_head_sha": "61fd3d7896819b4ed55877446b9b4432e2f09cb7",
+    "control_observed_at": "2026-08-12T03:45:00+07:00",
+    "canonical_generation": "R64",
+    "return_registry_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+    "return_registry_raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f"
+  },
+  "registrations": [
+    {
+      "canonical_id": "maworld",
+      "display_name": "MAWorld",
+      "approval": {
+        "phrase": "APPROVE_MAWORLD_OPERATIONAL_PROJECT_REGISTRATION_R1",
+        "approved_at": "2026-08-24T08:46:00+07:00",
+        "scope": "CURRENT_PORTFOLIO_OPERATIONAL_REGISTRATION_ONLY"
+      },
+      "identity_binding": {
+        "approval_phrase": "APPROVE_MAWORLD_CURRENT_PORTFOLIO_IDENTITY_ADOPTION_R1",
+        "current_identity_state": "CURRENT_PORTFOLIO_IDENTITY_ADOPTED"
+      },
+      "evidence_binding": {
+        "registration_evidence_schema": "control_center.portfolio_operational_registration_evidence.v1",
+        "return_registry_generation": "R50_AUDIT",
+        "codex03_return_sha256": "83919140df509fb735d6b6ef2ff4d9b4b1b2aa9f1952c63fc8f7951dccc9deb8",
+        "independent_verifier_slot": "ANTIGRAVITY_WO041"
+      },
+      "operational_metadata": {
+        "owner_candidate": "CODEX-03",
+        "owner_authority_granted": false,
+        "state": "FAILURE_DIAGNOSTIC_REQUIRED",
+        "blocked_by": [
+          "INITDB_FAILED_ROOT_CAUSE_UNRESOLVED",
+          "FRESH_GIT_BASELINE_READBACK_REQUIRED_BEFORE_IMPLEMENTATION"
+        ],
+        "next": "MAWORLD_INITDB_DIAGNOSTIC_REPAIR",
+        "policy_bound": false,
+        "source_baseline_fresh_for_implementation": false,
+        "implementation_ready": false,
+        "repair_authorized": false
+      },
+      "result": {
+        "current_operational_registration": "CURRENT_PORTFOLIO_OPERATIONALLY_REGISTERED",
+        "owner_authority": "NOT_GRANTED",
+        "policy_binding_authority": "NOT_GRANTED",
+        "implementation_authority": "NOT_GRANTED",
+        "repair_authority": "NOT_GRANTED",
+        "execution_authority": "NONE"
+      }
+    }
+  ],
+  "safety": {
+    "approval_authority_consumed_for_metadata_write": true,
+    "downstream_authority_granted": false,
+    "owner_authority_granted": false,
+    "policy_authority_granted": false,
+    "repair_authorized": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "runtime_mutation_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}

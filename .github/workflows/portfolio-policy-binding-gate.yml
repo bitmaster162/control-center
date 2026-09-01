@@ -1,0 +1,34 @@
+name: Portfolio Policy Binding Gate
+
+on:
+  pull_request:
+    paths:
+      - 'control_center/data/portfolio_policy.candidate.v1.json'
+      - 'control_center/data/portfolio_operational_registrations.current.v1.json'
+      - 'control_center/data/portfolio_policy_binding_evidence.maworld.candidate.v1.json'
+      - 'control_center/data/portfolio_terminal_evidence.candidate.v1.json'
+      - 'control_center/data/current_control_plane.generated.v1.json'
+      - 'control_center/data/agent_control_plane.generated.v1.json'
+      - 'control_center/data/provider_freshness_evidence.current.v1.json'
+      - 'control_center/ui/portfolio_policy_binding.js'
+      - 'control_center/ui/portfolio_terminal.js'
+      - 'control_center/ui/portfolio_governance.js'
+      - 'control_center/ui/test_portfolio_policy_binding.js'
+      - 'control_center/ui/index.html'
+      - '.github/workflows/portfolio-policy-binding-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-policy-binding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Portfolio policy-binding module
+        run: node --check control_center/ui/portfolio_policy_binding.js
+      - name: Adversarial MAWorld policy-binding tests
+        run: node control_center/ui/test_portfolio_policy_binding.js

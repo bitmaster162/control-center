@@ -18,6 +18,11 @@
 
   <nav class="tabs" aria-label="Control Center views">
     <a href="#now">NOW</a>
+    <a href="#portfolio-governance">PORTFOLIO GOV</a>
+    <a href="#portfolio-terminal">TERMINAL ENGINE</a>
+    <a href="#portfolio-identity">PROJECT IDENTITY</a>
+    <a href="#portfolio-registration">REGISTRATION GATE</a>
+    <a href="#portfolio-policy-binding">POLICY GATE</a>
     <a href="#system-attention">SYSTEM ATTENTION</a>
     <a href="#provider-lease">PROVIDER LEASE</a>
     <a href="#execution-scope">EXECUTION SCOPE</a>
@@ -43,6 +48,46 @@
         <span class="pill">Human Gate Packet · HUMAN_NOW only</span>
       </div>
       <div id="now-cards" class="grid cards"></div>
+    </section>
+
+    <section id="portfolio-governance" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">PORTFOLIO CONTROL</p><h2>Portfolio Governance + Arbiter</h2></div>
+        <span class="pill">recommendation ≠ priority authority ≠ execution</span>
+      </div>
+      <div id="portfolio-governance-list"><div class="empty">Loading portfolio governance…</div></div>
+    </section>
+
+    <section id="portfolio-terminal" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">TERMINAL CONTROL</p><h2>Terminal / Kill / Sunset Engine</h2></div>
+        <span class="pill">classification ≠ close ≠ sunset ≠ execution</span>
+      </div>
+      <div id="portfolio-terminal-list"><div class="empty">Loading terminal classification…</div></div>
+    </section>
+
+    <section id="portfolio-identity" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">REGISTRY RECONCILIATION</p><h2>Project Identity</h2></div>
+        <span class="pill">identifier ≠ semantic alias ≠ registration</span>
+      </div>
+      <div id="portfolio-identity-list"><div class="empty">Loading project identity reconciliation…</div></div>
+    </section>
+
+    <section id="portfolio-registration" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">OPERATIONAL REGISTRY GATE</p><h2>Project Registration Evidence</h2></div>
+        <span class="pill">registration candidate ≠ owner authority ≠ repair authority</span>
+      </div>
+      <div id="portfolio-registration-list"><div class="empty">Loading operational registration gate…</div></div>
+    </section>
+
+    <section id="portfolio-policy-binding" class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">PROJECT POLICY GATE</p><h2>MAWorld Policy Binding</h2></div>
+        <span class="pill">candidate policy ≠ canonical policy ≠ execution</span>
+      </div>
+      <div id="portfolio-policy-binding-list"><div class="empty">Loading MAWorld policy binding…</div></div>
     </section>
 
     <section id="system-attention" class="panel">
@@ -104,6 +149,11 @@
   <footer><span>Dashboard is projection only. It never becomes the authority writer.</span></footer>
 
   <script src="./app.js" defer></script>
+  <script src="./portfolio_governance.js" defer></script>
+  <script src="./portfolio_terminal.js" defer></script>
+  <script src="./portfolio_identity.js" defer></script>
+  <script src="./portfolio_registration.js" defer></script>
+  <script src="./portfolio_policy_binding.js" defer></script>
   <script src="./system_attention.js" defer></script>
   <script src="./provider_lease.js" defer></script>
   <script src="./lifecycle.js" defer></script>

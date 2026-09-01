@@ -1,0 +1,166 @@
+{
+  "schema": "control_center.portfolio_policy.v1",
+  "policy_kind": "CANDIDATE_NON_AUTHORITY_POLICY",
+  "policy_version": "R4",
+  "policy_owner": "ROBERT",
+  "approval_scope": "AUTHORIZED_FOR_BRANCH_IMPLEMENTATION_ONLY",
+  "source_note": "Portfolio Control Center/dashboard direction and bounded implementation were approved by the human owner in the current conversation on 2026-08-24. This branch artifact is a candidate policy input and is not canonical adoption, merge authority, deployment authority, terminal authority, sunset authority, or effect authority.",
+  "policy_revision_note": "MAWorld is bound here only as a source-backed candidate project policy after approved current operational registration. This does not promote policy authority or authorize implementation/repair.",
+  "portfolio": {
+    "max_active_lanes": 3,
+    "progress_unit": "CLOSED_INVARIANT_OR_PROOF_OBLIGATION",
+    "single_active_blocker_target": true,
+    "terminal_verdicts": [
+      "PASS",
+      "REJECT",
+      "BLOCKED_EXTERNAL",
+      "HOLD",
+      "SUNSET"
+    ],
+    "definition_of_done_dimensions": [
+      "technical_acceptance",
+      "operational_usability",
+      "commercial_validation",
+      "production_qualification"
+    ],
+    "arbiter": {
+      "mode": "PRESERVE_PROVIDER_OPERATOR_ATTENTION_ORDER",
+      "ordering_source": "agent_control_plane.generated.v1.json#operator_attention.rank",
+      "rescore": false,
+      "weighted_score": false,
+      "evidence_gate": "EXACT_AT_CAPTURE",
+      "ambiguous_rank_action": "HOLD_AMBIGUOUS_RANK",
+      "no_eligible_action": "HOLD_NO_ELIGIBLE_ATTENTION",
+      "eligibility": {
+        "exclude_do_not_touch": true,
+        "require_auto_dispatch_false": true,
+        "require_slot_dispatch_authorized_false": true,
+        "require_named_requested_next": true
+      },
+      "recommendation_scope": "HUMAN_ATTENTION_ONLY",
+      "execution_authority": "NONE"
+    },
+    "terminal_engine": {
+      "mode": "EXPLICIT_SIGNALS_ONLY",
+      "subject_source": "portfolio_arbiter.recommended_project",
+      "evidence_source": "portfolio_terminal_evidence.candidate.v1.json",
+      "provider_evidence_gate": "EXACT_AT_CAPTURE",
+      "allowed_classifications": [
+        "CONTINUE",
+        "HOLD",
+        "TERMINAL_CANDIDATE",
+        "SUNSET_CANDIDATE"
+      ],
+      "required_dod_dimensions": [
+        "technical_acceptance",
+        "operational_usability",
+        "commercial_validation",
+        "production_qualification"
+      ],
+      "terminal_pass_value": "EVIDENCED_PASS",
+      "sunset_requires_explicit_human_signal": true,
+      "infer_from_free_text": false,
+      "infer_from_project_state": false,
+      "auto_close": false,
+      "auto_sunset": false,
+      "auto_repair": false,
+      "execution_authority": "NONE"
+    }
+  },
+  "projects": {
+    "control-center": {
+      "policy_state": "CANDIDATE_BOUND",
+      "definition_of_done": {
+        "technical_acceptance": [
+          "Candidate head passes repository CI",
+          "Candidate head passes Control Center Current Truth Projection",
+          "Portfolio Governance deterministic UI test passes"
+        ],
+        "operational_usability": [
+          "Dashboard renders tracked projects and operator-attention lanes from provider-backed generated inputs",
+          "Missing policy or evidence remains visibly missing",
+          "Dashboard remains projection-only and grants no effect authority"
+        ],
+        "commercial_validation": [
+          "NOT_YET_EVIDENCED"
+        ],
+        "production_qualification": [
+          "Explicit human merge approval after review",
+          "Fresh post-merge deployment/readback only if deployment is separately authorized"
+        ]
+      },
+      "kill_sunset_criteria": [
+        "SUNSET_OR_HOLD when no named active blocker or proof obligation justifies further work",
+        "STOP when another safe iteration does not change the decision or close an invariant",
+        "SUNSET when the human owner explicitly ends the lane"
+      ],
+      "freshness_policy": {
+        "source": "provider_freshness_evidence.current.v1.json",
+        "requires_exact_root_match_at_capture": true,
+        "continuous_freshness_required": false,
+        "expired_evidence_action": "HOLD_RECAPTURE",
+        "provider_drift_action": "HOLD_NO_REPAIR"
+      },
+      "terminal_evidence_binding_required": true
+    },
+    "maworld": {
+      "policy_state": "CANDIDATE_BOUND",
+      "policy_binding_class": "SOURCE_BACKED_NON_AUTHORITY",
+      "portfolio_role": "INTERNAL_RESEARCH_INFRA",
+      "strategic_decision": "KEEP_RESEARCH_INFRA",
+      "binding_evidence": "portfolio_policy_binding_evidence.maworld.candidate.v1.json",
+      "definition_of_done": {
+        "technical_acceptance": [
+          "Fresh exact local Git baseline readback is required before any persistent implementation",
+          "Portable PostgreSQL sandbox initdb succeeds with raw stdout and stderr captured",
+          "RLS 21/21 passes on the same verifiable Git baseline and teardown is CLEAN"
+        ],
+        "operational_usability": [
+          "One complete reproducible receipt bundle exists on a verifiable Git baseline",
+          "Receipt bundle includes sealed input manifest, isolated task/agent branches, immutable per-attempt outputs, explicit retry lineage, raw stdout/stderr, and teardown receipt",
+          "Scope remains a narrow internal experimental isolation/evidence harness rather than a generic agent orchestration platform"
+        ],
+        "commercial_validation": [
+          "No external-product or commercial PASS is inferred from current evidence",
+          "Any future commercial PASS requires explicit external adoption evidence such as users, payment, procurement, or equivalent buyer proof"
+        ],
+        "production_qualification": [
+          "Current MAWorld evidence does not establish production qualification",
+          "Any production or deployment qualification requires a separate authority gate and fresh runtime readback"
+        ]
+      },
+      "kill_sunset_criteria": [
+        "HOLD when a fresh Git baseline is missing before persistent implementation",
+        "HOLD while INITDB_FAILED root cause remains unresolved",
+        "HOLD until exact RLS 21/21 and clean teardown are evidenced",
+        "REVISE_OR_HOLD if scope broadens into generic orchestration without new evidence",
+        "SUNSET only from an explicit human sunset signal or a separate evidence-backed portfolio decision that no justified research workload remains"
+      ],
+      "freshness_policy": {
+        "current_return_registry_drive_file_id": "1BXdqWzA74SvkgcygO_ktO_2uolqFshWm",
+        "current_return_registry_raw_sha256": "ea0ff88fce2d02f664087ea2697e71688ad95cb6deb65e22df73af2081dfb03f",
+        "code_baseline_fresh_readback_required_before_implementation": true,
+        "external_research_cutoff": "2026-08-01",
+        "external_research_continuous_freshness": false,
+        "stale_or_drift_action": "HOLD_RECAPTURE_NO_REPAIR"
+      },
+      "terminal_evidence_binding_required": true,
+      "implementation_ready": false,
+      "repair_authorized": false,
+      "execution_authority": "NONE"
+    }
+  },
+  "safety": {
+    "authority_granted": false,
+    "source_of_truth_promoted": false,
+    "dispatch_authorized": false,
+    "auto_fix_authorized": false,
+    "auto_close_authorized": false,
+    "auto_sunset_authorized": false,
+    "merge_authorized": false,
+    "deploy_authorized": false,
+    "can_trade": false,
+    "capital_permission": "DENY",
+    "self_application": false
+  }
+}
